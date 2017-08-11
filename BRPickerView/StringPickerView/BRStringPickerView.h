@@ -5,6 +5,7 @@
 //  Created by 任波 on 2017/8/11.
 //  Copyright © 2017年 renb. All rights reserved.
 //
+//  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
 #import "BaseView.h"
 
@@ -13,7 +14,7 @@ typedef void(^BRStringResultBlock)(id selectValue);
 @interface BRStringPickerView : BaseView
 
 /**
- *  创建数组数据源PickerView
+ *  显示自定义字符串选择器
  *
  *  @param title            标题
  *  @param dataSource       数组数据源
@@ -29,7 +30,7 @@ typedef void(^BRStringResultBlock)(id selectValue);
                       resultBlock:(BRStringResultBlock)resultBlock;
 
 /**
- *  创建数组数据源PickerView
+ *  显示自定义字符串选择器
  *
  *  @param title            标题
  *  @param plistName        plist文件名

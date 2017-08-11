@@ -5,14 +5,11 @@
 //  Created by 任波 on 2017/8/11.
 //  Copyright © 2017年 renb. All rights reserved.
 //
+//  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
 #import "BRAddressPickerView.h"
 #import "BRAddressModel.h"
 #import "YYModel.h"
-
-static NSInteger recordRowOfProvince = 10;  // 默认的省份选择
-static NSInteger recordRowOfCity = 0;       // 默认的市选择
-static NSInteger recordRowOfTown;           // 默认的区选择
 
 @interface BRAddressPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
@@ -25,7 +22,7 @@ static NSInteger recordRowOfTown;           // 默认的区选择
 @property (nonatomic, strong) UIPickerView *pickerView;
 @property (nonatomic, strong) NSMutableArray *addressModelArr;
 
-// 默认选中的值
+// 默认选中的值（@[省索引, 市索引, 区索引]）
 @property (nonatomic, strong) NSArray *defaultSelectedArr;
 // 是否开启自动选择
 @property (nonatomic, assign) BOOL isAutoSelect;
@@ -36,15 +33,21 @@ static NSInteger recordRowOfTown;           // 默认的区选择
 
 @implementation BRAddressPickerView
 
+#pragma mark - 显示地址选择器
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock {
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect resultBlock:resultBlock];
     [addressPickerView showWithAnimation:YES];
 }
 
-#pragma mark - init
+#pragma mark - 初始化地址选择器
 - (instancetype)initWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock {
     if (self = [super init]) {
-        self.defaultSelectedArr = defaultSelectedArr;
+        // 默认选中
+        if (defaultSelectedArr.count == 3) {
+            self.defaultSelectedArr = defaultSelectedArr;
+        } else {
+            self.defaultSelectedArr = @[@10, @0, @0];
+        }
         self.isAutoSelect = isAutoSelect;
         self.resultBlock = resultBlock;
         [self loadData];
@@ -53,6 +56,7 @@ static NSInteger recordRowOfTown;           // 默认的区选择
     return self;
 }
 
+#pragma mark - 获取地址数据
 - (void)loadData {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity" ofType:@"plist"];
     NSArray *arrData = [NSArray arrayWithContentsOfFile:filePath];
@@ -63,6 +67,7 @@ static NSInteger recordRowOfTown;           // 默认的区选择
     }
 }
 
+#pragma mark - 初始化子视图
 - (void)initUI {
     [super initUI];
     self.titleLabel.text = @"请选择城市";
@@ -70,11 +75,12 @@ static NSInteger recordRowOfTown;           // 默认的区选择
     [self.alertView addSubview:self.pickerView];
 }
 
+#pragma mark - 背景视图的点击事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
     [self dismissWithAnimation:NO];
 }
 
-/** 弹出视图方法 */
+#pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     // 1.获取当前应用的主窗口
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -93,12 +99,16 @@ static NSInteger recordRowOfTown;           // 默认的区选择
         }];
     }
     
+    NSInteger recordRowOfProvince = [self.defaultSelectedArr[0] integerValue];
+    NSInteger recordRowOfCity = [self.defaultSelectedArr[1] integerValue];
+    NSInteger recordRowOfTown = [self.defaultSelectedArr[2] integerValue];
+    
     // 2.滚动到默认行
     [self scrollToRow:recordRowOfProvince secondRow:recordRowOfCity thirdRow:recordRowOfTown];
     
 }
 
-/** 关闭视图方法 */
+#pragma mark - 关闭视图方法
 - (void)dismissWithAnimation:(BOOL)animation {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
@@ -128,12 +138,12 @@ static NSInteger recordRowOfTown;           // 默认的区选择
     }];
 }
 
-/** 取消按钮的点击事件 */
+#pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
     [self dismissWithAnimation:YES];
 }
 
-/** 确定按钮的点击事件 */
+#pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     NSLog(@"点击确定按钮后，执行block回调");
     [self dismissWithAnimation:YES];
@@ -143,6 +153,7 @@ static NSInteger recordRowOfTown;           // 默认的区选择
     }
 }
 
+#pragma mark - 地址选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kDatePicHeight)];
@@ -246,7 +257,7 @@ static NSInteger recordRowOfTown;           // 默认的区选择
     return arr;
 }
 
-/** 滚动到指定行 */
+#pragma mark - 滚动到指定行
 - (void)scrollToRow:(NSInteger)firstRow secondRow:(NSInteger)secondRow thirdRow:(NSInteger)thirdRow {
     if (firstRow < self.addressModelArr.count) {
         rowOfProvince = firstRow;

@@ -5,6 +5,7 @@
 //  Created by 任波 on 2017/8/11.
 //  Copyright © 2017年 renb. All rights reserved.
 //
+//  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
 #import "BRStringPickerView.h"
 
@@ -29,7 +30,7 @@
 
 @implementation BRStringPickerView
 
-#pragma mark - 显示StringPicker
+#pragma mark - 显示自定义字符串选择器
 + (void)showStringPickerWithTitle:(NSString *)title
                        dataSource:(NSArray *)dataSource
                   defaultSelValue:(id)defaultSelValue
@@ -42,7 +43,7 @@
     [strPickerView showWithAnimation:YES];
 }
 
-#pragma mark - 显示StringPicker
+#pragma mark - 显示自定义字符串选择器
 + (void)showStringPickerWithTitle:(NSString *)title
                         plistName:(NSString *)plistName
                   defaultSelValue:(id)defaultSelValue
@@ -58,7 +59,7 @@
 }
 
 
-#pragma mark - init
+#pragma mark - 初始化自定义字符串选择器
 - (instancetype)initWithTitle:(NSString *)title
                    dataSource:(NSArray *)dataSource
               defaultSelValue:(id)defaultSelValue
@@ -84,6 +85,7 @@
     return self;
 }
 
+#pragma mark - 初始化子视图
 - (void)initUI {
     [super initUI];
     self.titleLabel.text = self.title;
@@ -91,7 +93,7 @@
     [self.alertView addSubview:self.pickerView];
 }
 
-#pragma mark - loadData
+#pragma mark - 加载自定义字符串数据
 - (void)loadData {
     if (self.dataSource == nil || self.dataSource.count == 0) {
         self.isDataSourceValid = NO;
@@ -165,11 +167,12 @@
     }
 }
 
+#pragma mark - 背景视图的点击事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
     [self dismissWithAnimation:NO];
 }
 
-/** 弹出视图方法 */
+#pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     //1. 获取当前应用的主窗口
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -189,7 +192,7 @@
     }
 }
 
-/** 关闭视图方法 */
+#pragma mark - 关闭视图方法
 - (void)dismissWithAnimation:(BOOL)animation {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
@@ -220,12 +223,12 @@
     }];
 }
 
-/** 取消按钮的点击事件 */
+#pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
     [self dismissWithAnimation:YES];
 }
 
-/** 确定按钮的点击事件 */
+#pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     NSLog(@"点击确定按钮后，执行block回调");
     [self dismissWithAnimation:YES];
@@ -238,6 +241,7 @@
     }
 }
 
+#pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kDatePicHeight)];

@@ -5,6 +5,7 @@
 //  Created by 任波 on 2017/8/11.
 //  Copyright © 2017年 renb. All rights reserved.
 //
+//  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
 #import "BRDatePickerView.h"
 
@@ -25,12 +26,14 @@
 
 @implementation BRDatePickerView
 
-+ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:isAutoSelect resultBlock:resultBlock];
+#pragma mark - 显示时间选择器
++ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:isAutoSelect resultBlock:resultBlock];
     [datePickerView showWithAnimation:YES];
 }
 
-- (instancetype)initWithTitle:(NSString *)title dateType:(UIDatePickerMode)type minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
+#pragma mark - 初始化时间选择器
+- (instancetype)initWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
     if (self = [super init]) {
         _datePickerMode = type;
         _title = title;
@@ -40,13 +43,18 @@
         _resultBlock = resultBlock;
         
         // 默认选中今天的日期
-        _selectValue = [self toStringWithDate:[NSDate date]];
+        if (defaultSelValue.length > 0) {
+            _selectValue = defaultSelValue;
+        } else {
+            _selectValue = [self toStringWithDate:[NSDate date]];
+        }
         
         [self initUI];
     }
     return self;
 }
 
+#pragma mark - 初始化子视图
 - (void)initUI {
     [super initUI];
     self.titleLabel.text = _title;
@@ -54,6 +62,7 @@
     [self.alertView addSubview:self.datePicker];
 }
 
+#pragma mark - 时间选择器
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
         _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kDatePicHeight)];
@@ -83,12 +92,12 @@
     return _datePicker;
 }
 
-
+#pragma mark - 背景视图的点击事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
     [self dismissWithAnimation:NO];
 }
 
-/** 弹出视图方法 */
+#pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     //1. 获取当前应用的主窗口
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -108,7 +117,7 @@
     }
 }
 
-/** 关闭视图方法 */
+#pragma mark - 关闭视图方法
 - (void)dismissWithAnimation:(BOOL)animation {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
@@ -139,7 +148,7 @@
     }];
 }
 
-/** 时间选择器的滚动响应事件 */
+#pragma mark - 时间选择器的滚动响应事件
 - (void)didSelectValueChanged:(UIDatePicker *)sender {
     // 读取日期：datePicker.date
     _selectValue = [self toStringWithDate:sender.date];
@@ -152,12 +161,12 @@
     }
 }
 
-/** 取消按钮的点击事件 */
+#pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
     [self dismissWithAnimation:YES];
 }
 
-/** 确定按钮的点击事件 */
+#pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     NSLog(@"点击确定按钮后，执行block回调");
     [self dismissWithAnimation:YES];
@@ -166,7 +175,7 @@
     }
 }
 
-// NSDate --> NSString
+#pragma mark - 格式转换：NSDate --> NSString
 - (NSString *)toStringWithDate:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     switch (_datePickerMode) {
@@ -190,7 +199,7 @@
     return destDateString;
 }
 
-// NSDate <-- NSString
+#pragma mark - 格式转换：NSDate <-- NSString
 - (NSDate *)toDateWithDateString:(NSString *)dateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     switch (_datePickerMode) {

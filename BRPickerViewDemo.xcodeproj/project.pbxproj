@@ -9,18 +9,20 @@
 /* Begin PBXBuildFile section */
 		C5ACE4DB1F3D58BD0069978B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DA1F3D58BD0069978B /* main.m */; };
 		C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */; };
-		C5ACE4E11F3D58BD0069978B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4E01F3D58BD0069978B /* ViewController.m */; };
 		C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4E21F3D58BD0069978B /* Main.storyboard */; };
 		C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4E51F3D58BD0069978B /* Assets.xcassets */; };
 		C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4E71F3D58BD0069978B /* LaunchScreen.storyboard */; };
 		C5ACE4FC1F3D5A8B0069978B /* BRCity.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4F21F3D5A8B0069978B /* BRCity.plist */; };
 		C5ACE4FD1F3D5A8B0069978B /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4F81F3D5A8B0069978B /* NSObject+YYModel.m */; };
 		C5ACE4FE1F3D5A8B0069978B /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4FA1F3D5A8B0069978B /* YYClassInfo.m */; };
-		C5ACE5011F3D5AF70069978B /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5001F3D5AF70069978B /* BaseView.m */; };
 		C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5041F3D7C4F0069978B /* BRAddressPickerView.m */; };
 		C5ACE5081F3D7D060069978B /* BRAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5071F3D7D060069978B /* BRAddressModel.m */; };
 		C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */; };
 		C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE50D1F3D7E890069978B /* BRStringPickerView.m */; };
+		C5ACE5121F3D81360069978B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5111F3D81360069978B /* TestViewController.m */; };
+		C5ACE5151F3D81550069978B /* BRTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5141F3D81550069978B /* BRTextField.m */; };
+		C5ACE5181F3D81AD0069978B /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */; };
+		C5ACE51F1F3D904F0069978B /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE51E1F3D904F0069978B /* BaseView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +30,6 @@
 		C5ACE4DA1F3D58BD0069978B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C5ACE4DC1F3D58BD0069978B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C5ACE4DF1F3D58BD0069978B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C5ACE4E01F3D58BD0069978B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C5ACE4E31F3D58BD0069978B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C5ACE4E51F3D58BD0069978B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5ACE4E81F3D58BD0069978B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,9 +40,6 @@
 		C5ACE4F91F3D5A8B0069978B /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
 		C5ACE4FA1F3D5A8B0069978B /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
 		C5ACE4FB1F3D5A8B0069978B /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
-		C5ACE4FF1F3D5AF70069978B /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
-		C5ACE5001F3D5AF70069978B /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
-		C5ACE5021F3D5B340069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
 		C5ACE5031F3D7C4F0069978B /* BRAddressPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAddressPickerView.h; sourceTree = "<group>"; };
 		C5ACE5041F3D7C4F0069978B /* BRAddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAddressPickerView.m; sourceTree = "<group>"; };
 		C5ACE5061F3D7D060069978B /* BRAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAddressModel.h; sourceTree = "<group>"; };
@@ -51,6 +48,15 @@
 		C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDatePickerView.m; sourceTree = "<group>"; };
 		C5ACE50C1F3D7E890069978B /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
 		C5ACE50D1F3D7E890069978B /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
+		C5ACE5101F3D81360069978B /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		C5ACE5111F3D81360069978B /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		C5ACE5131F3D81550069978B /* BRTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRTextField.h; sourceTree = "<group>"; };
+		C5ACE5141F3D81550069978B /* BRTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRTextField.m; sourceTree = "<group>"; };
+		C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRAdd.h"; sourceTree = "<group>"; };
+		C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRAdd.m"; sourceTree = "<group>"; };
+		C5ACE51D1F3D904F0069978B /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
+		C5ACE51E1F3D904F0069978B /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
+		C5ACE5201F3D90A90069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,14 +90,9 @@
 			isa = PBXGroup;
 			children = (
 				C5ACE4F01F3D5A8B0069978B /* BRPickerView */,
+				C5ACE50F1F3D80BA0069978B /* Classes */,
 				C5ACE4DC1F3D58BD0069978B /* AppDelegate.h */,
 				C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */,
-				C5ACE4DF1F3D58BD0069978B /* ViewController.h */,
-				C5ACE4E01F3D58BD0069978B /* ViewController.m */,
-				C5ACE4E21F3D58BD0069978B /* Main.storyboard */,
-				C5ACE4E51F3D58BD0069978B /* Assets.xcassets */,
-				C5ACE4E71F3D58BD0069978B /* LaunchScreen.storyboard */,
-				C5ACE4EA1F3D58BD0069978B /* Info.plist */,
 				C5ACE4D91F3D58BD0069978B /* Supporting Files */,
 			);
 			path = BRPickerViewDemo;
@@ -100,6 +101,10 @@
 		C5ACE4D91F3D58BD0069978B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C5ACE4E21F3D58BD0069978B /* Main.storyboard */,
+				C5ACE4E51F3D58BD0069978B /* Assets.xcassets */,
+				C5ACE4E71F3D58BD0069978B /* LaunchScreen.storyboard */,
+				C5ACE4EA1F3D58BD0069978B /* Info.plist */,
 				C5ACE4DA1F3D58BD0069978B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -108,9 +113,8 @@
 		C5ACE4F01F3D5A8B0069978B /* BRPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				C5ACE4FF1F3D5AF70069978B /* BaseView.h */,
-				C5ACE5001F3D5AF70069978B /* BaseView.m */,
-				C5ACE5021F3D5B340069978B /* BRPickerView.h */,
+				C5ACE5201F3D90A90069978B /* BRPickerView.h */,
+				C5ACE51C1F3D904F0069978B /* Base */,
 				C5ACE4F31F3D5A8B0069978B /* DatePickerView */,
 				C5ACE4F11F3D5A8B0069978B /* AddressPickerView */,
 				C5ACE4F41F3D5A8B0069978B /* StringPickerView */,
@@ -167,6 +171,28 @@
 				C5ACE4FB1F3D5A8B0069978B /* YYModel.h */,
 			);
 			path = YYModel;
+			sourceTree = "<group>";
+		};
+		C5ACE50F1F3D80BA0069978B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE5101F3D81360069978B /* TestViewController.h */,
+				C5ACE5111F3D81360069978B /* TestViewController.m */,
+				C5ACE5131F3D81550069978B /* BRTextField.h */,
+				C5ACE5141F3D81550069978B /* BRTextField.m */,
+				C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */,
+				C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C5ACE51C1F3D904F0069978B /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE51D1F3D904F0069978B /* BaseView.h */,
+				C5ACE51E1F3D904F0069978B /* BaseView.m */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,16 +267,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5ACE4E11F3D58BD0069978B /* ViewController.m in Sources */,
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
 				C5ACE4FE1F3D5A8B0069978B /* YYClassInfo.m in Sources */,
+				C5ACE5151F3D81550069978B /* BRTextField.m in Sources */,
+				C5ACE5121F3D81360069978B /* TestViewController.m in Sources */,
+				C5ACE51F1F3D904F0069978B /* BaseView.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
 				C5ACE4FD1F3D5A8B0069978B /* NSObject+YYModel.m in Sources */,
+				C5ACE5181F3D81AD0069978B /* NSDate+BRAdd.m in Sources */,
 				C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */,
 				C5ACE5081F3D7D060069978B /* BRAddressModel.m in Sources */,
-				C5ACE5011F3D5AF70069978B /* BaseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.renb.BRPickerViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -382,6 +411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.renb.BRPickerViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

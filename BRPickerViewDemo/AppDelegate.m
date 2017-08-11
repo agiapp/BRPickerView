@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TestViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,10 +17,26 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self setupRootViewController];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
+- (void)setupRootViewController {
+    TestViewController *testVC = [[TestViewController alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:testVC];
+    // 设置状态栏前景色为白色
+    nav.navigationBar.barStyle = UIBarStyleBlack;
+    // 设置navigationBar背景颜色
+    nav.navigationBar.barTintColor = [UIColor colorWithRed:253 / 255.0 green:96 / 255.0 blue:134 / 255.0 alpha:1.0f];
+    // 设置navigationBar所有子控件的颜色
+    nav.navigationBar.tintColor = [UIColor whiteColor];
+    // 设置 title 颜色
+    [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.window.rootViewController = nav;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

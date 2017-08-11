@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TestViewController.h
 //  BRPickerViewDemo
 //
 //  Created by 任波 on 2017/8/11.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TestViewController : UIViewController
 
 @end
-
