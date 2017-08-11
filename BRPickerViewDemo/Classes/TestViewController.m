@@ -215,7 +215,7 @@
     if (!_phoneTF) {
         _phoneTF = [self getTextField:cell];
         _phoneTF.placeholder = @"请输入";
-        _phoneTF.keyboardType = UIKeyboardTypeNumberPad;
+        _phoneTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         _phoneTF.returnKeyType = UIReturnKeyDone;
         _phoneTF.tag = 4;
     }
@@ -228,7 +228,7 @@
         _addressTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _addressTF.tapAcitonBlock = ^{
-            [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @1, @1] isAutoSelect:YES resultBlock:^(NSArray *selectAddressArr) {
+            [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES resultBlock:^(NSArray *selectAddressArr) {
                 weakSelf.addressTF.text = [NSString stringWithFormat:@"%@%@%@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
             }];
         };
