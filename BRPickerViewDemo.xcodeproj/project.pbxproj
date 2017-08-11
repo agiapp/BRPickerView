@@ -13,6 +13,10 @@
 		C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4E21F3D58BD0069978B /* Main.storyboard */; };
 		C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4E51F3D58BD0069978B /* Assets.xcassets */; };
 		C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4E71F3D58BD0069978B /* LaunchScreen.storyboard */; };
+		C5ACE4FC1F3D5A8B0069978B /* BRCity.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5ACE4F21F3D5A8B0069978B /* BRCity.plist */; };
+		C5ACE4FD1F3D5A8B0069978B /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4F81F3D5A8B0069978B /* NSObject+YYModel.m */; };
+		C5ACE4FE1F3D5A8B0069978B /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4FA1F3D5A8B0069978B /* YYClassInfo.m */; };
+		C5ACE5011F3D5AF70069978B /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5001F3D5AF70069978B /* BaseView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,15 @@
 		C5ACE4E51F3D58BD0069978B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5ACE4E81F3D58BD0069978B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5ACE4EA1F3D58BD0069978B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5ACE4F21F3D5A8B0069978B /* BRCity.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BRCity.plist; sourceTree = "<group>"; };
+		C5ACE4F71F3D5A8B0069978B /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
+		C5ACE4F81F3D5A8B0069978B /* NSObject+YYModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YYModel.m"; sourceTree = "<group>"; };
+		C5ACE4F91F3D5A8B0069978B /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
+		C5ACE4FA1F3D5A8B0069978B /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
+		C5ACE4FB1F3D5A8B0069978B /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
+		C5ACE4FF1F3D5AF70069978B /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
+		C5ACE5001F3D5AF70069978B /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
+		C5ACE5021F3D5B340069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +71,7 @@
 		C5ACE4D81F3D58BD0069978B /* BRPickerViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C5ACE4F01F3D5A8B0069978B /* BRPickerView */,
 				C5ACE4DC1F3D58BD0069978B /* AppDelegate.h */,
 				C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */,
 				C5ACE4DF1F3D58BD0069978B /* ViewController.h */,
@@ -77,6 +91,62 @@
 				C5ACE4DA1F3D58BD0069978B /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C5ACE4F01F3D5A8B0069978B /* BRPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE4FF1F3D5AF70069978B /* BaseView.h */,
+				C5ACE5001F3D5AF70069978B /* BaseView.m */,
+				C5ACE5021F3D5B340069978B /* BRPickerView.h */,
+				C5ACE4F31F3D5A8B0069978B /* DatePickerView */,
+				C5ACE4F11F3D5A8B0069978B /* AddressPickerView */,
+				C5ACE4F41F3D5A8B0069978B /* StringPickerView */,
+				C5ACE4F51F3D5A8B0069978B /* Vendor */,
+			);
+			path = BRPickerView;
+			sourceTree = SOURCE_ROOT;
+		};
+		C5ACE4F11F3D5A8B0069978B /* AddressPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE4F21F3D5A8B0069978B /* BRCity.plist */,
+			);
+			path = AddressPickerView;
+			sourceTree = "<group>";
+		};
+		C5ACE4F31F3D5A8B0069978B /* DatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DatePickerView;
+			sourceTree = "<group>";
+		};
+		C5ACE4F41F3D5A8B0069978B /* StringPickerView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = StringPickerView;
+			sourceTree = "<group>";
+		};
+		C5ACE4F51F3D5A8B0069978B /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE4F61F3D5A8B0069978B /* YYModel */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		C5ACE4F61F3D5A8B0069978B /* YYModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE4F71F3D5A8B0069978B /* NSObject+YYModel.h */,
+				C5ACE4F81F3D5A8B0069978B /* NSObject+YYModel.m */,
+				C5ACE4F91F3D5A8B0069978B /* YYClassInfo.h */,
+				C5ACE4FA1F3D5A8B0069978B /* YYClassInfo.m */,
+				C5ACE4FB1F3D5A8B0069978B /* YYModel.h */,
+			);
+			path = YYModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +210,7 @@
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
+				C5ACE4FC1F3D5A8B0069978B /* BRCity.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +224,9 @@
 				C5ACE4E11F3D58BD0069978B /* ViewController.m in Sources */,
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
+				C5ACE4FE1F3D5A8B0069978B /* YYClassInfo.m in Sources */,
+				C5ACE4FD1F3D5A8B0069978B /* NSObject+YYModel.m in Sources */,
+				C5ACE5011F3D5AF70069978B /* BaseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +383,7 @@
 				C5ACE4EF1F3D58BD0069978B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
