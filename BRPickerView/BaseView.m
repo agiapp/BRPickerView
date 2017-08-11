@@ -29,6 +29,7 @@
     [self.topView addSubview:self.lineView];
 }
 
+#pragma mark - 背景遮罩图层
 - (UIView *)backgroundView {
     if (!_backgroundView) {
         _backgroundView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
@@ -40,6 +41,7 @@
     return _backgroundView;
 }
 
+#pragma mark - 弹出视图
 - (UIView *)alertView {
     if (!_alertView) {
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kTopViewHeight - kDatePicHeight, SCREEN_WIDTH, kTopViewHeight + kDatePicHeight)];
@@ -48,6 +50,7 @@
     return _alertView;
 }
 
+#pragma mark - 顶部标题栏视图
 - (UIView *)topView {
     if (!_topView) {
         _topView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kTopViewHeight + 0.5)];
@@ -56,6 +59,7 @@
     return _topView;
 }
 
+#pragma mark - 左边取消按钮
 - (UIButton *)leftBtn {
     if (!_leftBtn) {
         _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -73,6 +77,7 @@
     return _leftBtn;
 }
 
+#pragma mark - 右边确定按钮
 - (UIButton *)rightBtn {
     if (!_rightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,6 +93,7 @@
     return _rightBtn;
 }
 
+#pragma mark - 中间标题按钮
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, SCREEN_WIDTH - 130, kTopViewHeight)];
@@ -99,6 +105,7 @@
     return _titleLabel;
 }
 
+#pragma mark - 分割线
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, kTopViewHeight, SCREEN_WIDTH, 0.5)];
@@ -108,16 +115,17 @@
     return _lineView;
 }
 
+#pragma mark - 点击背景遮罩图层事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
     
 }
 
-/** 取消按钮的点击事件 */
+#pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
     
 }
 
-/** 确定按钮的点击事件 */
+#pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     
 }

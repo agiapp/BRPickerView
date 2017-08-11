@@ -37,12 +37,16 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 // 分割线视图
 @property (nonatomic, strong) UIView *lineView;
 
+/** 初始化子视图 */
 - (void)initUI;
 
+/** 点击背景遮罩图层事件 */
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender;
 
+/** 取消按钮的点击事件 */
 - (void)clickLeftBtn;
 
+/** 确定按钮的点击事件 */
 - (void)clickRightBtn;
 
 @end
