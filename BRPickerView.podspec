@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   # 框架的详细描述
-  s.description  = "A custom picker view for iOS."
+  s.description  = "A custom picker view for iOS, Support the Objective - C language."
   # 框架的主页
   s.homepage     = "https://github.com/borenfocus/BRPickerView"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
