@@ -51,9 +51,13 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
   ```objective-c
   [BRDatePickerView showDatePickerWithTitle:@"出生年月" dateType:UIDatePickerModeDate defaultSelValue:weakSelf.birthdayTF.text minDateStr:@"" maxDateStr:[NSDate currentDateString] isAutoSelect:YES resultBlock:^(NSString *selectValue) {
-                  weakSelf.birthdayTF.text = selectValue;
-              }];
+  	weakSelf.birthdayTF.text = selectValue;
+  }];
   ```
+
+  效果图：
+
+  ![日期选择器](https://github.com/borenfocus/BRPickerView/blob/master/BRPickerViewDemo/%E5%87%BA%E7%94%9F%E5%B9%B4%E6%9C%88.gif)
 
 - 地址选择器：`BRAddressPickerView`
 
@@ -73,9 +77,13 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
   ```objective-c
   [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES resultBlock:^(NSArray *selectAddressArr) {
-                  weakSelf.addressTF.text = [NSString stringWithFormat:@"%@%@%@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
-              }];
+  	weakSelf.addressTF.text = [NSString stringWithFormat:@"%@%@%@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
+  }];
   ```
+
+  效果图：
+
+  ![地址选择器](https://github.com/borenfocus/BRPickerView/blob/master/BRPickerViewDemo/%E5%9C%B0%E5%9D%80.gif)
 
 - 自定义字符串选择器：`BRStringPickerView`
 
@@ -116,10 +124,22 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
   方法使用：
 
   ```objective-c
+  // 自定义单列字符串
   [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:@[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"] defaultSelValue:@"本科" isAutoSelect:YES resultBlock:^(id selectValue) {
-                  weakSelf.educationTF.text = selectValue;
-              }];
+  	weakSelf.educationTF.text = selectValue;
+  }];
+  // 自定义多列字符串
+  NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
+  [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES resultBlock:^(id selectValue) {
+  	weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
+  }];
   ```
+
+  效果图：
+
+  | ![自定义单列字符串](https://github.com/borenfocus/BRPickerView/blob/master/BRPickerViewDemo/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%88%97%E5%AD%97%E7%AC%A6%E4%B8%B2.gif) | ![自定义多列字符串](https://github.com/borenfocus/BRPickerView/blob/master/BRPickerViewDemo/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%9A%E5%88%97%E5%AD%97%E7%AC%A6%E4%B8%B2.gif) |
+  | :--------------------------------------: | :--------------------------------------: |
+  |                 自定义单列字符串                 |                 自定义多列字符串                 |
 
 # 许可证
 
