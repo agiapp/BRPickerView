@@ -26,8 +26,10 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  # 框架的详细描述
-  s.description  = "A custom picker view for iOS, Support the Objective - C language."
+  # 框架的详细描述(详细介绍，要比简介长)
+  s.description  = <<-DESC
+                    A custom picker view for iOS, Include "时间选择器，地址选择器，自定义字符串选择器", Support the Objective - C language.
+                DESC
   # 框架的主页
   s.homepage     = "https://github.com/borenfocus/BRPickerView"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -96,9 +98,9 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  # 本地框架文件的位置
+  # 本地框架源文件的位置
   s.source_files  = "BRPickerView", "BRPickerView/**/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
 
@@ -111,7 +113,8 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
 
-  # s.resource  = "icon.png"
+  # 框架包含的资源包
+  s.resource  = "BRPickerView/AddressPickerView/BRCity.plist"
   # s.resources = "Resources/*.png"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
@@ -123,7 +126,8 @@ Pod::Spec.new do |s|
   #  the lib prefix of their name.
   #
 
-  # s.framework  = "SomeFramework"
+  # 声明了所依赖的核心库
+  s.framework  = "UIKit"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"
@@ -136,9 +140,11 @@ Pod::Spec.new do |s|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # s.requires_arc = true
+  # 框架要求ARC环境下使用
+  s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # s.dependency "JSONKit", "~> 1.4"
+  # 框架依赖的第三方库
+  # s.dependency 'YYModel', '~> 1.0.4'
 
 end
