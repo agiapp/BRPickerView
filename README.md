@@ -5,7 +5,9 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-
+| ![Demo运行效果图](https://github.com/borenfocus/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE.gif) |
+| :--------------------------------------: |
+|               框架Demo运行效果图                |
 
 # 安装
 
