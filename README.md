@@ -1,8 +1,6 @@
 # 框架介绍
 BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。
 
-
-
 # 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
