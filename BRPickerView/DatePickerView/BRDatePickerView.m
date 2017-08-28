@@ -84,7 +84,7 @@
         }
         
         // 把当前时间赋值给 _datePicker
-        [_datePicker setDate:[NSDate date] animated:YES];
+        [_datePicker setDate:[self toDateWithDateString:_selectValue] animated:YES];
         
         // 滚动改变值的响应事件
         [_datePicker addTarget:self action:@selector(didSelectValueChanged:) forControlEvents:UIControlEventValueChanged];
