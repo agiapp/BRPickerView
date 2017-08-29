@@ -19,7 +19,7 @@
     NSString *_selectValue;
     BOOL _isAutoSelect;  // 是否开启自动选择
 }
-// 时间选择器(默认大小: 320px × 216px)
+// 时间选择器(默认大小: 320px × 200px)
 @property (nonatomic, strong) UIDatePicker *datePicker;
 
 @end
@@ -42,10 +42,11 @@
         _isAutoSelect = isAutoSelect;
         _resultBlock = resultBlock;
         
-        // 默认选中今天的日期
+        
         if (defaultSelValue.length > 0) {
             _selectValue = defaultSelValue;
         } else {
+            // 不设置默认日期，就默认选中今天的日期
             _selectValue = [self toStringWithDate:[NSDate date]];
         }
         
@@ -84,7 +85,7 @@
         }
         
         // 把当前时间赋值给 _datePicker
-        [_datePicker setDate:[NSDate date] animated:YES];
+        [_datePicker setDate:[self toDateWithDateString:_selectValue] animated:YES];
         
         // 滚动改变值的响应事件
         [_datePicker addTarget:self action:@selector(didSelectValueChanged:) forControlEvents:UIControlEventValueChanged];
