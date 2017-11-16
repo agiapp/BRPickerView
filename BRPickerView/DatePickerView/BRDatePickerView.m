@@ -43,7 +43,7 @@
         _resultBlock = resultBlock;
         
         
-        if (defaultSelValue.length > 0) {
+        if (defaultSelValue != nil && defaultSelValue.length > 0) {
             _selectValue = defaultSelValue;
         } else {
             // 不设置默认日期，就默认选中今天的日期

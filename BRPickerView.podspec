@@ -145,6 +145,6 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # 框架依赖的第三方库
-  # s.dependency 'YYModel', '~> 1.0.4'
+  s.dependency 'YYModel', '~> 1.0.4'
 
 end
