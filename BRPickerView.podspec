@@ -99,7 +99,7 @@ Pod::Spec.new do |s|
   #
 
   # 本地框架源文件的位置
-  s.source_files  = "BRPickerView", "BRPickerView/**/*.{h,m}"
+  s.source_files  = "BRPickerView/**/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -127,7 +127,7 @@ Pod::Spec.new do |s|
   #
 
   # 声明了所依赖的核心库
-  s.framework  = "UIKit"
+  # s.framework  = "UIKit"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"
