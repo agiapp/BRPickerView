@@ -21,9 +21,11 @@
 		C5ACE5151F3D81550069978B /* BRTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5141F3D81550069978B /* BRTextField.m */; };
 		C5ACE5181F3D81AD0069978B /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */; };
 		C5ACE51F1F3D904F0069978B /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE51E1F3D904F0069978B /* BaseView.m */; };
+		EBA803F0DD7217AD8C18D99B /* libPods-BRPickerViewDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 299311B2D9851E2325A4ED86 /* libPods-BRPickerViewDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		299311B2D9851E2325A4ED86 /* libPods-BRPickerViewDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRPickerViewDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5ACE4D61F3D58BD0069978B /* BRPickerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRPickerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5ACE4DA1F3D58BD0069978B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C5ACE4DC1F3D58BD0069978B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -50,6 +52,8 @@
 		C5ACE51D1F3D904F0069978B /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
 		C5ACE51E1F3D904F0069978B /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
 		C5ACE5201F3D90A90069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
+		C87E217E65E08D73EB324D55 /* Pods-BRPickerViewDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRPickerViewDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRPickerViewDemo/Pods-BRPickerViewDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		F2F134EFCC1B079D1ACF9A42 /* Pods-BRPickerViewDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRPickerViewDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRPickerViewDemo/Pods-BRPickerViewDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,17 +61,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBA803F0DD7217AD8C18D99B /* libPods-BRPickerViewDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D16F45E9D4EBCD4B94BF6C8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C87E217E65E08D73EB324D55 /* Pods-BRPickerViewDemo.debug.xcconfig */,
+				F2F134EFCC1B079D1ACF9A42 /* Pods-BRPickerViewDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C5ACE4CD1F3D58BD0069978B = {
 			isa = PBXGroup;
 			children = (
 				C5ACE4D81F3D58BD0069978B /* BRPickerViewDemo */,
 				C5ACE4D71F3D58BD0069978B /* Products */,
+				6D16F45E9D4EBCD4B94BF6C8 /* Pods */,
+				FD3DEC5DE0B9697E696B8792 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -167,6 +183,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		FD3DEC5DE0B9697E696B8792 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				299311B2D9851E2325A4ED86 /* libPods-BRPickerViewDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -174,9 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5ACE4ED1F3D58BD0069978B /* Build configuration list for PBXNativeTarget "BRPickerViewDemo" */;
 			buildPhases = (
+				CF6B13E2909269BB1846D4A8 /* [CP] Check Pods Manifest.lock */,
 				C5ACE4D21F3D58BD0069978B /* Sources */,
 				C5ACE4D31F3D58BD0069978B /* Frameworks */,
 				C5ACE4D41F3D58BD0069978B /* Resources */,
+				C6D220A904385DBE69DDE269 /* [CP] Embed Pods Frameworks */,
+				4470132514D22E502915BBAA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -233,6 +260,57 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4470132514D22E502915BBAA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRPickerViewDemo/Pods-BRPickerViewDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6D220A904385DBE69DDE269 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRPickerViewDemo/Pods-BRPickerViewDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF6B13E2909269BB1846D4A8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BRPickerViewDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C5ACE4D21F3D58BD0069978B /* Sources */ = {
@@ -366,6 +444,7 @@
 		};
 		C5ACE4EE1F3D58BD0069978B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C87E217E65E08D73EB324D55 /* Pods-BRPickerViewDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
@@ -378,6 +457,7 @@
 		};
 		C5ACE4EF1F3D58BD0069978B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F2F134EFCC1B079D1ACF9A42 /* Pods-BRPickerViewDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
