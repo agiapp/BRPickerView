@@ -23,9 +23,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 2. 导入头文件 ` #import "BRPickerView.h"`。
 
-   >注意：本框架依赖第三方YYModel，所以手动导入框架时，还需要导入YYModel框架。
-
-   ​
+   > 注意：本框架依赖第三方YYModel，所以手动导入框架时，还需要导入YYModel框架。
 
 # 系统要求
 
