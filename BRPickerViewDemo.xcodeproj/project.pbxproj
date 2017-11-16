@@ -118,7 +118,6 @@
 				C5ACE4F31F3D5A8B0069978B /* DatePickerView */,
 				C5ACE4F11F3D5A8B0069978B /* AddressPickerView */,
 				C5ACE4F41F3D5A8B0069978B /* StringPickerView */,
-				C5ACE4F51F3D5A8B0069978B /* Vendor */,
 			);
 			path = BRPickerView;
 			sourceTree = SOURCE_ROOT;
@@ -182,6 +181,7 @@
 				C5ACE5141F3D81550069978B /* BRTextField.m */,
 				C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */,
 				C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */,
+				C5ACE4F51F3D5A8B0069978B /* Vendor */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

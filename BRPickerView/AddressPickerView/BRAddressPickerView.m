@@ -279,7 +279,7 @@
     }
     
     // 是否自动滚动回调
-    if (false) {
+    if (self.isAutoSelect) {
         NSArray *arr = [self getChooseCityArr];
         if (self.resultBlock != nil) {
             self.resultBlock(arr);
