@@ -20,7 +20,7 @@
 		C5ACE5121F3D81360069978B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5111F3D81360069978B /* TestViewController.m */; };
 		C5ACE5151F3D81550069978B /* BRTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5141F3D81550069978B /* BRTextField.m */; };
 		C5ACE5181F3D81AD0069978B /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */; };
-		C5ACE51F1F3D904F0069978B /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE51E1F3D904F0069978B /* BaseView.m */; };
+		C5F9644F1FBD63A300CA7D94 /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F9644D1FBD631800CA7D94 /* BRBaseView.m */; };
 		EBA803F0DD7217AD8C18D99B /* libPods-BRPickerViewDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 299311B2D9851E2325A4ED86 /* libPods-BRPickerViewDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -49,9 +49,9 @@
 		C5ACE5141F3D81550069978B /* BRTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRTextField.m; sourceTree = "<group>"; };
 		C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRAdd.h"; sourceTree = "<group>"; };
 		C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRAdd.m"; sourceTree = "<group>"; };
-		C5ACE51D1F3D904F0069978B /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
-		C5ACE51E1F3D904F0069978B /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
 		C5ACE5201F3D90A90069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
+		C5F9644D1FBD631800CA7D94 /* BRBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
+		C5F9644E1FBD631900CA7D94 /* BRBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
 		C87E217E65E08D73EB324D55 /* Pods-BRPickerViewDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRPickerViewDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRPickerViewDemo/Pods-BRPickerViewDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		F2F134EFCC1B079D1ACF9A42 /* Pods-BRPickerViewDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRPickerViewDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRPickerViewDemo/Pods-BRPickerViewDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,8 +177,8 @@
 		C5ACE51C1F3D904F0069978B /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				C5ACE51D1F3D904F0069978B /* BaseView.h */,
-				C5ACE51E1F3D904F0069978B /* BaseView.m */,
+				C5F9644E1FBD631900CA7D94 /* BRBaseView.h */,
+				C5F9644D1FBD631800CA7D94 /* BRBaseView.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -317,12 +317,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F9644F1FBD63A300CA7D94 /* BRBaseView.m in Sources */,
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
 				C5ACE5151F3D81550069978B /* BRTextField.m in Sources */,
 				C5ACE5121F3D81360069978B /* TestViewController.m in Sources */,
-				C5ACE51F1F3D904F0069978B /* BaseView.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
 				C5ACE5181F3D81AD0069978B /* NSDate+BRAdd.m in Sources */,
 				C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */,

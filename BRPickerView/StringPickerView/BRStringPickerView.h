@@ -7,11 +7,11 @@
 //
 //  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
-#import "BaseView.h"
+#import "BRBaseView.h"
 
 typedef void(^BRStringResultBlock)(id selectValue);
 
-@interface BRStringPickerView : BaseView
+@interface BRStringPickerView : BRBaseView
 
 /**
  *  显示自定义字符串选择器

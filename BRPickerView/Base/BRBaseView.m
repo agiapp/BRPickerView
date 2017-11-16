@@ -7,9 +7,9 @@
 //
 //  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
-#import "BaseView.h"
+#import "BRBaseView.h"
 
-@implementation BaseView
+@implementation BRBaseView
 
 - (void)initUI {
     self.frame = SCREEN_BOUNDS;

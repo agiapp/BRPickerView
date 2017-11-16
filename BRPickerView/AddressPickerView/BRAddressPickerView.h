@@ -7,11 +7,11 @@
 //
 //  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
-#import "BaseView.h"
+#import "BRBaseView.h"
 
 typedef void(^BRAddressResultBlock)(NSArray *selectAddressArr);
 
-@interface BRAddressPickerView : BaseView
+@interface BRAddressPickerView : BRBaseView
 /**
  *  显示地址选择器
  *

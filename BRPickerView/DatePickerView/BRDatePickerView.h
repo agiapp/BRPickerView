@@ -7,11 +7,11 @@
 //
 //  最新代码下载地址：https://github.com/borenfocus/BRPickerView
 
-#import "BaseView.h"
+#import "BRBaseView.h"
 
 typedef void(^BRDateResultBlock)(NSString *selectValue);
 
-@interface BRDatePickerView : BaseView
+@interface BRDatePickerView : BRBaseView
 /**
  *  显示时间选择器
  *
