@@ -42,7 +42,6 @@
         _isAutoSelect = isAutoSelect;
         _resultBlock = resultBlock;
         
-        
         if (defaultSelValue != nil && defaultSelValue.length > 0) {
             _selectValue = defaultSelValue;
         } else {
@@ -75,11 +74,11 @@
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         // 设置时间范围
-        if (_minDateStr) {
+        if (_minDateStr != nil && _minDateStr.length > 0) {
             NSDate *minDate = [formatter dateFromString:_minDateStr];
             _datePicker.minimumDate = minDate;
         }
-        if (_maxDateStr) {
+        if (_maxDateStr != nil && _maxDateStr.length > 0) {
             NSDate *maxDate = [formatter dateFromString:_maxDateStr];
             _datePicker.maximumDate = maxDate;
         }
