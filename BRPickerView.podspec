@@ -87,7 +87,7 @@ Pod::Spec.new do |s|
   #
 
   # GitHib下载地址和版本
-  s.source       = { :git => "https://github.com/borenfocus/BRPickerView.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/borenfocus/BRPickerView.git", :tag => "1.0.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
