@@ -112,7 +112,7 @@ static force_inline NSNumber *YYNSNumberCreateFromID(__unsafe_unretained id valu
     if ([value isKindOfClass:[NSNumber class]]) return value;
     if ([value isKindOfClass:[NSString class]]) {
         NSNumber *num = dic[value];
-        if (num != nil) {
+        if (num) {
             if (num == (id)kCFNull) return nil;
             return num;
         }
@@ -787,7 +787,7 @@ static void ModelSetValueForProperty(__unsafe_unretained id model,
     if (meta->_isCNumber) {
         NSNumber *num = YYNSNumberCreateFromID(value);
         ModelSetNumberToProperty(model, num, meta);
-        if (num != nil) [num class]; // hold the number
+        if (num) [num class]; // hold the number
     } else if (meta->_nsType) {
         if (value == (id)kCFNull) {
             ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)model, meta->_setter, (id)nil);
@@ -1007,10 +1007,9 @@ static void ModelSetValueForProperty(__unsafe_unretained id model,
         BOOL isNull = (value == (id)kCFNull);
         switch (meta->_type & YYEncodingTypeMask) {
             case YYEncodingTypeObject: {
-                Class cls = meta->_genericCls ?: meta->_cls;
                 if (isNull) {
                     ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)model, meta->_setter, (id)nil);
-                } else if ([value isKindOfClass:cls] || !cls) {
+                } else if ([value isKindOfClass:meta->_cls] || !meta->_cls) {
                     ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)model, meta->_setter, (id)value);
                 } else if ([value isKindOfClass:[NSDictionary class]]) {
                     NSObject *one = nil;
@@ -1020,8 +1019,10 @@ static void ModelSetValueForProperty(__unsafe_unretained id model,
                     if (one) {
                         [one yy_modelSetWithDictionary:value];
                     } else {
+                        Class cls = meta->_cls;
                         if (meta->_hasCustomClassFromDictionary) {
-                            cls = [cls modelCustomClassForDictionary:value] ?: cls;
+                            cls = [cls modelCustomClassForDictionary:value];
+                            if (!cls) cls = meta->_genericCls; // for xcode code coverage
                         }
                         one = [cls new];
                         [one yy_modelSetWithDictionary:value];
@@ -1294,7 +1295,7 @@ static NSMutableString *ModelDescriptionAddIndent(NSMutableString *desc, NSUInte
     return desc;
 }
 
-/// Generate a description string
+/// Generaate a description string
 static NSString *ModelDescription(NSObject *model) {
     static const int kDescMaxLength = 100;
     if (!model) return @"<nil>";
@@ -1643,7 +1644,7 @@ static NSString *ModelDescription(NSObject *model) {
         
         if (propertyMeta->_isCNumber) {
             NSNumber *value = ModelCreateNumberFromProperty(self, propertyMeta);
-            if (value != nil) [aCoder encodeObject:value forKey:propertyMeta->_name];
+            if (value) [aCoder encodeObject:value forKey:propertyMeta->_name];
         } else {
             switch (propertyMeta->_type & YYEncodingTypeMask) {
                 case YYEncodingTypeObject: {
