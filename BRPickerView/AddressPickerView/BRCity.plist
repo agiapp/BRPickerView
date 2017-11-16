@@ -14399,7 +14399,38 @@
 				<key>k</key>
 				<string>441900</string>
 				<key>n</key>
-				<array/>
+				<array>
+					<dict>
+						<key>k</key>
+						<string>441901</string>
+						<key>v</key>
+						<string>市辖区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>441902</string>
+						<key>v</key>
+						<string>莞城区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>441903</string>
+						<key>v</key>
+						<string>东城区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>441904</string>
+						<key>v</key>
+						<string>南城区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>441905</string>
+						<key>v</key>
+						<string>万江区</string>
+					</dict>
+				</array>
 				<key>v</key>
 				<string>东莞市</string>
 			</dict>
@@ -14407,7 +14438,50 @@
 				<key>k</key>
 				<string>442000</string>
 				<key>n</key>
-				<array/>
+				<array>
+					<dict>
+						<key>k</key>
+						<string>442001</string>
+						<key>v</key>
+						<string>市辖区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>442002</string>
+						<key>v</key>
+						<string>石歧区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>442003</string>
+						<key>v</key>
+						<string>东区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>442004</string>
+						<key>v</key>
+						<string>西区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>442005</string>
+						<key>v</key>
+						<string>南区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>442006</string>
+						<key>v</key>
+						<string>五桂山区</string>
+					</dict>
+					<dict>
+						<key>k</key>
+						<string>442007</string>
+						<key>v</key>
+						<string>火炬开发区</string>
+					</dict>
+				</array>
 				<key>v</key>
 				<string>中山市</string>
 			</dict>
@@ -22217,11 +22291,11 @@
 						<key>k</key>
 						<string>710101</string>
 						<key>v</key>
-						<string>台湾省</string>
+						<string>台湾</string>
 					</dict>
 				</array>
 				<key>v</key>
-				<string>台湾省</string>
+				<string>台湾</string>
 			</dict>
 		</array>
 		<key>v</key>
