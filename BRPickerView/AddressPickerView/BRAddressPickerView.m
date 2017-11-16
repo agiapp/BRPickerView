@@ -278,13 +278,13 @@
         }
     }
     
-    // 是否自动滚动回调
-    if (self.isAutoSelect) {
-        NSArray *arr = [self getChooseCityArr];
-        if (self.resultBlock != nil) {
-            self.resultBlock(arr);
-        }
-    }
+//    // 是否自动滚动回调
+//    if (self.isAutoSelect) {
+//        NSArray *arr = [self getChooseCityArr];
+//        if (self.resultBlock != nil) {
+//            self.resultBlock(arr);
+//        }
+//    }
 }
 
 - (NSMutableArray *)addressModelArr {
