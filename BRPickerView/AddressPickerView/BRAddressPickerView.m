@@ -204,8 +204,10 @@
     if (component == 2) {//区
         BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
         BRCityModel *cityModel = provinceModel.city[rowOfCity];
-        BRTownModel *townModel = cityModel.town[row];
-        showTitleValue = townModel.name;
+        if (cityModel.town.count > 0) {
+            BRTownModel *townModel = cityModel.town[row];
+            showTitleValue = townModel.name;
+        }
     }
     return showTitleValue;
 }
