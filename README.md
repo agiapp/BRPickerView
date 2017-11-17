@@ -14,8 +14,24 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 ### CocoaPods
 
 1. 在 Podfile 中添加 `pod 'BRPickerView'`。
+
 2. 执行 `pod install` 或 `pod update`。
+
 3. 导入头文件 ` #import <BRPickerView.h>`。
+
+   >注意：
+   >
+   >​	先搜索框架：pod search BRPickerView （版本号为1.0.0）
+   >
+   >​	如果无法搜索到框架，执行下面操作：
+   >
+   >​	1》pod setup
+   >
+   >​	2》rm ~/Library/Caches/CocoaPods/search_index.json
+   >
+   >​	3》pod search BRPickerView
+   >
+   >导入框架：pod 'BRPickerView', '~> 1.0.0'
 
 ### 手动导入
 
