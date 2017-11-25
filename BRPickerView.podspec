@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
 
