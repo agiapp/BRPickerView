@@ -9,7 +9,7 @@
 
 #import "BRAddressPickerView.h"
 #import "BRAddressModel.h"
-#import "YYModel.h"
+#import "MJExtension.h"
 
 @interface BRAddressPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
@@ -62,7 +62,7 @@
     NSArray *arrData = [NSArray arrayWithContentsOfFile:filePath];
     for (NSDictionary *dic in arrData) {
         // 此处用 YYModel 进行解析
-        BRProvinceModel *proviceModel = [BRProvinceModel yy_modelWithDictionary:dic];
+        BRProvinceModel *proviceModel = [BRProvinceModel mj_objectWithKeyValues:dic];
         [self.addressModelArr addObject:proviceModel];
     }
 }

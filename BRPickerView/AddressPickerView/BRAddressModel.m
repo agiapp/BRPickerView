@@ -7,17 +7,18 @@
 //
 
 #import "BRAddressModel.h"
+#import "MJExtension.h"
 
 @implementation BRProvinceModel
 
-+ (NSDictionary *)modelCustomPropertyMapper {
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
              @"name": @"v",
              @"city": @"n"
              };
 }
 
-+ (NSDictionary *)modelContainerPropertyGenericClass {
++ (NSDictionary *)mj_objectClassInArray {
     return @{
              @"city": [BRCityModel class]
              };
@@ -28,14 +29,14 @@
 
 @implementation BRCityModel
 
-+ (NSDictionary *)modelCustomPropertyMapper {
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
              @"name": @"v",
              @"town": @"n"
              };
 }
 
-+ (NSDictionary *)modelContainerPropertyGenericClass {
++ (NSDictionary *)mj_objectClassInArray {
     return @{
              @"town": [BRTownModel class]
              };
@@ -46,7 +47,7 @@
 
 @implementation BRTownModel
 
-+ (NSDictionary *)modelCustomPropertyMapper {
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
              @"name": @"v"
              };
