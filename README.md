@@ -1,6 +1,11 @@
 # 框架介绍
 BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。
 
+- ##### `V1.0.0` 初始版本。
+
+
+- ##### `V1.1.0`  替换了第三方依赖库，用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错），推荐使用1.1.0版本！！！
+
 # 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
@@ -15,13 +20,15 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 1. 在 Podfile 中添加 `pod 'BRPickerView'`。
 
-2. 执行 `pod install` 或 `pod update`。
+2. 执行 `pod install` 或 `pod update` 。
+
+   推荐使用：`pod update --verbose --no-repo-update`  (安装速度快一点)
 
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
    >注意：
    >
-   >​	先搜索框架：pod search BRPickerView （版本号为1.0.0）
+   >​	先搜索框架：pod search BRPickerView （版本号为1.1.0）
    >
    >​	如果无法搜索到框架，执行下面操作：
    >
@@ -31,7 +38,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
    >
    >​	3》pod search BRPickerView
    >
-   >导入框架：pod 'BRPickerView', '~> 1.0.0'
+   >导入框架：pod 'BRPickerView', '~> 1.1.0'
 
 ### 手动导入
 
@@ -39,7 +46,9 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 2. 导入头文件 ` #import "BRPickerView.h"`。
 
-   > 注意：本框架依赖第三方YYModel，所以手动导入框架时，还需要导入YYModel框架。
+   > 注意：
+   >
+   > 本框架依赖第三方MJExtension，所以手动导入框架时，还需要导入MJExtension框架。
 
 # 系统要求
 
