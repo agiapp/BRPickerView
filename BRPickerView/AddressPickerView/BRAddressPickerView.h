@@ -33,7 +33,7 @@ typedef void(^BRAddressResultBlock)(NSArray *selectAddressArr);
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock;
 
 /**
- *  2.显示地址选择器
+ *  3.显示地址选择器
  *
  *  @param defaultSelectedArr       默认选中的值(传数组，元素为对应的索引值。如：@[@10, @1, @1])
  *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值

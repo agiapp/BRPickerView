@@ -16,7 +16,6 @@
     NSInteger rowOfProvince; // 保存省份对应的下标
     NSInteger rowOfCity;     // 保存市对应的下标
     NSInteger rowOfTown;     // 保存区对应的下标
-    UIColor *_themeColor;
 }
 
 // 时间选择器（默认大小: 320px × 216px）
@@ -27,6 +26,8 @@
 @property (nonatomic, strong) NSArray *defaultSelectedArr;
 // 是否开启自动选择
 @property (nonatomic, assign) BOOL isAutoSelect;
+// 主题色
+@property (nonatomic, strong) UIColor *themeColor;
 // 选中后的回调
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;
 
@@ -46,7 +47,7 @@
     [addressPickerView showWithAnimation:YES];
 }
 
-#pragma mark - 2.显示地址选择器
+#pragma mark - 3.显示地址选择器
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRAddressResultBlock)resultBlock {
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
     [addressPickerView showWithAnimation:YES];
@@ -62,7 +63,7 @@
             self.defaultSelectedArr = @[@10, @0, @0];
         }
         self.isAutoSelect = isAutoSelect;
-        _themeColor = themeColor;
+        self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         [self loadData];
         [self initUI];
@@ -87,6 +88,9 @@
     self.titleLabel.text = @"请选择城市";
     // 添加时间选择器
     [self.alertView addSubview:self.pickerView];
+    if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
+        [self configThemeColor:self.themeColor];
+    }
 }
 
 #pragma mark - 背景视图的点击事件
