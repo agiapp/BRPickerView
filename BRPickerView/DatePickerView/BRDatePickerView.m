@@ -18,6 +18,7 @@
     BRDateResultBlock _resultBlock;
     NSString *_selectValue;
     BOOL _isAutoSelect;  // 是否开启自动选择
+    UIColor *_themeColor;
 }
 // 时间选择器(默认大小: 320px × 200px)
 @property (nonatomic, strong) UIDatePicker *datePicker;
@@ -26,20 +27,33 @@
 
 @implementation BRDatePickerView
 
-#pragma mark - 显示时间选择器
+#pragma mark - 1.显示时间选择器
++ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue resultBlock:(BRDateResultBlock)resultBlock {
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:nil maxDateStr:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock];
+    [datePickerView showWithAnimation:YES];
+}
+
+#pragma mark - 2.显示时间选择器
 + (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:isAutoSelect resultBlock:resultBlock];
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock];
+    [datePickerView showWithAnimation:YES];
+}
+
+#pragma mark - 3.显示时间选择器
++ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRDateResultBlock)resultBlock {
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
     [datePickerView showWithAnimation:YES];
 }
 
 #pragma mark - 初始化时间选择器
-- (instancetype)initWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
+- (instancetype)initWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRDateResultBlock)resultBlock {
     if (self = [super init]) {
         _datePickerMode = type;
         _title = title;
         _minDateStr = minDateStr;
         _maxDateStr = maxDateStr;
         _isAutoSelect = isAutoSelect;
+        _themeColor = themeColor;
         _resultBlock = resultBlock;
         
         if (defaultSelValue.length > 0) {
@@ -60,6 +74,9 @@
     self.titleLabel.text = _title;
     // 添加时间选择器
     [self.alertView addSubview:self.datePicker];
+    if (_themeColor && [_themeColor isKindOfClass:[UIColor class]]) {
+        [self configThemeColor:_themeColor];
+    }
 }
 
 #pragma mark - 时间选择器

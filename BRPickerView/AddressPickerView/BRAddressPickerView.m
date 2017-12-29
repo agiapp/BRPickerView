@@ -16,6 +16,7 @@
     NSInteger rowOfProvince; // 保存省份对应的下标
     NSInteger rowOfCity;     // 保存市对应的下标
     NSInteger rowOfTown;     // 保存区对应的下标
+    UIColor *_themeColor;
 }
 
 // 时间选择器（默认大小: 320px × 216px）
@@ -33,14 +34,26 @@
 
 @implementation BRAddressPickerView
 
-#pragma mark - 显示地址选择器
+#pragma mark - 1.显示地址选择器
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr resultBlock:(BRAddressResultBlock)resultBlock {
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock];
+    [addressPickerView showWithAnimation:YES];
+}
+
+#pragma mark - 2.显示地址选择器
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect resultBlock:resultBlock];
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock];
+    [addressPickerView showWithAnimation:YES];
+}
+
+#pragma mark - 2.显示地址选择器
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRAddressResultBlock)resultBlock {
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
     [addressPickerView showWithAnimation:YES];
 }
 
 #pragma mark - 初始化地址选择器
-- (instancetype)initWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock {
+- (instancetype)initWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRAddressResultBlock)resultBlock {
     if (self = [super init]) {
         // 默认选中
         if (defaultSelectedArr.count == 3) {
@@ -49,6 +62,7 @@
             self.defaultSelectedArr = @[@10, @0, @0];
         }
         self.isAutoSelect = isAutoSelect;
+        _themeColor = themeColor;
         self.resultBlock = resultBlock;
         [self loadData];
         [self initUI];

@@ -67,11 +67,11 @@
         _leftBtn.frame = CGRectMake(5, 8, 60, 28);
         _leftBtn.backgroundColor = [UIColor clearColor];
         _leftBtn.layer.cornerRadius = 6.0f;
-        _leftBtn.layer.borderColor = RGB_HEX(0xFF7998, 1.0).CGColor;
+        _leftBtn.layer.borderColor = kDefaultThemeColor.CGColor;
         _leftBtn.layer.borderWidth = 1.0f;
         _leftBtn.layer.masksToBounds = YES;
         _leftBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-        [_leftBtn setTitleColor:RGB_HEX(0xFF7998, 1.0) forState:UIControlStateNormal];
+        [_leftBtn setTitleColor:kDefaultThemeColor forState:UIControlStateNormal];
         [_leftBtn setTitle:@"取消" forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -83,7 +83,7 @@
     if (!_rightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _rightBtn.frame = CGRectMake(SCREEN_WIDTH - 65, 8, 60, 28);
-        _rightBtn.backgroundColor = RGB_HEX(0xFF7998, 1.0);
+        _rightBtn.backgroundColor = kDefaultThemeColor;
         _rightBtn.layer.cornerRadius = 6.0f;
         _rightBtn.layer.masksToBounds = YES;
         _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
@@ -100,7 +100,7 @@
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, SCREEN_WIDTH - 130, kTopViewHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont systemFontOfSize:14.0f];
-        _titleLabel.textColor = RGB_HEX(0xFF7998, 1.0);
+        _titleLabel.textColor = kDefaultThemeColor;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _titleLabel;
@@ -129,6 +129,14 @@
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     
+}
+
+#pragma mark - 设置主题颜色
+- (void)configThemeColor:(UIColor *)themeColor {
+    self.leftBtn.layer.borderColor = themeColor.CGColor;
+    [self.leftBtn setTitleColor:themeColor forState:UIControlStateNormal];
+    self.rightBtn.backgroundColor = themeColor;
+    self.titleLabel.textColor = themeColor;
 }
 
 @end
