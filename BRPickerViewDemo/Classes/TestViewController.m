@@ -83,7 +83,7 @@
         [textStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[[textStr string]rangeOfString:@"* "]];
         cell.textLabel.attributedText = textStr;
     } else {
-        cell.textLabel.text = [self.titleArr objectAtIndex:indexPath.row];
+        cell.textLabel.text = title;
     }
     
     switch (indexPath.row) {
