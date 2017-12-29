@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSArray  *dataSource;
 // 是否开启自动选择
 @property (nonatomic, assign) BOOL isAutoSelect;
+// 主题色
+@property (nonatomic, strong) UIColor *themeColor;
 @property (nonatomic, copy) BRStringResultBlock resultBlock;
 // 单列选中的项
 @property (nonatomic, copy) NSString *selectedItem;
@@ -30,7 +32,19 @@
 
 @implementation BRStringPickerView
 
-#pragma mark - 显示自定义字符串选择器
+#pragma mark - 1.显示自定义字符串选择器
++ (void)showStringPickerWithTitle:(NSString *)title
+                       dataSource:(NSArray *)dataSource
+                  defaultSelValue:(id)defaultSelValue
+                      resultBlock:(BRStringResultBlock)resultBlock {
+    if (dataSource == nil || dataSource.count == 0) {
+        return;
+    }
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock];
+    [strPickerView showWithAnimation:YES];
+}
+
+#pragma mark - 2.显示自定义字符串选择器
 + (void)showStringPickerWithTitle:(NSString *)title
                        dataSource:(NSArray *)dataSource
                   defaultSelValue:(id)defaultSelValue
@@ -39,11 +53,39 @@
     if (dataSource == nil || dataSource.count == 0) {
         return;
     }
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect resultBlock:resultBlock];
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock];
     [strPickerView showWithAnimation:YES];
 }
 
-#pragma mark - 显示自定义字符串选择器
+#pragma mark - 3.显示自定义字符串选择器
++ (void)showStringPickerWithTitle:(NSString *)title
+                       dataSource:(NSArray *)dataSource
+                  defaultSelValue:(id)defaultSelValue
+                     isAutoSelect:(BOOL)isAutoSelect
+                       themeColor:(UIColor *)themeColor
+                      resultBlock:(BRStringResultBlock)resultBlock {
+    if (dataSource == nil || dataSource.count == 0) {
+        return;
+    }
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
+    [strPickerView showWithAnimation:YES];
+}
+
+#pragma mark - 4.显示自定义字符串选择器
++ (void)showStringPickerWithTitle:(NSString *)title
+                        plistName:(NSString *)plistName
+                  defaultSelValue:(id)defaultSelValue
+                      resultBlock:(BRStringResultBlock)resultBlock {
+    if (plistName == nil || plistName.length == 0) {
+        return;
+    }
+    NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
+    NSArray *dataSource =[[NSArray alloc] initWithContentsOfFile:path];
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock];
+    [strPickerView showWithAnimation:YES];
+}
+
+#pragma mark - 5.显示自定义字符串选择器
 + (void)showStringPickerWithTitle:(NSString *)title
                         plistName:(NSString *)plistName
                   defaultSelValue:(id)defaultSelValue
@@ -54,21 +96,38 @@
     }
     NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
     NSArray *dataSource =[[NSArray alloc] initWithContentsOfFile:path];
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect resultBlock:resultBlock];
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock];
     [strPickerView showWithAnimation:YES];
 }
 
+#pragma mark - 6.显示自定义字符串选择器
++ (void)showStringPickerWithTitle:(NSString *)title
+                        plistName:(NSString *)plistName
+                  defaultSelValue:(id)defaultSelValue
+                     isAutoSelect:(BOOL)isAutoSelect
+                       themeColor:(UIColor *)themeColor
+                      resultBlock:(BRStringResultBlock)resultBlock {
+    if (plistName == nil || plistName.length == 0) {
+        return;
+    }
+    NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
+    NSArray *dataSource =[[NSArray alloc] initWithContentsOfFile:path];
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
+    [strPickerView showWithAnimation:YES];
+}
 
 #pragma mark - 初始化自定义字符串选择器
 - (instancetype)initWithTitle:(NSString *)title
                    dataSource:(NSArray *)dataSource
               defaultSelValue:(id)defaultSelValue
                  isAutoSelect:(BOOL)isAutoSelect
+                   themeColor:(UIColor *)themeColor
                   resultBlock:(BRStringResultBlock)resultBlock {
     if (self = [super init]) {
         self.title = title;
         self.dataSource = dataSource;
         self.isAutoSelect = isAutoSelect;
+        self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         
         if (defaultSelValue) {
@@ -91,6 +150,9 @@
     self.titleLabel.text = self.title;
     // 添加字符串选择器
     [self.alertView addSubview:self.pickerView];
+    if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
+        [self configThemeColor:self.themeColor];
+    }
 }
 
 #pragma mark - 加载自定义字符串数据
