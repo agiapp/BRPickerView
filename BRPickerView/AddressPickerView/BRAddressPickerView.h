@@ -20,20 +20,23 @@ typedef void(^BRAddressResultBlock)(NSArray *selectAddressArr);
  *  @param resultBlock              选择后的回调
  *
  */
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr resultBlock:(BRAddressResultBlock)resultBlock;
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                 resultBlock:(BRAddressResultBlock)resultBlock;
 
 /**
- *  2.显示地址选择器
+ *  2.显示地址选择器（支持 设置自动选择）
  *
  *  @param defaultSelectedArr       默认选中的值(传数组，元素为对应的索引值。如：@[@10, @1, @1])
  *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param resultBlock              选择后的回调
  *
  */
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock;
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                isAutoSelect:(BOOL)isAutoSelect
+                                 resultBlock:(BRAddressResultBlock)resultBlock;
 
 /**
- *  3.显示地址选择器
+ *  3.显示地址选择器（支持 设置自动选择 和 自定义主题颜色）
  *
  *  @param defaultSelectedArr       默认选中的值(传数组，元素为对应的索引值。如：@[@10, @1, @1])
  *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
@@ -41,6 +44,9 @@ typedef void(^BRAddressResultBlock)(NSArray *selectAddressArr);
  *  @param resultBlock              选择后的回调
  *
  */
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRAddressResultBlock)resultBlock;
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                isAutoSelect:(BOOL)isAutoSelect
+                                  themeColor:(UIColor *)themeColor
+                                 resultBlock:(BRAddressResultBlock)resultBlock;
 
 @end

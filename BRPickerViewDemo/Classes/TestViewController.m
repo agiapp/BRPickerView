@@ -189,7 +189,7 @@
         _birthdayTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _birthdayTF.tapAcitonBlock = ^{
-            [BRDatePickerView showDatePickerWithTitle:@"出生年月" dateType:UIDatePickerModeDate defaultSelValue:weakSelf.birthdayTF.text minDateStr:@"" maxDateStr:[NSDate currentDateString] isAutoSelect:YES resultBlock:^(NSString *selectValue) {
+            [BRDatePickerView showDatePickerWithTitle:@"出生年月" dateType:UIDatePickerModeCountDownTimer defaultSelValue:weakSelf.birthdayTF.text minDateStr:nil maxDateStr:[NSDate currentDateString] isAutoSelect:YES resultBlock:^(NSString *selectValue) {
                 weakSelf.birthdayTF.text = selectValue;
             }];
         };
@@ -242,7 +242,8 @@
         _educationTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _educationTF.tapAcitonBlock = ^{
-            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:@[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"] defaultSelValue:@"本科" isAutoSelect:YES themeColor:[UIColor blueColor] resultBlock:^(id selectValue) {
+            NSArray *dataSources = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
+            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSources defaultSelValue:@"本科" isAutoSelect:YES themeColor:[UIColor blueColor] resultBlock:^(id selectValue) {
                 weakSelf.educationTF.text = selectValue;
             }];
         };
