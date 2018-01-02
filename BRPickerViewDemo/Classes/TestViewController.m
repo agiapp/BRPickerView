@@ -75,7 +75,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
+    cell.textLabel.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
     cell.textLabel.textColor = RGB_HEX(0x464646, 1.0f);
     NSString *title = [self.titleArr objectAtIndex:indexPath.row];
     if ([title hasPrefix:@"* "]) {
@@ -150,7 +150,7 @@
 - (BRTextField *)getTextField:(UITableViewCell *)cell {
     BRTextField *textField = [[BRTextField alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 230, 0, 200, 50)];
     textField.backgroundColor = [UIColor clearColor];
-    textField.font = [UIFont systemFontOfSize:16.0f];
+    textField.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
     textField.textAlignment = NSTextAlignmentRight;
     textField.textColor = RGB_HEX(0x666666, 1.0);
     textField.delegate = self;
@@ -242,7 +242,7 @@
         _educationTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _educationTF.tapAcitonBlock = ^{
-            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:@[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"] defaultSelValue:@"本科" isAutoSelect:YES resultBlock:^(id selectValue) {
+            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:@[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"] defaultSelValue:@"本科" isAutoSelect:YES themeColor:[UIColor blueColor] resultBlock:^(id selectValue) {
                 weakSelf.educationTF.text = selectValue;
             }];
         };
@@ -257,7 +257,7 @@
         __weak typeof(self) weakSelf = self;
         _otherTF.tapAcitonBlock = ^{
             NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-            [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES resultBlock:^(id selectValue) {
+            [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
                 weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
             }];
         };

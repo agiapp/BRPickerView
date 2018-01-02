@@ -16,13 +16,16 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
+// 等比例适配系数
+#define kScaleFit (SCREEN_WIDTH / 375.0f)
+
 /// RGB颜色(16进制)
 #define RGB_HEX(rgbValue, a) \
 [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
 green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0 \
 blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 
-#define kDefaultThemeColor RGB_HEX(0xFF7998, 1.0)
+#define kDefaultThemeColor RGB_HEX(0x464646, 1.0)
 
 @interface BRBaseView : UIView
 // 背景视图
@@ -52,7 +55,7 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 /** 确定按钮的点击事件 */
 - (void)clickRightBtn;
 
-/** 设置主题颜色 */
+/** 自定义主题颜色 */
 - (void)setupThemeColor:(UIColor *)themeColor;
 
 @end

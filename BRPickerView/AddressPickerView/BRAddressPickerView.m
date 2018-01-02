@@ -233,7 +233,7 @@
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH - 30) / 3, 40)];
     label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:16.0f];
+    label.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
     label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
     return label;
 }

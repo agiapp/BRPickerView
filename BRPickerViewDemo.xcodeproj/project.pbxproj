@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C54333FA1FFB29C800693E3D /* default_custom_color.png in Resources */ = {isa = PBXBuildFile; fileRef = C54333F21FFB29C800693E3D /* default_custom_color.png */; };
+		C54333FB1FFB29C800693E3D /* default_theme_color.png in Resources */ = {isa = PBXBuildFile; fileRef = C54333F31FFB29C800693E3D /* default_theme_color.png */; };
+		C54333FC1FFB29C800693E3D /* 出生年月.gif in Resources */ = {isa = PBXBuildFile; fileRef = C54333F41FFB29C800693E3D /* 出生年月.gif */; };
+		C54333FD1FFB29C800693E3D /* 出生时刻.gif in Resources */ = {isa = PBXBuildFile; fileRef = C54333F51FFB29C800693E3D /* 出生时刻.gif */; };
+		C54333FE1FFB29C800693E3D /* 自定义单列字符串.gif in Resources */ = {isa = PBXBuildFile; fileRef = C54333F61FFB29C800693E3D /* 自定义单列字符串.gif */; };
+		C54333FF1FFB29C800693E3D /* 自定义多列字符串.gif in Resources */ = {isa = PBXBuildFile; fileRef = C54333F71FFB29C800693E3D /* 自定义多列字符串.gif */; };
+		C54334001FFB29C800693E3D /* 效果图.gif in Resources */ = {isa = PBXBuildFile; fileRef = C54333F81FFB29C800693E3D /* 效果图.gif */; };
+		C54334011FFB29C800693E3D /* 地址.gif in Resources */ = {isa = PBXBuildFile; fileRef = C54333F91FFB29C800693E3D /* 地址.gif */; };
 		C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A158F01FBD893900B3B3BA /* BRBaseView.m */; };
 		C5ACE4DB1F3D58BD0069978B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DA1F3D58BD0069978B /* main.m */; };
 		C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */; };
@@ -34,6 +42,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C54333F21FFB29C800693E3D /* default_custom_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_custom_color.png; sourceTree = "<group>"; };
+		C54333F31FFB29C800693E3D /* default_theme_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_theme_color.png; sourceTree = "<group>"; };
+		C54333F41FFB29C800693E3D /* 出生年月.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "出生年月.gif"; sourceTree = "<group>"; };
+		C54333F51FFB29C800693E3D /* 出生时刻.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "出生时刻.gif"; sourceTree = "<group>"; };
+		C54333F61FFB29C800693E3D /* 自定义单列字符串.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "自定义单列字符串.gif"; sourceTree = "<group>"; };
+		C54333F71FFB29C800693E3D /* 自定义多列字符串.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "自定义多列字符串.gif"; sourceTree = "<group>"; };
+		C54333F81FFB29C800693E3D /* 效果图.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "效果图.gif"; sourceTree = "<group>"; };
+		C54333F91FFB29C800693E3D /* 地址.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "地址.gif"; sourceTree = "<group>"; };
 		C5A158F01FBD893900B3B3BA /* BRBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
 		C5A158F11FBD893900B3B3BA /* BRBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
 		C5ACE4D61F3D58BD0069978B /* BRPickerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRPickerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +111,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C54333F11FFB292E00693E3D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				C54333F41FFB29C800693E3D /* 出生年月.gif */,
+				C54333F51FFB29C800693E3D /* 出生时刻.gif */,
+				C54333F91FFB29C800693E3D /* 地址.gif */,
+				C54333F81FFB29C800693E3D /* 效果图.gif */,
+				C54333F61FFB29C800693E3D /* 自定义单列字符串.gif */,
+				C54333F71FFB29C800693E3D /* 自定义多列字符串.gif */,
+				C54333F21FFB29C800693E3D /* default_custom_color.png */,
+				C54333F31FFB29C800693E3D /* default_theme_color.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		C5ACE4CD1F3D58BD0069978B = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +226,7 @@
 				C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */,
 				C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */,
 				C5ACE4F51F3D5A8B0069978B /* Vendor */,
+				C54333F11FFB292E00693E3D /* Resource */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -296,9 +328,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
+				C54334001FFB29C800693E3D /* 效果图.gif in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
+				C54333FC1FFB29C800693E3D /* 出生年月.gif in Resources */,
+				C54333FF1FFB29C800693E3D /* 自定义多列字符串.gif in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
+				C54334011FFB29C800693E3D /* 地址.gif in Resources */,
 				C5ACE4FC1F3D5A8B0069978B /* BRCity.plist in Resources */,
+				C54333FE1FFB29C800693E3D /* 自定义单列字符串.gif in Resources */,
+				C54333FA1FFB29C800693E3D /* default_custom_color.png in Resources */,
+				C54333FD1FFB29C800693E3D /* 出生时刻.gif in Resources */,
+				C54333FB1FFB29C800693E3D /* default_theme_color.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

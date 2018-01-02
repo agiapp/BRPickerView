@@ -34,7 +34,7 @@
 - (UIView *)backgroundView {
     if (!_backgroundView) {
         _backgroundView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
-        _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.20];
+        _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
         _backgroundView.userInteractionEnabled = YES;
         UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapBackgroundView:)];
         [_backgroundView addGestureRecognizer:myTap];
@@ -66,11 +66,7 @@
         _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _leftBtn.frame = CGRectMake(5, 8, 60, 28);
         _leftBtn.backgroundColor = [UIColor clearColor];
-        _leftBtn.layer.cornerRadius = 6.0f;
-        _leftBtn.layer.borderColor = kDefaultThemeColor.CGColor;
-        _leftBtn.layer.borderWidth = 1.0f;
-        _leftBtn.layer.masksToBounds = YES;
-        _leftBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+        _leftBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
         [_leftBtn setTitleColor:kDefaultThemeColor forState:UIControlStateNormal];
         [_leftBtn setTitle:@"取消" forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -83,11 +79,9 @@
     if (!_rightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _rightBtn.frame = CGRectMake(SCREEN_WIDTH - 65, 8, 60, 28);
-        _rightBtn.backgroundColor = kDefaultThemeColor;
-        _rightBtn.layer.cornerRadius = 6.0f;
-        _rightBtn.layer.masksToBounds = YES;
-        _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-        [_rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _rightBtn.backgroundColor = [UIColor clearColor];
+        _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
+        [_rightBtn setTitleColor:kDefaultThemeColor forState:UIControlStateNormal];
         [_rightBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -99,8 +93,8 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, SCREEN_WIDTH - 130, kTopViewHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.font = [UIFont systemFontOfSize:14.0f];
-        _titleLabel.textColor = kDefaultThemeColor;
+        _titleLabel.font = [UIFont systemFontOfSize:14.0f * kScaleFit];
+        _titleLabel.textColor = [kDefaultThemeColor colorWithAlphaComponent:0.8f];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _titleLabel;
@@ -131,12 +125,20 @@
     
 }
 
-#pragma mark - 设置主题颜色
+#pragma mark - 自定义主题颜色
 - (void)setupThemeColor:(UIColor *)themeColor {
+    self.leftBtn.layer.cornerRadius = 6.0f;
     self.leftBtn.layer.borderColor = themeColor.CGColor;
+    self.leftBtn.layer.borderWidth = 1.0f;
+    self.leftBtn.layer.masksToBounds = YES;
     [self.leftBtn setTitleColor:themeColor forState:UIControlStateNormal];
+    
     self.rightBtn.backgroundColor = themeColor;
-    self.titleLabel.textColor = themeColor;
+    self.rightBtn.layer.cornerRadius = 6.0f;
+    self.rightBtn.layer.masksToBounds = YES;
+    [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    self.titleLabel.textColor = [themeColor colorWithAlphaComponent:0.8f];
 }
 
 @end
