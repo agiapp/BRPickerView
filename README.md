@@ -196,7 +196,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 效果图：
 
-![地址选择器](https://github.com/borenfocus/BRPickerView/blob/6a3b327505011d5b2dd6d460268b67b7f44a5e5f/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E5%9C%B0%E5%9D%80.png?raw=true)
+![地址选择器](https://github.com/borenfocus/BRPickerView/blob/3e7ed8835f188c7ad7f49b1baa3f528266088750/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E5%9C%B0%E5%9D%80.png?raw=true)
 
 #### 3.  自定义字符串选择器：`BRStringPickerView`
 
@@ -317,7 +317,7 @@ NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第
 
 效果图：
 
-| ![自定义单列字符串](https://github.com/borenfocus/BRPickerView/blob/6a3b327505011d5b2dd6d460268b67b7f44a5e5f/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%88%97%E5%AD%97%E7%AC%A6%E4%B8%B2.png?raw=true) | ![自定义多列字符串](https://github.com/borenfocus/BRPickerView/blob/6a3b327505011d5b2dd6d460268b67b7f44a5e5f/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%9A%E5%88%97%E5%AD%97%E7%AC%A6%E4%B8%B2.png?raw=true) |
+| ![自定义单列字符串](https://github.com/borenfocus/BRPickerView/blob/018260fc8b2a20e335182b017e2b4e51ad79a3dd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%88%97%E5%AD%97%E7%AC%A6%E4%B8%B2.png?raw=true) | ![自定义多列字符串](https://github.com/borenfocus/BRPickerView/blob/018260fc8b2a20e335182b017e2b4e51ad79a3dd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%9A%E5%88%97%E5%AD%97%E7%AC%A6%E4%B8%B2.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |                 自定义单列字符串                 |                 自定义多列字符串                 |
 
