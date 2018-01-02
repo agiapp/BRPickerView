@@ -53,6 +53,6 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 - (void)clickRightBtn;
 
 /** 设置主题颜色 */
-- (void)configThemeColor:(UIColor *)themeColor;
+- (void)setupThemeColor:(UIColor *)themeColor;
 
 @end

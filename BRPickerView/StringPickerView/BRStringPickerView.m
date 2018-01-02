@@ -151,7 +151,7 @@
     // 添加字符串选择器
     [self.alertView addSubview:self.pickerView];
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
-        [self configThemeColor:self.themeColor];
+        [self setupThemeColor:self.themeColor];
     }
 }
 

@@ -75,7 +75,7 @@
     // 添加时间选择器
     [self.alertView addSubview:self.datePicker];
     if (_themeColor && [_themeColor isKindOfClass:[UIColor class]]) {
-        [self configThemeColor:_themeColor];
+        [self setupThemeColor:_themeColor];
     }
 }
 

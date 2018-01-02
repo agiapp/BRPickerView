@@ -132,7 +132,7 @@
 }
 
 #pragma mark - 设置主题颜色
-- (void)configThemeColor:(UIColor *)themeColor {
+- (void)setupThemeColor:(UIColor *)themeColor {
     self.leftBtn.layer.borderColor = themeColor.CGColor;
     [self.leftBtn setTitleColor:themeColor forState:UIControlStateNormal];
     self.rightBtn.backgroundColor = themeColor;
