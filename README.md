@@ -106,21 +106,14 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 + (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRDateResultBlock)resultBlock;
 ```
 
-方法使用：
-
-```objective-c
-[BRDatePickerView showDatePickerWithTitle:@"出生年月" dateType:UIDatePickerModeDate defaultSelValue:weakSelf.birthdayTF.text minDateStr:@"" maxDateStr:[NSDate currentDateString] isAutoSelect:YES resultBlock:^(NSString *selectValue) {
-	weakSelf.birthdayTF.text = selectValue;
-}];
-```
-
-日期选择器的四种类型（dateType的4个枚举值）：
+- 日期选择器的四种类型（dateType的4个枚举值）：
 
 | ![样式1：UIDatePickerModeTime](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
-| ---------------------------------------- | ---------------------------------------- |
-| 样式1：UIDatePickerModeTime                 | 样式2：UIDatePickerModeDate                 |
+| :--------------------------------------: | :--------------------------------------: |
+|         样式1：UIDatePickerModeTime         |         样式2：UIDatePickerModeDate         |
+|                                          |                                          |
 | ![样式3：UIDatePickerModeDateAndTime](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
-| 样式3：UIDatePickerModeDateAndTime          | 样式4：UIDatePickerModeCountDownTimer       |
+|     样式3：UIDatePickerModeDateAndTime      |    样式4：UIDatePickerModeCountDownTimer    |
 
 
 
