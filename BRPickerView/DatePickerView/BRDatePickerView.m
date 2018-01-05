@@ -16,6 +16,7 @@
     NSString *_minDateStr;
     NSString *_maxDateStr;
     BRDateResultBlock _resultBlock;
+    BRDateCancelBlock _cancelBlock;
     NSString *_selectValue;
     BOOL _isAutoSelect;  // 是否开启自动选择
     UIColor *_themeColor;
@@ -28,25 +29,60 @@
 @implementation BRDatePickerView
 
 #pragma mark - 1.显示时间选择器
-+ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:nil maxDateStr:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock];
-    [datePickerView showWithAnimation:YES];
++ (void)showDatePickerWithTitle:(NSString *)title
+                       dateType:(UIDatePickerMode)type
+                defaultSelValue:(NSString *)defaultSelValue
+                    resultBlock:(BRDateResultBlock)resultBlock {
+    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:nil maxDateStr:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 2.显示时间选择器
-+ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock];
-    [datePickerView showWithAnimation:YES];
+#pragma mark - 2.显示时间选择器（支持 设置自动选择）
++ (void)showDatePickerWithTitle:(NSString *)title
+                       dateType:(UIDatePickerMode)type
+                defaultSelValue:(NSString *)defaultSelValue
+                     minDateStr:(NSString *)minDateStr
+                     maxDateStr:(NSString *)maxDateStr
+                   isAutoSelect:(BOOL)isAutoSelect
+                    resultBlock:(BRDateResultBlock)resultBlock {
+    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 3.显示时间选择器
-+ (void)showDatePickerWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
+#pragma mark - 3.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
++ (void)showDatePickerWithTitle:(NSString *)title
+                       dateType:(UIDatePickerMode)type
+                defaultSelValue:(NSString *)defaultSelValue
+                     minDateStr:(NSString *)minDateStr
+                     maxDateStr:(NSString *)maxDateStr
+                   isAutoSelect:(BOOL)isAutoSelect
+                     themeColor:(UIColor *)themeColor
+                    resultBlock:(BRDateResultBlock)resultBlock {
+    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+}
+
+#pragma mark - 4.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
++ (void)showDatePickerWithTitle:(NSString *)title
+                       dateType:(UIDatePickerMode)type
+                defaultSelValue:(NSString *)defaultSelValue
+                     minDateStr:(NSString *)minDateStr
+                     maxDateStr:(NSString *)maxDateStr
+                   isAutoSelect:(BOOL)isAutoSelect
+                     themeColor:(UIColor *)themeColor
+                    resultBlock:(BRDateResultBlock)resultBlock
+                    cancelBlock:(BRDateCancelBlock)cancelBlock {
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     [datePickerView showWithAnimation:YES];
 }
 
 #pragma mark - 初始化时间选择器
-- (instancetype)initWithTitle:(NSString *)title dateType:(UIDatePickerMode)type defaultSelValue:(NSString *)defaultSelValue minDateStr:(NSString *)minDateStr maxDateStr:(NSString *)maxDateStr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRDateResultBlock)resultBlock {
+- (instancetype)initWithTitle:(NSString *)title
+                     dateType:(UIDatePickerMode)type
+              defaultSelValue:(NSString *)defaultSelValue
+                   minDateStr:(NSString *)minDateStr
+                   maxDateStr:(NSString *)maxDateStr
+                 isAutoSelect:(BOOL)isAutoSelect
+                   themeColor:(UIColor *)themeColor
+                  resultBlock:(BRDateResultBlock)resultBlock
+                  cancelBlock:(BRDateCancelBlock)cancelBlock {
     if (self = [super init]) {
         _datePickerMode = type;
         _title = title;
@@ -55,6 +91,7 @@
         _isAutoSelect = isAutoSelect;
         _themeColor = themeColor;
         _resultBlock = resultBlock;
+        _cancelBlock = cancelBlock;
         
         if (defaultSelValue.length > 0) {
             _selectValue = defaultSelValue;
@@ -112,6 +149,9 @@
 #pragma mark - 背景视图的点击事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
     [self dismissWithAnimation:NO];
+    if (_cancelBlock) {
+        _cancelBlock();
+    }
 }
 
 #pragma mark - 弹出视图方法
@@ -181,6 +221,9 @@
 #pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
     [self dismissWithAnimation:YES];
+    if (_cancelBlock) {
+        _cancelBlock();
+    }
 }
 
 #pragma mark - 确定按钮的点击事件
