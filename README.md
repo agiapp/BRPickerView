@@ -3,6 +3,14 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 #### 更新记录
 
+- 2018-01-05（V1.3.0）:
+
+  >1. 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
+  >2. 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
+  >   - 1> 可以直接传数组：NSArray类型；
+  >   - 2> 可以传plist文件名：NSString类型，带后缀名，plist文件的内容必须是数组格式。
+
+
 - 2018-01-02（V1.2.0）：
 
   >添加支持自定义主题颜色的方法
@@ -73,7 +81,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 #### 1. 时间选择器：`BRDatePickerView`
 
-​	查看 BRDatePickerView.h 头文件，里面提供了3个方法，可根据自己的需求选择其中的一个方法进行使用。
+​	查看 BRDatePickerView.h 头文件，里面提供了4个方法，可根据自己的需求选择其中的一个方法进行使用。
 
 ```objective-c
 /**
@@ -131,6 +139,30 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock;
+
+/**
+ *  4.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+ *
+ *  @param title            标题
+ *  @param type             类型（枚举类型：UIDatePickerModeTime、UIDatePickerModeDate、UIDatePickerModeDateAndTime、UIDatePickerModeCountDownTimer）
+ *  @param defaultSelValue  默认选中的时间（为空，默认选中现在的时间）
+ *  @param minDateStr       最小时间（如：2015-08-28 00:00:00），可为空
+ *  @param maxDateStr       最大时间（如：2018-05-05 00:00:00），可为空
+ *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
+ *  @param themeColor       自定义主题颜色
+ *  @param resultBlock      选择结果的回调
+ *  @param cancelBlock      取消选择的回调
+ *
+ */
++ (void)showDatePickerWithTitle:(NSString *)title
+                       dateType:(UIDatePickerMode)type
+                defaultSelValue:(NSString *)defaultSelValue
+                     minDateStr:(NSString *)minDateStr
+                     maxDateStr:(NSString *)maxDateStr
+                   isAutoSelect:(BOOL)isAutoSelect
+                     themeColor:(UIColor *)themeColor
+                    resultBlock:(BRDateResultBlock)resultBlock
+                    cancelBlock:(BRDateCancelBlock)cancelBlock;
 ```
 
 - 日期选择器的四种类型（dateType的4个枚举值）：
@@ -146,7 +178,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 #### 2. 地址选择器：`BRAddressPickerView`
 
-​	查看 BRAddressPickerView.h 头文件，里面提供了3个方法，可根据自己的需求选择其中的一个方法进行使用。
+​	查看 BRAddressPickerView.h 头文件，里面提供了4个方法，可根据自己的需求选择其中的一个方法进行使用。
 
 ```objective-c
 /**
@@ -184,6 +216,22 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
                                 isAutoSelect:(BOOL)isAutoSelect
                                   themeColor:(UIColor *)themeColor
                                  resultBlock:(BRAddressResultBlock)resultBlock;
+
+/**
+ *  4.显示地址选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+ *
+ *  @param defaultSelectedArr       默认选中的值(传数组，元素为对应的索引值。如：@[@10, @1, @1])
+ *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
+ *  @param themeColor               自定义主题颜色
+ *  @param resultBlock              选择后的回调
+ *  @param cancelBlock              取消选择的回调
+ *
+ */
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                isAutoSelect:(BOOL)isAutoSelect
+                                  themeColor:(UIColor *)themeColor
+                                 resultBlock:(BRAddressResultBlock)resultBlock
+                                 cancelBlock:(BRAddressCancelBlock)cancelBlock;
 ```
 
 方法使用：
@@ -207,85 +255,37 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
  *  1.显示自定义字符串选择器
  *
  *  @param title            标题
- *  @param dataSource       数组数据源
+ *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
  *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
  *  @param resultBlock      选择后的回调
  *
  */
 + (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(NSArray *)dataSource
+                       dataSource:(id)dataSource
                   defaultSelValue:(id)defaultSelValue
                       resultBlock:(BRStringResultBlock)resultBlock;
 
 /**
- *  2.显示自定义字符串选择器
+ *  2.显示自定义字符串选择器（支持 设置自动选择）
  *
  *  @param title            标题
- *  @param dataSource       数组数据源
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param resultBlock      选择后的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(NSArray *)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                      resultBlock:(BRStringResultBlock)resultBlock;
-
-/**
- *  3.显示自定义字符串选择器
- *
- *  @param title            标题
- *  @param dataSource       数组数据源
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
- *  @param resultBlock      选择后的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(NSArray *)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                       themeColor:(UIColor *)themeColor
-                      resultBlock:(BRStringResultBlock)resultBlock;
-
-/**
- *  4.显示自定义字符串选择器
- *
- *  @param title            标题
- *  @param plistName        plist文件名（不带后缀，数组格式）
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param resultBlock      选择后的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                        plistName:(NSString *)plistName
-                  defaultSelValue:(id)defaultSelValue
-                      resultBlock:(BRStringResultBlock)resultBlock;
-
-/**
- *  5.显示自定义字符串选择器
- *
- *  @param title            标题
- *  @param plistName        plist文件名（不带后缀，数组格式）
+ *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
  *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param resultBlock      选择后的回调
  *
  */
 + (void)showStringPickerWithTitle:(NSString *)title
-                        plistName:(NSString *)plistName
+                       dataSource:(id)dataSource
                   defaultSelValue:(id)defaultSelValue
                      isAutoSelect:(BOOL)isAutoSelect
                       resultBlock:(BRStringResultBlock)resultBlock;
 
 /**
- *  6.显示自定义字符串选择器
+ *  3.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
  *
  *  @param title            标题
- *  @param plistName        plist文件名（不带后缀，数组格式）
+ *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
  *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
@@ -293,11 +293,31 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
  *
  */
 + (void)showStringPickerWithTitle:(NSString *)title
-                        plistName:(NSString *)plistName
+                       dataSource:(id)dataSource
                   defaultSelValue:(id)defaultSelValue
                      isAutoSelect:(BOOL)isAutoSelect
                        themeColor:(UIColor *)themeColor
                       resultBlock:(BRStringResultBlock)resultBlock;
+
+/**
+ *  4.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+ *
+ *  @param title            标题
+ *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
+ *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
+ *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
+ *  @param themeColor       自定义主题颜色
+ *  @param resultBlock      选择后的回调
+ *  @param cancelBlock      取消选择的回调
+ *
+ */
++ (void)showStringPickerWithTitle:(NSString *)title
+                       dataSource:(id)dataSource
+                  defaultSelValue:(id)defaultSelValue
+                     isAutoSelect:(BOOL)isAutoSelect
+                       themeColor:(UIColor *)themeColor
+                      resultBlock:(BRStringResultBlock)resultBlock
+                      cancelBlock:(BRStringCancelBlock)cancelBlock;
 ```
 
 方法使用：
