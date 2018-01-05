@@ -189,8 +189,10 @@
         _birthdayTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _birthdayTF.tapAcitonBlock = ^{
-            [BRDatePickerView showDatePickerWithTitle:@"出生年月" dateType:UIDatePickerModeDate defaultSelValue:weakSelf.birthdayTF.text minDateStr:nil maxDateStr:[NSDate currentDateString] isAutoSelect:YES resultBlock:^(NSString *selectValue) {
+            [BRDatePickerView showDatePickerWithTitle:@"" dateType:UIDatePickerModeDate defaultSelValue:weakSelf.birthdayTF.text minDateStr:nil maxDateStr:[NSDate currentDateString] isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
                 weakSelf.birthdayTF.text = selectValue;
+            } cancelBlock:^{
+                NSLog(@"点击了背景或取消按钮");
             }];
         };
     }
@@ -228,8 +230,10 @@
         _addressTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _addressTF.tapAcitonBlock = ^{
-            [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES resultBlock:^(NSArray *selectAddressArr) {
+            [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
                 weakSelf.addressTF.text = [NSString stringWithFormat:@"%@%@%@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
+            } cancelBlock:^{
+                NSLog(@"点击了背景视图或取消按钮");
             }];
         };
     }
@@ -245,6 +249,8 @@
             NSArray *dataSources = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
             [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSources defaultSelValue:@"本科" isAutoSelect:YES themeColor:[UIColor blueColor] resultBlock:^(id selectValue) {
                 weakSelf.educationTF.text = selectValue;
+            } cancelBlock:^{
+                NSLog(@"点击了背景视图或取消按钮");
             }];
         };
     }
@@ -260,6 +266,8 @@
             NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
             [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
                 weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
+            } cancelBlock:^{
+                NSLog(@"点击了背景视图或取消按钮");
             }];
         };
     }
