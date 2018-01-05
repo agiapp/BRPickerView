@@ -30,31 +30,50 @@
 @property (nonatomic, strong) UIColor *themeColor;
 // 选中后的回调
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;
+// 取消选择的回调
+@property (nonatomic, copy) BRAddressCancelBlock cancelBlock;
 
 @end
 
 @implementation BRAddressPickerView
 
 #pragma mark - 1.显示地址选择器
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr resultBlock:(BRAddressResultBlock)resultBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock];
-    [addressPickerView showWithAnimation:YES];
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                 resultBlock:(BRAddressResultBlock)resultBlock {
+    [self showAddressPickerWithDefaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 2.显示地址选择器
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect resultBlock:(BRAddressResultBlock)resultBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock];
-    [addressPickerView showWithAnimation:YES];
+#pragma mark - 2.显示地址选择器（支持 设置自动选择）
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                isAutoSelect:(BOOL)isAutoSelect
+                                 resultBlock:(BRAddressResultBlock)resultBlock {
+    [self showAddressPickerWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 3.显示地址选择器
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRAddressResultBlock)resultBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock];
+#pragma mark - 3.显示地址选择器（支持 设置自动选择 和 自定义主题颜色）
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                isAutoSelect:(BOOL)isAutoSelect
+                                  themeColor:(UIColor *)themeColor
+                                 resultBlock:(BRAddressResultBlock)resultBlock {
+    [self showAddressPickerWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+}
+
+#pragma mark - 4.显示地址选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
++ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
+                                isAutoSelect:(BOOL)isAutoSelect
+                                  themeColor:(UIColor *)themeColor
+                                 resultBlock:(BRAddressResultBlock)resultBlock
+                                 cancelBlock:(BRAddressCancelBlock)cancelBlock {
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithDefaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     [addressPickerView showWithAnimation:YES];
 }
 
 #pragma mark - 初始化地址选择器
-- (instancetype)initWithDefaultSelected:(NSArray *)defaultSelectedArr isAutoSelect:(BOOL)isAutoSelect themeColor:(UIColor *)themeColor resultBlock:(BRAddressResultBlock)resultBlock {
+- (instancetype)initWithDefaultSelected:(NSArray *)defaultSelectedArr
+                           isAutoSelect:(BOOL)isAutoSelect
+                             themeColor:(UIColor *)themeColor
+                            resultBlock:(BRAddressResultBlock)resultBlock
+                            cancelBlock:(BRAddressCancelBlock)cancelBlock {
     if (self = [super init]) {
         // 默认选中
         if (defaultSelectedArr.count == 3) {
@@ -65,6 +84,8 @@
         self.isAutoSelect = isAutoSelect;
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
+        self.cancelBlock = cancelBlock;
+        
         [self loadData];
         [self initUI];
     }
@@ -96,6 +117,9 @@
 #pragma mark - 背景视图的点击事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
     [self dismissWithAnimation:NO];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
 }
 
 #pragma mark - 弹出视图方法
@@ -159,6 +183,9 @@
 #pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
     [self dismissWithAnimation:YES];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
 }
 
 #pragma mark - 确定按钮的点击事件
