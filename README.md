@@ -1,6 +1,10 @@
 # 框架介绍
 BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。
 
+####【特别提示】：
+
+<font color=#ff0000 size=30>当前最新版本为： `1.3.0` 。如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 pod search BRPickerView 进行搜索，就会看到最新版本。</font>
+
 #### 更新记录
 
 - 2018-01-05（V1.3.0）:
@@ -40,7 +44,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 #### CocoaPods
 
-1. 在 Podfile 中添加 `pod 'BRPickerView'`。
+1. 在 Podfile 中添加 `pod 'BRPickerView', '~> 1.3.0'`。
 
 2. 执行 `pod install` 或 `pod update` 。
 
@@ -50,7 +54,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
    >注意：
    >
-   >​	先搜索框架：pod search BRPickerView （最新版本号为1.2.0）
+   >​	先搜索框架：pod search BRPickerView （最新版本号为1.3.0）
    >
    >​	如果无法搜索到框架（或没有显示最新版本），执行下面操作：
    >
@@ -60,7 +64,7 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
    >
    >​		3》pod search BRPickerView
    >
-   >导入指定版本的框架：pod 'BRPickerView', '~> 1.2.0'
+   >导入指定版本的框架：pod 'BRPickerView', '~> 1.3.0'
 
 #### 手动导入
 
