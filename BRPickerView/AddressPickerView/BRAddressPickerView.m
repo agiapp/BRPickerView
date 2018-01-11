@@ -97,7 +97,7 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity" ofType:@"plist"];
     NSArray *arrData = [NSArray arrayWithContentsOfFile:filePath];
     for (NSDictionary *dic in arrData) {
-        // 此处用 YYModel 进行解析
+        // 此处用 MJExtension 进行解析
         BRProvinceModel *proviceModel = [BRProvinceModel mj_objectWithKeyValues:dic];
         [self.addressModelArr addObject:proviceModel];
     }
