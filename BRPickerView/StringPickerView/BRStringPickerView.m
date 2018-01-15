@@ -360,4 +360,25 @@
     }
 }
 
+// 自定义 pickerView 的 label
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3, 35.0f * kScaleFit)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    //label.textColor = [UIColor redColor];
+    label.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
+    // 字体自适应属性
+    label.adjustsFontSizeToFitWidth = YES;
+    // 自适应最小字体缩放比例
+    label.minimumScaleFactor = 0.5f;
+    // 调用上一个委托方法，获得要展示的title
+    label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    return label;
+}
+
+// 设置行高
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+    return 35.0f * kScaleFit;
+}
+
 @end
