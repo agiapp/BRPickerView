@@ -231,7 +231,7 @@
         __weak typeof(self) weakSelf = self;
         _addressTF.tapAcitonBlock = ^{
             [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
-                weakSelf.addressTF.text = [NSString stringWithFormat:@"%@%@%@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
+                weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
             }];
