@@ -11,7 +11,7 @@
 #import "BRAddressModel.h"
 #import "MJExtension.h"
 
-@interface BRAddressPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
+@interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
     NSInteger rowOfProvince; // 保存省份对应的下标
     NSInteger rowOfCity;     // 保存市对应的下标
@@ -211,10 +211,12 @@
 
 
 #pragma mark - UIPickerViewDataSource
+// 1.指定pickerview有几个表盘
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 3;
 }
 
+// 2.指定每个表盘上有几行数据
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
     BRCityModel *cityModel = provinceModel.city[rowOfCity];
@@ -234,9 +236,10 @@
     
 }
 
-#pragma mark - PickerView的代理方法
-- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    NSString *showTitleValue = @"";
+#pragma mark - UIPickerViewDelegate
+// 3.指定每行显示的内容（此处和tableview类似）
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString *showTitleValue = nil;
     if (component == 0) {//省
         BRProvinceModel *provinceModel = self.addressModelArr[row];
         showTitleValue = provinceModel.name;
@@ -257,15 +260,9 @@
     return showTitleValue;
 }
 
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH - 30) / 3, 40)];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
-    label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
-    return label;
-}
-
+// 4.选中时回调的委托方法，在此方法中实现省份和城市间的联动
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    //选中省份表盘时，根据row的值改变城市数组，刷新城市数组，实现联动
     if (component == 0) {
         rowOfProvince = row;
         rowOfCity = 0;
@@ -288,9 +285,25 @@
     }
 }
 
+// 自定义 pickerView 的 label
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3, 35 * kScaleFit)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    //label.textColor = [UIColor redColor];
+    label.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
+    // 字体自适应属性
+    label.adjustsFontSizeToFitWidth = YES;
+    // 自适应最小字体缩放比例
+    label.minimumScaleFactor = 0.5f;
+    // 调用上一个委托方法，获得要展示的title
+    label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    return label;
+}
+
 #pragma mark - Tool
 - (NSArray *)getChooseCityArr {
-    NSArray *arr;
+    NSArray *arr = nil;
     if (rowOfProvince < self.addressModelArr.count) {
         BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
         if (rowOfCity < provinceModel.city.count) {
@@ -337,6 +350,11 @@
         _addressModelArr = [[NSMutableArray alloc]init];
     }
     return _addressModelArr;
+}
+
+// 设置行高
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+    return 30.0f * kScaleFit;
 }
 
 @end
