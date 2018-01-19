@@ -366,7 +366,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     //label.textColor = [UIColor redColor];
-    label.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
+    label.font = [UIFont systemFontOfSize:18.0f * kScaleFit];
     // 字体自适应属性
     label.adjustsFontSizeToFitWidth = YES;
     // 自适应最小字体缩放比例

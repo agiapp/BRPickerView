@@ -291,7 +291,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     //label.textColor = [UIColor redColor];
-    label.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
+    label.font = [UIFont systemFontOfSize:18.0f * kScaleFit];
     // 字体自适应属性
     label.adjustsFontSizeToFitWidth = YES;
     // 自适应最小字体缩放比例
@@ -354,7 +354,7 @@
 
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 30.0f * kScaleFit;
+    return 35.0f * kScaleFit;
 }
 
 @end
