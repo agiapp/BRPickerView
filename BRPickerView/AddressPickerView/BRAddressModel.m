@@ -13,14 +13,13 @@
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
-             @"name": @"v",
-             @"city": @"n"
+             @"ID": @"id"
              };
 }
 
 + (NSDictionary *)mj_objectClassInArray {
     return @{
-             @"city": [BRCityModel class]
+             @"citylist": [BRCityModel class]
              };
 }
 
@@ -31,14 +30,13 @@
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
-             @"name": @"v",
-             @"town": @"n"
+             @"ID": @"id"
              };
 }
 
 + (NSDictionary *)mj_objectClassInArray {
     return @{
-             @"town": [BRTownModel class]
+             @"arealist": [BRTownModel class]
              };
 }
 
@@ -49,7 +47,7 @@
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
-             @"name": @"v"
+             @"ID": @"id"
              };
 }
 

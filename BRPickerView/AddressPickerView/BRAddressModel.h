@@ -11,22 +11,22 @@
 @class BRProvinceModel, BRCityModel, BRTownModel;
 
 @interface BRProvinceModel : NSObject
-
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) NSArray *city;
+@property (nonatomic, copy) NSString *ID;
+@property (nonatomic, copy) NSString *provinceName;
+@property (nonatomic, strong) NSArray *citylist;
 
 @end
 
 @interface BRCityModel : NSObject
-
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) NSArray *town;
+@property (nonatomic, copy) NSString *ID;
+@property (nonatomic, copy) NSString *cityName;
+@property (nonatomic, strong) NSArray *arealist;
 
 @end
 
 
 @interface BRTownModel : NSObject
-
-@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *ID;
+@property (nonatomic, copy) NSString *areaName;
 
 @end
