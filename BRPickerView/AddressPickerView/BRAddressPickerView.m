@@ -219,18 +219,18 @@
 // 2.指定每个表盘上有几行数据
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
-    BRCityModel *cityModel = provinceModel.city[rowOfCity];
+    BRCityModel *cityModel = provinceModel.citylist[rowOfCity];
     if (component == 0) {
         //返回省个数
         return self.addressModelArr.count;
     }
     if (component == 1) {
         //返回市个数
-        return provinceModel.city.count;
+        return provinceModel.citylist.count;
     }
     if (component == 2) {
         //返回区个数
-        return cityModel.town.count;
+        return cityModel.arealist.count;
     }
     return 0;
     
@@ -242,19 +242,19 @@
     NSString *showTitleValue = nil;
     if (component == 0) {//省
         BRProvinceModel *provinceModel = self.addressModelArr[row];
-        showTitleValue = provinceModel.name;
+        showTitleValue = provinceModel.provinceName;
     }
     if (component == 1) {//市
         BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
-        BRCityModel *cityModel = provinceModel.city[row];
-        showTitleValue = cityModel.name;
+        BRCityModel *cityModel = provinceModel.citylist[row];
+        showTitleValue = cityModel.cityName;
     }
     if (component == 2) {//区
         BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
-        BRCityModel *cityModel = provinceModel.city[rowOfCity];
-        if (cityModel.town.count > 0) {
-            BRTownModel *townModel = cityModel.town[row];
-            showTitleValue = townModel.name;
+        BRCityModel *cityModel = provinceModel.citylist[rowOfCity];
+        if (cityModel.arealist.count > 0) {
+            BRTownModel *townModel = cityModel.arealist[row];
+            showTitleValue = townModel.areaName;
         }
     }
     return showTitleValue;
@@ -287,7 +287,7 @@
 
 // 自定义 pickerView 的 label
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3, 35 * kScaleFit)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH) / 3, 35 * kScaleFit)];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     //label.textColor = [UIColor redColor];
@@ -306,11 +306,11 @@
     NSArray *arr = nil;
     if (rowOfProvince < self.addressModelArr.count) {
         BRProvinceModel *provinceModel = self.addressModelArr[rowOfProvince];
-        if (rowOfCity < provinceModel.city.count) {
-            BRCityModel *cityModel = provinceModel.city[rowOfCity];
-            if (rowOfTown < cityModel.town.count) {
-                BRTownModel *townModel = cityModel.town[rowOfTown];
-                arr = @[provinceModel.name, cityModel.name, townModel.name];
+        if (rowOfCity < provinceModel.citylist.count) {
+            BRCityModel *cityModel = provinceModel.citylist[rowOfCity];
+            if (rowOfTown < cityModel.arealist.count) {
+                BRTownModel *townModel = cityModel.arealist[rowOfTown];
+                arr = @[provinceModel.provinceName, cityModel.cityName, townModel.areaName];
             }
         }
     }
@@ -322,11 +322,11 @@
     if (firstRow < self.addressModelArr.count) {
         rowOfProvince = firstRow;
         BRProvinceModel *provinceModel = self.addressModelArr[firstRow];
-        if (secondRow < provinceModel.city.count) {
+        if (secondRow < provinceModel.citylist.count) {
             rowOfCity = secondRow;
             [self.pickerView reloadComponent:1];
-            BRCityModel *cityModel = provinceModel.city[secondRow];
-            if (thirdRow < cityModel.town.count) {
+            BRCityModel *cityModel = provinceModel.citylist[secondRow];
+            if (thirdRow < cityModel.arealist.count) {
                 rowOfTown = thirdRow;
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:firstRow inComponent:0 animated:YES];
