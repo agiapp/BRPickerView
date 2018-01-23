@@ -106,7 +106,7 @@
 #pragma mark - 初始化子视图
 - (void)initUI {
     [super initUI];
-    self.titleLabel.text = @"请选择城市";
+    self.titleLabel.text = @"请选择地区";
     // 添加时间选择器
     [self.alertView addSubview:self.pickerView];
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
