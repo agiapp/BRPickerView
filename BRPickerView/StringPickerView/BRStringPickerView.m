@@ -292,7 +292,7 @@
         _pickerView.backgroundColor = [UIColor whiteColor];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
-        
+        _pickerView.showsSelectionIndicator = YES;
         __weak typeof(self) weakSelf = self;
         if (self.isSingleColumn) {
             [_dataSource enumerateObjectsUsingBlock:^(NSString *rowItem, NSUInteger rowIdx, BOOL *stop) {
@@ -362,6 +362,11 @@
 
 // 自定义 pickerView 的 label
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    
+    //设置分割线的颜色
+    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3, 35.0f * kScaleFit)];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
