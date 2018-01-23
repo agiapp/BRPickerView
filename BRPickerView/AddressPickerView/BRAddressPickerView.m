@@ -205,6 +205,7 @@
         _pickerView.backgroundColor = [UIColor whiteColor];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
+        _pickerView.showsSelectionIndicator = YES;
     }
     return _pickerView;
 }
@@ -287,6 +288,11 @@
 
 // 自定义 pickerView 的 label
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    
+    //设置分割线的颜色
+    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH) / 3, 35 * kScaleFit)];
     bgView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (SCREEN_WIDTH) / 3 - 10 * kScaleFit, 35 * kScaleFit)];
@@ -327,10 +333,12 @@
         BRProvinceModel *provinceModel = self.addressModelArr[firstRow];
         if (secondRow < provinceModel.citylist.count) {
             rowOfCity = secondRow;
+            // 重新加载第2列的数据
             [self.pickerView reloadComponent:1];
             BRCityModel *cityModel = provinceModel.citylist[secondRow];
             if (thirdRow < cityModel.arealist.count) {
                 rowOfTown = thirdRow;
+                // 重新加载第3列的数据
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:firstRow inComponent:0 animated:YES];
                 [self.pickerView selectRow:secondRow inComponent:1 animated:YES];
@@ -338,14 +346,6 @@
             }
         }
     }
-    
-//    // 是否自动滚动回调
-//    if (self.isAutoSelect) {
-//        NSArray *arr = [self getChooseCityArr];
-//        if (self.resultBlock != nil) {
-//            self.resultBlock(arr);
-//        }
-//    }
 }
 
 - (NSMutableArray *)addressModelArr {
