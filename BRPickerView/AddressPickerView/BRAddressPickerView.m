@@ -287,7 +287,10 @@
 
 // 自定义 pickerView 的 label
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH) / 3, 35 * kScaleFit)];
+    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH) / 3, 35 * kScaleFit)];
+    bgView.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (SCREEN_WIDTH) / 3 - 10 * kScaleFit, 35 * kScaleFit)];
+    [bgView addSubview:label];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     //label.textColor = [UIColor redColor];
@@ -298,7 +301,7 @@
     label.minimumScaleFactor = 0.5f;
     // 调用上一个委托方法，获得要展示的title
     label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
-    return label;
+    return bgView;
 }
 
 #pragma mark - Tool
