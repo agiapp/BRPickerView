@@ -9822,8 +9822,6 @@
 			</dict>
 		</array>
 	</dict>
-    
-<!--    #warning -->
 	<dict>
 		<key>id</key>
 		<string>410000</string>
@@ -9906,6 +9904,24 @@
 						<key>id</key>
 						<string>410185</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>经济开发区</string>
+                        <key>id</key>
+                        <string>410186</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>郑东新区</string>
+                        <key>id</key>
+                        <string>410187</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>高新技术开发区</string>
+                        <key>id</key>
+                        <string>410188</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>郑州市</string>
@@ -10074,6 +10090,12 @@
 						<key>id</key>
 						<string>410381</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>伊滨区</string>
+                        <key>id</key>
+                        <string>410382</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>洛阳市</string>
@@ -10206,6 +10228,12 @@
 						<key>id</key>
 						<string>410581</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>开发区</string>
+                        <key>id</key>
+                        <string>410582</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>安阳市</string>
@@ -10857,6 +10885,18 @@
 						<key>id</key>
 						<string>411681</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>经济开发区</string>
+                        <key>id</key>
+                        <string>411682</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东新区</string>
+                        <key>id</key>
+                        <string>411683</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>周口市</string>
@@ -10943,7 +10983,7 @@
 					</dict>
 				</array>
 				<key>cityName</key>
-				<string>济源市</string>
+				<string>省直辖县级行政区划</string>
 				<key>id</key>
 				<string>419000</string>
 			</dict>
@@ -11037,6 +11077,12 @@
 						<key>id</key>
 						<string>420117</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>武汉经济技术开发区</string>
+                        <key>id</key>
+                        <string>420118</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>武汉市</string>
@@ -11082,6 +11128,12 @@
 						<key>id</key>
 						<string>420281</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>经济技术开发区</string>
+                        <key>id</key>
+                        <string>420282</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>黄石市</string>
@@ -11592,6 +11644,12 @@
 						<key>id</key>
 						<string>421302</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>随县</string>
+                        <key>id</key>
+                        <string>421303</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>广水市</string>
@@ -11664,77 +11722,35 @@
 			<dict>
 				<key>arealist</key>
 				<array>
-					<dict>
-						<key>areaName</key>
-						<string>仙桃市</string>
-						<key>id</key>
-						<string>429004</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>仙桃市</string>
+                        <key>id</key>
+                        <string>429004</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>潜江市</string>
+                        <key>id</key>
+                        <string>429005</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>天门市</string>
+                        <key>id</key>
+                        <string>429006</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>神农架林区</string>
+                        <key>id</key>
+                        <string>429021</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
-				<string>仙桃市</string>
+				<string>省直辖县级行政区划</string>
 				<key>id</key>
-				<string>429004</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>潜江市</string>
-						<key>id</key>
-						<string>429005</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>潜江市</string>
-				<key>id</key>
-				<string>429005</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>天门市</string>
-						<key>id</key>
-						<string>429006</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>天门市</string>
-				<key>id</key>
-				<string>429006</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>神农架林区</string>
-						<key>id</key>
-						<string>429021</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>神农架林区</string>
-				<key>id</key>
-				<string>429021</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>三峡</string>
-						<key>id</key>
-						<string>429900</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>三峡</string>
-				<key>id</key>
-				<string>429900</string>
+				<string>429000</string>
 			</dict>
 		</array>
 	</dict>
@@ -11774,17 +11790,17 @@
 						<key>id</key>
 						<string>430111</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>望城区</string>
+                        <key>id</key>
+                        <string>430122</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>长沙县</string>
 						<key>id</key>
 						<string>430121</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>望城县</string>
-						<key>id</key>
-						<string>430122</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
@@ -12801,6 +12817,30 @@
 						<key>id</key>
 						<string>440308</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大鹏新区</string>
+                        <key>id</key>
+                        <string>440309</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>坪山新区</string>
+                        <key>id</key>
+                        <string>440310</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>光明新区</string>
+                        <key>id</key>
+                        <string>440311</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>龙华新区</string>
+                        <key>id</key>
+                        <string>440312</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>深圳市</string>
@@ -13032,6 +13072,12 @@
 						<key>id</key>
 						<string>440883</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>经济技术开发区</string>
+                        <key>id</key>
+                        <string>440884</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>湛江市</string>
@@ -13173,6 +13219,12 @@
 						<key>id</key>
 						<string>441324</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大亚湾区</string>
+                        <key>id</key>
+                        <string>441325</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>惠州市</string>
@@ -13356,6 +13408,12 @@
 						<key>id</key>
 						<string>441802</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>清新区</string>
+                        <key>id</key>
+                        <string>441827</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>佛冈县</string>
@@ -13382,12 +13440,6 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>清新县</string>
-						<key>id</key>
-						<string>441827</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
 						<string>英德市</string>
 						<key>id</key>
 						<string>441881</string>
@@ -13409,10 +13461,202 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>东莞市</string>
+						<string>中堂镇</string>
 						<key>id</key>
-						<string>441900</string>
+						<string>441901</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南城区</string>
+                        <key>id</key>
+                        <string>441902</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>沙田镇</string>
+                        <key>id</key>
+                        <string>441903</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>长安镇</string>
+                        <key>id</key>
+                        <string>441904</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东坑镇</string>
+                        <key>id</key>
+                        <string>441905</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>樟木头镇</string>
+                        <key>id</key>
+                        <string>441906</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>莞城区</string>
+                        <key>id</key>
+                        <string>441907</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>石龙镇</string>
+                        <key>id</key>
+                        <string>441908</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>桥头镇</string>
+                        <key>id</key>
+                        <string>441909</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>万江区</string>
+                        <key>id</key>
+                        <string>441910</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>麻涌镇</string>
+                        <key>id</key>
+                        <string>441911</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>虎门镇</string>
+                        <key>id</key>
+                        <string>441912</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>谢岗镇</string>
+                        <key>id</key>
+                        <string>441913</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>石碣镇</string>
+                        <key>id</key>
+                        <string>441914</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>茶山镇</string>
+                        <key>id</key>
+                        <string>441915</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东城区</string>
+                        <key>id</key>
+                        <string>441916</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>洪梅镇</string>
+                        <key>id</key>
+                        <string>441917</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>道滘镇</string>
+                        <key>id</key>
+                        <string>441918</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>高埗镇</string>
+                        <key>id</key>
+                        <string>441919</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>企石镇</string>
+                        <key>id</key>
+                        <string>441920</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>凤岗镇</string>
+                        <key>id</key>
+                        <string>441921</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大岭山镇</string>
+                        <key>id</key>
+                        <string>441922</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>松山湖</string>
+                        <key>id</key>
+                        <string>441923</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>清溪镇</string>
+                        <key>id</key>
+                        <string>441924</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>望牛墩镇</string>
+                        <key>id</key>
+                        <string>441925</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>厚街镇</string>
+                        <key>id</key>
+                        <string>441926</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>常平镇</string>
+                        <key>id</key>
+                        <string>441927</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>寮步镇</string>
+                        <key>id</key>
+                        <string>441928</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>石排镇</string>
+                        <key>id</key>
+                        <string>441929</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>横沥镇</string>
+                        <key>id</key>
+                        <string>441930</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>塘厦镇</string>
+                        <key>id</key>
+                        <string>441931</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>黄江镇</string>
+                        <key>id</key>
+                        <string>441932</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大朗镇</string>
+                        <key>id</key>
+                        <string>441933</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>东莞市</string>
@@ -13424,10 +13668,154 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>中山市</string>
+						<string>南头镇</string>
 						<key>id</key>
-						<string>442000</string>
+						<string>442001</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>神湾镇</string>
+                        <key>id</key>
+                        <string>442002</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东凤镇</string>
+                        <key>id</key>
+                        <string>442003</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>五桂山镇</string>
+                        <key>id</key>
+                        <string>442004</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>黄圃镇</string>
+                        <key>id</key>
+                        <string>442005</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>小榄镇</string>
+                        <key>id</key>
+                        <string>442006</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>石岐区街道</string>
+                        <key>id</key>
+                        <string>442007</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>横栏镇</string>
+                        <key>id</key>
+                        <string>442008</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>三角镇</string>
+                        <key>id</key>
+                        <string>442009</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>三乡镇</string>
+                        <key>id</key>
+                        <string>442010</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>港口镇</string>
+                        <key>id</key>
+                        <string>442011</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>沙溪镇</string>
+                        <key>id</key>
+                        <string>442012</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>板芙镇</string>
+                        <key>id</key>
+                        <string>442013</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>沙朗镇</string>
+                        <key>id</key>
+                        <string>442014</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东升镇</string>
+                        <key>id</key>
+                        <string>442015</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>阜沙镇</string>
+                        <key>id</key>
+                        <string>442016</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>民众镇</string>
+                        <key>id</key>
+                        <string>442017</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东区街道</string>
+                        <key>id</key>
+                        <string>442018</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>火炬开发区</string>
+                        <key>id</key>
+                        <string>442019</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>西区街道</string>
+                        <key>id</key>
+                        <string>442020</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南区街道</string>
+                        <key>id</key>
+                        <string>442021</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>古镇</string>
+                        <key>id</key>
+                        <string>442022</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>坦洲镇</string>
+                        <key>id</key>
+                        <string>442023</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大涌镇</string>
+                        <key>id</key>
+                        <string>442024</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南朗镇</string>
+                        <key>id</key>
+                        <string>442025</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>中山市</string>
@@ -13455,6 +13843,12 @@
 						<key>id</key>
 						<string>445122</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>枫溪区</string>
+                        <key>id</key>
+                        <string>445123</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>潮州市</string>
@@ -13494,6 +13888,12 @@
 						<key>id</key>
 						<string>445281</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东山区</string>
+                        <key>id</key>
+                        <string>445282</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>揭阳市</string>
@@ -13538,21 +13938,6 @@
 				<string>云浮市</string>
 				<key>id</key>
 				<string>445300</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>顺德市</string>
-						<key>id</key>
-						<string>445400</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>顺德市</string>
-				<key>id</key>
-				<string>445400</string>
 			</dict>
 		</array>
 	</dict>
@@ -14022,6 +14407,12 @@
 						<key>id</key>
 						<string>450902</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>福绵区</string>
+                        <key>id</key>
+                        <string>450903</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>容县</string>
@@ -14148,6 +14539,12 @@
 						<key>id</key>
 						<string>451102</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>平桂区</string>
+                        <key>id</key>
+                        <string>451103</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>昭平县</string>
@@ -14390,16 +14787,208 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>三亚市</string>
+						<string>海棠区</string>
 						<key>id</key>
-						<string>460200</string>
+						<string>460201</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>吉阳区</string>
+                        <key>id</key>
+                        <string>460202</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>天涯区</string>
+                        <key>id</key>
+                        <string>460203</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>崖州区</string>
+                        <key>id</key>
+                        <string>460204</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>河西区</string>
+                        <key>id</key>
+                        <string>460205</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>育才镇</string>
+                        <key>id</key>
+                        <string>460206</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南新农场</string>
+                        <key>id</key>
+                        <string>460207</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>凤凰镇</string>
+                        <key>id</key>
+                        <string>460208</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>河东区</string>
+                        <key>id</key>
+                        <string>460209</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南田农场</string>
+                        <key>id</key>
+                        <string>460210</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>立才农场</string>
+                        <key>id</key>
+                        <string>460211</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>三亚市</string>
 				<key>id</key>
 				<string>460200</string>
 			</dict>
+            <dict>
+                <key>arealist</key>
+                <array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>西沙群岛</string>
+                        <key>id</key>
+                        <string>460301</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南沙群岛</string>
+                        <key>id</key>
+                        <string>460302</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>中沙群岛的岛礁及其海域</string>
+                        <key>id</key>
+                        <string>460303</string>
+                    </dict>
+                </array>
+                <key>cityName</key>
+                <string>三沙市</string>
+                <key>id</key>
+                <string>460300</string>
+            </dict>
+            <dict>
+                <key>arealist</key>
+                <array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>五指山市</string>
+                        <key>id</key>
+                        <string>460401</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>琼海市</string>
+                        <key>id</key>
+                        <string>460402</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>儋州市</string>
+                        <key>id</key>
+                        <string>460403</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>文昌市</string>
+                        <key>id</key>
+                        <string>460404</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>万宁市</string>
+                        <key>id</key>
+                        <string>460405</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>东方市</string>
+                        <key>id</key>
+                        <string>460406</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>定安县</string>
+                        <key>id</key>
+                        <string>460407</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>屯昌县</string>
+                        <key>id</key>
+                        <string>460408</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>澄迈县</string>
+                        <key>id</key>
+                        <string>460409</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>临高县</string>
+                        <key>id</key>
+                        <string>460410</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>白沙黎族自治县</string>
+                        <key>id</key>
+                        <string>460411</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>昌江黎族自治县</string>
+                        <key>id</key>
+                        <string>460412</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>乐东黎族自治县</string>
+                        <key>id</key>
+                        <string>460413</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>陵水黎族自治县</string>
+                        <key>id</key>
+                        <string>460414</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>保亭黎族苗族自治县</string>
+                        <key>id</key>
+                        <string>460415</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>琼中黎族苗族自治县</string>
+                        <key>id</key>
+                        <string>460416</string>
+                    </dict>
+                </array>
+                <key>cityName</key>
+                <string>省直辖县级行政区划</string>
+                <key>id</key>
+                <string>460400</string>
+            </dict>
 		</array>
 	</dict>
 	<dict>
@@ -14466,18 +15055,18 @@
 						<key>id</key>
 						<string>500109</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>万盛区</string>
-						<key>id</key>
-						<string>500110</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>双桥区</string>
-						<key>id</key>
-						<string>500111</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>綦江区</string>
+                        <key>id</key>
+                        <string>500222</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大足区</string>
+                        <key>id</key>
+                        <string>500225</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>渝北区</string>
@@ -14526,138 +15115,135 @@
 						<key>id</key>
 						<string>500119</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>璧山区</string>
+                        <key>id</key>
+                        <string>500227</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>铜梁区</string>
+                        <key>id</key>
+                        <string>500224</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
-						<string>綦江县</string>
-						<key>id</key>
-						<string>500222</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>潼南县</string>
+						<string>潼南区</string>
 						<key>id</key>
 						<string>500223</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>铜梁县</string>
-						<key>id</key>
-						<string>500224</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>大足县</string>
-						<key>id</key>
-						<string>500225</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>荣昌县</string>
+						<string>荣昌区</string>
 						<key>id</key>
 						<string>500226</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>璧山县</string>
-						<key>id</key>
-						<string>500227</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>梁平县</string>
-						<key>id</key>
-						<string>500228</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>城口县</string>
-						<key>id</key>
-						<string>500229</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>丰都县</string>
-						<key>id</key>
-						<string>500230</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>垫江县</string>
-						<key>id</key>
-						<string>500231</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>武隆县</string>
-						<key>id</key>
-						<string>500232</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>忠县</string>
-						<key>id</key>
-						<string>500233</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>开县</string>
-						<key>id</key>
-						<string>500234</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>云阳县</string>
-						<key>id</key>
-						<string>500235</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>奉节县</string>
-						<key>id</key>
-						<string>500236</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>巫山县</string>
-						<key>id</key>
-						<string>500237</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>巫溪县</string>
-						<key>id</key>
-						<string>500238</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>石柱土家族自治县</string>
-						<key>id</key>
-						<string>500240</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>秀山土家族苗族自治县</string>
-						<key>id</key>
-						<string>500241</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>酉阳土家族苗族自治县</string>
-						<key>id</key>
-						<string>500242</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>彭水苗族土家族自治县</string>
-						<key>id</key>
-						<string>500243</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>开州区</string>
+                        <key>id</key>
+                        <string>500234</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
-				<string>重庆</string>
+				<string>重庆市</string>
 				<key>id</key>
 				<string>500000</string>
 			</dict>
+            <dict>
+                <key>arealist</key>
+                <array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>梁平县</string>
+                        <key>id</key>
+                        <string>500228</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>城口县</string>
+                        <key>id</key>
+                        <string>500229</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>丰都县</string>
+                        <key>id</key>
+                        <string>500230</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>垫江县</string>
+                        <key>id</key>
+                        <string>500231</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>武隆县</string>
+                        <key>id</key>
+                        <string>500232</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>忠县</string>
+                        <key>id</key>
+                        <string>500233</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>云阳县</string>
+                        <key>id</key>
+                        <string>500235</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>奉节县</string>
+                        <key>id</key>
+                        <string>500236</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>巫山县</string>
+                        <key>id</key>
+                        <string>500237</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>巫溪县</string>
+                        <key>id</key>
+                        <string>500238</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>石柱土家族自治县</string>
+                        <key>id</key>
+                        <string>500240</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>秀山土家族苗族自治县</string>
+                        <key>id</key>
+                        <string>500241</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>酉阳土家族苗族自治县</string>
+                        <key>id</key>
+                        <string>500242</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>彭水苗族土家族自治县</string>
+                        <key>id</key>
+                        <string>500243</string>
+                    </dict>
+                </array>
+                <key>cityName</key>
+                <string>县</string>
+                <key>id</key>
+                <string>500200</string>
+            </dict>
 		</array>
 	</dict>
 	<dict>
@@ -14724,23 +15310,17 @@
 						<key>id</key>
 						<string>510115</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>高新区</string>
-						<key>id</key>
-						<string>510118</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>双流区</string>
+                        <key>id</key>
+                        <string>510122</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>金堂县</string>
 						<key>id</key>
 						<string>510121</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>双流县</string>
-						<key>id</key>
-						<string>510122</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
@@ -14790,6 +15370,24 @@
 						<key>id</key>
 						<string>510184</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>简阳市</string>
+                        <key>id</key>
+                        <string>510116</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>高新西区</string>
+                        <key>id</key>
+                        <string>510117</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>高新区</string>
+                        <key>id</key>
+                        <string>510118</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>成都市</string>
@@ -15033,6 +15631,18 @@
 						<key>id</key>
 						<string>510781</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>经开区</string>
+                        <key>id</key>
+                        <string>510782</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>高新区</string>
+                        <key>id</key>
+                        <string>510783</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>绵阳市</string>
@@ -15044,7 +15654,7 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>市中区</string>
+						<string>利州区</string>
 						<key>id</key>
 						<string>510802</string>
 					</dict>
@@ -15360,17 +15970,17 @@
 						<key>id</key>
 						<string>511502</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南溪区</string>
+                        <key>id</key>
+                        <string>511522</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>宜宾县</string>
 						<key>id</key>
 						<string>511521</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>南溪县</string>
-						<key>id</key>
-						<string>511522</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
@@ -15470,7 +16080,7 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>达县</string>
+						<string>达川区</string>
 						<key>id</key>
 						<string>511721</string>
 					</dict>
@@ -15521,7 +16131,7 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>名山县</string>
+						<string>名山区</string>
 						<key>id</key>
 						<string>511821</string>
 					</dict>
@@ -15576,6 +16186,12 @@
 						<key>id</key>
 						<string>511902</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>恩阳区</string>
+                        <key>id</key>
+                        <string>511903</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>通江县</string>
@@ -15621,12 +16237,6 @@
 						<key>id</key>
 						<string>512022</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>简阳市</string>
-						<key>id</key>
-						<string>512081</string>
-					</dict>
 				</array>
 				<key>cityName</key>
 				<string>资阳市</string>
@@ -15636,6 +16246,12 @@
 			<dict>
 				<key>arealist</key>
 				<array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>马尔康市</string>
+                        <key>id</key>
+                        <string>513220</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>汶川县</string>
@@ -15684,12 +16300,12 @@
 						<key>id</key>
 						<string>513228</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>马尔康县</string>
-						<key>id</key>
-						<string>513229</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>马尔康县</string>
+                        <key>id</key>
+                        <string>513229</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>壤塘县</string>
@@ -15990,12 +16606,12 @@
 						<key>id</key>
 						<string>520113</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>小河区</string>
-						<key>id</key>
-						<string>520114</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>观山湖区</string>
+                        <key>id</key>
+                        <string>520114</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>开阳县</string>
@@ -16076,7 +16692,7 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>遵义县</string>
+						<string>播州区</string>
 						<key>id</key>
 						<string>520321</string>
 					</dict>
@@ -16197,15 +16813,78 @@
 				<key>id</key>
 				<string>520400</string>
 			</dict>
+            <dict>
+                <key>arealist</key>
+                <array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>七星关区</string>
+                        <key>id</key>
+                        <string>522401</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>大方县</string>
+                        <key>id</key>
+                        <string>522422</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>黔西县</string>
+                        <key>id</key>
+                        <string>522423</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>金沙县</string>
+                        <key>id</key>
+                        <string>522424</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>织金县</string>
+                        <key>id</key>
+                        <string>522425</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>纳雍县</string>
+                        <key>id</key>
+                        <string>522426</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>威宁彝族回族苗族自治县</string>
+                        <key>id</key>
+                        <string>522427</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>赫章县</string>
+                        <key>id</key>
+                        <string>522428</string>
+                    </dict>
+                </array>
+                <key>cityName</key>
+                <string>毕节市</string>
+                <key>id</key>
+                <string>522400</string>
+            </dict>
 			<dict>
 				<key>arealist</key>
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>铜仁市</string>
+						<string>碧江区</string>
 						<key>id</key>
 						<string>522201</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>万山区</string>
+                        <key>id</key>
+                        <string>522230</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>江口县</string>
@@ -16254,15 +16933,9 @@
 						<key>id</key>
 						<string>522229</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>万山特区</string>
-						<key>id</key>
-						<string>522230</string>
-					</dict>
 				</array>
 				<key>cityName</key>
-				<string>铜仁地区</string>
+				<string>铜仁市</string>
 				<key>id</key>
 				<string>522200</string>
 			</dict>
@@ -16322,63 +16995,6 @@
 				<string>黔西南布依族苗族自治州</string>
 				<key>id</key>
 				<string>522300</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>毕节市</string>
-						<key>id</key>
-						<string>522401</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>大方县</string>
-						<key>id</key>
-						<string>522422</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>黔西县</string>
-						<key>id</key>
-						<string>522423</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>金沙县</string>
-						<key>id</key>
-						<string>522424</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>织金县</string>
-						<key>id</key>
-						<string>522425</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>纳雍县</string>
-						<key>id</key>
-						<string>522426</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>威宁彝族回族苗族自治县</string>
-						<key>id</key>
-						<string>522427</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>赫章县</string>
-						<key>id</key>
-						<string>522428</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>毕节地区</string>
-				<key>id</key>
-				<string>522400</string>
 			</dict>
 			<dict>
 				<key>arealist</key>
@@ -16811,12 +17427,6 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>腾冲县</string>
-						<key>id</key>
-						<string>530522</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
 						<string>龙陵县</string>
 						<key>id</key>
 						<string>530523</string>
@@ -16827,6 +17437,12 @@
 						<key>id</key>
 						<string>530524</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>腾冲市</string>
+                        <key>id</key>
+                        <string>530522</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>保山市</string>
@@ -17405,7 +18021,7 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>潞西市</string>
+						<string>芒市</string>
 						<key>id</key>
 						<string>533103</string>
 					</dict>
@@ -17471,7 +18087,7 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>香格里拉县</string>
+						<string>香格里拉市</string>
 						<key>id</key>
 						<string>533421</string>
 					</dict>
@@ -17511,6 +18127,12 @@
 						<key>id</key>
 						<string>540102</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>堆龙德庆区</string>
+                        <key>id</key>
+                        <string>540125</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>林周县</string>
@@ -17537,12 +18159,6 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>堆龙德庆县</string>
-						<key>id</key>
-						<string>540125</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
 						<string>达孜县</string>
 						<key>id</key>
 						<string>540126</string>
@@ -17559,12 +18175,129 @@
 				<key>id</key>
 				<string>540100</string>
 			</dict>
+            <dict>
+                <key>arealist</key>
+                <array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>桑珠孜区</string>
+                        <key>id</key>
+                        <string>542301</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>南木林县</string>
+                        <key>id</key>
+                        <string>542322</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>江孜县</string>
+                        <key>id</key>
+                        <string>542323</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>定日县</string>
+                        <key>id</key>
+                        <string>542324</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>萨迦县</string>
+                        <key>id</key>
+                        <string>542325</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>拉孜县</string>
+                        <key>id</key>
+                        <string>542326</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>昂仁县</string>
+                        <key>id</key>
+                        <string>542327</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>谢通门县</string>
+                        <key>id</key>
+                        <string>542328</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>白朗县</string>
+                        <key>id</key>
+                        <string>542329</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>仁布县</string>
+                        <key>id</key>
+                        <string>542330</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>康马县</string>
+                        <key>id</key>
+                        <string>542331</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>定结县</string>
+                        <key>id</key>
+                        <string>542332</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>仲巴县</string>
+                        <key>id</key>
+                        <string>542333</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>亚东县</string>
+                        <key>id</key>
+                        <string>542334</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>吉隆县</string>
+                        <key>id</key>
+                        <string>542335</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>聂拉木县</string>
+                        <key>id</key>
+                        <string>542336</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>萨嘎县</string>
+                        <key>id</key>
+                        <string>542337</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>岗巴县</string>
+                        <key>id</key>
+                        <string>542338</string>
+                    </dict>
+                </array>
+                <key>cityName</key>
+                <string>日喀则市</string>
+                <key>id</key>
+                <string>542300</string>
+            </dict>
 			<dict>
 				<key>arealist</key>
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>昌都县</string>
+						<string>卡若区</string>
 						<key>id</key>
 						<string>542121</string>
 					</dict>
@@ -17630,7 +18363,7 @@
 					</dict>
 				</array>
 				<key>cityName</key>
-				<string>昌都地区</string>
+				<string>昌都市</string>
 				<key>id</key>
 				<string>542100</string>
 			</dict>
@@ -17714,123 +18447,6 @@
 				<string>山南地区</string>
 				<key>id</key>
 				<string>542200</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>日喀则市</string>
-						<key>id</key>
-						<string>542301</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>南木林县</string>
-						<key>id</key>
-						<string>542322</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>江孜县</string>
-						<key>id</key>
-						<string>542323</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>定日县</string>
-						<key>id</key>
-						<string>542324</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>萨迦县</string>
-						<key>id</key>
-						<string>542325</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>拉孜县</string>
-						<key>id</key>
-						<string>542326</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>昂仁县</string>
-						<key>id</key>
-						<string>542327</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>谢通门县</string>
-						<key>id</key>
-						<string>542328</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>白朗县</string>
-						<key>id</key>
-						<string>542329</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>仁布县</string>
-						<key>id</key>
-						<string>542330</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>康马县</string>
-						<key>id</key>
-						<string>542331</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>定结县</string>
-						<key>id</key>
-						<string>542332</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>仲巴县</string>
-						<key>id</key>
-						<string>542333</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>亚东县</string>
-						<key>id</key>
-						<string>542334</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>吉隆县</string>
-						<key>id</key>
-						<string>542335</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>聂拉木县</string>
-						<key>id</key>
-						<string>542336</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>萨嘎县</string>
-						<key>id</key>
-						<string>542337</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>岗巴县</string>
-						<key>id</key>
-						<string>542338</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>日喀则地区</string>
-				<key>id</key>
-				<string>542300</string>
 			</dict>
 			<dict>
 				<key>arealist</key>
@@ -17957,7 +18573,7 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>林芝县</string>
+						<string>巴宜区</string>
 						<key>id</key>
 						<string>542621</string>
 					</dict>
@@ -18069,6 +18685,12 @@
 						<key>id</key>
 						<string>610116</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>高陵区</string>
+                        <key>id</key>
+                        <string>610126</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>蓝田县</string>
@@ -18087,12 +18709,12 @@
 						<key>id</key>
 						<string>610125</string>
 					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>高陵县</string>
-						<key>id</key>
-						<string>610126</string>
-					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>杨凌农业示范区</string>
+                        <key>id</key>
+                        <string>610126</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>西安市</string>
@@ -18317,7 +18939,7 @@
 					</dict>
 					<dict>
 						<key>areaName</key>
-						<string>华县</string>
+						<string>华州区</string>
 						<key>id</key>
 						<string>610521</string>
 					</dict>
@@ -18390,6 +19012,12 @@
 						<key>id</key>
 						<string>610602</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>安塞区</string>
+                        <key>id</key>
+                        <string>610624</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>延长县</string>
@@ -18407,12 +19035,6 @@
 						<string>子长县</string>
 						<key>id</key>
 						<string>610623</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>安塞县</string>
-						<key>id</key>
-						<string>610624</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
@@ -18552,6 +19174,12 @@
 						<key>id</key>
 						<string>610802</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>横山区</string>
+                        <key>id</key>
+                        <string>610823</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>神木县</string>
@@ -18563,12 +19191,6 @@
 						<string>府谷县</string>
 						<key>id</key>
 						<string>610822</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>横山县</string>
-						<key>id</key>
-						<string>610823</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
@@ -18815,10 +19437,22 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>嘉峪关市</string>
+						<string>雄关区</string>
 						<key>id</key>
-						<string>620200</string>
+						<string>620201</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>长城区</string>
+                        <key>id</key>
+                        <string>620202</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>镜铁区</string>
+                        <key>id</key>
+                        <string>620203</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>嘉峪关市</string>
@@ -19464,6 +20098,12 @@
 			<dict>
 				<key>arealist</key>
 				<array>
+                    <dict>
+                        <key>areaName</key>
+                        <string>乐都区</string>
+                        <key>id</key>
+                        <string>632123</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>平安县</string>
@@ -19475,12 +20115,6 @@
 						<string>民和回族土族自治县</string>
 						<key>id</key>
 						<string>632122</string>
-					</dict>
-					<dict>
-						<key>areaName</key>
-						<string>乐都县</string>
-						<key>id</key>
-						<string>632123</string>
 					</dict>
 					<dict>
 						<key>areaName</key>
@@ -19830,6 +20464,12 @@
 						<key>id</key>
 						<string>640302</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>红寺堡区</string>
+                        <key>id</key>
+                        <string>640303</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>盐池县</string>
@@ -20024,7 +20664,7 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>吐鲁番市</string>
+						<string>高昌区</string>
 						<key>id</key>
 						<string>652101</string>
 					</dict>
@@ -20042,7 +20682,7 @@
 					</dict>
 				</array>
 				<key>cityName</key>
-				<string>吐鲁番地区</string>
+				<string>吐鲁番市</string>
 				<key>id</key>
 				<string>652100</string>
 			</dict>
@@ -20051,7 +20691,7 @@
 				<array>
 					<dict>
 						<key>areaName</key>
-						<string>哈密市</string>
+						<string>伊州区</string>
 						<key>id</key>
 						<string>652201</string>
 					</dict>
@@ -20069,7 +20709,7 @@
 					</dict>
 				</array>
 				<key>cityName</key>
-				<string>哈密地区</string>
+				<string>哈密市</string>
 				<key>id</key>
 				<string>652200</string>
 			</dict>
@@ -20133,6 +20773,12 @@
 						<key>id</key>
 						<string>652701</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>阿拉山口市</string>
+                        <key>id</key>
+                        <string>652702</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>精河县</string>
@@ -20469,6 +21115,12 @@
 						<key>id</key>
 						<string>654021</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>霍尔果斯市</string>
+                        <key>id</key>
+                        <string>654004</string>
+                    </dict>
 					<dict>
 						<key>areaName</key>
 						<string>察布查尔锡伯自治县</string>
@@ -20613,6 +21265,12 @@
 						<key>id</key>
 						<string>654326</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>北屯市</string>
+                        <key>id</key>
+                        <string>654327</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
 				<string>阿勒泰地区</string>
@@ -20628,56 +21286,35 @@
 						<key>id</key>
 						<string>659001</string>
 					</dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>阿拉尔市</string>
+                        <key>id</key>
+                        <string>659002</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>图木舒克市</string>
+                        <key>id</key>
+                        <string>659003</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>五家渠市</string>
+                        <key>id</key>
+                        <string>659004</string>
+                    </dict>
+                    <dict>
+                        <key>areaName</key>
+                        <string>铁门关市</string>
+                        <key>id</key>
+                        <string>659005</string>
+                    </dict>
 				</array>
 				<key>cityName</key>
-				<string>石河子市</string>
+				<string>自治区直辖县级行政区划</string>
 				<key>id</key>
-				<string>659001</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>阿拉尔市</string>
-						<key>id</key>
-						<string>659002</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>阿拉尔市</string>
-				<key>id</key>
-				<string>659002</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>图木舒克市</string>
-						<key>id</key>
-						<string>659003</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>图木舒克市</string>
-				<key>id</key>
-				<string>659003</string>
-			</dict>
-			<dict>
-				<key>arealist</key>
-				<array>
-					<dict>
-						<key>areaName</key>
-						<string>五家渠市</string>
-						<key>id</key>
-						<string>659004</string>
-					</dict>
-				</array>
-				<key>cityName</key>
-				<string>五家渠市</string>
-				<key>id</key>
-				<string>659004</string>
+				<string>659000</string>
 			</dict>
 		</array>
 	</dict>
