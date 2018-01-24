@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class BRProvinceModel, BRCityModel, BRTownModel;
+@class BRProvinceModel, BRCityModel, BRAreaModel;
 
+/// 省
 @interface BRProvinceModel : NSObject
 @property (nonatomic, copy) NSString *ID;
 @property (nonatomic, copy) NSString *provinceName;
@@ -17,6 +18,7 @@
 
 @end
 
+/// 市
 @interface BRCityModel : NSObject
 @property (nonatomic, copy) NSString *ID;
 @property (nonatomic, copy) NSString *cityName;
@@ -24,8 +26,8 @@
 
 @end
 
-
-@interface BRTownModel : NSObject
+/// 区
+@interface BRAreaModel : NSObject
 @property (nonatomic, copy) NSString *ID;
 @property (nonatomic, copy) NSString *areaName;
 

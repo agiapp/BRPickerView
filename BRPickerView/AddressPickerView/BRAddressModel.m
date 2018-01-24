@@ -36,14 +36,14 @@
 
 + (NSDictionary *)mj_objectClassInArray {
     return @{
-             @"arealist": [BRTownModel class]
+             @"arealist": [BRAreaModel class]
              };
 }
 
 @end
 
 
-@implementation BRTownModel
+@implementation BRAreaModel
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{
