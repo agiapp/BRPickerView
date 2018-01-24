@@ -249,7 +249,7 @@
         __weak typeof(self) weakSelf = self;
         _educationTF.tapAcitonBlock = ^{
             NSArray *dataSources = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSources defaultSelValue:@"本科" isAutoSelect:YES themeColor:[UIColor blueColor] resultBlock:^(id selectValue) {
+            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSources defaultSelValue:@"本科" isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
                 weakSelf.educationTF.text = selectValue;
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
