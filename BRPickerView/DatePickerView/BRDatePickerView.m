@@ -36,18 +36,7 @@
     [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:nil maxDateStr:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 2.显示时间选择器（支持 设置自动选择）
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(UIDatePickerMode)type
-                defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
-                   isAutoSelect:(BOOL)isAutoSelect
-                    resultBlock:(BRDateResultBlock)resultBlock {
-    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-}
-
-#pragma mark - 3.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
+#pragma mark - 2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
 + (void)showDatePickerWithTitle:(NSString *)title
                        dateType:(UIDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
@@ -59,7 +48,7 @@
     [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 4.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+#pragma mark - 3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
 + (void)showDatePickerWithTitle:(NSString *)title
                        dateType:(UIDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
@@ -209,9 +198,9 @@
 - (void)didSelectValueChanged:(UIDatePicker *)sender {
     // 读取日期：datePicker.date
     _selectValue = [self toStringWithDate:sender.date];
-    NSLog(@"滚动完成后，执行block回调:%@", _selectValue);
     // 设置是否开启自动回调
     if (_isAutoSelect) {
+        // 滚动完成后，执行block回调
         if (_resultBlock) {
             _resultBlock(_selectValue);
         }
@@ -228,7 +217,7 @@
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
-    NSLog(@"点击确定按钮后，执行block回调");
+    // 点击确定按钮后，执行block回调
     [self dismissWithAnimation:YES];
     if (_resultBlock) {
         _resultBlock(_selectValue);
