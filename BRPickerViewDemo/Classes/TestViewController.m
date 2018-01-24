@@ -175,7 +175,7 @@
         _genderTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _genderTF.tapAcitonBlock = ^{
-            [BRStringPickerView showStringPickerWithTitle:@"宝宝性别" dataSource:@[@"男", @"女", @"其他"] defaultSelValue:@"男" isAutoSelect:YES resultBlock:^(id selectValue) {
+            [BRStringPickerView showStringPickerWithTitle:@"宝宝性别" dataSource:@[@"男", @"女", @"其他"] defaultSelValue:weakSelf.genderTF.text resultBlock:^(id selectValue) {
                 weakSelf.genderTF.text = selectValue;
             }];
         };
@@ -205,7 +205,7 @@
         _birthtimeTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _birthtimeTF.tapAcitonBlock = ^{
-            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:UIDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDateStr:@"" maxDateStr:@"" isAutoSelect:YES resultBlock:^(NSString *selectValue) {
+            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:UIDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDateStr:@"" maxDateStr:@"" isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
                 weakSelf.birthtimeTF.text = selectValue;
             }];
         };
@@ -230,7 +230,9 @@
         _addressTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _addressTF.tapAcitonBlock = ^{
-            [BRAddressPickerView showAddressPickerWithDefaultSelected:@[@10, @0, @3] isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
+            // 【转换】：以@" "自字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
+            NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@" "];
+            [BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
                 weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
