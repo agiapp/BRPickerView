@@ -29,23 +29,7 @@ typedef void(^BRStringCancelBlock)();
                       resultBlock:(BRStringResultBlock)resultBlock;
 
 /**
- *  2.显示自定义字符串选择器（支持 设置自动选择）
- *
- *  @param title            标题
- *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param resultBlock      选择后的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                      resultBlock:(BRStringResultBlock)resultBlock;
-
-/**
- *  3.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
+ *  2.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
  *
  *  @param title            标题
  *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
@@ -63,7 +47,7 @@ typedef void(^BRStringCancelBlock)();
                       resultBlock:(BRStringResultBlock)resultBlock;
 
 /**
- *  4.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+ *  3.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
  *
  *  @param title            标题
  *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）

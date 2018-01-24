@@ -41,16 +41,7 @@
     [self showStringPickerWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 2.显示自定义字符串选择器（支持 设置自动选择）
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(NSArray *)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                      resultBlock:(BRStringResultBlock)resultBlock {
-    [self showStringPickerWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-}
-
-#pragma mark - 3.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
+#pragma mark - 2.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
 + (void)showStringPickerWithTitle:(NSString *)title
                        dataSource:(id)dataSource
                   defaultSelValue:(id)defaultSelValue
@@ -60,7 +51,7 @@
     [self showStringPickerWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
 }
 
-#pragma mark - 4.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+#pragma mark - 3.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
 + (void)showStringPickerWithTitle:(NSString *)title
                        dataSource:(id)dataSource
                   defaultSelValue:(id)defaultSelValue
@@ -274,9 +265,9 @@
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
-    NSLog(@"点击确定按钮后，执行block回调");
     [self dismissWithAnimation:YES];
     if(_resultBlock) {
+        // 点击确定按钮后，执行block回调
         if (self.isSingleColumn) {
             _resultBlock([self.selectedItem copy]);
         } else {
