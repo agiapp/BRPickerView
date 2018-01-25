@@ -1,5 +1,5 @@
 # 框架介绍
-BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。
+BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需一句代码即可完成调用，使用比较灵活支持自定义主题颜色。选择器类型主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。
 
 【特别提示】：
 
@@ -47,33 +47,20 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 | ![效果图1](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE.gif?raw=true) | ![效果图2](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
-|               框架Demo运行效果图1               |               框架Demo运行效果图1               |
+|               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 安装
 
 #### CocoaPods
 
-1. 在 Podfile 中添加 `pod 'BRPickerView', '~> 2.0.0'`。
+1. 在 Podfile 中添加 `pod 'BRPickerView'`。
 
 2. 执行 `pod install` 或 `pod update` 。
 
-   推荐使用：`pod update --verbose --no-repo-update`  (安装速度快一点)
-
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
-   >注意：
+   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.0.0'
    >
-   >​	先搜索框架：pod search BRPickerView （最新版本号为2.0.0）
-   >
-   >​	如果无法搜索到框架（或没有显示最新版本），执行下面操作：
-   >
-   >​		1》pod setup
-   >
-   >​		2》rm ~/Library/Caches/CocoaPods/search_index.json
-   >
-   >​		3》pod search BRPickerView
-   >
-   >导入指定版本的框架：pod 'BRPickerView', '~> 2.0.0'
 
 #### 手动导入
 
@@ -81,9 +68,8 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 2. 导入头文件 ` #import "BRPickerView.h"`。
 
-   > 注意：
+   > 注意：本框架依赖第三方MJExtension，所以手动导入框架时，还需要导入MJExtension框架。
    >
-   > 本框架依赖第三方MJExtension，所以手动导入框架时，还需要导入MJExtension框架。
 
 # 系统要求
 
