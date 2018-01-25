@@ -50,7 +50,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 # 4. 安装
 
-#### 4.1 CocoaPods
+#### 4.1. CocoaPods
 
 1. 在 Podfile 中添加 `pod 'BRPickerView'`。
 
@@ -61,7 +61,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
    >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.0.0'
    >
 
-#### 4.2 手动导入
+#### 4.2. 手动导入
 
 1. 将与 `README.md` 同级目录下的 `BRPickerView` 文件夹拽入项目中
 
