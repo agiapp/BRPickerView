@@ -6,45 +6,48 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 - 当前最新版本为： `2.0.0` 。
 - 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
-#### 更新记录
+####  更新记录
 
 - 2018-01-24（V2.0.0）：
 
-  >1. 更新了地址数据源（BRCity.plist），地区信息是2018年最新最全的，与微信的地区信息完全一致。
-  >2. 支持自定义默认选择地址（格式：@[@"浙江省", @"杭州市", @"西湖区"]），支持下次点击进入地址选择器时，默认地址为上次选择的结果。
-  >3. 修改了日期选择器、地址选择器、字符串选择器的接口方法（删除了之前的方法2）。
-  >4. 添加了地址选择器显示类型，支持3种显示：只显示省份、显示省份和城市、显示省市区。
+  >- 更新了地址数据源（BRCity.plist），地区信息是2018年最新最全的，与微信的地区信息完全一致。
+  >- 支持自定义默认选择地址（格式：@[@"浙江省", @"杭州市", @"西湖区"]），支持下次点击进入地址选择器时，默认地址为上次选择的结果。
+  >- 修改了日期选择器、地址选择器、字符串选择器的接口方法（删除了之前的方法2）。
+  >- 添加了地址选择器显示类型，支持3种显示：只显示省份、显示省份和城市、显示省市区。
 
 
 
 - 2018-01-05（V1.3.0）:
 
-  >1. 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
-  >2. 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
-  >   - 1> 可以直接传数组：NSArray类型；
-  >   - 2> 可以传plist文件名：NSString类型，带后缀名，plist文件的内容必须是数组格式。
+  >- 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
+  >
+  >- 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
+  >
+  >  ​	1> 可以直接传数组：NSArray类型；
+  >
+  >  ​	2> 可以传plist文件名：NSString类型，带后缀名，plist文件的内容必须是数组格式。
 
 
 - 2018-01-02（V1.2.0）：
 
-  >添加支持自定义主题颜色的方法
+  >- 添加支持自定义主题颜色的方法
 
 - 2017-11-26（V1.1.0）：
 
-  >替换了第三方依赖库，用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错），推荐使用1.1.0版本！！！
+  >- 替换了第三方依赖库，用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错），推荐使用1.1.0版本！！！
 
 
 - 2017-11-16（V1.0.0）：
 
-  >初始版本。
+  >- 初始版本！
 
 # 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-| ![Demo运行效果图](https://github.com/borenfocus/BRPickerView/blob/ace50fb90d32e80a3a94116a925c631e13c6f4cc/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE.gif?raw=true) |
-| :--------------------------------------: |
-|               框架Demo运行效果图                |
+| ![效果图1](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE.gif?raw=true) | ![效果图2](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
+| :--------------------------------------: | :--------------------------------------: |
+|               框架Demo运行效果图1               |               框架Demo运行效果图1               |
 
 # 安装
 
@@ -157,14 +160,12 @@ BRPickerView是iOS的选择器组件，主要包括：日期选择器、时间�
 
 - 日期选择器的四种类型（dateType的4个枚举值）：
 
-| ![样式1：UIDatePickerModeTime](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
+| ![样式1：UIDatePickerModeTime](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |         样式1：UIDatePickerModeTime         |         样式2：UIDatePickerModeDate         |
 |                                          |                                          |
-| ![样式3：UIDatePickerModeDateAndTime](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/borenfocus/BRPickerView/blob/0e4519a28bd0ce462b9e2c15d63834645228a605/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
+| ![样式3：UIDatePickerModeDateAndTime](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
 |     样式3：UIDatePickerModeDateAndTime      |    样式4：UIDatePickerModeCountDownTimer    |
-
-
 
 #### 2. 地址选择器：`BRAddressPickerView`
 
@@ -226,7 +227,7 @@ NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@"
 }];
 ```
 
-效果图（3种样式）：
+地址选择的3种显示类型（showType 的3个枚举值）：
 
 | ![省份](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeCity.png?raw=true) | ![地区](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeArea.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
@@ -234,7 +235,7 @@ NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@"
 
 #### 3.  自定义字符串选择器：`BRStringPickerView`
 
-​	查看 BRStringPickerView.h 头文件，里面提供了6个方法，可根据自己的需求选择其中的一个方法进行使用。
+​	查看 BRStringPickerView.h 头文件，里面提供了3个方法，可根据自己的需求选择其中的一个方法进行使用。
 
 ```objective-c
 /**
@@ -294,15 +295,19 @@ NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@"
 
 ```objective-c
 // 自定义单列字符串
-NSArray *dataSources = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-[BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSources defaultSelValue:@"本科" isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+//NSArray *dataSource = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
+NSString *dataSource = @"testData1.plist"; // 可以将数据源（上面的数组）放到plist文件中
+[BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSource defaultSelValue:weakSelf.educationTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
     weakSelf.educationTF.text = selectValue;
 } cancelBlock:^{
     NSLog(@"点击了背景视图或取消按钮");
 }];
+
 // 自定义多列字符串
-NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-[BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
+NSArray *dataSource = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
+//NSString *dataSource = @"testData3.plist"; // 可以将数据源（上面的数组）放到plist文件中
+NSArray *defaultSelArr = [weakSelf.otherTF.text componentsSeparatedByString:@"，"];
+[BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
     weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
 } cancelBlock:^{
     NSLog(@"点击了背景视图或取消按钮");
@@ -313,7 +318,11 @@ NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第
 
 | ![自定义单列字符串](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_single.png?raw=true) | ![自定义多列字符串](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
-|                 自定义单列字符串                 |                 自定义多列字符串                 |
+|            自定义单列字符串（默认主题色样式）             |            自定义2列字符串（自定义主题色样式）            |
+
+| ![3列效果图](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more3.png?raw=true) | ![4列效果图](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more4.png?raw=true) |
+| :--------------------------------------: | :--------------------------------------: |
+|            自定义3列字符串（自定义主题色样式）            |            自定义4列字符串（自定义主题色样式）            |
 
 # 许可证
 
