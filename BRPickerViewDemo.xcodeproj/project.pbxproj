@@ -31,6 +31,9 @@
 		C5C2870B1FC9C214005DE4E7 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286FF1FC9C1FD005DE4E7 /* NSObject+MJKeyValue.m */; };
 		C5C2870C1FC9C214005DE4E7 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C287011FC9C1FD005DE4E7 /* NSObject+MJProperty.m */; };
 		C5C2870D1FC9C214005DE4E7 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C287031FC9C1FD005DE4E7 /* NSString+MJExtension.m */; };
+		C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D32018D38100FECAD5 /* testData1.plist */; };
+		C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D52018D39900FECAD5 /* testData2.plist */; };
+		C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D72018D5DF00FECAD5 /* testData3.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +85,9 @@
 		C5C287011FC9C1FD005DE4E7 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		C5C287021FC9C1FD005DE4E7 /* NSString+MJExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		C5C287031FC9C1FD005DE4E7 /* NSString+MJExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		C5EB52D32018D38100FECAD5 /* testData1.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData1.plist; sourceTree = "<group>"; };
+		C5EB52D52018D39900FECAD5 /* testData2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData2.plist; sourceTree = "<group>"; };
+		C5EB52D72018D5DF00FECAD5 /* testData3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData3.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +200,9 @@
 				C5ACE5141F3D81550069978B /* BRTextField.m */,
 				C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */,
 				C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */,
+				C5EB52D32018D38100FECAD5 /* testData1.plist */,
+				C5EB52D52018D39900FECAD5 /* testData2.plist */,
+				C5EB52D72018D5DF00FECAD5 /* testData3.plist */,
 				C5ACE4F51F3D5A8B0069978B /* Vendor */,
 			);
 			path = Classes;
@@ -296,9 +305,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
+				C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
+				C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */,
 				C5ACE4FC1F3D5A8B0069978B /* BRCity.plist in Resources */,
+				C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

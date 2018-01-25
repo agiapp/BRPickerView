@@ -9,25 +9,31 @@
 
 #import "BRStringPickerView.h"
 
+typedef NS_ENUM(NSInteger, BRStringPickerMode) {
+    BRStringPickerComponentSingle,  // 单列
+    BRStringPickerComponentMore     // 多列
+};
+
 @interface BRStringPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
+{
+    BOOL isDataSourceValid; // 数据源是否合法
+}
 // 字符串选择器(默认大小: 320px × 216px)
 @property (nonatomic, strong) UIPickerView *pickerView;
-// 是否是单列
-@property (nonatomic, assign) BOOL isSingleColumn;
-// 数据源是否合法（数组的元素类型只能是字符串或数组类型）
-@property (nonatomic, assign) BOOL isDataSourceValid;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSArray  *dataSource;
+@property (nonatomic, assign) BRStringPickerMode type;
+@property (nonatomic, strong) NSArray *dataSourceArr;
+// 单列选择的值
+@property (nonatomic, strong) NSString *selectValue;
+// 多列选择的值
+@property (nonatomic, strong) NSMutableArray *selectValueArr;
+
 // 是否开启自动选择
 @property (nonatomic, assign) BOOL isAutoSelect;
 // 主题色
 @property (nonatomic, strong) UIColor *themeColor;
 @property (nonatomic, copy) BRStringResultBlock resultBlock;
 @property (nonatomic, copy) BRStringCancelBlock cancelBlock;
-// 单列选中的项
-@property (nonatomic, copy) NSString *selectedItem;
-// 多列选中的项
-@property (nonatomic, strong) NSMutableArray *selectedItems;
 
 @end
 
@@ -59,32 +65,19 @@
                        themeColor:(UIColor *)themeColor
                       resultBlock:(BRStringResultBlock)resultBlock
                       cancelBlock:(BRStringCancelBlock)cancelBlock {
-    if (!dataSource) {
-        return;
-    }
-    NSArray *dataArr = nil;
-    if ([dataSource isKindOfClass:[NSArray class]]) {
-        dataArr = dataSource;
-        if (dataArr.count == 0) {
-            return;
-        }
-    } else if ([dataSource isKindOfClass:[NSString class]]) {
-        NSString *plistName = dataSource;
-        NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
-        dataArr = [[NSArray alloc] initWithContentsOfFile:path];
-        if (!dataArr || dataArr.count == 0) {
-            return;
-        }
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
+    if (strPickerView->isDataSourceValid) {
+        [strPickerView showWithAnimation:YES];
     } else {
-        return;
+        NSLog(@"数据源不合法！");
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"参数异常！" message:@"选择器的数据源不合法，请检查数据源格式" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+        [alert show];
     }
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataArr defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    [strPickerView showWithAnimation:YES];
 }
 
 #pragma mark - 初始化自定义字符串选择器
 - (instancetype)initWithTitle:(NSString *)title
-                   dataSource:(NSArray *)dataSource
+                   dataSource:(id)dataSource
               defaultSelValue:(id)defaultSelValue
                  isAutoSelect:(BOOL)isAutoSelect
                    themeColor:(UIColor *)themeColor
@@ -92,23 +85,87 @@
                   cancelBlock:(BRStringCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.title = title;
-        self.dataSource = dataSource;
-        if (defaultSelValue) {
-            if ([defaultSelValue isKindOfClass:[NSString class]]) {
-                self.selectedItem = defaultSelValue;
-            } else if ([defaultSelValue isKindOfClass:[NSArray class]]){
-                self.selectedItems = [defaultSelValue mutableCopy];
-            }
-        }
         self.isAutoSelect = isAutoSelect;
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
-        
-        [self loadData];
-        [self initUI];
+        isDataSourceValid = YES;
+        [self configDataSource:dataSource defaultSelValue:defaultSelValue];
+        if (isDataSourceValid) {
+            [self initUI];
+        }
     }
     return self;
+}
+
+#pragma mark - 设置数据源
+- (void)configDataSource:(id)dataSource defaultSelValue:(id)defaultSelValue {
+    // 1.先判断传入的数据源是否合法
+    if (!dataSource) {
+        isDataSourceValid = NO;
+    }
+    NSArray *dataArr = nil;
+    if ([dataSource isKindOfClass:[NSArray class]] && [dataSource count] > 0) {
+        dataArr = [NSArray arrayWithArray:dataSource];
+    } else if ([dataSource isKindOfClass:[NSString class]] && [dataSource length] > 0) {
+        NSString *plistName = dataSource;
+        NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
+        dataArr = [[NSArray alloc] initWithContentsOfFile:path];
+        if (!dataArr || dataArr.count == 0) {
+            isDataSourceValid = NO;
+        }
+    } else {
+        isDataSourceValid = NO;
+    }
+    // 判断数组是否合法（即数组的所有元素是否是同一种数据类型）
+    if (isDataSourceValid) {
+        Class itemClass = [[dataArr firstObject] class];
+        for (id obj in dataArr) {
+            if (![obj isKindOfClass:itemClass]) {
+                isDataSourceValid = NO;
+                break;
+            }
+        }
+    }
+    if (!isDataSourceValid) {
+        return;
+    }
+    // 2. 给数据源赋值
+    self.dataSourceArr = dataArr;
+    
+    // 3. 根据数据源 数组元素的类型，判断选择器的显示类型
+    if ([[self.dataSourceArr firstObject] isKindOfClass:[NSString class]]) {
+        self.type = BRStringPickerComponentSingle;
+    } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
+        self.type = BRStringPickerComponentMore;
+    }
+    // 4. 给选择器设置默认值
+    if (self.type == BRStringPickerComponentSingle) {
+        if (defaultSelValue && [defaultSelValue isKindOfClass:[NSString class]] && [defaultSelValue length] > 0 && [self.dataSourceArr containsObject:defaultSelValue]) {
+            self.selectValue = defaultSelValue;
+        } else {
+            self.selectValue = [self.dataSourceArr firstObject];
+        }
+        NSInteger row = [self.dataSourceArr indexOfObject:self.selectValue];
+        // 默认滚动的行
+        [self.pickerView selectRow:row inComponent:0 animated:NO];
+    } else if (self.type == BRStringPickerComponentMore) {
+        NSMutableArray *tempArr = [NSMutableArray array];
+        for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
+            NSString *selValue = nil;
+            if (defaultSelValue && [defaultSelValue isKindOfClass:[NSArray class]] && [defaultSelValue count] > 0 && i < [defaultSelValue count] && [self.dataSourceArr[i] containsObject:defaultSelValue[i]]) {
+                [tempArr addObject:defaultSelValue[i]];
+                selValue = defaultSelValue[i];
+            } else {
+                [tempArr addObject:[self.dataSourceArr[i] firstObject]];
+                selValue = [self.dataSourceArr[i] firstObject];
+            }
+            NSInteger row = [self.dataSourceArr[i] indexOfObject:selValue];
+            // 默认滚动的行
+            [self.pickerView selectRow:row inComponent:i animated:NO];
+        }
+        self.selectValueArr = [tempArr copy];
+    }
 }
 
 #pragma mark - 初始化子视图
@@ -119,80 +176,6 @@
     [self.alertView addSubview:self.pickerView];
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
         [self setupThemeColor:self.themeColor];
-    }
-}
-
-#pragma mark - 加载自定义字符串数据
-- (void)loadData {
-    if (self.dataSource == nil || self.dataSource.count == 0) {
-        self.isDataSourceValid = NO;
-        return;
-    } else {
-        self.isDataSourceValid = YES;
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    // 遍历数组元素 (遍历多维数组一般用这个方法)
-    [self.dataSource enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        static Class itemType;
-        if (idx == 0) {
-            itemType = [obj class];
-            // 判断数据源数组的第一个元素是什么类型
-            if ([obj isKindOfClass:[NSArray class]]) {
-                weakSelf.isSingleColumn = NO; // 非单列
-            } else if ([obj isKindOfClass:[NSString class]]) {
-                weakSelf.isSingleColumn = YES; // 单列
-            } else {
-                weakSelf.isDataSourceValid = NO; // 数组不合法
-                return;
-            }
-        } else {
-            // 判断数组的元素类型是否相同
-            if (itemType != [obj class]) {
-                weakSelf.isDataSourceValid = NO; // 数组不合法
-                *stop = YES;
-                return;
-            }
-            
-            if ([obj isKindOfClass:[NSArray class]]) {
-                if (((NSArray *)obj).count == 0) {
-                    weakSelf.isDataSourceValid = NO;
-                    *stop = YES;
-                    return;
-                } else {
-                    for (id subObj in obj) {
-                        if (![subObj isKindOfClass:[NSString class]]) {
-                            weakSelf.isDataSourceValid = NO;
-                            *stop = YES;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-    }];
-    
-    if (self.isSingleColumn) {
-        if (self.selectedItem == nil) {
-            // 如果是单列，默认选中数组第一个元素
-            self.selectedItem = _dataSource.firstObject;
-        }
-    } else {
-        BOOL isSelectedItemsValid = YES;
-        for (id obj in self.selectedItems) {
-            if (![obj isKindOfClass:[NSString class]]) {
-                isSelectedItemsValid = NO;
-                break;
-            }
-        }
-        
-        if (self.selectedItems == nil || self.selectedItems.count != self.dataSource.count || !isSelectedItemsValid) {
-            NSMutableArray *mutableArray = [NSMutableArray array];
-            for (NSArray* componentItem in _dataSource) {
-                [mutableArray addObject:componentItem.firstObject];
-            }
-            self.selectedItems = [NSMutableArray arrayWithArray:mutableArray];
-        }
     }
 }
 
@@ -266,12 +249,12 @@
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     [self dismissWithAnimation:YES];
+    // 点击确定按钮后，执行block回调
     if(_resultBlock) {
-        // 点击确定按钮后，执行block回调
-        if (self.isSingleColumn) {
-            _resultBlock([self.selectedItem copy]);
-        } else {
-            _resultBlock([self.selectedItems copy]);
+        if (self.type == BRStringPickerComponentSingle) {
+            _resultBlock(self.selectValue);
+        } else if (self.type == BRStringPickerComponentMore) {
+            _resultBlock(self.selectValueArr);
         }
     }
 }
@@ -284,24 +267,6 @@
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
         _pickerView.showsSelectionIndicator = YES;
-        __weak typeof(self) weakSelf = self;
-        if (self.isSingleColumn) {
-            [_dataSource enumerateObjectsUsingBlock:^(NSString *rowItem, NSUInteger rowIdx, BOOL *stop) {
-                if ([weakSelf.selectedItem isEqualToString:rowItem]) {
-                    [weakSelf.pickerView selectRow:rowIdx inComponent:0 animated:NO];
-                    *stop = YES;
-                }
-            }];
-        } else {
-            [self.selectedItems enumerateObjectsUsingBlock:^(NSString *selectedItem, NSUInteger component, BOOL *stop) {
-                [_dataSource[component] enumerateObjectsUsingBlock:^(id rowItem, NSUInteger rowIdx, BOOL *stop) {
-                    if ([selectedItem isEqualToString:rowItem]) {
-                        [weakSelf.pickerView selectRow:rowIdx inComponent:component animated:NO];
-                        *stop = YES;
-                    }
-                }];
-            }];
-        }
     }
     return _pickerView;
 }
@@ -309,45 +274,70 @@
 
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    if (self.isSingleColumn) {
-        return 1;
-    } else {
-        return _dataSource.count;
+    switch (self.type) {
+        case BRStringPickerComponentSingle:
+            return 1;
+            break;
+        case BRStringPickerComponentMore:
+            return self.dataSourceArr.count;
+            break;
+            
+        default:
+            break;
     }
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (self.isSingleColumn) {
-        return _dataSource.count;
-    } else {
-        return ((NSArray*)_dataSource[component]).count;
+    switch (self.type) {
+        case BRStringPickerComponentSingle:
+            return self.dataSourceArr.count;
+            break;
+        case BRStringPickerComponentMore:
+            return [self.dataSourceArr[component] count];
+            break;
+            
+        default:
+            break;
     }
 }
 
 #pragma mark - UIPickerViewDelegate
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (self.isSingleColumn) {
-        return _dataSource[row];
-    } else {
-        return ((NSArray*)_dataSource[component])[row];
-    }
-}
-
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (self.isSingleColumn) {
-        self.selectedItem = _dataSource[row];
-    } else {
-        self.selectedItems[component] = ((NSArray *)_dataSource[component])[row];
-    }
-    // 设置是否自动回调
-    if (self.isAutoSelect) {
-        if(_resultBlock) {
-            if (self.isSingleColumn) {
-                _resultBlock([self.selectedItem copy]);
-            } else {
-                _resultBlock([self.selectedItems copy]);
+    switch (self.type) {
+        case BRStringPickerComponentSingle:
+        {
+            self.selectValue = self.dataSourceArr[row];
+            // 设置是否自动回调
+            if (self.isAutoSelect) {
+                if(self.resultBlock) {
+                    self.resultBlock(self.selectValue);
+                }
             }
         }
+            break;
+        case BRStringPickerComponentMore:
+        {
+            NSMutableArray *tempArr = [NSMutableArray array];
+            for (NSInteger i = 0; i < self.selectValueArr.count; i++) {
+                if (i == component) {
+                    [tempArr addObject:self.dataSourceArr[component][row]];
+                } else {
+                    [tempArr addObject:self.selectValueArr[i]];
+                }
+            }
+            self.selectValueArr = tempArr;
+            
+            // 设置是否自动回调
+            if (self.isAutoSelect) {
+                if(self.resultBlock) {
+                    self.resultBlock([self.selectValueArr copy]);
+                }
+            }
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -367,14 +357,32 @@
     label.adjustsFontSizeToFitWidth = YES;
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
-    // 调用上一个委托方法，获得要展示的title
-    label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    if (self.type == BRStringPickerComponentSingle) {
+        label.text = self.dataSourceArr[row];
+    } else if (self.type == BRStringPickerComponentMore) {
+        label.text = self.dataSourceArr[component][row];
+    }
+    
     return label;
 }
 
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     return 35.0f * kScaleFit;
+}
+
+- (NSArray *)dataSourceArr {
+    if (!_dataSourceArr) {
+        _dataSourceArr = [NSArray array];
+    }
+    return _dataSourceArr;
+}
+
+- (NSMutableArray *)selectValueArr {
+    if (!_selectValueArr) {
+        _selectValueArr = [[NSMutableArray alloc]init];
+    }
+    return _selectValueArr;
 }
 
 @end
