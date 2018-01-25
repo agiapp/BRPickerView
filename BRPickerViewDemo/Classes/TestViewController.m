@@ -248,8 +248,9 @@
         _educationTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _educationTF.tapAcitonBlock = ^{
-            NSArray *dataSources = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSources defaultSelValue:@"本科" isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+            //NSArray *dataSource = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
+            NSString *dataSource = @"testData1.plist"; // 可以将数据源（上面的数组）放到plist文件中
+            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSource defaultSelValue:weakSelf.educationTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
                 weakSelf.educationTF.text = selectValue;
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
@@ -265,8 +266,10 @@
         _otherTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _otherTF.tapAcitonBlock = ^{
-            NSArray *dataSources = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-            [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSources defaultSelValue:@[@"第3周", @"第3天"] isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
+            NSArray *dataSource = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
+            //NSString *dataSource = @"testData3.plist"; // 可以将数据源（上面的数组）放到plist文件中
+            NSArray *defaultSelArr = [weakSelf.otherTF.text componentsSeparatedByString:@"，"];
+            [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
                 weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
