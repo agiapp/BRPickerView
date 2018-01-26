@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.0.0` 。
+- 当前最新版本为： `2.1.0` 。
 - 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -16,6 +16,11 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+- 2018-01-26（V2.1.0）:
+
+  >- 给地址选择器添加了一个方法（见方法4），提供数据源参数，支持外部传入地区数据源。
+  >- 提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
 
 - 2018-01-25（V2.0.0）：
 
@@ -58,7 +63,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
-   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.0.0'
+   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.1.0'
    >
 
 #### 4.2. 手动导入
@@ -154,7 +159,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 #### 6.2. 地址选择器：`BRAddressPickerView`
 
-​	查看 BRAddressPickerView.h 头文件，里面提供了3个方法，可根据自己的需求选择其中的一个方法进行使用。
+​	查看 BRAddressPickerView.h 头文件，里面提供了4个方法，可根据自己的需求选择其中的一个方法进行使用。
 
 ```objective-c
 /**
@@ -193,6 +198,26 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *
  */
 + (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
+                      defaultSelected:(NSArray *)defaultSelectedArr
+                         isAutoSelect:(BOOL)isAutoSelect
+                           themeColor:(UIColor *)themeColor
+                          resultBlock:(BRAddressResultBlock)resultBlock
+                          cancelBlock:(BRAddressCancelBlock)cancelBlock;
+
+/**
+ *  4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
+ *
+ *  @param showType                 地址选择器显示类型
+ *  @param dataSource               地区数据源
+ *  @param defaultSelectedArr       默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"])
+ *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
+ *  @param themeColor               自定义主题颜色
+ *  @param resultBlock              选择后的回调
+ *  @param cancelBlock              取消选择的回调
+ *
+ */
++ (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
+                           dataSource:(NSArray *)dataSource
                       defaultSelected:(NSArray *)defaultSelectedArr
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
