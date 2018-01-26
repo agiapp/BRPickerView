@@ -13,6 +13,7 @@
 
 @interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
+    BOOL isDataSourceValid;    // 数据源是否合法
     NSString *_selectProvince; // 保存选中的省
     NSString *_selectCity;     // 保存选中的市
     NSString *_selectArea;     // 保存选中的区
@@ -20,6 +21,8 @@
 }
 // 时间选择器（默认大小: 320px × 216px）
 @property (nonatomic, strong) UIPickerView *pickerView;
+// 保存传入的数据源
+@property (nonatomic, strong) NSArray *dataSource;
 // 省市区模型数据
 @property (nonatomic, strong) NSMutableArray *addressModelArr;
 // 省
@@ -47,7 +50,7 @@
 #pragma mark - 1.显示地址选择器
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
                                  resultBlock:(BRAddressResultBlock)resultBlock {
-    [self showAddressPickerWithShowType:BRAddressPickerModeArea defaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    [self showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
 #pragma mark - 2.显示地址选择器（支持 设置自动选择 和 自定义主题颜色）
@@ -55,7 +58,7 @@
                                 isAutoSelect:(BOOL)isAutoSelect
                                   themeColor:(UIColor *)themeColor
                                  resultBlock:(BRAddressResultBlock)resultBlock {
-    [self showAddressPickerWithShowType:BRAddressPickerModeArea defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+    [self showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
 }
 
 #pragma mark - 3.显示地址选择器（支持 设置选择器类型、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -65,12 +68,30 @@
                           themeColor:(UIColor *)themeColor
                          resultBlock:(BRAddressResultBlock)resultBlock
                          cancelBlock:(BRAddressCancelBlock)cancelBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    [addressPickerView showWithAnimation:YES];
+    [self showAddressPickerWithShowType:showType dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
+}
+
+#pragma mark - 4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
++ (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
+                           dataSource:(NSArray *)dataSource
+                      defaultSelected:(NSArray *)defaultSelectedArr
+                         isAutoSelect:(BOOL)isAutoSelect
+                           themeColor:(UIColor *)themeColor
+                          resultBlock:(BRAddressResultBlock)resultBlock
+                          cancelBlock:(BRAddressCancelBlock)cancelBlock {
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType dataSource:dataSource defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
+    if (addressPickerView->isDataSourceValid) {
+        [addressPickerView showWithAnimation:YES];
+    } else {
+        NSLog(@"数据源不合法！");
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"参数异常！" message:@"请检查地址选择器的数据源是否有误" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 #pragma mark - 初始化地址选择器
 - (instancetype)initWithShowType:(BRAddressPickerMode)showType
+                      dataSource:(NSArray *)dataSource
                  defaultSelected:(NSArray *)defaultSelectedArr
                     isAutoSelect:(BOOL)isAutoSelect
                       themeColor:(UIColor *)themeColor
@@ -78,6 +99,8 @@
                      cancelBlock:(BRAddressCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.showType = showType;
+        self.dataSource = dataSource;
+        isDataSourceValid = YES;
         // 默认选中
         if (defaultSelectedArr) {
             if (defaultSelectedArr.count > 0 && [defaultSelectedArr[0] isKindOfClass:[NSString class]]) {
@@ -96,17 +119,27 @@
         self.cancelBlock = cancelBlock;
         
         [self loadData];
-        [self initUI];
+        if (isDataSourceValid) {
+            [self initUI];
+        }
     }
     return self;
 }
 
 #pragma mark - 获取地址数据
 - (void)loadData {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity" ofType:@"plist"];
-    NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
+    // 如果外部没有传入地区数据源，就使用本地的数据源
+    if (!self.dataSource || self.dataSource.count == 0) {
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity.plist" ofType:nil];
+        NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
+        if (!dataSource || dataSource.count == 0) {
+            isDataSourceValid = NO;
+            return;
+        }
+        self.dataSource = dataSource;
+    }
     NSMutableArray *tempArr = [NSMutableArray array];
-    for (NSDictionary *dic in dataSource) {
+    for (NSDictionary *dic in self.dataSource) {
         // 此处用 MJExtension 进行解析
         BRProvinceModel *proviceModel = [BRProvinceModel mj_objectWithKeyValues:dic];
         [self.addressModelArr addObject:proviceModel];
