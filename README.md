@@ -305,7 +305,7 @@ NSArray *defaultSelArr = [weakSelf.otherTF.text componentsSeparatedByString:@"�
 
 | ![自定义单列字符串](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_single.png?raw=true) | ![自定义多列字符串](https://github.com/borenfocus/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
-|            单列字符串选择器（默认主题色样式）             |            2列字符串选择器（自定义主题色样式）            |
+|            单列字符串选择器（默认主题色样式）             |            双列字符串选择器（自定义主题色样式）            |
 
 | ![3列效果图](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more3.png?raw=true) | ![4列效果图](https://github.com/borenfocus/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more4.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
