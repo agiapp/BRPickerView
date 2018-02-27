@@ -121,6 +121,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     if (isDataSourceValid) {
         Class itemClass = [[dataArr firstObject] class];
         for (id obj in dataArr) {
+            //obj = @"VR"(NSTaggedPointerString); // 同样作为NSString的子类，但是是不会通过验证的
             if (![obj isKindOfClass:itemClass]) {
                 isDataSourceValid = NO;
                 break;
