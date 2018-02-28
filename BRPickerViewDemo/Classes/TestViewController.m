@@ -232,8 +232,8 @@
         _addressTF.tapAcitonBlock = ^{
             // 【转换】：以@" "自字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
             NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@" "];
-            NSArray *dataSource = [weakSelf getAddressDataSource];  //从外部传入地区数据源
-            // NSArray *dataSource = nil; // dataSource 为空时，就默认使用框架内部提供的数据源（即 BRCity.plist）
+            //NSArray *dataSource = [weakSelf getAddressDataSource];  //从外部传入地区数据源
+            NSArray *dataSource = nil; // dataSource 为空时，就默认使用框架内部提供的数据源（即 BRCity.plist）
             [BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:dataSource defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
                 weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
             } cancelBlock:^{
@@ -245,7 +245,7 @@
 #pragma mark - 获取地区数据源
 - (NSArray *)getAddressDataSource {
     // 加载地区数据源（实际开发中这里可以写网络请求，从服务端请求数据。可以把 BRCity.json 文件的数据放到服务端去维护，通过接口获取这个数据源数组）
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"BRCity.json" ofType:nil];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity.json" ofType:nil];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     
