@@ -130,7 +130,8 @@
 - (void)loadData {
     // 如果外部没有传入地区数据源，就使用本地的数据源
     if (!self.dataSource || self.dataSource.count == 0) {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity.plist" ofType:nil];
+        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+        NSString *filePath = [bundle pathForResource:@"BRCity.plist" ofType:nil];
         NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
         if (!dataSource || dataSource.count == 0) {
             isDataSourceValid = NO;
