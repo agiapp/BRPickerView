@@ -4,18 +4,23 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.1.1` 。
+- 当前最新版本为： `2.1.2` 。
 - 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-| ![效果图1](https://github.com/renboss/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE.gif?raw=true) | ![效果图2](https://github.com/renboss/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
+| ![效果图1](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+- 2018-03-11（V2.1.2）:
+
+  >- 重命名了Github用户名，更新项目相关的路径。
+  >- 提示：pod之前的版本不受影响。
 
 - 2018-02-28（V2.1.1）：
 
@@ -67,7 +72,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
-   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.1.1'
+   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.1.2'
    >
 
 #### 4.2. 手动导入
@@ -154,11 +159,11 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 - 日期选择器的四种类型（dateType的4个枚举值）：
 
-| ![样式1：UIDatePickerModeTime](https://github.com/renboss/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/renboss/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
+| ![样式1：UIDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |         样式1：UIDatePickerModeTime         |         样式2：UIDatePickerModeDate         |
 |                                          |                                          |
-| ![样式3：UIDatePickerModeDateAndTime](https://github.com/renboss/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/renboss/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
+| ![样式3：UIDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
 |     样式3：UIDatePickerModeDateAndTime      |    样式4：UIDatePickerModeCountDownTimer    |
 
 #### 6.2. 地址选择器：`BRAddressPickerView`
@@ -243,10 +248,10 @@ NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@"
 
 - 地址选择器的3种显示类型（showType 的3个枚举值）：
 
-| ![省份](https://github.com/renboss/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/renboss/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeCity.png?raw=true) |
+| ![省份](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeCity.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |     样式1：BRAddressPickerModeProvince      |       样式2：BRAddressPickerModeCity        |
-| ![地区](https://github.com/renboss/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeArea.png?raw=true) |                                          |
+| ![地区](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeArea.png?raw=true) |                                          |
 |       样式3：BRAddressPickerModeArea        |                                          |
 
 #### 6.3.  自定义字符串选择器：`BRStringPickerView`
@@ -332,11 +337,11 @@ NSArray *defaultSelArr = [weakSelf.otherTF.text componentsSeparatedByString:@"�
 
 - 字符串选择器效果图：
 
-| ![自定义单列字符串](https://github.com/renboss/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_single.png?raw=true) | ![自定义多列字符串](https://github.com/renboss/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more.png?raw=true) |
+| ![自定义单列字符串](https://github.com/91renb/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_single.png?raw=true) | ![自定义多列字符串](https://github.com/91renb/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |            单列字符串选择器（默认主题色样式）             |            双列字符串选择器（自定义主题色样式）            |
 
-| ![3列效果图](https://github.com/renboss/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more3.png?raw=true) | ![4列效果图](https://github.com/renboss/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more4.png?raw=true) |
+| ![3列效果图](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more3.png?raw=true) | ![4列效果图](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more4.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |            3列字符串选择器（自定义主题色样式）            |            4列字符串选择器（自定义主题色样式）            |
 

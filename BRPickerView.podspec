@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "2.1.1"
+  s.version      = "2.1.2"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
@@ -10,18 +10,18 @@ Pod::Spec.new do |s|
                     A custom picker view for iOS, Include "时间选择器，地址选择器，自定义字符串选择器", Support the Objective - C language.
                 DESC
   # 框架的主页
-  s.homepage     = "https://github.com/borenfocus/BRPickerView"
+  s.homepage     = "https://github.com/91renb/BRPickerView"
   # 证书类型
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
   # 作者
-  s.author             = { "任波" => "borenfocus@gmail.com" }
+  s.author             = { "任波" => "ios@91renb.com" }
   
   # 框架支持的平台和版本
   s.platform     = :ios, "8.0"
 
   # GitHib下载地址和版本
-  s.source       = { :git => "https://github.com/borenfocus/BRPickerView.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => "#{s.version}" }
 
   # 本地框架源文件的位置
   s.source_files  = "BRPickerView/**/*.{h,m}"
