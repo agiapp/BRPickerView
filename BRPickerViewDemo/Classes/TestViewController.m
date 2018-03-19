@@ -234,8 +234,12 @@
             NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@" "];
             //NSArray *dataSource = [weakSelf getAddressDataSource];  //从外部传入地区数据源
             NSArray *dataSource = nil; // dataSource 为空时，就默认使用框架内部提供的数据源（即 BRCity.plist）
-            [BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:dataSource defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
-                weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
+            [BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:dataSource defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+                weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
+                NSLog(@"省：%@，%@", province.code, province.name);
+                NSLog(@"市：%@，%@", city.code, city.name);
+                NSLog(@"区：%@，%@", area.code, area.name);
+                NSLog(@"-----------------");
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
             }];

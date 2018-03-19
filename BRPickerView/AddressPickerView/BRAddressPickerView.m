@@ -8,31 +8,34 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRAddressPickerView.h"
-#import "BRAddressModel.h"
-#import "MJExtension.h"
 
 @interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
-    BOOL isDataSourceValid;    // 数据源是否合法
-    NSString *_selectProvince; // 保存选中的省
-    NSString *_selectCity;     // 保存选中的市
-    NSString *_selectArea;     // 保存选中的区
-    NSInteger _selectProvinceIndex; // 记录省选中的位置
+    BOOL _isDataSourceValid;    // 数据源是否合法
+    NSInteger _provinceIndex;   // 记录省选中的位置
+    NSInteger _cityIndex;       // 记录市选中的位置
+    NSInteger _areaIndex;       // 记录区选中的位置
+    
+    NSArray * _defaultSelectedArr;
 }
-// 时间选择器（默认大小: 320px × 216px）
+// 地址选择器（默认大小: 320px × 216px）
 @property (nonatomic, strong) UIPickerView *pickerView;
 // 保存传入的数据源
 @property (nonatomic, strong) NSArray *dataSource;
-// 省市区模型数据
-@property (nonatomic, strong) NSMutableArray *addressModelArr;
-// 省
-@property(nonatomic, strong) NSArray *provinceNameArr;
-// 市
-@property(nonatomic, strong) NSArray *cityNameArr;
-// 区
-@property(nonatomic, strong) NSArray *areaNameArr;
+// 省模型数组
+@property(nonatomic, strong) NSArray *provinceModelArr;
+// 市模型数组
+@property(nonatomic, strong) NSArray *cityModelArr;
+// 区模型数组
+@property(nonatomic, strong) NSArray *areaModelArr;
 // 显示类型
 @property (nonatomic, assign) BRAddressPickerMode showType;
+// 选中的省
+@property(nonatomic, strong) BRProvinceModel *selectProvinceModel;
+// 选中的市
+@property(nonatomic, strong) BRCityModel *selectCityModel;
+// 选中的区
+@property(nonatomic, strong) BRAreaModel *selectAreaModel;
 
 // 是否开启自动选择
 @property (nonatomic, assign) BOOL isAutoSelect;
@@ -80,7 +83,7 @@
                           resultBlock:(BRAddressResultBlock)resultBlock
                           cancelBlock:(BRAddressCancelBlock)cancelBlock {
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType dataSource:dataSource defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    if (addressPickerView->isDataSourceValid) {
+    if (addressPickerView->_isDataSourceValid) {
         [addressPickerView showWithAnimation:YES];
     } else {
         NSLog(@"数据源不合法！");
@@ -100,26 +103,16 @@
     if (self = [super init]) {
         self.showType = showType;
         self.dataSource = dataSource;
-        isDataSourceValid = YES;
-        // 默认选中
-        if (defaultSelectedArr) {
-            if (defaultSelectedArr.count > 0 && [defaultSelectedArr[0] isKindOfClass:[NSString class]]) {
-                _selectProvince = defaultSelectedArr[0];
-            }
-            if (defaultSelectedArr.count > 1 && [defaultSelectedArr[1] isKindOfClass:[NSString class]]) {
-                _selectCity = defaultSelectedArr[1];
-            }
-            if (defaultSelectedArr.count > 2 && [defaultSelectedArr[2] isKindOfClass:[NSString class]]) {
-                _selectArea = defaultSelectedArr[2];
-            }
-        }
+        _defaultSelectedArr = defaultSelectedArr;
+        _isDataSourceValid = YES;
+    
         self.isAutoSelect = isAutoSelect;
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
         
         [self loadData];
-        if (isDataSourceValid) {
+        if (_isDataSourceValid) {
             [self initUI];
         }
     }
@@ -130,51 +123,127 @@
 - (void)loadData {
     // 如果外部没有传入地区数据源，就使用本地的数据源
     if (!self.dataSource || self.dataSource.count == 0) {
+        /*
+            先拿到最外面的 bundle。
+            对 framework 链接方式来说就是 framework 的 bundle 根目录，
+            对静态库链接方式来说就是 target client 的 main bundle，
+            然后再去找下面名为 BRPickerView 的 bundle 对象。
+         */
         NSBundle *bundle = [NSBundle bundleForClass:[self class]];
         NSURL *url = [bundle URLForResource:@"BRPickerView" withExtension:@"bundle"];
         NSBundle *plistBundle = [NSBundle bundleWithURL:url];
+        
         NSString *filePath = [plistBundle pathForResource:@"BRCity" ofType:@"plist"];
         NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
         if (!dataSource || dataSource.count == 0) {
-            isDataSourceValid = NO;
+            _isDataSourceValid = NO;
             return;
         }
         self.dataSource = dataSource;
     }
-    NSMutableArray *tempArr = [NSMutableArray array];
-    for (NSDictionary *dic in self.dataSource) {
-        // 此处用 MJExtension 进行解析
-        BRProvinceModel *proviceModel = [BRProvinceModel mj_objectWithKeyValues:dic];
-        [self.addressModelArr addObject:proviceModel];
-        [tempArr addObject:proviceModel.provinceName];
+    
+    // 1.解析数据源
+    [self parseDataSource];
+    
+    // 2.设置默认值
+    [self setupDefaultValue];
+    
+    // 3.设置默认滚动
+    [self scrollToRow:_provinceIndex secondRow:_cityIndex thirdRow:_areaIndex];
+}
+
+#pragma mark - 解析数据源
+- (void)parseDataSource {
+    NSMutableArray *tempArr1 = [NSMutableArray array];
+    for (NSDictionary *proviceDic in self.dataSource) {
+        BRProvinceModel *proviceModel = [[BRProvinceModel alloc]init];
+        proviceModel.code = proviceDic[@"code"];
+        proviceModel.name = proviceDic[@"name"];
+        NSArray *citylist = proviceDic[@"citylist"];
+        NSMutableArray *tempArr2 = [NSMutableArray array];
+        for (NSDictionary *cityDic in citylist) {
+            BRCityModel *cityModel = [[BRCityModel alloc]init];
+            cityModel.code = cityDic[@"code"];
+            cityModel.name = cityDic[@"name"];
+            NSArray *arealist = cityDic[@"arealist"];
+            NSMutableArray *tempArr3 = [NSMutableArray array];
+            for (NSDictionary *areaDic in arealist) {
+                BRAreaModel *areaModel = [[BRAreaModel alloc]init];
+                areaModel.code = areaDic[@"code"];
+                areaModel.name = areaDic[@"name"];
+                [tempArr3 addObject:areaModel];
+            }
+            cityModel.arealist = [tempArr3 copy];
+            [tempArr2 addObject:cityModel];
+        }
+        proviceModel.citylist = [tempArr2 copy];
+        [tempArr1 addObject:proviceModel];
     }
-    self.provinceNameArr = [tempArr copy];
-    NSInteger provinceIndex = 0;
-    NSInteger cityIndex = 0;
-    NSInteger areaIndex = 0;
-    if ([self.provinceNameArr containsObject:_selectProvince]) {
-        provinceIndex = [self.provinceNameArr indexOfObject:_selectProvince];
-    } else {
-        // 值无效时（即不存在传入的省份值，就默认选择第一个省份）
-        _selectProvince = [self.provinceNameArr firstObject];
+    self.provinceModelArr = [tempArr1 copy];
+}
+
+#pragma mark - 设置默认值
+- (void)setupDefaultValue {
+    __block NSString *selectProvinceName = nil;
+    __block NSString *selectCityName = nil;
+    __block NSString *selectAreaName = nil;
+    // 1. 获取默认选中的省市区的名称
+    if (_defaultSelectedArr) {
+        if (_defaultSelectedArr.count > 0 && [_defaultSelectedArr[0] isKindOfClass:[NSString class]]) {
+            selectProvinceName = _defaultSelectedArr[0];
+        }
+        if (_defaultSelectedArr.count > 1 && [_defaultSelectedArr[1] isKindOfClass:[NSString class]]) {
+            selectCityName = _defaultSelectedArr[1];
+        }
+        if (_defaultSelectedArr.count > 2 && [_defaultSelectedArr[2] isKindOfClass:[NSString class]]) {
+            selectAreaName = _defaultSelectedArr[2];
+        }
     }
-    _selectProvinceIndex = provinceIndex;
-    self.cityNameArr = [self getCityNameArray:provinceIndex];
-    if ([self.cityNameArr containsObject:_selectCity]) {
-        cityIndex = [self.cityNameArr indexOfObject:_selectCity];
-    } else {
-        // 值无效时（即不存在传入的城市值，就默认选择第一个城市）
-        _selectCity = [self.cityNameArr firstObject];
-    }
-    self.areaNameArr = [self getAreaNameArray:provinceIndex cityIndex:cityIndex];
-    if ([self.areaNameArr containsObject:_selectArea]) {
-        areaIndex = [self.areaNameArr indexOfObject:_selectArea];
-    } else {
-        // 值无效时（即不存在传入的区域值，就默认选择第一个区域）
-        _selectArea = [self.areaNameArr firstObject];
-    }
-    // 默认滚动
-    [self scrollToRow:provinceIndex secondRow:cityIndex thirdRow:areaIndex];
+    
+    // 2. 根据名称找到默认选中的省市区索引
+    [self.provinceModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BRProvinceModel *model = obj;
+        if ([model.name isEqualToString:selectProvinceName]) {
+            _provinceIndex = idx;
+            self.selectProvinceModel = model;
+            *stop = YES;
+        } else {
+            if (idx == self.provinceModelArr.count - 1) {
+                _provinceIndex = 0;
+                self.selectProvinceModel = [self.provinceModelArr firstObject];
+            }
+        }
+    }];
+    
+    self.cityModelArr = [self getCityModelArray:_provinceIndex];
+    [self.cityModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BRCityModel *model = obj;
+        if ([model.name isEqualToString:selectCityName]) {
+            _cityIndex = idx;
+            self.selectCityModel = model;
+            *stop = YES;
+        } else {
+            if (idx == self.cityModelArr.count - 1) {
+                _cityIndex = 0;
+                self.selectCityModel = [self.cityModelArr firstObject];
+            }
+        }
+    }];
+    
+    self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:_cityIndex];
+    [self.areaModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BRAreaModel *model = obj;
+        if ([model.name isEqualToString:selectAreaName]) {
+            _areaIndex = idx;
+            self.selectAreaModel = model;
+            *stop = YES;
+        } else {
+            if (idx == self.cityModelArr.count - 1) {
+                _areaIndex = 0;
+                self.selectAreaModel = [self.areaModelArr firstObject];
+            }
+        }
+    }];
 }
 
 #pragma mark - 滚动到指定行
@@ -191,25 +260,19 @@
     }
 }
 
-// 根据 省索引 获取 城市名数组
-- (NSArray *)getCityNameArray:(NSInteger)provinceIndex {
-    BRProvinceModel *provinceModel = self.addressModelArr[provinceIndex];
-    NSMutableArray *tempArray = [NSMutableArray array];
-    for (BRCityModel *model in provinceModel.citylist) {
-        [tempArray addObject:model.cityName];
-    }
-    return [tempArray copy];
+// 根据 省索引 获取 城市模型数组
+- (NSArray *)getCityModelArray:(NSInteger)provinceIndex {
+    BRProvinceModel *provinceModel = self.provinceModelArr[provinceIndex];
+    // 返回城市模型数组
+    return provinceModel.citylist;
 }
 
-// 根据 省索引和城市索引 获取 区域名数组
-- (NSArray *)getAreaNameArray:(NSInteger)provinceIndex cityIndex:(NSInteger)cityIndex {
-    BRProvinceModel *provinceModel = self.addressModelArr[provinceIndex];
+// 根据 省索引和城市索引 获取 区域模型数组
+- (NSArray *)getAreaModelArray:(NSInteger)provinceIndex cityIndex:(NSInteger)cityIndex {
+    BRProvinceModel *provinceModel = self.provinceModelArr[provinceIndex];
     BRCityModel *cityModel = provinceModel.citylist[cityIndex];
-    NSMutableArray *tempArray = [NSMutableArray array];
-    for (BRAreaModel *model in cityModel.arealist) {
-        [tempArray addObject:model.areaName];
-    }
-    return [tempArray copy];
+    // 返回地区模型数组
+    return cityModel.arealist;
 }
 
 #pragma mark - 初始化子视图
@@ -301,8 +364,7 @@
     [self dismissWithAnimation:YES];
     // 点击确定按钮后，执行回调
     if(self.resultBlock) {
-        NSArray *arr = @[_selectProvince, _selectCity, _selectArea];
-        self.resultBlock(arr);
+        self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
     }
 }
 
@@ -342,15 +404,15 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
         // 返回省个数
-        return self.provinceNameArr.count;
+        return self.provinceModelArr.count;
     }
     if (component == 1) {
         // 返回市个数
-        return self.cityNameArr.count;
+        return self.cityModelArr.count;
     }
     if (component == 2) {
         // 返回区个数
-        return self.areaNameArr.count;
+        return self.areaModelArr.count;
     }
     return 0;
     
@@ -377,11 +439,14 @@
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
     if (component == 0) {
-        label.text = self.provinceNameArr[row];
+        BRProvinceModel *model = self.provinceModelArr[row];
+        label.text = model.name;
     }else if (component == 1){
-        label.text = self.cityNameArr[row];
+        BRCityModel *model = self.cityModelArr[row];
+        label.text = model.name;
     }else if (component == 2){
-        label.text = self.areaNameArr[row];
+        BRAreaModel *model = self.areaModelArr[row];
+        label.text = model.name;
     }
     return bgView;
 }
@@ -389,36 +454,37 @@
 // 4.选中时回调的委托方法，在此方法中实现省份和城市间的联动
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) { // 选择省
-        _selectProvinceIndex = row;
+        // 保存选择的省份的索引
+        _provinceIndex = row;
         switch (self.showType) {
             case BRAddressPickerModeProvince:
             {
-                _selectProvince = self.provinceNameArr[row];
-                _selectCity = @"";
-                _selectArea = @"";
+                self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
+                self.selectCityModel = nil;
+                self.selectAreaModel = nil;
             }
                 break;
             case BRAddressPickerModeCity:
             {
-                self.cityNameArr = [self getCityNameArray:row];
+                self.cityModelArr = [self getCityModelArray:_provinceIndex];
                 [self.pickerView reloadComponent:1];
                 [self.pickerView selectRow:0 inComponent:1 animated:YES];
-                _selectProvince = self.provinceNameArr[row];
-                _selectCity = self.cityNameArr[0];
-                _selectArea = @"";
+                self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
+                self.selectCityModel = self.cityModelArr[0];
+                self.selectAreaModel = nil;
             }
                 break;
             case BRAddressPickerModeArea:
             {
-                self.cityNameArr = [self getCityNameArray:row];
-                self.areaNameArr = [self getAreaNameArray:row cityIndex:0];
+                self.cityModelArr = [self getCityModelArray:_provinceIndex];
+                self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:0];
                 [self.pickerView reloadComponent:1];
                 [self.pickerView selectRow:0 inComponent:1 animated:YES];
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
-                _selectProvince = self.provinceNameArr[row];
-                _selectCity = self.cityNameArr[0];
-                _selectArea = self.areaNameArr[0];
+                self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
+                self.selectCityModel = self.cityModelArr[0];
+                self.selectAreaModel = self.areaModelArr[0];
             }
                 break;
             default:
@@ -426,20 +492,22 @@
         }
     }
     if (component == 1) { // 选择市
+        // 保存选择的城市的索引
+        _cityIndex = row;
         switch (self.showType) {
             case BRAddressPickerModeCity:
             {
-                _selectCity = self.cityNameArr[row];
-                _selectArea = @"";
+                self.selectCityModel = self.cityModelArr[_cityIndex];
+                self.selectAreaModel = nil;
             }
                 break;
             case BRAddressPickerModeArea:
             {
-                self.areaNameArr = [self getAreaNameArray:_selectProvinceIndex cityIndex:row];
+                self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:_cityIndex];
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
-                _selectCity = self.cityNameArr[row];
-                _selectArea = self.areaNameArr[0];
+                self.selectCityModel = self.cityModelArr[_cityIndex];
+                self.selectAreaModel = self.areaModelArr[0];
             }
                 break;
             default:
@@ -447,16 +515,17 @@
         }
     }
     if (component == 2) { // 选择区
+        // 保存选择的地区的索引
+        _areaIndex = row;
         if (self.showType == BRAddressPickerModeArea) {
-            _selectArea = self.areaNameArr[row];
+            self.selectAreaModel = self.areaModelArr[_areaIndex];
         }
     }
     
     // 自动获取数据，滚动完就执行回调
     if (self.isAutoSelect) {
-        NSArray *arr = @[_selectProvince, _selectCity, _selectArea];
         if (self.resultBlock) {
-            self.resultBlock(arr);
+            self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
         }
     }
 }
@@ -466,32 +535,46 @@
     return 35.0f * kScaleFit;
 }
 
-- (NSMutableArray *)addressModelArr {
-    if (!_addressModelArr) {
-        _addressModelArr = [[NSMutableArray alloc]init];
+- (NSArray *)provinceModelArr {
+    if (!_provinceModelArr) {
+        _provinceModelArr = [NSArray array];
     }
-    return _addressModelArr;
+    return _provinceModelArr;
 }
 
-- (NSArray *)provinceNameArr {
-    if (!_provinceNameArr) {
-        _provinceNameArr = [NSArray array];
+- (NSArray *)cityModelArr {
+    if (!_cityModelArr) {
+        _cityModelArr = [NSArray array];
     }
-    return _provinceNameArr;
+    return _cityModelArr;
 }
 
-- (NSArray *)cityNameArr {
-    if (!_cityNameArr) {
-        _cityNameArr = [NSArray array];
+- (NSArray *)areaModelArr {
+    if (!_areaModelArr) {
+        _areaModelArr = [NSArray array];
     }
-    return _cityNameArr;
+    return _areaModelArr;
 }
 
-- (NSArray *)areaNameArr {
-    if (!_areaNameArr) {
-        _areaNameArr = [NSArray array];
+- (BRProvinceModel *)selectProvinceModel {
+    if (!_selectProvinceModel) {
+        _selectProvinceModel = [[BRProvinceModel alloc]init];
     }
-    return _areaNameArr;
+    return _selectProvinceModel;
+}
+
+- (BRCityModel *)selectCityModel {
+    if (!_selectCityModel) {
+        _selectCityModel = [[BRCityModel alloc]init];
+    }
+    return _selectCityModel;
+}
+
+- (BRAreaModel *)selectAreaModel {
+    if (!_selectAreaModel) {
+        _selectAreaModel = [[BRAreaModel alloc]init];
+    }
+    return _selectAreaModel;
 }
 
 @end

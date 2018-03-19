@@ -8,6 +8,7 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRBaseView.h"
+#import "BRAddressModel.h"
 
 typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
     // 只显示省
@@ -18,7 +19,7 @@ typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
     BRAddressPickerModeArea
 };
 
-typedef void(^BRAddressResultBlock)(NSArray *selectAddressArr);
+typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area);
 typedef void(^BRAddressCancelBlock)();
 
 @interface BRAddressPickerView : BRBaseView

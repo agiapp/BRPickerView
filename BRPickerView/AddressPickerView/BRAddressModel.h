@@ -12,23 +12,23 @@
 
 /// 省
 @interface BRProvinceModel : NSObject
-@property (nonatomic, copy) NSString *ID;
-@property (nonatomic, copy) NSString *provinceName;
+@property (nonatomic, copy) NSString *code;
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSArray *citylist;
 
 @end
 
 /// 市
 @interface BRCityModel : NSObject
-@property (nonatomic, copy) NSString *ID;
-@property (nonatomic, copy) NSString *cityName;
+@property (nonatomic, copy) NSString *code;
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSArray *arealist;
 
 @end
 
 /// 区
 @interface BRAreaModel : NSObject
-@property (nonatomic, copy) NSString *ID;
-@property (nonatomic, copy) NSString *areaName;
+@property (nonatomic, copy) NSString *code;
+@property (nonatomic, copy) NSString *name;
 
 @end

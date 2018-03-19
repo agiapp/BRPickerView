@@ -9,21 +9,22 @@
 
 #import <UIKit/UIKit.h>
 
-#define kDatePicHeight 200
-#define kTopViewHeight 44
-
+// 屏幕大小、宽、高
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-
-// 等比例适配系数
-#define kScaleFit (SCREEN_WIDTH / 375.0f)
 
 /// RGB颜色(16进制)
 #define RGB_HEX(rgbValue, a) \
 [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
 green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0 \
 blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
+
+// 等比例适配系数
+#define kScaleFit (SCREEN_WIDTH / 375.0f)
+
+#define kDatePicHeight 200
+#define kTopViewHeight 44
 
 #define kDefaultThemeColor RGB_HEX(0x464646, 1.0)
 
