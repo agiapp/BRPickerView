@@ -69,9 +69,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     if (strPickerView->isDataSourceValid) {
         [strPickerView showWithAnimation:YES];
     } else {
-        NSLog(@"数据源不合法！");
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"参数异常！" message:@"选择器的数据源不合法，请检查数据源格式" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-        [alert show];
+        NSLog(@"数据源不合法！参数异常，请检查字符串选择器数据源的格式");
     }
 }
 

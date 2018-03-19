@@ -86,9 +86,7 @@
     if (addressPickerView->_isDataSourceValid) {
         [addressPickerView showWithAnimation:YES];
     } else {
-        NSLog(@"数据源不合法！");
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"参数异常！" message:@"请检查地址选择器的数据源是否有误" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-        [alert show];
+        NSLog(@"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
     }
 }
 
@@ -214,36 +212,38 @@
             }
         }
     }];
-    
-    self.cityModelArr = [self getCityModelArray:_provinceIndex];
-    [self.cityModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        BRCityModel *model = obj;
-        if ([model.name isEqualToString:selectCityName]) {
-            _cityIndex = idx;
-            self.selectCityModel = model;
-            *stop = YES;
-        } else {
-            if (idx == self.cityModelArr.count - 1) {
-                _cityIndex = 0;
-                self.selectCityModel = [self.cityModelArr firstObject];
+    if (self.showType == BRAddressPickerModeCity || self.showType == BRAddressPickerModeArea) {
+        self.cityModelArr = [self getCityModelArray:_provinceIndex];
+        [self.cityModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            BRCityModel *model = obj;
+            if ([model.name isEqualToString:selectCityName]) {
+                _cityIndex = idx;
+                self.selectCityModel = model;
+                *stop = YES;
+            } else {
+                if (idx == self.cityModelArr.count - 1) {
+                    _cityIndex = 0;
+                    self.selectCityModel = [self.cityModelArr firstObject];
+                }
             }
-        }
-    }];
-    
-    self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:_cityIndex];
-    [self.areaModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        BRAreaModel *model = obj;
-        if ([model.name isEqualToString:selectAreaName]) {
-            _areaIndex = idx;
-            self.selectAreaModel = model;
-            *stop = YES;
-        } else {
-            if (idx == self.cityModelArr.count - 1) {
-                _areaIndex = 0;
-                self.selectAreaModel = [self.areaModelArr firstObject];
+        }];
+    }
+    if (self.showType == BRAddressPickerModeArea) {
+        self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:_cityIndex];
+        [self.areaModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            BRAreaModel *model = obj;
+            if ([model.name isEqualToString:selectAreaName]) {
+                _areaIndex = idx;
+                self.selectAreaModel = model;
+                *stop = YES;
+            } else {
+                if (idx == self.cityModelArr.count - 1) {
+                    _areaIndex = 0;
+                    self.selectAreaModel = [self.areaModelArr firstObject];
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 #pragma mark - 滚动到指定行
@@ -566,6 +566,8 @@
 - (BRCityModel *)selectCityModel {
     if (!_selectCityModel) {
         _selectCityModel = [[BRCityModel alloc]init];
+        _selectCityModel.code = @"";
+        _selectCityModel.name = @"";
     }
     return _selectCityModel;
 }
@@ -573,6 +575,8 @@
 - (BRAreaModel *)selectAreaModel {
     if (!_selectAreaModel) {
         _selectAreaModel = [[BRAreaModel alloc]init];
+        _selectAreaModel.code = @"";
+        _selectAreaModel.name = @"";
     }
     return _selectAreaModel;
 }
