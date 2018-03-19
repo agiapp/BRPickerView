@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.1.2` 。
+- 当前最新版本为： `2.1.3` 。
 - 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -16,6 +16,19 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+- 2018-03-19（V2.1.3）:
+
+  >- 地址选择器确认选择后，新增返回省市区的模型（可以通过省市区的模型对象获取code/名称）
+  >
+  >  ```objective-c
+  >  // 之前的回调，只能获取省市区的名称(name)
+  >  resultBlock:^(NSArray *selectAddressArr) {}
+  >  // 现在修改回调参数如下：可获取省市区的name和code
+  >  resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}
+  >  ```
+  >
+  >- 去掉第三方依赖库 `MJExtension` ，修改为手动解析地址数据源。
 
 - 2018-03-11（V2.1.2）:
 
@@ -72,7 +85,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
-   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.1.2'
+   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.1.3'
    >
 
 #### 4.2. 手动导入
@@ -81,8 +94,6 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 2. 导入头文件 ` #import "BRPickerView.h"`。
 
-   > 注意：本框架依赖第三方MJExtension，所以手动导入框架时，还需要导入MJExtension框架。
-   >
 
 # 5. 系统要求
 
@@ -239,8 +250,8 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 ```objective-c
 // 【转换】：以@" "子字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
 NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@" "];
-[BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(NSArray *selectAddressArr) {
-    weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", selectAddressArr[0], selectAddressArr[1], selectAddressArr[2]];
+[BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+    weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
 } cancelBlock:^{
     NSLog(@"点击了背景视图或取消按钮");
 }];
