@@ -21,16 +21,6 @@
 		C5ACE5121F3D81360069978B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5111F3D81360069978B /* TestViewController.m */; };
 		C5ACE5151F3D81550069978B /* BRTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5141F3D81550069978B /* BRTextField.m */; };
 		C5ACE5181F3D81AD0069978B /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */; };
-		C5C287041FC9C214005DE4E7 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286F11FC9C1FD005DE4E7 /* MJExtensionConst.m */; };
-		C5C287051FC9C214005DE4E7 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286F31FC9C1FD005DE4E7 /* MJFoundation.m */; };
-		C5C287061FC9C214005DE4E7 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286F51FC9C1FD005DE4E7 /* MJProperty.m */; };
-		C5C287071FC9C214005DE4E7 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286F71FC9C1FD005DE4E7 /* MJPropertyKey.m */; };
-		C5C287081FC9C214005DE4E7 /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286F91FC9C1FD005DE4E7 /* MJPropertyType.m */; };
-		C5C287091FC9C214005DE4E7 /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286FB1FC9C1FD005DE4E7 /* NSObject+MJClass.m */; };
-		C5C2870A1FC9C214005DE4E7 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286FD1FC9C1FD005DE4E7 /* NSObject+MJCoding.m */; };
-		C5C2870B1FC9C214005DE4E7 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C286FF1FC9C1FD005DE4E7 /* NSObject+MJKeyValue.m */; };
-		C5C2870C1FC9C214005DE4E7 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C287011FC9C1FD005DE4E7 /* NSObject+MJProperty.m */; };
-		C5C2870D1FC9C214005DE4E7 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C287031FC9C1FD005DE4E7 /* NSString+MJExtension.m */; };
 		C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D32018D38100FECAD5 /* testData1.plist */; };
 		C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D52018D39900FECAD5 /* testData2.plist */; };
 		C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D72018D5DF00FECAD5 /* testData3.plist */; };
@@ -64,28 +54,6 @@
 		C5ACE5161F3D81AD0069978B /* NSDate+BRAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRAdd.h"; sourceTree = "<group>"; };
 		C5ACE5171F3D81AD0069978B /* NSDate+BRAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRAdd.m"; sourceTree = "<group>"; };
 		C5ACE5201F3D90A90069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
-		C5C286EE1FC9C1FD005DE4E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C5C286EF1FC9C1FD005DE4E7 /* MJExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
-		C5C286F01FC9C1FD005DE4E7 /* MJExtensionConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
-		C5C286F11FC9C1FD005DE4E7 /* MJExtensionConst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
-		C5C286F21FC9C1FD005DE4E7 /* MJFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
-		C5C286F31FC9C1FD005DE4E7 /* MJFoundation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
-		C5C286F41FC9C1FD005DE4E7 /* MJProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
-		C5C286F51FC9C1FD005DE4E7 /* MJProperty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
-		C5C286F61FC9C1FD005DE4E7 /* MJPropertyKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
-		C5C286F71FC9C1FD005DE4E7 /* MJPropertyKey.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
-		C5C286F81FC9C1FD005DE4E7 /* MJPropertyType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
-		C5C286F91FC9C1FD005DE4E7 /* MJPropertyType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
-		C5C286FA1FC9C1FD005DE4E7 /* NSObject+MJClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
-		C5C286FB1FC9C1FD005DE4E7 /* NSObject+MJClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
-		C5C286FC1FC9C1FD005DE4E7 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
-		C5C286FD1FC9C1FD005DE4E7 /* NSObject+MJCoding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
-		C5C286FE1FC9C1FD005DE4E7 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
-		C5C286FF1FC9C1FD005DE4E7 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
-		C5C287001FC9C1FD005DE4E7 /* NSObject+MJProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
-		C5C287011FC9C1FD005DE4E7 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
-		C5C287021FC9C1FD005DE4E7 /* NSString+MJExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
-		C5C287031FC9C1FD005DE4E7 /* NSString+MJExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		C5EB52D32018D38100FECAD5 /* testData1.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData1.plist; sourceTree = "<group>"; };
 		C5EB52D52018D39900FECAD5 /* testData2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData2.plist; sourceTree = "<group>"; };
 		C5EB52D72018D5DF00FECAD5 /* testData3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData3.plist; sourceTree = "<group>"; };
@@ -185,14 +153,6 @@
 			path = StringPickerView;
 			sourceTree = "<group>";
 		};
-		C5ACE4F51F3D5A8B0069978B /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				C5C286ED1FC9C1FD005DE4E7 /* MJExtension */,
-			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
 		C5ACE50F1F3D80BA0069978B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,7 +166,6 @@
 				C5EB52D32018D38100FECAD5 /* testData1.plist */,
 				C5EB52D52018D39900FECAD5 /* testData2.plist */,
 				C5EB52D72018D5DF00FECAD5 /* testData3.plist */,
-				C5ACE4F51F3D5A8B0069978B /* Vendor */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -218,35 +177,6 @@
 				C5A158F01FBD893900B3B3BA /* BRBaseView.m */,
 			);
 			path = Base;
-			sourceTree = "<group>";
-		};
-		C5C286ED1FC9C1FD005DE4E7 /* MJExtension */ = {
-			isa = PBXGroup;
-			children = (
-				C5C286EE1FC9C1FD005DE4E7 /* Info.plist */,
-				C5C286EF1FC9C1FD005DE4E7 /* MJExtension.h */,
-				C5C286F01FC9C1FD005DE4E7 /* MJExtensionConst.h */,
-				C5C286F11FC9C1FD005DE4E7 /* MJExtensionConst.m */,
-				C5C286F21FC9C1FD005DE4E7 /* MJFoundation.h */,
-				C5C286F31FC9C1FD005DE4E7 /* MJFoundation.m */,
-				C5C286F41FC9C1FD005DE4E7 /* MJProperty.h */,
-				C5C286F51FC9C1FD005DE4E7 /* MJProperty.m */,
-				C5C286F61FC9C1FD005DE4E7 /* MJPropertyKey.h */,
-				C5C286F71FC9C1FD005DE4E7 /* MJPropertyKey.m */,
-				C5C286F81FC9C1FD005DE4E7 /* MJPropertyType.h */,
-				C5C286F91FC9C1FD005DE4E7 /* MJPropertyType.m */,
-				C5C286FA1FC9C1FD005DE4E7 /* NSObject+MJClass.h */,
-				C5C286FB1FC9C1FD005DE4E7 /* NSObject+MJClass.m */,
-				C5C286FC1FC9C1FD005DE4E7 /* NSObject+MJCoding.h */,
-				C5C286FD1FC9C1FD005DE4E7 /* NSObject+MJCoding.m */,
-				C5C286FE1FC9C1FD005DE4E7 /* NSObject+MJKeyValue.h */,
-				C5C286FF1FC9C1FD005DE4E7 /* NSObject+MJKeyValue.m */,
-				C5C287001FC9C1FD005DE4E7 /* NSObject+MJProperty.h */,
-				C5C287011FC9C1FD005DE4E7 /* NSObject+MJProperty.m */,
-				C5C287021FC9C1FD005DE4E7 /* NSString+MJExtension.h */,
-				C5C287031FC9C1FD005DE4E7 /* NSString+MJExtension.m */,
-			);
-			path = MJExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,16 +255,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5C287041FC9C214005DE4E7 /* MJExtensionConst.m in Sources */,
-				C5C287051FC9C214005DE4E7 /* MJFoundation.m in Sources */,
-				C5C287061FC9C214005DE4E7 /* MJProperty.m in Sources */,
-				C5C287071FC9C214005DE4E7 /* MJPropertyKey.m in Sources */,
-				C5C287081FC9C214005DE4E7 /* MJPropertyType.m in Sources */,
-				C5C287091FC9C214005DE4E7 /* NSObject+MJClass.m in Sources */,
-				C5C2870A1FC9C214005DE4E7 /* NSObject+MJCoding.m in Sources */,
-				C5C2870B1FC9C214005DE4E7 /* NSObject+MJKeyValue.m in Sources */,
-				C5C2870C1FC9C214005DE4E7 /* NSObject+MJProperty.m in Sources */,
-				C5C2870D1FC9C214005DE4E7 /* NSString+MJExtension.m in Sources */,
 				C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */,
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
