@@ -10,7 +10,7 @@
 #import "BRBaseView.h"
 
 typedef void(^BRDateResultBlock)(NSString *selectValue);
-typedef void(^BRDateCancelBlock)();
+typedef void(^BRDateCancelBlock)(void);
 
 @interface BRDatePickerView : BRBaseView
 

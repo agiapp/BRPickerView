@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
 };
 
 typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area);
-typedef void(^BRAddressCancelBlock)();
+typedef void(^BRAddressCancelBlock)(void);
 
 @interface BRAddressPickerView : BRBaseView
 
