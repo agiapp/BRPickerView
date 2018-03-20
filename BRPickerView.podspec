@@ -16,12 +16,14 @@ Pod::Spec.new do |s|
 
   # 作者
   s.author             = { "任波" => "ios@91renb.com" }
+  # 社交网址
+  s.social_media_url = 'http://blog.91renb.com'
   
   # 框架支持的平台和版本
   s.platform     = :ios, "8.0"
 
   # GitHib下载地址和版本
-  s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => s.version.to_s }
 
   # 本地框架源文件的位置
   s.source_files  = "BRPickerView/**/*.{h,m}"
