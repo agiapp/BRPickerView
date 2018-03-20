@@ -20,15 +20,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 - **2018-03-19（V2.1.3）**:
 
   >- 修改地址选择器确认选择后的回调参数。
-  >
-  >  // 之前的回调，只能获取省市区的名称(name)
-  >
-  >  `resultBlock:^(NSArray *selectAddressArr) {}`
-  >
-  >  // 现修改如下：可通过省市区的模型获取省市区的 name（名称）、code（id）、index（索引）
-  >
-  >  `resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}`
-  >
+  >- 现修改如下：可通过省市区的模型获取省市区的 name（名称）、code（id）、index（索引）`resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}`
   >- 去掉第三方依赖库 `MJExtension` ，修改为手动解析地址数据源。
 
 - **2018-03-11（V2.1.2）**:
@@ -44,8 +36,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 - **2018-01-26（V2.1.0）**:
 
   >- 给地址选择器添加了一个方法（见方法4），提供数据源参数，支持外部传入地区数据源。
-  >
-  >  提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
+  >- 提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
 
 - **2018-01-25（V2.0.0）**：
 
