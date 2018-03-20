@@ -157,18 +157,21 @@
         BRProvinceModel *proviceModel = [[BRProvinceModel alloc]init];
         proviceModel.code = proviceDic[@"code"];
         proviceModel.name = proviceDic[@"name"];
+        proviceModel.index = [self.dataSource indexOfObject:proviceDic];
         NSArray *citylist = proviceDic[@"citylist"];
         NSMutableArray *tempArr2 = [NSMutableArray array];
         for (NSDictionary *cityDic in citylist) {
             BRCityModel *cityModel = [[BRCityModel alloc]init];
             cityModel.code = cityDic[@"code"];
             cityModel.name = cityDic[@"name"];
+            cityModel.index = [citylist indexOfObject:cityDic];
             NSArray *arealist = cityDic[@"arealist"];
             NSMutableArray *tempArr3 = [NSMutableArray array];
             for (NSDictionary *areaDic in arealist) {
                 BRAreaModel *areaModel = [[BRAreaModel alloc]init];
                 areaModel.code = areaDic[@"code"];
                 areaModel.name = areaDic[@"name"];
+                areaModel.index = [arealist indexOfObject:areaDic];
                 [tempArr3 addObject:areaModel];
             }
             cityModel.arealist = [tempArr3 copy];
