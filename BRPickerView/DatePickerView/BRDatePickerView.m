@@ -90,6 +90,13 @@
         }
         
         [self initUI];
+        
+        NSDate *selectedDate = [self toDateWithDateString:_selectValue];
+        if (!selectedDate) {
+            selectedDate = [NSDate date];
+        }
+        // 滚动到默认选择的时间
+        [self.datePicker setDate:selectedDate animated:YES];
     }
     return self;
 }
@@ -126,10 +133,6 @@
             NSDate *maxDate = [formatter dateFromString:_maxDateStr];
             _datePicker.maximumDate = maxDate;
         }
-        
-        // 把当前时间赋值给 _datePicker
-        [_datePicker setDate:[self toDateWithDateString:_selectValue] animated:YES];
-        
         // 滚动改变值的响应事件
         [_datePicker addTarget:self action:@selector(didSelectValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
