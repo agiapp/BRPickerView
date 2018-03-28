@@ -189,7 +189,7 @@
         _birthdayTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _birthdayTF.tapAcitonBlock = ^{
-            [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDateStr:@"2010-03-21 00:00:00" maxDateStr:@"2020-04-05 00:00:00" isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
+            [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:@"2018-03-21" minDateStr:@"2010-03-21 00:00:00" maxDateStr:@"2020-03-28 09:20:27" isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
                 weakSelf.birthdayTF.text = selectValue;
             } cancelBlock:^{
                 NSLog(@"点击了背景或取消按钮");

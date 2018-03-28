@@ -11,26 +11,30 @@
 
 /// 弹出日期类型
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
-    /// --- 以下4种是系统自带的四种样式 ---
-    BRDatePickerModeTime,           // UIDatePickerModeTime
-    BRDatePickerModeDate,           // UIDatePickerModeDate
-    BRDatePickerModeDateAndTime,    // UIDatePickerModeDateAndTime
-    BRDatePickerModeCountDownTimer, // UIDatePickerModeCountDownTimer
-    /// --- 以下7种是自定义样式 ---
-    // 年月日时分: yyyy-MM-dd HH:mm
-    BRDatePickerModeYMDHM,
-    // 月日时分: MM-dd HH:mm
-    BRDatePickerModeMDHM,
-    // 年月日（默认）: yyyy-MM-dd
-    BRDatePickerModeYMD,
-    // 年月: yyyy-MM
-    BRDatePickerModeYM,
-    // 年: yyyy
-    BRDatePickerModeY,
-    // 月日: MM-dd
-    BRDatePickerModeMD,
-    // 时分: HH:mm
-    BRDatePickerModeHM
+    // --- 以下4种是系统自带的样式 ---
+    // UIDatePickerModeTime
+    BRDatePickerModeTime,              // HH:mm
+    // UIDatePickerModeDate
+    BRDatePickerModeDate,              // yyyy-MM-dd
+    // UIDatePickerModeDateAndTime
+    BRDatePickerModeDateAndTime,       // yyyy-MM-dd HH:mm
+    // UIDatePickerModeCountDownTimer
+    BRDatePickerModeCountDownTimer,    // HH:mm
+    // --- 以下7种是自定义样式 ---
+    // 年月日时分
+    BRDatePickerModeYMDHM,      // yyyy-MM-dd HH:mm
+    // 月日时分
+    BRDatePickerModeMDHM,       // MM-dd HH:mm
+    // 年月日（默认）
+    BRDatePickerModeYMD,        // yyyy-MM-dd
+    // 年月
+    BRDatePickerModeYM,         // yyyy-MM
+    // 年
+    BRDatePickerModeY,          // yyyy
+    // 月日
+    BRDatePickerModeMD,         // MM-dd
+    // 时分
+    BRDatePickerModeHM          // HH:mm
 };
 
 typedef void(^BRDateResultBlock)(NSString *selectValue);
