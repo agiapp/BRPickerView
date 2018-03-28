@@ -8,7 +8,7 @@
 
 #import "NSDate+BRAdd.h"
 
-static const unsigned componentFlags = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekOfMonth |  NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekdayOrdinal);
+static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekOfMonth |  NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekdayOrdinal);
 
 @implementation NSDate (BRAdd)
 
@@ -25,53 +25,106 @@ static const unsigned componentFlags = (NSCalendarUnitYear | NSCalendarUnitMonth
 #pragma mark - 获取指定日期的年份
 - (NSInteger)year {
     // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
-    return comps.year;
+    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
+    return components.year;
 }
 
 #pragma mark - 获取指定日期的月份
 - (NSInteger)month {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
-    return comps.month;
+    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
+    return components.month;
 }
 
 #pragma mark - 获取指定日期的天
 - (NSInteger)day {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
-    return comps.day;
+    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
+    return components.day;
 }
 
 #pragma mark - 获取指定日期的小时
 - (NSInteger)hour {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
-    return comps.hour;
+    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
+    return components.hour;
 }
 
 #pragma mark - 获取指定日期的分钟
 - (NSInteger)minute {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
+    NSDateComponents *comps = [[NSDate calendar] components:unitFlags fromDate:self];
     return comps.minute;
 }
 
 #pragma mark - 获取指定日期的秒
 - (NSInteger)second {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
-    return comps.second;
+    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
+    return components.second;
 }
 
 #pragma mark - 获取指定日期的星期
 - (NSInteger)weekday {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *comps = [[NSDate calendar] components:componentFlags fromDate:self];
-    return comps.weekday;
+    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
+    return components.weekday;
 }
 
 /////提示：除了使用 NSDateComponents 获取年月日等信息，还可以通过格式化日期获取日期的详细的信息//////
+
+#pragma mark - 创建date
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
+    NSCalendar *calendar = [NSDate calendar];
+    // 初始化日期组件
+    NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
+    if (year >= 0) {
+        components.year = year;
+    }
+    if (month >= 0) {
+        components.month = month;
+    }
+    if (day >= 0) {
+        components.day = day;
+    }
+    if (hour >= 0) {
+        components.hour = hour;
+    }
+    if (minute >= 0) {
+        components.minute = minute;
+    }
+    if (second >= 0) {
+        components.second = second;
+    }
+    NSDate *date = [calendar dateFromComponents:components];
+    return date;
+}
+
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
+    return [self setYear:year month:month day:day hour:hour minute:minute second:-1];
+}
+
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
+    return [self setYear:year month:month day:day hour:0 minute:0 second:0];
+}
+
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month {
+    return [self setYear:year month:month day:-1 hour:0 minute:0 second:0];
+}
+
++ (NSDate *)setYear:(NSInteger)year {
+    return [self setYear:year month:1 day:-1 hour:0 minute:0 second:0];
+}
+
++ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
+    return [self setYear:-1 month:month day:day hour:hour minute:minute second:-1];
+}
+
++ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
+    return [self setYear:-1 month:-1 day:-1 hour:hour minute:minute second:second];
+}
+
++ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute {
+    return [self setYear:-1 month:-1 day:-1 hour:hour minute:minute second:-1];
+}
+
++ (NSDate *)setMinute:(NSInteger)minute second:(NSInteger)second {
+    return [self setYear:-1 month:-1 day:-1 hour:-1 minute:minute second:second];
+}
 
 #pragma mark - 日期和字符串之间的转换：NSDate --> NSString
 + (NSString *)getDateString:(NSDate *)date format:(NSString *)format {

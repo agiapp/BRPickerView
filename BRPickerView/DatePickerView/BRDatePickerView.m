@@ -140,6 +140,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                 self.maxLimitDate = [NSDate getDate:@"2099-12-31 23:59:00" format:@"yyyy-MM-dd HH:mm:ss"];
             }
         }
+        
+        NSAssert([self.minLimitDate compare:self.maxLimitDate] != NSOrderedDescending, @"最小日期不能大于最大日期！");
+        
         if (self.style == BRDatePickerStyleCustom) {
             [self initData];
         }
