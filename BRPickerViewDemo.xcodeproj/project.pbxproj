@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C52AD40F206B49B4001236D1 /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD40E206B49B3001236D1 /* NSDate+BRAdd.m */; };
+		C5210BAE206A7A20002A73EC /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C5210BAC206A7A20002A73EC /* NSDate+BRAdd.m */; };
 		C57E775C204699B2004A2425 /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C57E775B204699B2004A2425 /* BRPickerView.bundle */; };
 		C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A158F01FBD893900B3B3BA /* BRBaseView.m */; };
 		C5ACE4DB1F3D58BD0069978B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DA1F3D58BD0069978B /* main.m */; };
@@ -28,8 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C52AD40D206B49B3001236D1 /* NSDate+BRAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRAdd.h"; sourceTree = "<group>"; };
-		C52AD40E206B49B3001236D1 /* NSDate+BRAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRAdd.m"; sourceTree = "<group>"; };
+		C5210BAC206A7A20002A73EC /* NSDate+BRAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRAdd.m"; sourceTree = "<group>"; };
+		C5210BAD206A7A20002A73EC /* NSDate+BRAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRAdd.h"; sourceTree = "<group>"; };
 		C57E775B204699B2004A2425 /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		C5A158F01FBD893900B3B3BA /* BRBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
 		C5A158F11FBD893900B3B3BA /* BRBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
@@ -140,8 +140,8 @@
 			children = (
 				C5ACE5091F3D7D890069978B /* BRDatePickerView.h */,
 				C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */,
-				C52AD40D206B49B3001236D1 /* NSDate+BRAdd.h */,
-				C52AD40E206B49B3001236D1 /* NSDate+BRAdd.m */,
+				C5210BAD206A7A20002A73EC /* NSDate+BRAdd.h */,
+				C5210BAC206A7A20002A73EC /* NSDate+BRAdd.m */,
 			);
 			path = DatePickerView;
 			sourceTree = "<group>";
@@ -259,7 +259,7 @@
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
-				C52AD40F206B49B4001236D1 /* NSDate+BRAdd.m in Sources */,
+				C5210BAE206A7A20002A73EC /* NSDate+BRAdd.m in Sources */,
 				C5ACE5151F3D81550069978B /* BRTextField.m in Sources */,
 				C5ACE5121F3D81360069978B /* TestViewController.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
