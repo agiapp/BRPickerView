@@ -83,10 +83,9 @@
                           resultBlock:(BRAddressResultBlock)resultBlock
                           cancelBlock:(BRAddressCancelBlock)cancelBlock {
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType dataSource:dataSource defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
+    NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
     if (addressPickerView->_isDataSourceValid) {
         [addressPickerView showWithAnimation:YES];
-    } else {
-        NSLog(@"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
     }
 }
 

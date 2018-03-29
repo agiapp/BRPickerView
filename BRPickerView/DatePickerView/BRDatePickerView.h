@@ -9,6 +9,9 @@
 
 #import "BRBaseView.h"
 
+// 打印错误日志
+#define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])
+
 /// 弹出日期类型
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     // --- 以下4种是系统自带的样式 ---
