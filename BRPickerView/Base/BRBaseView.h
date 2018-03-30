@@ -21,10 +21,20 @@ green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0 \
 blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 
 // 等比例适配系数
-#define kScaleFit (SCREEN_WIDTH / 375.0f)
+#define kScaleFit ((SCREEN_WIDTH < SCREEN_HEIGHT) ? SCREEN_WIDTH / 375.0f : SCREEN_WIDTH / 667.0f)
 
-#define kDatePicHeight 200
+#define kPickerHeight 216
 #define kTopViewHeight 44
+
+// 状态栏的高度(20 / 44(iPhoneX))
+#define STATUSBAR_HEIGHT ([UIApplication sharedApplication].statusBarFrame.size.height)
+#define IS_iPhoneX ((STATUSBAR_HEIGHT == 44) ? YES : NO)
+// 顶部安全区域远离高度
+#define TOP_MARGIN   (CGFloat)(IS_iPhoneX ? 44 : 0)
+// 底部安全区域远离高度
+#define BOTTOM_MARGIN (CGFloat)(IS_iPhoneX ? 34 : 0)
+// 左右安全区域远离距离
+#define LEFTRIGHT_MARGIN (SCREEN_WIDTH == 812 && SCREEN_HEIGHT == 375 ? 44 : 0)
 
 #define kDefaultThemeColor RGB_HEX(0x464646, 1.0)
 

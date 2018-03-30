@@ -18,7 +18,7 @@
     
     NSArray * _defaultSelectedArr;
 }
-// 地址选择器（默认大小: 320px × 216px）
+// 地址选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
 // 保存传入的数据源
 @property (nonatomic, strong) NSArray *dataSource;
@@ -317,7 +317,7 @@
         // 浮现动画
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kDatePicHeight + kTopViewHeight;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -328,7 +328,7 @@
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
         CGRect rect = self.alertView.frame;
-        rect.origin.y += kDatePicHeight + kTopViewHeight;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
         self.alertView.frame = rect;
         self.backgroundView.alpha = 0;
     } completion:^(BOOL finished) {
@@ -373,7 +373,7 @@
 #pragma mark - 地址选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kDatePicHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _pickerView.backgroundColor = [UIColor whiteColor];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
@@ -428,9 +428,9 @@
     ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH) / 3, 35 * kScaleFit)];
+    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.alertView.frame.size.width) / 3, 35 * kScaleFit)];
     bgView.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (SCREEN_WIDTH) / 3 - 10 * kScaleFit, 35 * kScaleFit)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (self.alertView.frame.size.width) / 3 - 10 * kScaleFit, 35 * kScaleFit)];
     [bgView addSubview:label];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;

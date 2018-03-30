@@ -45,7 +45,7 @@
 #pragma mark - 弹出视图
 - (UIView *)alertView {
     if (!_alertView) {
-        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kTopViewHeight - kDatePicHeight, SCREEN_WIDTH, kTopViewHeight + kDatePicHeight)];
+        _alertView = [[UIView alloc]initWithFrame:CGRectMake(LEFTRIGHT_MARGIN, SCREEN_HEIGHT - kTopViewHeight - kPickerHeight - BOTTOM_MARGIN, SCREEN_WIDTH - LEFTRIGHT_MARGIN * 2, kTopViewHeight + kPickerHeight + BOTTOM_MARGIN)];
         _alertView.backgroundColor = [UIColor whiteColor];
     }
     return _alertView;
@@ -54,7 +54,7 @@
 #pragma mark - 顶部标题栏视图
 - (UIView *)topView {
     if (!_topView) {
-        _topView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kTopViewHeight + 0.5)];
+        _topView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.alertView.frame.size.width, kTopViewHeight + 0.5)];
         _topView.backgroundColor = RGB_HEX(0xFDFDFD, 1.0f);
     }
     return _topView;
@@ -78,7 +78,7 @@
 - (UIButton *)rightBtn {
     if (!_rightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _rightBtn.frame = CGRectMake(SCREEN_WIDTH - 65, 8, 60, 28);
+        _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - 65, 8, 60, 28);
         _rightBtn.backgroundColor = [UIColor clearColor];
         _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
         [_rightBtn setTitleColor:kDefaultThemeColor forState:UIControlStateNormal];
@@ -91,7 +91,7 @@
 #pragma mark - 中间标题按钮
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, SCREEN_WIDTH - 130, kTopViewHeight)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, self.alertView.frame.size.width - 130, kTopViewHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont systemFontOfSize:14.0f * kScaleFit];
         _titleLabel.textColor = [kDefaultThemeColor colorWithAlphaComponent:0.8f];
@@ -103,8 +103,8 @@
 #pragma mark - 分割线
 - (UIView *)lineView {
     if (!_lineView) {
-        _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, kTopViewHeight, SCREEN_WIDTH, 0.5)];
-        _lineView.backgroundColor  = [UIColor colorWithRed:225 / 255.0 green:225 / 255.0 blue:225 / 255.0 alpha:1.0];
+        _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, kTopViewHeight, self.alertView.frame.size.width, 0.5)];
+        _lineView.backgroundColor = RGB_HEX(0xf1f1f1, 1.0f);
         [self.alertView addSubview:_lineView];
     }
     return _lineView;

@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 {
     BOOL isDataSourceValid; // 数据源是否合法
 }
-// 字符串选择器(默认大小: 320px × 216px)
+// 字符串选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) BRStringPickerMode type;
@@ -198,7 +198,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         // 浮现动画
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kDatePicHeight + kTopViewHeight;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -209,7 +209,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
         CGRect rect = self.alertView.frame;
-        rect.origin.y += kDatePicHeight + kTopViewHeight;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
         self.alertView.frame = rect;
         
         self.backgroundView.alpha = 0;
@@ -259,7 +259,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 #pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kDatePicHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _pickerView.backgroundColor = [UIColor whiteColor];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
@@ -345,7 +345,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3, 35.0f * kScaleFit)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.alertView.frame.size.width / 3, 35.0f * kScaleFit)];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     //label.textColor = [UIColor redColor];
