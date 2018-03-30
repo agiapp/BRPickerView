@@ -18,17 +18,6 @@
 @property (readonly) NSInteger second;  // 秒
 @property (readonly) NSInteger weekday; // 星期
 
-/** 创建 date */
-+ (NSDate *)setYear:(NSInteger)year;
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month;
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
-+ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute;
-+ (NSDate *)setMinute:(NSInteger)minute second:(NSInteger)second;
-+ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
-+ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
-
 /* yyyy-MM-dd HH:mm:ss 格式的字符串按指定格式返回 */
 + (NSString *)getDateString:(NSString *)dateString newFormat:(NSString *)newFormat;
 
@@ -72,10 +61,11 @@
  *  计算 指定时间 加 指定天数
  *
  *  @param dateString  日期
+ *  @param format      日期格式
  *  @param days        天数
  *  @return 日期字符串，格式：yyyy-MM-dd
  */
-+ (NSString *)date:(NSString *)dateString formatter:(NSString *)formatterStr addDays:(NSInteger)days;
++ (NSString *)date:(NSString *)dateString format:(NSString *)format addDays:(NSInteger)days;
 
 
 @end
