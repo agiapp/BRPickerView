@@ -120,8 +120,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 不设置默认日期，就默认选中今天的日期
         if (defaultSelValue && defaultSelValue.length > 0) {
             NSDate *defaultSelDate = [NSDate getDate:defaultSelValue format:self.selectDateFormatter];
-#warning 优化最大值和最小值，格式同默认值保持一致。（这样才好比较，没有值的位默认为0）
-            
             if (!defaultSelDate) {
                 BRErrorLog(@"参数格式错误！参数 defaultSelValue 的正确格式是：%@", self.selectDateFormatter);
                 NSAssert(defaultSelDate, @"参数格式错误！请检查形参 defaultSelValue 的格式");
@@ -134,6 +132,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 最小日期限制
         if (minDateStr && minDateStr.length > 0) {
             NSDate *minDate = [NSDate getDate:minDateStr format:@"yyyy-MM-dd HH:mm:ss"];
+            if (self.style == BRDatePickerStyleCustom) {
+#warning 优化最大值和最小值，格式同默认值保持一致。（这样才好比较，没有值的位默认为0）
+                NSString *minDateString = [NSDate getDateString:minDate format:self.selectDateFormatter];
+                NSLog(@"minDateString = %@", minDateString);
+                minDate = [NSDate getDate:minDateString format:self.selectDateFormatter];
+            }
             if (!minDate) {
                 BRErrorLog(@"参数格式错误！参数 minDateStr 的正确格式是：yyyy-MM-dd HH:mm:ss");
                 NSAssert(minDate, @"参数格式错误！请检查形参 minDateStr 的格式");
@@ -149,6 +153,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 最大日期限制
         if (maxDateStr && maxDateStr.length > 0) {
             NSDate *maxDate = [NSDate getDate:maxDateStr format:@"yyyy-MM-dd HH:mm:ss"];
+            if (self.style == BRDatePickerStyleCustom) {
+#warning 优化最大值和最小值，格式同默认值保持一致。（这样才好比较，没有值的位默认为0）
+                NSString *maxDateString = [NSDate getDateString:maxDate format:self.selectDateFormatter];
+                NSLog(@"maxDateString = %@", maxDateString);
+                maxDate = [NSDate getDate:maxDateString format:self.selectDateFormatter];
+            }
             if (!maxDate) {
                 BRErrorLog(@"参数格式错误！参数 maxDateStr 的正确格式是：yyyy-MM-dd HH:mm:ss");
                 NSAssert(maxDate, @"参数格式错误！请检查形参 maxDateStr 的格式");

@@ -29,6 +29,9 @@
 + (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 + (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
 
+/* yyyy-MM-dd HH:mm:ss 格式的字符串按指定格式返回 */
++ (NSString *)getDateString:(NSString *)dateString newFormat:(NSString *)newFormat;
+
 /** 日期和字符串之间的转换：NSDate --> NSString */
 + (NSString *)getDateString:(NSDate *)date format:(NSString *)format;
 /** 日期和字符串之间的转换：NSString --> NSDate */

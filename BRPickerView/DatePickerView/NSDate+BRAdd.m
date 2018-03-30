@@ -126,6 +126,23 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return [self setYear:-1 month:-1 day:-1 hour:-1 minute:minute second:second];
 }
 
+#pragma mark - 将 yyyy-MM-dd HH:mm:ss 格式的字符串按指定格式返回
++ (NSString *)getDateString:(NSString *)dateString newFormat:(NSString *)newFormat {
+    NSDateFormatter *oldDateFormatter = [[NSDateFormatter alloc] init];
+    oldDateFormatter.locale = [NSLocale currentLocale];
+    oldDateFormatter.timeZone = [NSTimeZone localTimeZone];
+    oldDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate *oldDate = [oldDateFormatter dateFromString:dateString];
+    
+    NSDateFormatter *newDateFormatter = [[NSDateFormatter alloc] init];
+    newDateFormatter.locale = [NSLocale currentLocale];
+    newDateFormatter.timeZone = [NSTimeZone localTimeZone];
+    newDateFormatter.dateFormat = newFormat;
+    NSString *newDateString = [newDateFormatter stringFromDate:oldDate];
+    
+    return newDateString;
+}
+
 #pragma mark - 日期和字符串之间的转换：NSDate --> NSString
 + (NSString *)getDateString:(NSDate *)date format:(NSString *)format {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
