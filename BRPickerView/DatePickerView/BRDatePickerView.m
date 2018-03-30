@@ -10,9 +10,6 @@
 #import "BRDatePickerView.h"
 #import "NSDate+BRAdd.h"
 
-#define kPickerHeight 200
-#define kTopViewHeight 44
-
 /// 时间选择器的类型
 typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     BRDatePickerStyleSystem,   // 系统样式：使用 UIDatePicker 类
@@ -133,9 +130,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (minDateStr && minDateStr.length > 0) {
             NSDate *minDate = [NSDate getDate:minDateStr format:@"yyyy-MM-dd HH:mm:ss"];
             if (self.style == BRDatePickerStyleCustom) {
-#warning 优化最大值和最小值，格式同默认值保持一致。（这样才好比较，没有值的位默认为0）
                 NSString *minDateString = [NSDate getDateString:minDate format:self.selectDateFormatter];
-                NSLog(@"minDateString = %@", minDateString);
                 minDate = [NSDate getDate:minDateString format:self.selectDateFormatter];
             }
             if (!minDate) {
@@ -154,9 +149,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (maxDateStr && maxDateStr.length > 0) {
             NSDate *maxDate = [NSDate getDate:maxDateStr format:@"yyyy-MM-dd HH:mm:ss"];
             if (self.style == BRDatePickerStyleCustom) {
-#warning 优化最大值和最小值，格式同默认值保持一致。（这样才好比较，没有值的位默认为0）
                 NSString *maxDateString = [NSDate getDateString:maxDate format:self.selectDateFormatter];
-                NSLog(@"maxDateString = %@", maxDateString);
                 maxDate = [NSDate getDate:maxDateString format:self.selectDateFormatter];
             }
             if (!maxDate) {
@@ -427,7 +420,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器1
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kDatePicHeight)];
+        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _datePicker.backgroundColor = [UIColor whiteColor];
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该UIDatePicker的国际化Locale，以简体中文习惯显示日期，UIDatePicker控件默认使用iOS系统的国际化Locale
@@ -450,7 +443,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器2
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _pickerView.backgroundColor = [UIColor whiteColor];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
@@ -728,7 +721,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 浮现动画
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kDatePicHeight + kTopViewHeight;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -739,7 +732,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
         CGRect rect = self.alertView.frame;
-        rect.origin.y += kDatePicHeight + kTopViewHeight;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
         self.alertView.frame = rect;
         
         self.backgroundView.alpha = 0;
@@ -750,6 +743,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [self.lineView removeFromSuperview];
         [self.topView removeFromSuperview];
         [self.datePicker removeFromSuperview];
+        [self.pickerView removeFromSuperview];
         [self.alertView removeFromSuperview];
         [self.backgroundView removeFromSuperview];
         [self removeFromSuperview];
@@ -760,6 +754,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.lineView = nil;
         self.topView = nil;
         self.datePicker = nil;
+        self.pickerView = nil;
         self.alertView = nil;
         self.backgroundView = nil;
     }];
