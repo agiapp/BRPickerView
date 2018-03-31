@@ -129,10 +129,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 最小日期限制
         if (minDateStr && minDateStr.length > 0) {
             NSDate *minDate = [NSDate getDate:minDateStr format:@"yyyy-MM-dd HH:mm:ss"];
-            if (self.style == BRDatePickerStyleCustom) {
-                NSString *minDateString = [NSDate getDateString:minDate format:self.selectDateFormatter];
-                minDate = [NSDate getDate:minDateString format:self.selectDateFormatter];
-            }
             if (!minDate) {
                 BRErrorLog(@"参数格式错误！参数 minDateStr 的正确格式是：yyyy-MM-dd HH:mm:ss");
                 NSAssert(minDate, @"参数格式错误！请检查形参 minDateStr 的格式");
@@ -148,10 +144,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 最大日期限制
         if (maxDateStr && maxDateStr.length > 0) {
             NSDate *maxDate = [NSDate getDate:maxDateStr format:@"yyyy-MM-dd HH:mm:ss"];
-            if (self.style == BRDatePickerStyleCustom) {
-                NSString *maxDateString = [NSDate getDateString:maxDate format:self.selectDateFormatter];
-                maxDate = [NSDate getDate:maxDateString format:self.selectDateFormatter];
-            }
             if (!maxDate) {
                 BRErrorLog(@"参数格式错误！参数 maxDateStr 的正确格式是：yyyy-MM-dd HH:mm:ss");
                 NSAssert(maxDate, @"参数格式错误！请检查形参 maxDateStr 的格式");
@@ -165,10 +157,24 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             }
         }
         
+        // 自定义选择器样式：要统一默认时间、最小时间、最大时间的格式，便于进行比较
+        if (self.style == BRDatePickerStyleCustom) {
+            self.selectDate = [NSDate getNewDate:self.selectDate newFormat:self.selectDateFormatter];
+            self.minLimitDate = [NSDate getNewDate:self.minLimitDate newFormat:self.selectDateFormatter];
+            self.maxLimitDate = [NSDate getNewDate:self.maxLimitDate newFormat:self.selectDateFormatter];
+        }
+        
+        NSLog(@"默认时间：%@", self.selectDate);
+        NSLog(@"最小时间：%@", self.minLimitDate);
+        NSLog(@"最大时间：%@", self.maxLimitDate);
+        
+        NSLog(@"默认时间：%@", [NSDate getDateString:self.selectDate format:self.selectDateFormatter]);
+        NSLog(@"最小时间：%@", [NSDate getDateString:self.minLimitDate format:self.selectDateFormatter]);
+        NSLog(@"最大时间：%@", [NSDate getDateString:self.maxLimitDate format:self.selectDateFormatter]);
+        
         NSAssert([self.minLimitDate compare:self.maxLimitDate] != NSOrderedDescending, @"最小日期不能大于最大日期！");
         NSAssert([self.selectDate compare:self.minLimitDate] != NSOrderedAscending, @"默认选择的日期不能小于最小日期！");
         NSAssert([self.selectDate compare:self.maxLimitDate] != NSOrderedDescending, @"默认选择的日期不能大于最大日期！");
-        
         if (self.style == BRDatePickerStyleCustom) {
             [self initData];
         }

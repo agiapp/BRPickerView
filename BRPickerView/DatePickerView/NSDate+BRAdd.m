@@ -67,22 +67,22 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 /////提示：除了使用 NSDateComponents 获取年月日等信息，还可以通过格式化日期获取日期的详细的信息//////
 
-#pragma mark - 将 yyyy-MM-dd HH:mm:ss 格式的字符串按指定格式返回
-+ (NSString *)getDateString:(NSString *)dateString newFormat:(NSString *)newFormat {
-    NSDateFormatter *oldDateFormatter = [[NSDateFormatter alloc] init];
-    oldDateFormatter.locale = [NSLocale currentLocale];
-    oldDateFormatter.timeZone = [NSTimeZone localTimeZone];
-    oldDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSDate *oldDate = [oldDateFormatter dateFromString:dateString];
-    
-    NSDateFormatter *newDateFormatter = [[NSDateFormatter alloc] init];
-    newDateFormatter.locale = [NSLocale currentLocale];
-    newDateFormatter.timeZone = [NSTimeZone localTimeZone];
-    newDateFormatter.dateFormat = newFormat;
-    NSString *newDateString = [newDateFormatter stringFromDate:oldDate];
+#pragma mark - 获取日期字符串（dateString）的指定格式
++ (NSString *)getNewDateString:(NSString *)dateString newFormat:(NSString *)newFormat {
+    NSDate *oldDate = [self getDate:dateString format:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *newDateString = [self getDateString:oldDate format:newFormat];
     
     return newDateString;
 }
+
+#pragma mark - 获取日期（date）的指定格式
++ (NSDate *)getNewDate:(NSDate *)date newFormat:(NSString *)newFormat {
+    NSString *oldDateString = [self getDateString:date format:newFormat];
+    NSDate *newDate = [self getDate:oldDateString format:newFormat];
+
+    return newDate;
+}
+
 
 #pragma mark - 日期和字符串之间的转换：NSDate --> NSString
 + (NSString *)getDateString:(NSDate *)date format:(NSString *)format {
