@@ -67,32 +67,32 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                        dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
                     resultBlock:(BRDateResultBlock)resultBlock {
-    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:nil maxDateStr:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDate:nil maxDate:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
 }
 
 #pragma mark - 2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
 + (void)showDatePickerWithTitle:(NSString *)title
                        dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
+                        minDate:(NSDate *)minDate
+                        maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock {
-    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+    [self showDatePickerWithTitle:title dateType:type defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
 }
 
 #pragma mark - 3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
 + (void)showDatePickerWithTitle:(NSString *)title
                        dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
+                        minDate:(NSDate *)minDate
+                        maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
                     cancelBlock:(BRDateCancelBlock)cancelBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDateStr:minDateStr maxDateStr:maxDateStr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:type defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     [datePickerView showWithAnimation:YES];
 }
 
@@ -100,8 +100,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (instancetype)initWithTitle:(NSString *)title
                      dateType:(BRDatePickerMode)type
               defaultSelValue:(NSString *)defaultSelValue
-                   minDateStr:(NSString *)minDateStr
-                   maxDateStr:(NSString *)maxDateStr
+                      minDate:(NSDate *)minDate
+                      maxDate:(NSDate *)maxDate
                  isAutoSelect:(BOOL)isAutoSelect
                    themeColor:(UIColor *)themeColor
                   resultBlock:(BRDateResultBlock)resultBlock
@@ -127,13 +127,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.selectDate = [NSDate date];
         }
         // 最小日期限制
-        if (minDateStr && minDateStr.length > 0) {
-            NSDate *minDate = [NSDate getDate:minDateStr format:@"yyyy-MM-dd HH:mm:ss"];
-            if (!minDate) {
-                BRErrorLog(@"参数格式错误！参数 minDateStr 的正确格式是：yyyy-MM-dd HH:mm:ss");
-                NSAssert(minDate, @"参数格式错误！请检查形参 minDateStr 的格式");
-                minDate = [NSDate distantPast];
-            }
+        if (minDate) {
             self.minLimitDate = minDate;
         } else {
             if (self.style == BRDatePickerStyleCustom) {
@@ -142,26 +136,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             }
         }
         // 最大日期限制
-        if (maxDateStr && maxDateStr.length > 0) {
-            NSDate *maxDate = [NSDate getDate:maxDateStr format:@"yyyy-MM-dd HH:mm:ss"];
-            if (!maxDate) {
-                BRErrorLog(@"参数格式错误！参数 maxDateStr 的正确格式是：yyyy-MM-dd HH:mm:ss");
-                NSAssert(maxDate, @"参数格式错误！请检查形参 maxDateStr 的格式");
-                maxDate = [NSDate distantFuture];
-            }
+        if (maxDate) {
             self.maxLimitDate = maxDate;
         } else {
             if (self.style == BRDatePickerStyleCustom) {
                 // 不可达到的未来的某个时间点
                 self.maxLimitDate = [NSDate distantFuture];
             }
-        }
-        
-        // 自定义选择器样式：要统一默认时间、最小时间、最大时间的格式，便于进行比较
-        if (self.style == BRDatePickerStyleCustom) {
-            self.selectDate = [NSDate getNewDate:self.selectDate newFormat:self.selectDateFormatter];
-            self.minLimitDate = [NSDate getNewDate:self.minLimitDate newFormat:self.selectDateFormatter];
-            self.maxLimitDate = [NSDate getNewDate:self.maxLimitDate newFormat:self.selectDateFormatter];
         }
         
         NSLog(@"默认时间：%@", self.selectDate);

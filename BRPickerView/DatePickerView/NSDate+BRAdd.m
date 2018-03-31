@@ -65,7 +65,62 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return components.weekday;
 }
 
-/////提示：除了使用 NSDateComponents 获取年月日等信息，还可以通过格式化日期获取日期的详细的信息//////
+///// 提示：除了使用 NSDateComponents 获取年月日等信息，还可以通过格式化日期获取日期的详细的信息 //////
+
+#pragma mark - 创建date
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
+    NSCalendar *calendar = [NSDate calendar];
+    // 初始化日期组件
+    NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
+    if (year >= 0) {
+        components.year = year;
+    }
+    if (month >= 0) {
+        components.month = month;
+    }
+    if (day >= 0) {
+        components.day = day;
+    }
+    if (hour >= 0) {
+        components.hour = hour;
+    }
+    if (minute >= 0) {
+        components.minute = minute;
+    }
+    if (second >= 0) {
+        components.second = second;
+    }
+    NSDate *date = [calendar dateFromComponents:components];
+    return date;
+}
+
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
+    return [self setYear:year month:month day:day hour:hour minute:minute second:0];
+}
+
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
+    return [self setYear:year month:month day:day hour:0 minute:0 second:0];
+}
+
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month {
+    return [self setYear:year month:month day:-1 hour:0 minute:0 second:0];
+}
+
++ (NSDate *)setYear:(NSInteger)year {
+    return [self setYear:year month:1 day:-1 hour:0 minute:0 second:0];
+}
+
++ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
+    return [self setYear:-1 month:month day:day hour:hour minute:minute second:-1];
+}
+
++ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day {
+    return [self setYear:-1 month:month day:day hour:-1 minute:-1 second:-1];
+}
+
++ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute {
+    return [self setYear:-1 month:-1 day:-1 hour:hour minute:minute second:-1];
+}
 
 #pragma mark - 获取日期字符串（dateString）的指定格式
 + (NSString *)getNewDateString:(NSString *)dateString newFormat:(NSString *)newFormat {
@@ -140,9 +195,9 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 + (NSInteger)getDaysInYear2:(NSInteger)year month:(NSInteger)month {
     NSDate *date = [NSDate getDate:[NSString stringWithFormat:@"%zi-%zi", year, month] format:@"yyyy-MM"];
     // 指定日历的算法(这里按公历)
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     // 只要给个时间给日历,就会帮你计算出来。
-    NSRange range = [calendar rangeOfUnit:NSDayCalendarUnit inUnit: NSMonthCalendarUnit forDate:date];
+    NSRange range = [calendar rangeOfUnit:NSCalendarUnitDay inUnit: NSCalendarUnitMonth forDate:date];
     return range.length;
 }
 

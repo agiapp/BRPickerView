@@ -65,8 +65,8 @@ typedef void(^BRDateCancelBlock)(void);
  *  @param title            标题
  *  @param type             显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDateStr       最小时间（如：2015-08-28 00:00:00），可为空
- *  @param maxDateStr       最大时间（如：2018-05-05 00:00:00），可为空
+ *  @param minDate          最小时间，可为空
+ *  @param maxDate          最大时间，可为空
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
@@ -75,8 +75,8 @@ typedef void(^BRDateCancelBlock)(void);
 + (void)showDatePickerWithTitle:(NSString *)title
                        dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
+                        minDate:(NSDate *)minDate
+                        maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock;
@@ -87,8 +87,8 @@ typedef void(^BRDateCancelBlock)(void);
  *  @param title            标题
  *  @param type             显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDateStr       最小时间（如：2015-08-28 00:00:00），可为空
- *  @param maxDateStr       最大时间（如：2018-05-05 00:00:00），可为空
+ *  @param minDate          最小时间，可为空
+ *  @param maxDate          最大时间，可为空
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
@@ -98,8 +98,8 @@ typedef void(^BRDateCancelBlock)(void);
 + (void)showDatePickerWithTitle:(NSString *)title
                        dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
+                        minDate:(NSDate *)minDate
+                        maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock

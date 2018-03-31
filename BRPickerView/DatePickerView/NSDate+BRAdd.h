@@ -18,6 +18,22 @@
 @property (readonly) NSInteger second;  // 秒
 @property (readonly) NSInteger weekday; // 星期
 
+/** 创建 date */
+/** yyyy */
++ (NSDate *)setYear:(NSInteger)year;
+/** yyyy-MM */
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month;
+/** yyyy-MM-dd */
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
+/** yyyy-MM-dd HH:mm */
++ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
+/** MM-dd HH:mm */
++ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
+/** MM-dd */
++ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day;
+/** HH:mm */
++ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute;
+
 /* 获取日期字符串（dateString）的指定格式 */
 + (NSString *)getNewDateString:(NSString *)dateString newFormat:(NSString *)newFormat;
 /** 获取日期（date）的指定格式 */
