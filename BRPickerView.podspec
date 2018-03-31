@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   # 作者
   s.author             = { "任波" => "91renb@gmail.com" }
   # 社交网址
-  s.social_media_url = 'https://blog.91renb.com'
+  s.social_media_url = 'http://blog.91renb.com'
   
   # 框架支持的平台和版本
   s.platform     = :ios, "8.0"
@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
   # 框架要求ARC环境下使用
   s.requires_arc = true
 
-  ## 框架依赖的第三方库
+  # 框架依赖的第三方库
   # s.dependency 'MJExtension', '~> 3.0.13'
 
 end
