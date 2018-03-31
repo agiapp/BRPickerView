@@ -65,8 +65,8 @@ typedef void(^BRDateCancelBlock)(void);
  *  @param title            标题
  *  @param type             显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空
- *  @param maxDate          最大时间，可为空
+ *  @param minDate          最小时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 minDate）
+ *  @param maxDate          最大时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 maxDate）
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
@@ -87,8 +87,8 @@ typedef void(^BRDateCancelBlock)(void);
  *  @param title            标题
  *  @param type             显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空
- *  @param maxDate          最大时间，可为空
+ *  @param minDate          最小时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 minDate）
+ *  @param maxDate          最大时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 maxDate）
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调

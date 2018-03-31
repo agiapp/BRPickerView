@@ -95,19 +95,19 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 + (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
-    return [self setYear:year month:month day:day hour:hour minute:minute second:0];
+    return [self setYear:year month:month day:day hour:hour minute:minute second:-1];
 }
 
 + (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
-    return [self setYear:year month:month day:day hour:0 minute:0 second:0];
+    return [self setYear:year month:month day:day hour:-1 minute:-1 second:-1];
 }
 
 + (NSDate *)setYear:(NSInteger)year month:(NSInteger)month {
-    return [self setYear:year month:month day:-1 hour:0 minute:0 second:0];
+    return [self setYear:year month:month day:-1 hour:-1 minute:-1 second:-1];
 }
 
 + (NSDate *)setYear:(NSInteger)year {
-    return [self setYear:year month:1 day:-1 hour:0 minute:0 second:0];
+    return [self setYear:year month:-1 day:-1 hour:-1 minute:-1 second:-1];
 }
 
 + (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
@@ -121,23 +121,6 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 + (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute {
     return [self setYear:-1 month:-1 day:-1 hour:hour minute:minute second:-1];
 }
-
-#pragma mark - 获取日期字符串（dateString）的指定格式
-+ (NSString *)getNewDateString:(NSString *)dateString newFormat:(NSString *)newFormat {
-    NSDate *oldDate = [self getDate:dateString format:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *newDateString = [self getDateString:oldDate format:newFormat];
-    
-    return newDateString;
-}
-
-#pragma mark - 获取日期（date）的指定格式
-+ (NSDate *)getNewDate:(NSDate *)date newFormat:(NSString *)newFormat {
-    NSString *oldDateString = [self getDateString:date format:newFormat];
-    NSDate *newDate = [self getDate:oldDateString format:newFormat];
-
-    return newDate;
-}
-
 
 #pragma mark - 日期和字符串之间的转换：NSDate --> NSString
 + (NSString *)getDateString:(NSDate *)date format:(NSString *)format {

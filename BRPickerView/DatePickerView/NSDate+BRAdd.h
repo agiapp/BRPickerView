@@ -34,11 +34,6 @@
 /** HH:mm */
 + (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute;
 
-/* 获取日期字符串（dateString）的指定格式 */
-+ (NSString *)getNewDateString:(NSString *)dateString newFormat:(NSString *)newFormat;
-/** 获取日期（date）的指定格式 */
-+ (NSDate *)getNewDate:(NSDate *)date newFormat:(NSString *)newFormat;
-
 /** 日期和字符串之间的转换：NSDate --> NSString */
 + (NSString *)getDateString:(NSDate *)date format:(NSString *)format;
 /** 日期和字符串之间的转换：NSString --> NSDate */
