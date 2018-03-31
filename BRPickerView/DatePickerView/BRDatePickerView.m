@@ -145,14 +145,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             }
         }
         
-        NSLog(@"默认时间：%@", self.selectDate);
-        NSLog(@"最小时间：%@", self.minLimitDate);
-        NSLog(@"最大时间：%@", self.maxLimitDate);
-        
-        NSLog(@"默认时间：%@", [NSDate getDateString:self.selectDate format:self.selectDateFormatter]);
-        NSLog(@"最小时间：%@", [NSDate getDateString:self.minLimitDate format:self.selectDateFormatter]);
-        NSLog(@"最大时间：%@", [NSDate getDateString:self.maxLimitDate format:self.selectDateFormatter]);
-        
         NSAssert([self.minLimitDate compare:self.maxLimitDate] != NSOrderedDescending, @"最小日期不能大于最大日期！");
         NSAssert([self.selectDate compare:self.minLimitDate] != NSOrderedAscending, @"默认选择的日期不能小于最小日期！");
         NSAssert([self.selectDate compare:self.maxLimitDate] != NSOrderedDescending, @"默认选择的日期不能大于最大日期！");
@@ -507,15 +499,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 // 4.选中时回调的委托方法，在此方法中实现省份和城市间的联动
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     [self setSelectedIndex:component row:row];
-    //[pickerView reloadAllComponents];
-//    // 控制超出范围要进行回滚
-//    if ([self.selectDate compare:self.minLimitDate] == NSOrderedAscending) {
-//        self.selectDate = self.minLimitDate;
-//        [self scrollToSelectDate];
-//    } else if ([self.selectDate compare:self.maxLimitDate] == NSOrderedDescending) {
-//        self.selectDate = self.maxLimitDate;
-//        [self scrollToSelectDate];
-//    }
     // 设置是否开启自动回调
     if (_isAutoSelect) {
         // 滚动完成后，执行block回调
