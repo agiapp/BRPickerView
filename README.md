@@ -11,7 +11,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-| ![效果图1](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
+| ![效果图1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE1.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
@@ -114,13 +114,13 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *  1.显示时间选择器
  *
  *  @param title            标题
- *  @param type             类型（枚举类型：UIDatePickerModeTime、UIDatePickerModeDate、UIDatePickerModeDateAndTime、UIDatePickerModeCountDownTimer）
- *  @param defaultSelValue  默认选中的时间（为空，默认选中现在的时间）
+ *  @param type             显示类型
+ *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
  *  @param resultBlock      选择结果的回调
  *
  */
 + (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(UIDatePickerMode)type
+                       dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
                     resultBlock:(BRDateResultBlock)resultBlock;
 
@@ -128,20 +128,20 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *  2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
  *
  *  @param title            标题
- *  @param type             类型（枚举类型：UIDatePickerModeTime、UIDatePickerModeDate、UIDatePickerModeDateAndTime、UIDatePickerModeCountDownTimer）
- *  @param defaultSelValue  默认选中的时间（为空，默认选中现在的时间）
- *  @param minDateStr       最小时间（如：2015-08-28 00:00:00），可为空
- *  @param maxDateStr       最大时间（如：2018-05-05 00:00:00），可为空
+ *  @param type             显示类型
+ *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param minDate          最小时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 minDate）
+ *  @param maxDate          最大时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 maxDate）
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
  *
  */
 + (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(UIDatePickerMode)type
+                       dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
+                        minDate:(NSDate *)minDate
+                        maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock;
@@ -150,10 +150,10 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *  3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
  *
  *  @param title            标题
- *  @param type             类型（枚举类型：UIDatePickerModeTime、UIDatePickerModeDate、UIDatePickerModeDateAndTime、UIDatePickerModeCountDownTimer）
- *  @param defaultSelValue  默认选中的时间（为空，默认选中现在的时间）
- *  @param minDateStr       最小时间（如：2015-08-28 00:00:00），可为空
- *  @param maxDateStr       最大时间（如：2018-05-05 00:00:00），可为空
+ *  @param type             显示类型
+ *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param minDate          最小时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 minDate）
+ *  @param maxDate          最大时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 maxDate）
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
@@ -161,24 +161,89 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *
  */
 + (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(UIDatePickerMode)type
+                       dateType:(BRDatePickerMode)type
                 defaultSelValue:(NSString *)defaultSelValue
-                     minDateStr:(NSString *)minDateStr
-                     maxDateStr:(NSString *)maxDateStr
+                        minDate:(NSDate *)minDate
+                        maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
                     cancelBlock:(BRDateCancelBlock)cancelBlock;
 ```
 
-- 日期选择器的四种类型（dateType的4个枚举值）：
+- 使用示例（参考Demo）：
+
+```objective-c
+NSDate *minDate = [NSDate setYear:1990 month:3 day:3];
+NSDate *maxDate = [NSDate setYear:2025 month:10 day:28];
+[BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
+    weakSelf.birthdayTF.text = selectValue;
+} cancelBlock:^{
+    NSLog(@"点击了背景或取消按钮");
+}];
+```
+
+
+
+- 时间选择器的显示类型：
+
+```objective-c
+/// 弹出日期类型
+typedef NS_ENUM(NSInteger, BRDatePickerMode) {
+    // --- 以下4种是系统自带的样式 ---
+    // UIDatePickerModeTime
+    BRDatePickerModeTime,              // HH:mm
+    // UIDatePickerModeDate
+    BRDatePickerModeDate,              // yyyy-MM-dd
+    // UIDatePickerModeDateAndTime
+    BRDatePickerModeDateAndTime,       // yyyy-MM-dd HH:mm
+    // UIDatePickerModeCountDownTimer
+    BRDatePickerModeCountDownTimer,    // HH:mm
+    // --- 以下7种是自定义样式 ---
+    // 年月日时分
+    BRDatePickerModeYMDHM,      // yyyy-MM-dd HH:mm
+    // 月日时分
+    BRDatePickerModeMDHM,       // MM-dd HH:mm
+    // 年月日（默认）
+    BRDatePickerModeYMD,        // yyyy-MM-dd
+    // 年月
+    BRDatePickerModeYM,         // yyyy-MM
+    // 年
+    BRDatePickerModeY,          // yyyy
+    // 月日
+    BRDatePickerModeMD,         // MM-dd
+    // 时分
+    BRDatePickerModeHM          // HH:mm
+};
+```
+
+- 时间选择器显示类型的效果图：
+
+  > 以下4种样式是基于 UIDatePicker 类 封装的，支持循环滚动
 
 | ![样式1：UIDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
-|         样式1：UIDatePickerModeTime         |         样式2：UIDatePickerModeDate         |
+|         样式1：BRDatePickerModeTime         |         样式2：BRDatePickerModeDate         |
 |                                          |                                          |
 | ![样式3：UIDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
-|     样式3：UIDatePickerModeDateAndTime      |    样式4：UIDatePickerModeCountDownTimer    |
+|     样式3：BRDatePickerModeDateAndTime      |    样式4：BRDatePickerModeCountDownTimer    |
+
+	>以下7种样式是基于 UIPickerView 类 封装的。
+
+| ![样式5： BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type5.png?raw=true) | ![样式6： BRDatePickerModeMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type6.png?raw=true) |
+| :--------------------------------------: | :--------------------------------------: |
+|        样式5： BRDatePickerModeYMDHM        |        样式6： BRDatePickerModeMDHM         |
+|                                          |                                          |
+| ![样式7： BRDatePickerModeYMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type7.png?raw=true) | ![样式8： BRDatePickerModeYM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type8.png?raw=true) |
+|         样式7： BRDatePickerModeYMD         |         样式8： BRDatePickerModeYM          |
+|                                          |                                          |
+| ![样式9： BRDatePickerModeY](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type9.png?raw=true) | ![样式10： BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type10.png?raw=true) |
+|          样式9： BRDatePickerModeY          |         样式10： BRDatePickerModeMD         |
+|                                          |                                          |
+| ![样式11：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type11.png?raw=true) |                                          |
+|        样式11：  BRDatePickerModeHM         |                                          |
+
+
 
 #### 6.2. 地址选择器：`BRAddressPickerView`
 
@@ -248,7 +313,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
                           cancelBlock:(BRAddressCancelBlock)cancelBlock;
 ```
 
-方法使用：
+使用示例（参考Demo）：
 
 ```objective-c
 // 【转换】：以@" "子字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
