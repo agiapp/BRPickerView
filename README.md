@@ -183,8 +183,6 @@ NSDate *maxDate = [NSDate setYear:2025 month:10 day:28];
 }];
 ```
 
-
-
 - 时间选择器的显示类型：
 
 ```objective-c
@@ -219,7 +217,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 
 - 时间选择器显示类型的效果图：
 
-  > 以下4种样式是基于 UIDatePicker 类 封装的，支持循环滚动
+> 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
 
 | ![样式1：UIDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
@@ -228,7 +226,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 | ![样式3：UIDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
 |     样式3：BRDatePickerModeDateAndTime      |    样式4：BRDatePickerModeCountDownTimer    |
 
-	>以下7种样式是基于 UIPickerView 类 封装的。
+> 以下7种样式是使用 UIPickerView 类 进行封装的。
 
 | ![样式5： BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type5.png?raw=true) | ![样式6： BRDatePickerModeMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type6.png?raw=true) |
 | :--------------------------------------: | :--------------------------------------: |
@@ -242,8 +240,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 |                                          |                                          |
 | ![样式11：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type11.png?raw=true) |                                          |
 |        样式11：  BRDatePickerModeHM         |                                          |
-
-
 
 #### 6.2. 地址选择器：`BRAddressPickerView`
 
