@@ -190,7 +190,7 @@
         __weak typeof(self) weakSelf = self;
         _birthdayTF.tapAcitonBlock = ^{
             NSDate *minDate = [NSDate setYear:1990 month:3 day:3];
-            NSDate *maxDate = [NSDate setYear:2020 month:10 day:28];
+            NSDate *maxDate = [NSDate setYear:2025 month:10 day:28];
             [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
                 weakSelf.birthdayTF.text = selectValue;
             } cancelBlock:^{
@@ -207,9 +207,9 @@
         _birthtimeTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _birthtimeTF.tapAcitonBlock = ^{
-            NSDate *minDate = [NSDate setHour:8 minute:10];
-            NSDate *maxDate = [NSDate setHour:23 minute:59];
-            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
+            // NSDate *minDate = [NSDate setHour:8 minute:10];
+            // NSDate *maxDate = [NSDate setHour:23 minute:59];
+            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDate:nil maxDate:nil isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
                 weakSelf.birthtimeTF.text = selectValue;
             }];
         };
