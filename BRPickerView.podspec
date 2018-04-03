@@ -34,8 +34,5 @@ Pod::Spec.new do |s|
   # 框架要求ARC环境下使用
   s.requires_arc = true
 
-  # 框架依赖的第三方库
-  # s.dependency 'MJExtension', '~> 3.0.13'
-
-
+ 
 end
