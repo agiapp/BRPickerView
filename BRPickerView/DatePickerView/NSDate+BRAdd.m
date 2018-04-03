@@ -254,7 +254,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 #pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
-- (NSInteger)br_compare:(NSDate *)targetDate format:(NSString *)format {
+- (NSComparisonResult)br_compare:(NSDate *)targetDate format:(NSString *)format {
     NSString *dateString1 = [NSDate getDateString:self format:format];
     NSString *dateString2 = [NSDate getDateString:targetDate format:format];
     NSDate *date1 = [NSDate getDate:dateString1 format:format];

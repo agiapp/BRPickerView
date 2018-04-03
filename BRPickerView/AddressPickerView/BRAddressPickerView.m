@@ -201,16 +201,17 @@
     }
     
     // 2. 根据名称找到默认选中的省市区索引
+    __weak typeof(self) weakSelf = self;
     [self.provinceModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BRProvinceModel *model = obj;
         if ([model.name isEqualToString:selectProvinceName]) {
             _provinceIndex = idx;
-            self.selectProvinceModel = model;
+            weakSelf.selectProvinceModel = model;
             *stop = YES;
         } else {
-            if (idx == self.provinceModelArr.count - 1) {
+            if (idx == weakSelf.provinceModelArr.count - 1) {
                 _provinceIndex = 0;
-                self.selectProvinceModel = [self.provinceModelArr firstObject];
+                weakSelf.selectProvinceModel = [weakSelf.provinceModelArr firstObject];
             }
         }
     }];
@@ -220,12 +221,12 @@
             BRCityModel *model = obj;
             if ([model.name isEqualToString:selectCityName]) {
                 _cityIndex = idx;
-                self.selectCityModel = model;
+                weakSelf.selectCityModel = model;
                 *stop = YES;
             } else {
-                if (idx == self.cityModelArr.count - 1) {
+                if (idx == weakSelf.cityModelArr.count - 1) {
                     _cityIndex = 0;
-                    self.selectCityModel = [self.cityModelArr firstObject];
+                    weakSelf.selectCityModel = [weakSelf.cityModelArr firstObject];
                 }
             }
         }];
@@ -236,12 +237,12 @@
             BRAreaModel *model = obj;
             if ([model.name isEqualToString:selectAreaName]) {
                 _areaIndex = idx;
-                self.selectAreaModel = model;
+                weakSelf.selectAreaModel = model;
                 *stop = YES;
             } else {
-                if (idx == self.cityModelArr.count - 1) {
+                if (idx == weakSelf.cityModelArr.count - 1) {
                     _areaIndex = 0;
-                    self.selectAreaModel = [self.areaModelArr firstObject];
+                    weakSelf.selectAreaModel = [weakSelf.areaModelArr firstObject];
                 }
             }
         }];
@@ -293,81 +294,6 @@
         [self setupThemeColor:self.themeColor];
     }
     [self.pickerView reloadAllComponents];
-}
-
-#pragma mark - 背景视图的点击事件
-- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
-    [self dismissWithAnimation:NO];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation {
-    // 1.获取当前应用的主窗口
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    [keyWindow addSubview:self];
-    if (animation) {
-        // 动画前初始位置
-        CGRect rect = self.alertView.frame;
-        rect.origin.y = SCREEN_HEIGHT;
-        self.alertView.frame = rect;
-        
-        // 浮现动画
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
-            self.alertView.frame = rect;
-        }];
-    }
-}
-
-#pragma mark - 关闭视图方法
-- (void)dismissWithAnimation:(BOOL)animation {
-    // 关闭动画
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
-        self.alertView.frame = rect;
-        self.backgroundView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.leftBtn removeFromSuperview];
-        [self.rightBtn removeFromSuperview];
-        [self.titleLabel removeFromSuperview];
-        [self.lineView removeFromSuperview];
-        [self.topView removeFromSuperview];
-        [self.pickerView removeFromSuperview];
-        [self.alertView removeFromSuperview];
-        [self.backgroundView removeFromSuperview];
-        [self removeFromSuperview];
-        
-        self.leftBtn = nil;
-        self.rightBtn = nil;
-        self.titleLabel = nil;
-        self.lineView = nil;
-        self.topView = nil;
-        self.pickerView = nil;
-        self.alertView = nil;
-        self.backgroundView = nil;
-    }];
-}
-
-#pragma mark - 取消按钮的点击事件
-- (void)clickLeftBtn {
-    [self dismissWithAnimation:YES];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 确定按钮的点击事件
-- (void)clickRightBtn {
-    [self dismissWithAnimation:YES];
-    // 点击确定按钮后，执行回调
-    if(self.resultBlock) {
-        self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
-    }
 }
 
 #pragma mark - 地址选择器
@@ -535,6 +461,81 @@
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     return 35.0f * kScaleFit;
+}
+
+#pragma mark - 背景视图的点击事件
+- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
+    [self dismissWithAnimation:NO];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
+}
+
+#pragma mark - 取消按钮的点击事件
+- (void)clickLeftBtn {
+    [self dismissWithAnimation:YES];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
+}
+
+#pragma mark - 确定按钮的点击事件
+- (void)clickRightBtn {
+    [self dismissWithAnimation:YES];
+    // 点击确定按钮后，执行回调
+    if(self.resultBlock) {
+        self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
+    }
+}
+
+#pragma mark - 弹出视图方法
+- (void)showWithAnimation:(BOOL)animation {
+    // 1.获取当前应用的主窗口
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    [keyWindow addSubview:self];
+    if (animation) {
+        // 动画前初始位置
+        CGRect rect = self.alertView.frame;
+        rect.origin.y = SCREEN_HEIGHT;
+        self.alertView.frame = rect;
+        
+        // 浮现动画
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = self.alertView.frame;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+            self.alertView.frame = rect;
+        }];
+    }
+}
+
+#pragma mark - 关闭视图方法
+- (void)dismissWithAnimation:(BOOL)animation {
+    // 关闭动画
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect rect = self.alertView.frame;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+        self.alertView.frame = rect;
+        self.backgroundView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.leftBtn removeFromSuperview];
+        [self.rightBtn removeFromSuperview];
+        [self.titleLabel removeFromSuperview];
+        [self.lineView removeFromSuperview];
+        [self.topView removeFromSuperview];
+        [self.pickerView removeFromSuperview];
+        [self.alertView removeFromSuperview];
+        [self.backgroundView removeFromSuperview];
+        [self removeFromSuperview];
+        
+        self.leftBtn = nil;
+        self.rightBtn = nil;
+        self.titleLabel = nil;
+        self.lineView = nil;
+        self.topView = nil;
+        self.pickerView = nil;
+        self.alertView = nil;
+        self.backgroundView = nil;
+    }];
 }
 
 - (NSArray *)provinceModelArr {

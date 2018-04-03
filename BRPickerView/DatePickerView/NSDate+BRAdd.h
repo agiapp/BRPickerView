@@ -83,6 +83,6 @@
 /**
  *  比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
  */
-- (NSInteger)br_compare:(NSDate *)targetDate format:(NSString *)format;
+- (NSComparisonResult)br_compare:(NSDate *)targetDate format:(NSString *)format;
 
 @end

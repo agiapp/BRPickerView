@@ -675,6 +675,38 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
+#pragma mark - 时间选择器的滚动响应事件
+- (void)didSelectValueChanged:(UIDatePicker *)sender {
+    // 读取日期：datePicker.date
+    self.selectDate = sender.date;
+    // 设置是否开启自动回调
+    if (_isAutoSelect) {
+        // 滚动完成后，执行block回调
+        if (self.resultBlock) {
+            NSString *selectDateValue = [NSDate getDateString:self.selectDate format:self.selectDateFormatter];
+            self.resultBlock(selectDateValue);
+        }
+    }
+}
+
+#pragma mark - 取消按钮的点击事件
+- (void)clickLeftBtn {
+    [self dismissWithAnimation:YES];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
+}
+
+#pragma mark - 确定按钮的点击事件
+- (void)clickRightBtn {
+    // 点击确定按钮后，执行block回调
+    [self dismissWithAnimation:YES];
+    if (self.resultBlock) {
+        NSString *selectDateValue = [NSDate getDateString:self.selectDate format:self.selectDateFormatter];
+        self.resultBlock(selectDateValue);
+    }
+}
+
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     //1. 获取当前应用的主窗口
@@ -726,38 +758,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.alertView = nil;
         self.backgroundView = nil;
     }];
-}
-
-#pragma mark - 时间选择器的滚动响应事件
-- (void)didSelectValueChanged:(UIDatePicker *)sender {
-    // 读取日期：datePicker.date
-    self.selectDate = sender.date;
-    // 设置是否开启自动回调
-    if (_isAutoSelect) {
-        // 滚动完成后，执行block回调
-        if (self.resultBlock) {
-            NSString *selectDateValue = [NSDate getDateString:self.selectDate format:self.selectDateFormatter];
-            self.resultBlock(selectDateValue);
-        }
-    }
-}
-
-#pragma mark - 取消按钮的点击事件
-- (void)clickLeftBtn {
-    [self dismissWithAnimation:YES];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 确定按钮的点击事件
-- (void)clickRightBtn {
-    // 点击确定按钮后，执行block回调
-    [self dismissWithAnimation:YES];
-    if (self.resultBlock) {
-        NSString *selectDateValue = [NSDate getDateString:self.selectDate format:self.selectDateFormatter];
-        self.resultBlock(selectDateValue);
-    }
 }
 
 #pragma mark - getter 方法

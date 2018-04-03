@@ -176,86 +176,6 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     }
 }
 
-#pragma mark - 背景视图的点击事件
-- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
-    [self dismissWithAnimation:NO];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation {
-    //1. 获取当前应用的主窗口
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    [keyWindow addSubview:self];
-    if (animation) {
-        // 动画前初始位置
-        CGRect rect = self.alertView.frame;
-        rect.origin.y = SCREEN_HEIGHT;
-        self.alertView.frame = rect;
-        
-        // 浮现动画
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
-            self.alertView.frame = rect;
-        }];
-    }
-}
-
-#pragma mark - 关闭视图方法
-- (void)dismissWithAnimation:(BOOL)animation {
-    // 关闭动画
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
-        self.alertView.frame = rect;
-        
-        self.backgroundView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.leftBtn removeFromSuperview];
-        [self.rightBtn removeFromSuperview];
-        [self.titleLabel removeFromSuperview];
-        [self.lineView removeFromSuperview];
-        [self.topView removeFromSuperview];
-        [self.pickerView removeFromSuperview];
-        [self.alertView removeFromSuperview];
-        [self.backgroundView removeFromSuperview];
-        [self removeFromSuperview];
-        
-        self.leftBtn = nil;
-        self.rightBtn = nil;
-        self.titleLabel = nil;
-        self.lineView = nil;
-        self.topView = nil;
-        self.pickerView = nil;
-        self.alertView = nil;
-        self.backgroundView = nil;
-    }];
-}
-
-#pragma mark - 取消按钮的点击事件
-- (void)clickLeftBtn {
-    [self dismissWithAnimation:YES];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 确定按钮的点击事件
-- (void)clickRightBtn {
-    [self dismissWithAnimation:YES];
-    // 点击确定按钮后，执行block回调
-    if(_resultBlock) {
-        if (self.type == BRStringPickerComponentSingle) {
-            _resultBlock(self.selectValue);
-        } else if (self.type == BRStringPickerComponentMore) {
-            _resultBlock(self.selectValueArr);
-        }
-    }
-}
-
 #pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
@@ -366,6 +286,86 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     return 35.0f * kScaleFit;
+}
+
+#pragma mark - 背景视图的点击事件
+- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
+    [self dismissWithAnimation:NO];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
+}
+
+#pragma mark - 取消按钮的点击事件
+- (void)clickLeftBtn {
+    [self dismissWithAnimation:YES];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
+}
+
+#pragma mark - 确定按钮的点击事件
+- (void)clickRightBtn {
+    [self dismissWithAnimation:YES];
+    // 点击确定按钮后，执行block回调
+    if(_resultBlock) {
+        if (self.type == BRStringPickerComponentSingle) {
+            _resultBlock(self.selectValue);
+        } else if (self.type == BRStringPickerComponentMore) {
+            _resultBlock(self.selectValueArr);
+        }
+    }
+}
+
+#pragma mark - 弹出视图方法
+- (void)showWithAnimation:(BOOL)animation {
+    //1. 获取当前应用的主窗口
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    [keyWindow addSubview:self];
+    if (animation) {
+        // 动画前初始位置
+        CGRect rect = self.alertView.frame;
+        rect.origin.y = SCREEN_HEIGHT;
+        self.alertView.frame = rect;
+        
+        // 浮现动画
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = self.alertView.frame;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+            self.alertView.frame = rect;
+        }];
+    }
+}
+
+#pragma mark - 关闭视图方法
+- (void)dismissWithAnimation:(BOOL)animation {
+    // 关闭动画
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect rect = self.alertView.frame;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+        self.alertView.frame = rect;
+        
+        self.backgroundView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.leftBtn removeFromSuperview];
+        [self.rightBtn removeFromSuperview];
+        [self.titleLabel removeFromSuperview];
+        [self.lineView removeFromSuperview];
+        [self.topView removeFromSuperview];
+        [self.pickerView removeFromSuperview];
+        [self.alertView removeFromSuperview];
+        [self.backgroundView removeFromSuperview];
+        [self removeFromSuperview];
+        
+        self.leftBtn = nil;
+        self.rightBtn = nil;
+        self.titleLabel = nil;
+        self.lineView = nil;
+        self.topView = nil;
+        self.pickerView = nil;
+        self.alertView = nil;
+        self.backgroundView = nil;
+    }];
 }
 
 - (NSArray *)dataSourceArr {
