@@ -175,7 +175,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 ```objective-c
 NSDate *minDate = [NSDate setYear:1990 month:3 day:3];
-NSDate *maxDate = [NSDate setYear:2025 month:10 day:28];
+NSDate *maxDate = [NSDate date];
 [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
     weakSelf.birthdayTF.text = selectValue;
 } cancelBlock:^{
@@ -202,7 +202,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeYMDHM,      // yyyy-MM-dd HH:mm
     // 月日时分
     BRDatePickerModeMDHM,       // MM-dd HH:mm
-    // 年月日（默认）
+    // 年月日
     BRDatePickerModeYMD,        // yyyy-MM-dd
     // 年月
     BRDatePickerModeYM,         // yyyy-MM
