@@ -253,4 +253,24 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return newDateString;
 }
 
+#pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
+- (NSInteger)br_compare:(NSDate *)targetDate format:(NSString *)format {
+    NSString *dateString1 = [NSDate getDateString:self format:format];
+    NSString *dateString2 = [NSDate getDateString:targetDate format:format];
+    NSDate *date1 = [NSDate getDate:dateString1 format:format];
+    NSDate *date2 = [NSDate getDate:dateString2 format:format];
+    if ([date1 compare:date2] == NSOrderedDescending) {
+        return 1;
+    } else if ([date1 compare:date2] == NSOrderedAscending) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+#pragma mark - 按 yyyy-MM-dd HH:mm:ss 进行比较
+- (NSInteger)br_compare:(NSDate *)targetDate {
+    return [self br_compare:targetDate format:@"yyyy-MM-dd HH:mm:ss"];
+}
+
 @end

@@ -80,5 +80,14 @@
  */
 + (NSString *)date:(NSString *)dateString format:(NSString *)format addDays:(NSInteger)days;
 
+/**
+ *  比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
+ */
+- (NSInteger)br_compare:(NSDate *)targetDate format:(NSString *)format;
+
+/**
+ *  按 yyyy-MM-dd HH:mm:ss 进行比较
+ */
+- (NSInteger)br_compare:(NSDate *)targetDate;
 
 @end

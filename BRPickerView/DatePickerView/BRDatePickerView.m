@@ -145,9 +145,18 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             }
         }
         
-        NSAssert([self.minLimitDate compare:self.maxLimitDate] != NSOrderedDescending, @"最小日期不能大于最大日期！");
-        NSAssert([self.selectDate compare:self.minLimitDate] != NSOrderedAscending, @"默认选择的日期不能小于最小日期！");
-        NSAssert([self.selectDate compare:self.maxLimitDate] != NSOrderedDescending, @"默认选择的日期不能大于最大日期！");
+        NSLog(@"默认时间：%@", self.selectDate);
+        NSLog(@"最小时间：%@", self.minLimitDate);
+        NSLog(@"最大时间：%@", self.maxLimitDate);
+        
+        NSLog(@"默认时间：%@", [NSDate getDateString:self.selectDate format:self.selectDateFormatter]);
+        NSLog(@"最小时间：%@", [NSDate getDateString:self.minLimitDate format:self.selectDateFormatter]);
+        NSLog(@"最大时间：%@", [NSDate getDateString:self.maxLimitDate format:self.selectDateFormatter]);
+        
+        NSAssert([self.minLimitDate br_compare:self.maxLimitDate] != NSOrderedDescending, @"最小日期不能大于最大日期！");
+        NSAssert([self.selectDate br_compare:self.minLimitDate] != NSOrderedAscending, @"默认选择的日期不能小于最小日期！");
+        NSAssert([self.selectDate br_compare:self.maxLimitDate] != NSOrderedDescending, @"默认选择的日期不能大于最大日期！");
+        
         if (self.style == BRDatePickerStyleCustom) {
             [self initData];
         }

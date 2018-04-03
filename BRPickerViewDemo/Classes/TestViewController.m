@@ -190,7 +190,7 @@
         __weak typeof(self) weakSelf = self;
         _birthdayTF.tapAcitonBlock = ^{
             NSDate *minDate = [NSDate setYear:1990 month:3 day:3];
-            NSDate *maxDate = [NSDate setYear:2025 month:10 day:28];
+            NSDate *maxDate = [NSDate date];
             [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
                 weakSelf.birthdayTF.text = selectValue;
             } cancelBlock:^{
