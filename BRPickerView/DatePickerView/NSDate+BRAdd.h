@@ -85,9 +85,4 @@
  */
 - (NSInteger)br_compare:(NSDate *)targetDate format:(NSString *)format;
 
-/**
- *  按 yyyy-MM-dd HH:mm:ss 进行比较
- */
-- (NSInteger)br_compare:(NSDate *)targetDate;
-
 @end

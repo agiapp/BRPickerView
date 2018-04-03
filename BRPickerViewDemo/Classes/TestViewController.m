@@ -207,9 +207,9 @@
         _birthtimeTF.placeholder = @"请选择";
         __weak typeof(self) weakSelf = self;
         _birthtimeTF.tapAcitonBlock = ^{
-            // NSDate *minDate = [NSDate setHour:8 minute:10];
-            // NSDate *maxDate = [NSDate setHour:23 minute:59];
-            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDate:nil maxDate:nil isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
+            NSDate *minDate = [NSDate setHour:8 minute:10];
+            NSDate *maxDate = [NSDate setHour:23 minute:59];
+            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:weakSelf.birthtimeTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
                 weakSelf.birthtimeTF.text = selectValue;
             }];
         };

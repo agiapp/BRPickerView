@@ -268,9 +268,4 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     }
 }
 
-#pragma mark - 按 yyyy-MM-dd HH:mm:ss 进行比较
-- (NSInteger)br_compare:(NSDate *)targetDate {
-    return [self br_compare:targetDate format:@"yyyy-MM-dd HH:mm:ss"];
-}
-
 @end
