@@ -309,7 +309,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
                           cancelBlock:(BRAddressCancelBlock)cancelBlock;
 ```
 
-使用示例（参考Demo）：
+- 使用示例（参考Demo）：
 
 ```objective-c
 // 【转换】：以@" "子字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
@@ -387,7 +387,7 @@ NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@"
                       cancelBlock:(BRStringCancelBlock)cancelBlock;
 ```
 
-方法使用：
+- 使用示例（参考Demo）：
 
 ```objective-c
 // 自定义单列字符串
