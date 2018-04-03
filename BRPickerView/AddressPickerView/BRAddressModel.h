@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class BRProvinceModel, BRCityModel, BRAreaModel;
-
 /// 省
 @interface BRProvinceModel : NSObject
 /** 省对应的code或id */

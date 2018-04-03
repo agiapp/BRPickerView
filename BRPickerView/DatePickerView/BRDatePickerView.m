@@ -8,7 +8,6 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRDatePickerView.h"
-#import "NSDate+BRAdd.h"
 
 /// 时间选择器的类型
 typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
@@ -131,7 +130,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.minLimitDate = minDate;
         } else {
             if (self.style == BRDatePickerStyleCustom) {
-                // 不可达到的过去的某个时间点
                 self.minLimitDate = [NSDate distantPast];
             }
         }
@@ -140,7 +138,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.maxLimitDate = maxDate;
         } else {
             if (self.style == BRDatePickerStyleCustom) {
-                // 不可达到的未来的某个时间点
                 self.maxLimitDate = [NSDate distantFuture];
             }
         }

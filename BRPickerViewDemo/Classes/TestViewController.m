@@ -9,7 +9,6 @@
 #import "TestViewController.h"
 #import "BRPickerView.h"
 #import "BRTextField.h"
-#import "NSDate+BRAdd.h"
 
 @interface TestViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (nonatomic, strong) UITableView *tableView;
