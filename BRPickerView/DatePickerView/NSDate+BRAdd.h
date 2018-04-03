@@ -39,7 +39,7 @@
 /** 日期和字符串之间的转换：NSString --> NSDate */
 + (NSDate *)getDate:(NSString *)dateString format:(NSString *)format;
 /** 获取某个月的天数（通过年月求每月天数）*/
-+ (long)getDaysInYear:(NSInteger)year month:(NSInteger)month;
++ (NSUInteger)getDaysInYear:(NSInteger)year month:(NSInteger)month;
 
 /** 获取系统当前的时间戳，即当前时间距1970的秒数（以毫秒为单位） */
 + (NSString *)currentTimestamp;
@@ -60,7 +60,7 @@
  *  @param  beginDateString    开始时间 设置格式：yyyy-MM-dd
  *  @param  endDateString      结束时间 设置格式：yyyy-MM-dd
  */
-+ (long)deltaDays:(NSString *)beginDateString endDate:(NSString *)endDateString;
++ (NSInteger)deltaDays:(NSString *)beginDateString endDate:(NSString *)endDateString;
 
 /**
  *  返回指定时间差值的日期字符串
