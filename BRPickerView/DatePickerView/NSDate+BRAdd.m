@@ -145,7 +145,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 #pragma mark - 算法1：获取某个月的天数（通过年月求每月天数）
-+ (NSInteger)getDaysInYear:(NSInteger)year month:(NSInteger)month {
++ (long)getDaysInYear:(NSInteger)year month:(NSInteger)month {
     BOOL isLeapYear = year % 4 == 0 ? (year % 100 == 0 ? (year % 400 == 0 ? YES : NO) : YES) : NO;
     switch (month) {
         case 1:case 3:case 5:case 7:case 8:case 10:case 12:
@@ -175,7 +175,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 #pragma mark - 算法2：获取某个月的天数（通过年月求每月天数）
-+ (NSInteger)getDaysInYear2:(NSInteger)year month:(NSInteger)month {
++ (long)getDaysInYear2:(NSInteger)year month:(NSInteger)month {
     NSDate *date = [NSDate getDate:[NSString stringWithFormat:@"%zi-%zi", year, month] format:@"yyyy-MM"];
     // 指定日历的算法(这里按公历)
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -226,7 +226,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 #pragma mark - 计算两个日期之间的天数
-+ (NSInteger)deltaDays:(NSString *)beginDateString endDate:(NSString *)endDateString {
++ (long)deltaDays:(NSString *)beginDateString endDate:(NSString *)endDateString {
     //创建日期格式化对象
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
@@ -234,10 +234,10 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     NSDate *endDate = [dateFormatter dateFromString:endDateString];
     //取两个日期对象的时间间隔
     NSTimeInterval deltaTime = [endDate timeIntervalSinceDate:beginDate];
-    NSInteger days = (NSInteger)deltaTime / (24 * 60 * 60);
-    //NSInteger hours = ((NSInteger)deltaTime - days * 24 * 60 * 60) / (60 * 60);
-    //NSInteger minute = ((NSInteger)deltaTime - days * 24 * 60 * 60 - hours * 60 * 60) / 60;
-    //NSInteger second = (NSInteger)deltaTime - days * 24 * 60 * 60 - hours * 60 * 60 - minute * 60;
+    long days = (long)deltaTime / (24 * 60 * 60);
+    //long hours = ((long)deltaTime - days * 24 * 60 * 60) / (60 * 60);
+    //long minute = ((long)deltaTime - days * 24 * 60 * 60 - hours * 60 * 60) / 60;
+    //long second = (long)deltaTime - days * 24 * 60 * 60 - hours * 60 * 60 - minute * 60;
     
     return days;
 }
