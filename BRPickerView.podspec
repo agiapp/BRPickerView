@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
   s.description  = <<-DESC
-                    A custom picker view for iOS, Include "时间选择器，地址选择器，自定义字符串选择器", Support the Objective - C language.
+                    A custom picker view for iOS, Include "日期选择器，时间选择器，地址选择器，自定义字符串选择器", Support the Objective - C language.
                 DESC
   # 框架的主页
   s.homepage     = "https://github.com/91renb/BRPickerView"
