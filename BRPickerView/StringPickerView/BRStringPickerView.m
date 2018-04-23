@@ -8,6 +8,7 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRStringPickerView.h"
+#import "BRPickerViewMacro.h"
 
 typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     BRStringPickerComponentSingle,  // 单列

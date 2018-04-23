@@ -8,6 +8,7 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRBaseView.h"
+#import "BRPickerViewMacro.h"
 
 @implementation BRBaseView
 

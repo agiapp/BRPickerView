@@ -8,6 +8,7 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRDatePickerView.h"
+#import "BRPickerViewMacro.h"
 
 /// 时间选择器的类型
 typedef NS_ENUM(NSInteger, BRDatePickerStyle) {

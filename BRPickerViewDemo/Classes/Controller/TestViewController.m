@@ -10,6 +10,7 @@
 #import "BRPickerView.h"
 #import "BRInfoCell.h"
 #import "BRInfoModel.h"
+#import "BRPickerViewMacro.h"
 
 @interface TestViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (nonatomic, strong) UITableView *tableView;
