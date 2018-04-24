@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C5210BAE206A7A20002A73EC /* NSDate+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = C5210BAC206A7A20002A73EC /* NSDate+BRAdd.m */; };
 		C5655BA12084759300331751 /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA02084759300331751 /* BRInfoCell.m */; };
 		C5655BA420848B1900331751 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA220848B1900331751 /* icon_next@2x.png */; };
 		C5655BA520848B1900331751 /* icon_next@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA320848B1900331751 /* icon_next@3x.png */; };
@@ -28,11 +27,10 @@
 		C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D52018D39900FECAD5 /* testData2.plist */; };
 		C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D72018D5DF00FECAD5 /* testData3.plist */; };
 		C5EB52DA2019B75C00FECAD5 /* BRCity.json in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D92019B75C00FECAD5 /* BRCity.json */; };
+		C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C5210BAC206A7A20002A73EC /* NSDate+BRAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRAdd.m"; sourceTree = "<group>"; };
-		C5210BAD206A7A20002A73EC /* NSDate+BRAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRAdd.h"; sourceTree = "<group>"; };
 		C5655B9F2084759300331751 /* BRInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRInfoCell.h; sourceTree = "<group>"; };
 		C5655BA02084759300331751 /* BRInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRInfoCell.m; sourceTree = "<group>"; };
 		C5655BA220848B1900331751 /* icon_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@2x.png"; sourceTree = "<group>"; };
@@ -66,6 +64,8 @@
 		C5EB52D52018D39900FECAD5 /* testData2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData2.plist; sourceTree = "<group>"; };
 		C5EB52D72018D5DF00FECAD5 /* testData3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData3.plist; sourceTree = "<group>"; };
 		C5EB52D92019B75C00FECAD5 /* BRCity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BRCity.json; sourceTree = "<group>"; };
+		C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRPickerView.h"; sourceTree = "<group>"; };
+		C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,8 +178,8 @@
 			children = (
 				C5ACE5091F3D7D890069978B /* BRDatePickerView.h */,
 				C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */,
-				C5210BAD206A7A20002A73EC /* NSDate+BRAdd.h */,
-				C5210BAC206A7A20002A73EC /* NSDate+BRAdd.m */,
+				C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */,
+				C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */,
 			);
 			path = DatePickerView;
 			sourceTree = "<group>";
@@ -298,9 +298,9 @@
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
-				C5210BAE206A7A20002A73EC /* NSDate+BRAdd.m in Sources */,
 				C5655BA82084B3B000331751 /* BRInfoModel.m in Sources */,
 				C5ACE5121F3D81360069978B /* TestViewController.m in Sources */,
+				C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */,
 				C5655BA12084759300331751 /* BRInfoCell.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
 				C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */,

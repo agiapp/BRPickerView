@@ -8,10 +8,7 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRBaseView.h"
-#import "NSDate+BRAdd.h"
-
-// 打印错误日志
-#define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])
+#import "NSDate+BRPickerView.h"
 
 /// 弹出日期类型
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {

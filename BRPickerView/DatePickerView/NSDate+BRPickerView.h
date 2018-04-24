@@ -1,5 +1,5 @@
 //
-//  NSDate+BRAdd.h
+//  NSDate+BRPickerView.h
 //  BRPickerViewDemo
 //
 //  Created by 任波 on 2018/3/15.
@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDate (BRAdd)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSDate (BRPickerView)
 /// 获取指定date的详细信息
 @property (readonly) NSInteger year;    // 年
 @property (readonly) NSInteger month;   // 月
@@ -20,24 +22,24 @@
 
 /** 创建 date */
 /** yyyy */
-+ (NSDate *)setYear:(NSInteger)year;
++ (nullable NSDate *)setYear:(NSInteger)year;
 /** yyyy-MM */
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month;
++ (nullable NSDate *)setYear:(NSInteger)year month:(NSInteger)month;
 /** yyyy-MM-dd */
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
++ (nullable NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
 /** yyyy-MM-dd HH:mm */
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
++ (nullable NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
 /** MM-dd HH:mm */
-+ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
++ (nullable NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
 /** MM-dd */
-+ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day;
++ (nullable NSDate *)setMonth:(NSInteger)month day:(NSInteger)day;
 /** HH:mm */
-+ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute;
++ (nullable NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute;
 
 /** 日期和字符串之间的转换：NSDate --> NSString */
-+ (NSString *)getDateString:(NSDate *)date format:(NSString *)format;
++ (nullable  NSString *)getDateString:(NSDate *)date format:(NSString *)format;
 /** 日期和字符串之间的转换：NSString --> NSDate */
-+ (NSDate *)getDate:(NSString *)dateString format:(NSString *)format;
++ (nullable  NSDate *)getDate:(NSString *)dateString format:(NSString *)format;
 /** 获取某个月的天数（通过年月求每月天数）*/
 + (NSUInteger)getDaysInYear:(NSInteger)year month:(NSInteger)month;
 
@@ -52,7 +54,7 @@
  *
  *  @param  formatterStr  设置格式：yyyy-MM-dd HH:mm:ss
  */
-+ (NSString *)currentDateStringWithFormat:(NSString *)formatterStr;
++ (nullable NSString *)currentDateStringWithFormat:(NSString *)formatterStr;
 
 /**
  *  计算两个日期之间的天数
@@ -78,7 +80,7 @@
  *  @param days        天数
  *  @return 日期字符串，格式：yyyy-MM-dd
  */
-+ (NSString *)date:(NSString *)dateString format:(NSString *)format addDays:(NSInteger)days;
++ (nullable NSString *)date:(NSString *)dateString format:(NSString *)format addDays:(NSInteger)days;
 
 /**
  *  比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
@@ -86,3 +88,5 @@
 - (NSComparisonResult)br_compare:(NSDate *)targetDate format:(NSString *)format;
 
 @end
+
+NS_ASSUME_NONNULL_END

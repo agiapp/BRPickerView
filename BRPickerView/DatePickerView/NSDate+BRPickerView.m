@@ -1,16 +1,19 @@
 //
-//  NSDate+BRAdd.m
+//  NSDate+BRPickerView.m
 //  BRPickerViewDemo
 //
 //  Created by 任波 on 2018/3/15.
 //  Copyright © 2018年 renb. All rights reserved.
 //
 
-#import "NSDate+BRAdd.h"
+#import "NSDate+BRPickerView.h"
+#import "BRPickerViewMacro.h"
+
+BRSYNTH_DUMMY_CLASS(NSDate_BRPickerView)
 
 static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekOfMonth |  NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekdayOrdinal);
 
-@implementation NSDate (BRAdd)
+@implementation NSDate (BRPickerView)
 
 #pragma mark - 获取日历单例对象
 + (NSCalendar *)calendar {
@@ -169,7 +172,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
             }
         }
         default:
-        break;
+            break;
     }
     return 0;
 }

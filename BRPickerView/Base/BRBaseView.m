@@ -56,7 +56,7 @@
 - (UIView *)topView {
     if (!_topView) {
         _topView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.alertView.frame.size.width, kTopViewHeight + 0.5)];
-        _topView.backgroundColor = RGB_HEX(0xFDFDFD, 1.0f);
+        _topView.backgroundColor = BR_RGB_HEX(0xFDFDFD, 1.0f);
     }
     return _topView;
 }
@@ -105,7 +105,7 @@
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, kTopViewHeight, self.alertView.frame.size.width, 0.5)];
-        _lineView.backgroundColor = RGB_HEX(0xf1f1f1, 1.0f);
+        _lineView.backgroundColor = BR_RGB_HEX(0xf1f1f1, 1.0f);
         [self.alertView addSubview:_lineView];
     }
     return _lineView;
