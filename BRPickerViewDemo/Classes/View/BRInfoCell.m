@@ -7,17 +7,7 @@
 //
 
 #import "BRInfoCell.h"
-
-// 屏幕大小、宽、高
-#define SCREEN_BOUNDS [UIScreen mainScreen].bounds
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-
-/// RGB颜色(16进制)
-#define RGB_HEX(rgbValue, a) \
-[UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
-green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0 \
-blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
+#import "BRPickerViewMacro.h"
 
 #define kLeftMargin 20
 #define kRowHeight 50
@@ -65,7 +55,7 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc]init];
-        _lineView.backgroundColor = RGB_HEX(0xE3E3E3, 1.0f);
+        _lineView.backgroundColor = BR_RGB_HEX(0xE3E3E3, 1.0f);
     }
     return _lineView;
 }
@@ -74,8 +64,8 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]init];
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.textColor = RGB_HEX(0x464646, 1.0);
-        _titleLabel.font = [UIFont systemFontOfSize:16.0f];
+        _titleLabel.textColor = BR_RGB_HEX(0x464646, 1.0);
+        _titleLabel.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _titleLabel;
@@ -85,7 +75,7 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
     if (!_needLabel) {
         _needLabel = [[UILabel alloc]init];
         _needLabel.backgroundColor = [UIColor clearColor];
-        _needLabel.font = [UIFont systemFontOfSize:16.0f];
+        _needLabel.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
         _needLabel.textAlignment = NSTextAlignmentCenter;
         _needLabel.textColor = [UIColor redColor];
         _needLabel.text = @"*";
@@ -97,9 +87,9 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
     if (!_textField) {
         _textField = [[UITextField alloc]init];
         _textField.backgroundColor = [UIColor clearColor];
-        _textField.font = [UIFont systemFontOfSize:16.0f];
+        _textField.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
         _textField.textAlignment = NSTextAlignmentRight;
-        _textField.textColor = RGB_HEX(0x666666, 1.0);
+        _textField.textColor = BR_RGB_HEX(0x666666, 1.0);
     }
     return _textField;
 }
