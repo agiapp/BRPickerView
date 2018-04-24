@@ -400,6 +400,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (!_datePicker) {
         _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _datePicker.backgroundColor = [UIColor whiteColor];
+        // 设置子视图的大小随着父视图变化
+        _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该UIDatePicker的国际化Locale，以简体中文习惯显示日期，UIDatePicker控件默认使用iOS系统的国际化Locale
         _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CHS_CN"];
@@ -423,6 +425,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _pickerView.backgroundColor = [UIColor whiteColor];
+        // 设置子视图的大小随着父视图变化
+        _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
         _pickerView.showsSelectionIndicator = YES;
@@ -722,7 +726,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 浮现动画
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -733,7 +737,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
         CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
         self.alertView.frame = rect;
         
         self.backgroundView.alpha = 0;

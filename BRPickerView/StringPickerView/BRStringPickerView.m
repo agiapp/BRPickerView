@@ -182,6 +182,8 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
         _pickerView.backgroundColor = [UIColor whiteColor];
+        // 设置子视图的大小随着父视图变化
+        _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
         _pickerView.showsSelectionIndicator = YES;
@@ -332,7 +334,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         // 浮现动画
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -343,7 +345,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     // 关闭动画
     [UIView animateWithDuration:0.2 animations:^{
         CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BOTTOM_MARGIN;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
         self.alertView.frame = rect;
         
         self.backgroundView.alpha = 0;

@@ -30,22 +30,21 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 #define BR_IS_PAD (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
 
 // 等比例适配系数
-#define kScaleFit (BR_IS_IPHONE ? ((SCREEN_WIDTH < SCREEN_HEIGHT) ? SCREEN_WIDTH / 375.0f : SCREEN_WIDTH / 667.0f) : 1.0)
+#define kScaleFit (BR_IS_IPHONE ? ((SCREEN_WIDTH < SCREEN_HEIGHT) ? SCREEN_WIDTH / 375.0f : SCREEN_WIDTH / 667.0f) : 1.1f)
 
 #define kPickerHeight 216
 #define kTopViewHeight 44
 
 // 状态栏的高度(20 / 44(iPhoneX))
-#define STATUSBAR_HEIGHT ([UIApplication sharedApplication].statusBarFrame.size.height)
-#define IS_iPhoneX ((STATUSBAR_HEIGHT == 44) ? YES : NO)
-// 顶部安全区域远离高度
-#define TOP_MARGIN   (CGFloat)(IS_iPhoneX ? 44 : 0)
+#define BR_STATUSBAR_HEIGHT ([UIApplication sharedApplication].statusBarFrame.size.height)
+#define BR_IS_iPhoneX ((BR_STATUSBAR_HEIGHT == 44) ? YES : NO)
 // 底部安全区域远离高度
-#define BOTTOM_MARGIN (CGFloat)(IS_iPhoneX ? 34 : 0)
-// 左右安全区域远离距离
-#define LEFTRIGHT_MARGIN (SCREEN_WIDTH == 812 && SCREEN_HEIGHT == 375 ? 44 : 0)
+#define BR_BOTTOM_MARGIN (CGFloat)(BR_IS_iPhoneX ? 34 : 0)
 
+// 默认主题颜色
 #define kDefaultThemeColor BR_RGB_HEX(0x464646, 1.0)
+// topView视图的背景颜色
+#define kBRToolBarColor BR_RGB_HEX(0xFDFDFD, 1.0f)
 
 /** 静态库中编写 Category 时的便利宏，用于解决 Category 方法从静态库中加载需要特别设置的问题。*/
 #ifndef BRSYNTH_DUMMY_CLASS
