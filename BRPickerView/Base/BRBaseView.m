@@ -154,4 +154,8 @@
     self.titleLabel.textColor = [themeColor colorWithAlphaComponent:0.8f];
 }
 
+- (void)dealloc {
+    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
+}
+
 @end

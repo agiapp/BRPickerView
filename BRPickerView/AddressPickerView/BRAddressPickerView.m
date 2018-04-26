@@ -501,7 +501,6 @@
         CGRect rect = self.alertView.frame;
         rect.origin.y = SCREEN_HEIGHT;
         self.alertView.frame = rect;
-        
         // 浮现动画
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
@@ -520,24 +519,7 @@
         self.alertView.frame = rect;
         self.backgroundView.alpha = 0;
     } completion:^(BOOL finished) {
-        [self.leftBtn removeFromSuperview];
-        [self.rightBtn removeFromSuperview];
-        [self.titleLabel removeFromSuperview];
-        [self.lineView removeFromSuperview];
-        [self.topView removeFromSuperview];
-        [self.pickerView removeFromSuperview];
-        [self.alertView removeFromSuperview];
-        [self.backgroundView removeFromSuperview];
         [self removeFromSuperview];
-        
-        self.leftBtn = nil;
-        self.rightBtn = nil;
-        self.titleLabel = nil;
-        self.lineView = nil;
-        self.topView = nil;
-        self.pickerView = nil;
-        self.alertView = nil;
-        self.backgroundView = nil;
     }];
 }
 
