@@ -378,11 +378,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (year == self.maxLimitDate.br_year && month == self.maxLimitDate.br_month) {
         endDay = self.maxLimitDate.br_day;
     }
-    NSMutableArray *tempDayArr = [NSMutableArray array];
+    NSMutableArray *tempArr = [NSMutableArray array];
     for (NSInteger i = startDay; i <= endDay; i++) {
-        [tempDayArr addObject:[NSString stringWithFormat:@"%zi",i]];
+        [tempArr addObject:[NSString stringWithFormat:@"%zi",i]];
     }
-    self.dayArr = tempDayArr;
+    self.dayArr = [tempArr copy];
 }
 
 // 设置 hourArr 数组
@@ -557,18 +557,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     // 获取滚动后选择的日期
     self.selectDate = [self getDidSelectedDate:component row:row];
-    
-    BOOL selectLessThanMin = [self.selectDate br_compare:self.minLimitDate format:self.selectDateFormatter] == NSOrderedAscending;
-    BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxLimitDate format:self.selectDateFormatter] == NSOrderedDescending;
-    if (selectLessThanMin) {
-        self.selectDate = self.minLimitDate;
-    }
-    if (selectMoreThanMax) {
-        self.selectDate = self.maxLimitDate;
-    }
-    
-    [self.datePicker setDate:self.selectDate animated:YES];
-    
     // 设置是否开启自动回调
     if (_isAutoSelect) {
         // 滚动完成后，执行block回调
@@ -760,8 +748,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (selectMoreThanMax) {
         self.selectDate = self.maxLimitDate;
     }
-    
     [self.datePicker setDate:self.selectDate animated:YES];
+    
     // 设置是否开启自动回调
     if (_isAutoSelect) {
         // 滚动完成后，执行block回调
