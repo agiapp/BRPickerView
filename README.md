@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.2.0` 。
+- 当前最新版本为： `2.2.1` 。
 - 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -16,6 +16,11 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+- **2018-04-27（V2.2.1）**:
+
+  >- 修复bug，适配iPad和横屏显示。
+  >- 优化代码，提高框架适应性，降低内存消耗。
 
 - **2018-04-03（V2.2.0）**:
 
@@ -89,8 +94,6 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
-   >注意：推荐使用最新版本：pod 'BRPickerView', '~> 2.2.0'
-   >
 
 #### 4.2. 手动导入
 
@@ -115,13 +118,13 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *  1.显示时间选择器
  *
  *  @param title            标题
- *  @param type             显示类型
+ *  @param dateType         日期显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
  *  @param resultBlock      选择结果的回调
  *
  */
 + (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)type
+                       dateType:(BRDatePickerMode)dateType
                 defaultSelValue:(NSString *)defaultSelValue
                     resultBlock:(BRDateResultBlock)resultBlock;
 
@@ -129,17 +132,17 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *  2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
  *
  *  @param title            标题
- *  @param type             显示类型
+ *  @param dateType         日期显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 minDate）
- *  @param maxDate          最大时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 maxDate）
+ *  @param minDate          最小时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）
+ *  @param maxDate          最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
  *
  */
 + (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)type
+                       dateType:(BRDatePickerMode)dateType
                 defaultSelValue:(NSString *)defaultSelValue
                         minDate:(NSDate *)minDate
                         maxDate:(NSDate *)maxDate
@@ -151,10 +154,10 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *  3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
  *
  *  @param title            标题
- *  @param type             显示类型
+ *  @param dateType         日期显示类型
  *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 minDate）
- *  @param maxDate          最大时间，可为空（请使用 NSDate+BRAdd 分类中和显示类型格式对应的方法创建 maxDate）
+ *  @param minDate          最小时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）
+ *  @param maxDate          最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）
  *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
  *  @param themeColor       自定义主题颜色
  *  @param resultBlock      选择结果的回调
@@ -162,7 +165,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
  *
  */
 + (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)type
+                       dateType:(BRDatePickerMode)dateType
                 defaultSelValue:(NSString *)defaultSelValue
                         minDate:(NSDate *)minDate
                         maxDate:(NSDate *)maxDate
@@ -175,7 +178,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 - 使用示例（参考Demo）：
 
 ```objective-c
-NSDate *minDate = [NSDate setYear:1990 month:3 day:3];
+NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12];
 NSDate *maxDate = [NSDate date];
 [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
     weakSelf.birthdayTF.text = selectValue;
