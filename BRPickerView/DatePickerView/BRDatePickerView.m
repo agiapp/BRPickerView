@@ -663,7 +663,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 4) {
             _minuteIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%@-%02zi-%02zi %02zi:%02zi", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue], [self.hourArr[_hourIndex] integerValue], [self.minuteArr[_minuteIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%@-%02ld-%02ld %02ld:%02ld", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] longValue], [self.dayArr[_dayIndex] longValue], [self.hourArr[_hourIndex] longValue], [self.minuteArr[_minuteIndex] longValue]];
     } else if (self.showType == BRDatePickerModeMDHM) {
         if (component == 0) {
             _monthIndex = row;
@@ -683,7 +683,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 3) {
             _minuteIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%02zi-%02zi %02zi:%02zi", [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue], [self.hourArr[_hourIndex] integerValue], [self.minuteArr[_minuteIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%02ld-%02ld %02ld:%02ld", [self.monthArr[_monthIndex] longValue], [self.dayArr[_dayIndex] longValue], [self.hourArr[_hourIndex] longValue], [self.minuteArr[_minuteIndex] longValue]];
     } else if (self.showType == BRDatePickerModeYMD) {
         if (component == 0) {
             _yearIndex = row;
@@ -697,7 +697,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 2) {
             _dayIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%@-%02zi-%02zi", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%@-%02ld-%02ld", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] longValue], [self.dayArr[_dayIndex] longValue]];
     } else if (self.showType == BRDatePickerModeYM) {
         if (component == 0) {
             _yearIndex = row;
@@ -706,7 +706,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             _monthIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%@-%02zi", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%@-%02ld", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] longValue]];
     } else if (self.showType == BRDatePickerModeY) {
         if (component == 0) {
             _yearIndex = row;
@@ -720,7 +720,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             _dayIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%02zi-%02zi", [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%02ld-%02ld", [self.monthArr[_monthIndex] longValue], [self.dayArr[_dayIndex] longValue]];
     } else if (self.showType == BRDatePickerModeHM) {
         if (component == 0) {
             _hourIndex = row;
@@ -729,7 +729,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             _minuteIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%02zi:%02zi", [self.hourArr[_hourIndex] integerValue], [self.minuteArr[_minuteIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%02ld:%02ld", [self.hourArr[_hourIndex] longValue], [self.minuteArr[_minuteIndex] integerValue]];
     }
     return [NSDate br_getDate:selectDateValue format:self.selectDateFormatter];
 }

@@ -207,7 +207,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - 算法2：获取某个月的天数（通过年月求每月天数）
 + (NSUInteger)br_getDaysInYear2:(NSInteger)year month:(NSInteger)month {
-    NSDate *date = [NSDate br_getDate:[NSString stringWithFormat:@"%zi-%zi", year, month] format:@"yyyy-MM"];
+    NSDate *date = [NSDate br_getDate:[NSString stringWithFormat:@"%@-%@", @(year), @(month)] format:@"yyyy-MM"];
     // 指定日历的算法(这里按公历)
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     // 只要给个时间给日历,就会帮你计算出来。

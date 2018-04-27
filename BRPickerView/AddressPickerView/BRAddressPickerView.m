@@ -202,48 +202,53 @@
     }
     
     // 2. 根据名称找到默认选中的省市区索引
-    __weak typeof(self) weakSelf = self;
+    @weakify(self)
     [self.provinceModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        @strongify(self)
         BRProvinceModel *model = obj;
         if ([model.name isEqualToString:selectProvinceName]) {
             _provinceIndex = idx;
-            weakSelf.selectProvinceModel = model;
+            self.selectProvinceModel = model;
             *stop = YES;
         } else {
-            if (idx == weakSelf.provinceModelArr.count - 1) {
+            if (idx == self.provinceModelArr.count - 1) {
                 _provinceIndex = 0;
-                weakSelf.selectProvinceModel = [weakSelf.provinceModelArr firstObject];
+                self.selectProvinceModel = [self.provinceModelArr firstObject];
             }
         }
     }];
     if (self.showType == BRAddressPickerModeCity || self.showType == BRAddressPickerModeArea) {
         self.cityModelArr = [self getCityModelArray:_provinceIndex];
+        @weakify(self)
         [self.cityModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            @strongify(self)
             BRCityModel *model = obj;
             if ([model.name isEqualToString:selectCityName]) {
                 _cityIndex = idx;
-                weakSelf.selectCityModel = model;
+                self.selectCityModel = model;
                 *stop = YES;
             } else {
-                if (idx == weakSelf.cityModelArr.count - 1) {
+                if (idx == self.cityModelArr.count - 1) {
                     _cityIndex = 0;
-                    weakSelf.selectCityModel = [weakSelf.cityModelArr firstObject];
+                    self.selectCityModel = [self.cityModelArr firstObject];
                 }
             }
         }];
     }
     if (self.showType == BRAddressPickerModeArea) {
         self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:_cityIndex];
+        @weakify(self)
         [self.areaModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            @strongify(self)
             BRAreaModel *model = obj;
             if ([model.name isEqualToString:selectAreaName]) {
                 _areaIndex = idx;
-                weakSelf.selectAreaModel = model;
+                self.selectAreaModel = model;
                 *stop = YES;
             } else {
-                if (idx == weakSelf.cityModelArr.count - 1) {
+                if (idx == self.cityModelArr.count - 1) {
                     _areaIndex = 0;
-                    weakSelf.selectAreaModel = [weakSelf.areaModelArr firstObject];
+                    self.selectAreaModel = [self.areaModelArr firstObject];
                 }
             }
         }];
