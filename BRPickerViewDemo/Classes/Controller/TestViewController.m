@@ -63,7 +63,6 @@
         _tableView.backgroundColor = [UIColor whiteColor];
         // 设置子视图的大小随着父视图变化
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.tableFooterView = [[UIView alloc]init];
@@ -232,7 +231,7 @@
             break;
         case 2:
         {
-            NSDate *minDate = [NSDate setYear:1990 month:3 day:3];
+            NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12];
             NSDate *maxDate = [NSDate date];
             [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
                 textField.text = self.infoModel.birthdayStr = selectValue;
@@ -243,8 +242,8 @@
             break;
         case 3:
         {
-            NSDate *minDate = [NSDate setHour:8 minute:10];
-            NSDate *maxDate = [NSDate setHour:23 minute:59];
+            NSDate *minDate = [NSDate br_setHour:8 minute:10];
+            NSDate *maxDate = [NSDate br_setHour:20 minute:35];
             [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
                 textField.text = self.infoModel.birthtimeStr = selectValue;
             }];

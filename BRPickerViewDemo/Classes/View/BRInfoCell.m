@@ -13,7 +13,6 @@
 #define kRowHeight 50
 
 @interface BRInfoCell ()
-@property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UILabel *needLabel;
 @property (nonatomic, strong) UIImageView *nextImageView;
 
@@ -24,7 +23,6 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ([super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        [self.contentView addSubview:self.lineView];
         [self.contentView addSubview:self.needLabel];
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.textField];
@@ -35,7 +33,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.lineView.frame = CGRectMake(kLeftMargin, kRowHeight - 0.5f, SCREEN_WIDTH - 2 * kLeftMargin, 0.5f);
+    // 调整cell分割线的边距：top, left, bottom, right
+    self.separatorInset = UIEdgeInsetsMake(0, kLeftMargin, 0, kLeftMargin);
     self.needLabel.frame = CGRectMake(kLeftMargin - 16, 0, 16, kRowHeight);
     self.titleLabel.frame = CGRectMake(kLeftMargin, 0, 100, kRowHeight);
     self.nextImageView.frame = CGRectMake(SCREEN_WIDTH - kLeftMargin - 14, (kRowHeight - 14) / 2, 14, 14);
@@ -50,14 +49,6 @@
     } else {
         self.nextImageView.hidden = YES;
     }
-}
-
-- (UIView *)lineView {
-    if (!_lineView) {
-        _lineView = [[UIView alloc]init];
-        _lineView.backgroundColor = BR_RGB_HEX(0xE3E3E3, 1.0f);
-    }
-    return _lineView;
 }
 
 - (UILabel *)titleLabel {
