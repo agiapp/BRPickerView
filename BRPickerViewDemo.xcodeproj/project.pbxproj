@@ -242,11 +242,13 @@
 		C5ACE4CE1F3D58BD0069978B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = BR;
 				LastUpgradeCheck = 0830;
-				ORGANIZATIONNAME = renb;
+				ORGANIZATIONNAME = 91renb;
 				TargetAttributes = {
 					C5ACE4D51F3D58BD0069978B = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = ATU45Z8N5B;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -424,10 +426,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ATU45Z8N5B;
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.renb.BRPickerViewDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.91renb.BRPickerViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -437,10 +440,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ATU45Z8N5B;
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.renb.BRPickerViewDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.91renb.BRPickerViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
