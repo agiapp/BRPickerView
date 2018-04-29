@@ -128,7 +128,7 @@
             cell.isNeed = YES;
             cell.isNext = NO;
             cell.textField.placeholder = @"请输入";
-            cell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             cell.textField.returnKeyType = UIReturnKeyDone;
             cell.textField.text = self.infoModel.phoneStr;
         }
@@ -257,9 +257,9 @@
             NSArray *dataSource = nil; // dataSource 为空时，就默认使用框架内部提供的数据源（即 BRCity.plist）
             [BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:dataSource defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
                 textField.text = self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
-                NSLog(@"省[%zi]：%@，%@", province.index, province.code, province.name);
-                NSLog(@"市[%zi]：%@，%@", city.index, city.code, city.name);
-                NSLog(@"区[%zi]：%@，%@", area.index, area.code, area.name);
+                NSLog(@"省[%@]：%@，%@", @(province.index), province.code, province.name);
+                NSLog(@"市[%@]：%@，%@", @(city.index), city.code, city.name);
+                NSLog(@"区[%@]：%@，%@", @(area.index), area.code, area.name);
                 NSLog(@"--------------------");
             } cancelBlock:^{
                 NSLog(@"点击了背景视图或取消按钮");
