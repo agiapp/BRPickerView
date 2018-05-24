@@ -231,9 +231,9 @@
             break;
         case 2:
         {
-            // NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12 hour:12 minute:22];
+            NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12];
             NSDate *maxDate = [NSDate date];
-            [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:textField.text minDate:nil maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
+            [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeDate defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
                 textField.text = self.infoModel.birthdayStr = selectValue;
             } cancelBlock:^{
                 NSLog(@"点击了背景或取消按钮");
