@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.alertView.frame.size.width / 3, 35.0f * kScaleFit)];
+    UILabel *label = [[UILabel alloc]init];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     //label.textColor = [UIColor redColor];
@@ -278,8 +278,10 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
     if (self.type == BRStringPickerComponentSingle) {
+        label.frame = CGRectMake(0, 0, self.alertView.frame.size.width, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[row];
     } else if (self.type == BRStringPickerComponentMore) {
+        label.frame = CGRectMake(0, 0, self.alertView.frame.size.width / [self.dataSourceArr[component] count], 35.0f * kScaleFit);
         label.text = self.dataSourceArr[component][row];
     }
     
