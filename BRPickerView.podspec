@@ -15,9 +15,9 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
   # 作者
-  s.author             = { "任波" => "91renb@gmail.com" }
+  s.author             = { "任波" => "ios@91renb.com" }
   # 社交网址
-  s.social_media_url = 'https://blog.91renb.com'
+  s.social_media_url = 'http://blog.91renb.com'
   
   # 框架支持的平台和版本
   s.platform     = :ios, "8.0"
