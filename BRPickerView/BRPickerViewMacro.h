@@ -39,7 +39,7 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 #define BR_STATUSBAR_HEIGHT ([UIApplication sharedApplication].statusBarFrame.size.height)
 #define BR_IS_iPhoneX ((BR_STATUSBAR_HEIGHT == 44) ? YES : NO)
 // 底部安全区域远离高度
-#define BR_BOTTOM_MARGIN (CGFloat)(BR_IS_iPhoneX ? 34 : 0)
+#define BR_BOTTOM_MARGIN ((CGFloat)(BR_IS_iPhoneX ? 34 : 0))
 
 // 默认主题颜色
 #define kDefaultThemeColor BR_RGB_HEX(0x464646, 1.0)
