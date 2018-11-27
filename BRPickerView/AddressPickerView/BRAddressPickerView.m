@@ -246,7 +246,7 @@
                 self.selectAreaModel = model;
                 *stop = YES;
             } else {
-                if (idx == self.cityModelArr.count - 1) {
+                if (idx == self.areaModelArr.count - 1) {
                     _areaIndex = 0;
                     self.selectAreaModel = [self.areaModelArr firstObject];
                 }
