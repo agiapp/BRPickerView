@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
 
   # GitHib下载地址和版本
-  s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/mrgxg/BRPickerView.git", :tag => s.version.to_s }
 
   # 本地框架源文件的位置
   s.source_files  = "BRPickerView/**/*.{h,m}"
