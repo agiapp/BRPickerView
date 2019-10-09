@@ -109,10 +109,8 @@
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
         
+        [self initUI];
         [self loadData];
-        if (_isDataSourceValid) {
-            [self initUI];
-        }
     }
     return self;
 }
@@ -145,6 +143,9 @@
     
     // 2.设置默认值
     [self setupDefaultValue];
+    
+    // 注意必须先刷新UI，再设置默认滚动
+    [self.pickerView reloadAllComponents];
     
     // 3.设置默认滚动
     [self scrollToRow:_provinceIndex secondRow:_cityIndex thirdRow:_areaIndex];
@@ -246,7 +247,7 @@
                 self.selectAreaModel = model;
                 *stop = YES;
             } else {
-                if (idx == self.cityModelArr.count - 1) {
+                if (idx == self.areaModelArr.count - 1) {
                     _areaIndex = 0;
                     self.selectAreaModel = [self.areaModelArr firstObject];
                 }
@@ -299,7 +300,6 @@
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
         [self setupThemeColor:self.themeColor];
     }
-    [self.pickerView reloadAllComponents];
 }
 
 #pragma mark - 地址选择器
@@ -362,9 +362,9 @@
     ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.alertView.frame.size.width) / 3, 35 * kScaleFit)];
+    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.alertView.frame.size.width) / pickerView.numberOfComponents, 35 * kScaleFit)];
     bgView.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (self.alertView.frame.size.width) / 3 - 10 * kScaleFit, 35 * kScaleFit)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (self.alertView.frame.size.width) / pickerView.numberOfComponents - 10 * kScaleFit, 35 * kScaleFit)];
     [bgView addSubview:label];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;

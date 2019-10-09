@@ -162,7 +162,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
             // 默认滚动的行
             [self.pickerView selectRow:row inComponent:i animated:NO];
         }
-        self.selectValueArr = [tempArr copy];
+        self.selectValueArr = tempArr;
     }
 }
 
@@ -237,15 +237,17 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
             break;
         case BRStringPickerComponentMore:
         {
-            NSMutableArray *tempArr = [NSMutableArray array];
-            for (NSInteger i = 0; i < self.selectValueArr.count; i++) {
-                if (i == component) {
-                    [tempArr addObject:self.dataSourceArr[component][row]];
-                } else {
-                    [tempArr addObject:self.selectValueArr[i]];
-                }
-            }
-            self.selectValueArr = tempArr;
+//            NSMutableArray *tempArr = [NSMutableArray array];
+//            for (NSInteger i = 0; i < self.selectValueArr.count; i++) {
+//                if (i == component) {
+//                    [tempArr addObject:self.dataSourceArr[component][row]];
+//                } else {
+//                    [tempArr addObject:self.selectValueArr[i]];
+//                }
+//            }
+//            self.selectValueArr = tempArr;
+            
+            self.selectValueArr[component] = self.dataSourceArr[component][row]; //直接修改
             
             // 设置是否自动回调
             if (self.isAutoSelect) {
@@ -281,7 +283,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         label.frame = CGRectMake(0, 0, self.alertView.frame.size.width, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[row];
     } else if (self.type == BRStringPickerComponentMore) {
-        label.frame = CGRectMake(0, 0, self.alertView.frame.size.width / [self.dataSourceArr[component] count], 35.0f * kScaleFit);
+        label.frame = CGRectMake(0, 0, self.alertView.frame.size.width / pickerView.numberOfComponents, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[component][row];
     }
     
