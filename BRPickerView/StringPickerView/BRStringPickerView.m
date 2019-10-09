@@ -9,6 +9,7 @@
 
 #import "BRStringPickerView.h"
 #import "BRPickerViewMacro.h"
+#import "BRPickerStyle.h"
 
 typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     BRStringPickerComponentSingle,  // 单列

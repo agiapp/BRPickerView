@@ -9,6 +9,7 @@
 
 #import "BRAddressPickerView.h"
 #import "BRPickerViewMacro.h"
+#import "BRPickerStyle.h"
 
 @interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {

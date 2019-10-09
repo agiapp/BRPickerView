@@ -41,7 +41,7 @@
 /** 自定义主题颜色 */
 - (void)setupThemeColor:(UIColor *)themeColor;
 
-/** 自定义样式 */
-- (void)setPickerStyle:(BRPickerStyle *)pickerStyle;
+/** 自定义UI样式 */
+- (void)setupCustomPickerStyle:(BRPickerStyle *)pickerStyle;
 
 @end

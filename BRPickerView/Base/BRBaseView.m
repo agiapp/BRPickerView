@@ -9,6 +9,7 @@
 
 #import "BRBaseView.h"
 #import "BRPickerViewMacro.h"
+#import "BRPickerStyle.h"
 
 @implementation BRBaseView
 
@@ -154,9 +155,37 @@
     self.titleLabel.textColor = [themeColor colorWithAlphaComponent:0.8f];
 }
 
-#pragma mark - 自定义样式
-- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
+#pragma mark - 自定义UI样式
+- (void)setupCustomPickerStyle:(BRPickerStyle *)pickerStyle {
+    self.backgroundView.backgroundColor = pickerStyle.maskColor;
+    self.alertView.backgroundColor = pickerStyle.pickerColor;
     
+    self.topView.backgroundColor = pickerStyle.titleBarColor;
+    self.leftBtn.backgroundColor = pickerStyle.titleBarColor;
+    self.rightBtn.backgroundColor = pickerStyle.titleBarColor;
+    self.lineView.backgroundColor = pickerStyle.lineColor;
+    
+    [self.leftBtn setTitleColor:pickerStyle.leftTextColor forState:UIControlStateNormal];
+    if (pickerStyle.leftBorderStyle == BRBorderStyleSolid) {
+        self.leftBtn.layer.cornerRadius = 6.0f;
+        self.leftBtn.layer.borderColor = pickerStyle.leftTextColor.CGColor;
+        self.leftBtn.layer.borderWidth = 1.0f;
+        self.leftBtn.layer.masksToBounds = YES;
+    } else if (pickerStyle.leftBorderStyle == BRBorderStyleFill) {
+        self.leftBtn.layer.cornerRadius = 6.0f;
+        self.leftBtn.layer.masksToBounds = YES;
+    }
+    
+    [self.rightBtn setTitleColor:pickerStyle.leftTextColor forState:UIControlStateNormal];
+    if (pickerStyle.rightBorderStyle == BRBorderStyleSolid) {
+        self.rightBtn.layer.cornerRadius = 6.0f;
+        self.rightBtn.layer.borderColor = pickerStyle.rightTextColor.CGColor;
+        self.rightBtn.layer.borderWidth = 1.0f;
+        self.rightBtn.layer.masksToBounds = YES;
+    } else if (pickerStyle.rightBorderStyle == BRBorderStyleFill) {
+        self.rightBtn.layer.cornerRadius = 6.0f;
+        self.rightBtn.layer.masksToBounds = YES;
+    }
 }
 
 - (void)dealloc {
