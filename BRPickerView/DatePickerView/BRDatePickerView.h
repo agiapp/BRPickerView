@@ -41,7 +41,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 typedef void(^BRDateResultBlock)(NSString *selectValue);
 typedef void(^BRDateCancelBlock)(void);
 
-@class BRPickerStyle;
 @interface BRDatePickerView : BRBaseView
 
 /**
@@ -62,21 +61,18 @@ typedef void(^BRDateCancelBlock)(void);
 /** 最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate） */
 @property (nonatomic, strong) NSDate *maxDate;
 
-/** 是否自动选择，即选择完(滚动完)执行结果回调 */
+/** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
-
-/** 自定义UI样式 */
-@property (nonatomic, strong) BRPickerStyle *pickerStyle;
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRDateCancelBlock cancelBlock;
 
-/// 初始化方法
-/// @param pickerMode 日期选择器类型
-- (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;
-
+/// 初始化时间选择器
+/// @param pickerMode  日期选择器类型
+/// @param customStyle 自定义UI样式（可为空，为nil时是默认样式）
+- (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle;
 
 /// 弹出视图方法
 /// @param animation 是否开启动画

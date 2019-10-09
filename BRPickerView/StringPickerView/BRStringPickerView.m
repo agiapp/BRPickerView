@@ -9,7 +9,6 @@
 
 #import "BRStringPickerView.h"
 #import "BRPickerViewMacro.h"
-#import "BRPickerStyle.h"
 
 typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     BRStringPickerComponentSingle,  // 单列
@@ -18,7 +17,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 
 @interface BRStringPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
-    BOOL isDataSourceValid; // 数据源是否合法
+    BOOL _isDataSourceValid; // 数据源是否合法
 }
 // 字符串选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
@@ -62,19 +61,21 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
                       resultBlock:(BRStringResultBlock)resultBlock
                       cancelBlock:(BRStringCancelBlock)cancelBlock {
     BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    NSAssert(strPickerView->isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
-    if (strPickerView->isDataSourceValid) {
+    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
+    if (strPickerView->_isDataSourceValid) {
         [strPickerView showWithAnimation:YES];
     }
 }
 
 #pragma mark - 初始化自定义字符串选择器
-- (instancetype)initWithDataSource:(id)dataSource {
+- (instancetype)initWithDataSource:(id)dataSource customStyle:(BRPickerStyle *)customStyle {
     if (self = [super init]) {
-        isDataSourceValid = YES;
+        self.pickerStyle = customStyle;
+        self.isAutoSelect = NO;
+        _isDataSourceValid = YES;
         
         [self handlerDataSource:dataSource];
-        if (isDataSourceValid) {
+        if (_isDataSourceValid) {
             [self initUI];
         }
     }
@@ -95,9 +96,9 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
-        isDataSourceValid = YES;
+        _isDataSourceValid = YES;
         [self handlerDataSource:dataSource];
-        if (isDataSourceValid) {
+        if (_isDataSourceValid) {
             [self initUI];
         }
     }
@@ -108,7 +109,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 - (void)handlerDataSource:(id)dataSource {
     // 1.先判断传入的数据源是否合法
     if (!dataSource) {
-        isDataSourceValid = NO;
+        _isDataSourceValid = NO;
     }
     NSArray *dataArr = nil;
     if ([dataSource isKindOfClass:[NSArray class]] && [dataSource count] > 0) {
@@ -118,22 +119,22 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
         dataArr = [[NSArray alloc] initWithContentsOfFile:path];
         if (!dataArr || dataArr.count == 0) {
-            isDataSourceValid = NO;
+            _isDataSourceValid = NO;
         }
     } else {
-        isDataSourceValid = NO;
+        _isDataSourceValid = NO;
     }
     // 判断数组是否合法（即数组的所有元素是否是同一种数据类型）
-    if (isDataSourceValid) {
+    if (_isDataSourceValid) {
         Class itemClass = [[dataArr firstObject] class];
         for (id obj in dataArr) {
             if (![obj isKindOfClass:itemClass]) {
-                isDataSourceValid = NO;
+                _isDataSourceValid = NO;
                 break;
             }
         }
     }
-    if (!isDataSourceValid) {
+    if (!_isDataSourceValid) {
         return;
     }
     // 2. 给数据源赋值
@@ -186,13 +187,8 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     }
 }
 
-- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
-    // 设置自定义样式
-    [self setupCustomPickerStyle:pickerStyle];
-    self.pickerView.backgroundColor = pickerStyle.pickerColor;
-}
-
 - (void)setTitle:(NSString *)title {
+    _title = title;
     self.titleLabel.text = self.title;
 }
 
@@ -200,7 +196,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
-        _pickerView.backgroundColor = [UIColor whiteColor];
+        _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
@@ -278,13 +274,13 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
     //设置分割线的颜色
-    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
-    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = self.pickerStyle.separatorColor;
+    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = self.pickerStyle.separatorColor;
     
     UILabel *label = [[UILabel alloc]init];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
-    //label.textColor = [UIColor redColor];
+    label.textColor = self.pickerStyle.pickerTextColor;
     label.font = [UIFont systemFontOfSize:18.0f * kScaleFit];
     // 字体自适应属性
     label.adjustsFontSizeToFitWidth = YES;

@@ -8,10 +8,10 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import <UIKit/UIKit.h>
+#import "BRPickerStyle.h"
 
 #define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
-@class BRPickerStyle;
 @interface BRBaseView : UIView
 // 背景视图
 @property (nonatomic, strong) UIView *backgroundView;
@@ -28,6 +28,9 @@
 // 分割线视图
 @property (nonatomic, strong) UIView *lineView;
 
+/** 自定义UI样式 */
+@property (nonatomic, strong) BRPickerStyle *pickerStyle;
+
 /** 初始化子视图 */
 - (void)initUI;
 
@@ -42,8 +45,5 @@
 
 /** 自定义主题颜色 */
 - (void)setupThemeColor:(UIColor *)themeColor;
-
-/** 自定义UI样式 */
-- (void)setupCustomPickerStyle:(BRPickerStyle *)pickerStyle;
 
 @end

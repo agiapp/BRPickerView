@@ -9,7 +9,6 @@
 
 #import "BRAddressPickerView.h"
 #import "BRPickerViewMacro.h"
-#import "BRPickerStyle.h"
 
 @interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
@@ -82,9 +81,11 @@
 }
 
 #pragma mark - 初始化地址选择器
-- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode {
+- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle {
     if (self = [super init]) {
         self.showType = pickerMode;
+        self.pickerStyle = customStyle;
+        self.isAutoSelect = NO;
         _isDataSourceValid = YES;
     
         [self initUI];
@@ -304,13 +305,8 @@
     }
 }
 
-- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
-    // 设置自定义样式
-    [self setupCustomPickerStyle:pickerStyle];
-    self.pickerView.backgroundColor = pickerStyle.pickerColor;
-}
-
 - (void)setTitle:(NSString *)title {
+    _title = title;
     self.titleLabel.text = self.title;
 }
 
@@ -318,7 +314,7 @@
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
-        _pickerView.backgroundColor = [UIColor whiteColor];
+        _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
@@ -371,8 +367,8 @@
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
     // 设置分割线的颜色
-    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
-    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = self.pickerStyle.separatorColor;
+    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = self.pickerStyle.separatorColor;
     
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.alertView.frame.size.width) / pickerView.numberOfComponents, 35 * kScaleFit)];
     bgView.backgroundColor = [UIColor clearColor];
@@ -380,7 +376,7 @@
     [bgView addSubview:label];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
-    //label.textColor = [UIColor redColor];
+    label.textColor = self.pickerStyle.pickerTextColor;
     label.font = [UIFont systemFontOfSize:18.0f * kScaleFit];
     // 字体自适应属性
     label.adjustsFontSizeToFitWidth = YES;

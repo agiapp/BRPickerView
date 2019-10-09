@@ -35,16 +35,23 @@
     return _titleBarColor;
 }
 
-- (UIColor *)lineColor {
-    if (!_lineColor) {
-        _lineColor = BR_RGB_HEX(0xf1f1f1, 1.0f);
+- (UIColor *)titleLineColor {
+    if (!_titleLineColor) {
+        _titleLineColor = BR_RGB_HEX(0xf1f1f1, 1.0f);
     }
-    return _lineColor;
+    return _titleLineColor;
+}
+
+- (UIColor *)leftColor {
+    if (!_leftColor) {
+        _leftColor = [UIColor clearColor];
+    }
+    return _leftColor;
 }
 
 - (UIColor *)leftTextColor {
     if (!_leftTextColor) {
-        _leftTextColor = kDefaultThemeColor;
+        _leftTextColor = kDefaultTextColor;
     }
     return _leftTextColor;
 }
@@ -58,14 +65,21 @@
 
 - (UIColor *)titleTextColor {
     if (!_titleTextColor) {
-        _titleTextColor = [kDefaultThemeColor colorWithAlphaComponent:0.8f];
+        _titleTextColor = [kDefaultTextColor colorWithAlphaComponent:0.8f];
     }
     return _titleTextColor;
 }
 
+- (UIColor *)rightColor {
+    if (!_rightColor) {
+        _rightColor = [UIColor clearColor];
+    }
+    return _rightColor;
+}
+
 - (UIColor *)rightTextColor {
     if (!_rightTextColor) {
-        _rightTextColor = kDefaultThemeColor;
+        _rightTextColor = kDefaultTextColor;
     }
     return _rightTextColor;
 }
@@ -75,6 +89,20 @@
         _rightBorderStyle = BRBorderStyleNone;
     }
     return _rightBorderStyle;
+}
+
+- (UIColor *)separatorColor {
+    if (!_separatorColor) {
+        _separatorColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+    }
+    return _separatorColor;
+}
+
+- (UIColor *)pickerTextColor {
+    if (!_pickerTextColor) {
+        _pickerTextColor = kDefaultTextColor;
+    }
+    return _pickerTextColor;
 }
 
 @end

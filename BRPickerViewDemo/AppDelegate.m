@@ -30,7 +30,7 @@
     // 设置状态栏前景色为白色
     nav.navigationBar.barStyle = UIBarStyleBlack;
     // 设置navigationBar背景颜色
-    nav.navigationBar.barTintColor = [UIColor colorWithRed:253 / 255.0 green:96 / 255.0 blue:134 / 255.0 alpha:1.0f];
+    nav.navigationBar.barTintColor = [UIColor darkTextColor];
     // 设置navigationBar所有子控件的颜色
     nav.navigationBar.tintColor = [UIColor whiteColor];
     // 设置 title 颜色

@@ -22,14 +22,14 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 背景遮罩视图颜色 */
 @property (nonatomic, strong) UIColor *maskColor;
-/** picker选择器视图背景颜色 */
-@property (nonatomic, strong) UIColor *pickerColor;
 
 /** 标题栏背景颜色 */
 @property (nonatomic, strong) UIColor *titleBarColor;
 /** 标题栏下边框线颜色 */
-@property (nonatomic, strong) UIColor *lineColor;
+@property (nonatomic, strong) UIColor *titleLineColor;
 
+/** 左边取消按钮背景颜色 */
+@property (nonatomic, strong) UIColor *leftColor;
 /** 左边取消按钮文本颜色 */
 @property (nonatomic, strong) UIColor *leftTextColor;
 /** 左边取消按钮边框样式 */
@@ -38,9 +38,18 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 中间标题文本颜色 */
 @property (nonatomic, strong) UIColor *titleTextColor;
 
+/** 右边确定按钮背景颜色 */
+@property (nonatomic, strong) UIColor *rightColor;
 /** 右边确定按钮文本颜色 */
 @property (nonatomic, strong) UIColor *rightTextColor;
 /** 右边确定按钮边框样式 */
 @property (nonatomic, assign) BRBorderStyle rightBorderStyle;
+
+/** picker 选择器视图背景颜色 */
+@property (nonatomic, strong) UIColor *pickerColor;
+/** picker 中间分割线颜色 */
+@property (nonatomic, strong) UIColor *separatorColor;
+/** picker 中间选择文本颜色 */
+@property (nonatomic, strong) UIColor *pickerTextColor;
 
 @end

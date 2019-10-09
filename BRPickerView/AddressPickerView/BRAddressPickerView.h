@@ -22,7 +22,6 @@ typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
 typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area);
 typedef void(^BRAddressCancelBlock)(void);
 
-@class BRPickerStyle;
 @interface BRAddressPickerView : BRBaseView
 
 /**
@@ -39,20 +38,18 @@ typedef void(^BRAddressCancelBlock)(void);
 @property (nonatomic, strong) NSArray *dataSource;
 /** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
 @property (nonatomic, strong) NSArray *defaultSelectedArr;
-/** 是否自动选择，即选择完(滚动完)执行结果回调 */
+/** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
-
-/** 自定义UI样式 */
-@property (nonatomic, strong) BRPickerStyle *pickerStyle;
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRAddressCancelBlock cancelBlock;
 
-/// 初始化方法
+/// 初始化地址选择器
 /// @param pickerMode 地址选择器类型
-- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode;
+/// @param customStyle 自定义UI样式（可为空，为nil时是默认样式）
+- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle;
 
 
 /// 弹出视图方法

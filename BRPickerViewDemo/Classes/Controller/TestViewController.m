@@ -224,13 +224,25 @@
     switch (textField.tag) {
         case 1:
         {
+/*
             [BRStringPickerView showStringPickerWithTitle:@"宝宝性别" dataSource:@[@"男", @"女", @"其他"] defaultSelValue:textField.text resultBlock:^(id selectValue) {
                 textField.text = self.infoModel.genderStr = selectValue;
             }];
+ */
+            /// 使用方式一
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithDataSource:@[@"男", @"女", @"其他"] customStyle:nil];
+            stringPickerView.title = @"宝宝性别";
+            stringPickerView.defaultSelValue = textField.text;
+            stringPickerView.resultBlock = ^(id selectValue) {
+                textField.text = self.infoModel.genderStr = selectValue;
+            };
+            [stringPickerView showWithAnimation:YES];
+            
         }
             break;
         case 2:
         {
+/*
             NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12];
             NSDate *maxDate = [NSDate date];
             [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
@@ -238,15 +250,53 @@
             } cancelBlock:^{
                 NSLog(@"点击了背景或取消按钮");
             }];
+ */
+            /// 使用方式一
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD customStyle:nil];
+            datePickerView.title = @"出生年月日";
+            datePickerView.defaultSelValue = textField.text;
+            datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
+            datePickerView.maxDate = [NSDate date];
+            datePickerView.isAutoSelect = YES;
+            datePickerView.resultBlock = ^(NSString *selectValue) {
+                textField.text = self.infoModel.birthdayStr = selectValue;
+            };
+            [datePickerView showWithAnimation:YES];
+            
         }
             break;
         case 3:
         {
+/*
             NSDate *minDate = [NSDate br_setHour:8 minute:10];
             NSDate *maxDate = [NSDate br_setHour:20 minute:35];
             [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
                 textField.text = self.infoModel.birthtimeStr = selectValue;
             }];
+ */
+            /// 使用方式一
+            // 自定义主题样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.leftTextColor = [UIColor orangeColor];
+            customStyle.leftBorderStyle = BRBorderStyleSolid;
+            customStyle.rightColor = [UIColor orangeColor];
+            customStyle.rightTextColor = [UIColor whiteColor];
+            customStyle.rightBorderStyle = BRBorderStyleFill;
+            customStyle.pickerColor = [UIColor lightGrayColor];
+            customStyle.pickerTextColor = [UIColor redColor];
+            
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeTime customStyle:customStyle];
+            datePickerView.title = @"出生时刻";
+            datePickerView.defaultSelValue = textField.text;
+            datePickerView.minDate = [NSDate br_setHour:8 minute:10];
+            datePickerView.maxDate = [NSDate br_setHour:20 minute:35];
+            datePickerView.isAutoSelect = YES;
+            
+            datePickerView.resultBlock = ^(NSString *selectValue) {
+                textField.text = self.infoModel.birthdayStr = selectValue;
+            };
+            [datePickerView showWithAnimation:YES];
+            
         }
             break;
         case 5:

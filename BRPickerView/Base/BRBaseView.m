@@ -9,7 +9,6 @@
 
 #import "BRBaseView.h"
 #import "BRPickerViewMacro.h"
-#import "BRPickerStyle.h"
 
 @implementation BRBaseView
 
@@ -38,7 +37,7 @@
 - (UIView *)backgroundView {
     if (!_backgroundView) {
         _backgroundView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
-        _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
+        _backgroundView.backgroundColor = self.pickerStyle.maskColor;
         // 设置子视图的大小随着父视图变化
         _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _backgroundView.userInteractionEnabled = YES;
@@ -52,7 +51,7 @@
 - (UIView *)alertView {
     if (!_alertView) {
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kTopViewHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, kTopViewHeight + kPickerHeight + BR_BOTTOM_MARGIN)];
-        _alertView.backgroundColor = [UIColor whiteColor];
+        _alertView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _alertView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
@@ -63,7 +62,7 @@
 - (UIView *)topView {
     if (!_topView) {
         _topView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.alertView.frame.size.width, kTopViewHeight + 0.5)];
-        _topView.backgroundColor = kBRToolBarColor;
+        _topView.backgroundColor = self.pickerStyle.titleBarColor;
         // 设置子视图的大小随着父视图变化
         _topView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
@@ -75,12 +74,22 @@
     if (!_leftBtn) {
         _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _leftBtn.frame = CGRectMake(5, 8, 60, 28);
-        _leftBtn.backgroundColor = kBRToolBarColor;
+        _leftBtn.backgroundColor = self.pickerStyle.leftColor;;
         _leftBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
         _leftBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
-        [_leftBtn setTitleColor:kDefaultThemeColor forState:UIControlStateNormal];
+        [_leftBtn setTitleColor:self.pickerStyle.leftTextColor forState:UIControlStateNormal];
         [_leftBtn setTitle:@"取消" forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
+        // 设置按钮圆角或边框
+        if (self.pickerStyle.leftBorderStyle == BRBorderStyleSolid) {
+            _leftBtn.layer.cornerRadius = 6.0f;
+            _leftBtn.layer.borderColor = self.pickerStyle.leftTextColor.CGColor;
+            _leftBtn.layer.borderWidth = 1.0f;
+            _leftBtn.layer.masksToBounds = YES;
+        } else if (self.pickerStyle.leftBorderStyle == BRBorderStyleFill) {
+            _leftBtn.layer.cornerRadius = 6.0f;
+            _leftBtn.layer.masksToBounds = YES;
+        }
     }
     return _leftBtn;
 }
@@ -90,12 +99,22 @@
     if (!_rightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - 65, 8, 60, 28);
-        _rightBtn.backgroundColor = kBRToolBarColor;
+        _rightBtn.backgroundColor = self.pickerStyle.rightColor;
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
         _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
-        [_rightBtn setTitleColor:kDefaultThemeColor forState:UIControlStateNormal];
+        [_rightBtn setTitleColor:self.pickerStyle.rightTextColor forState:UIControlStateNormal];
         [_rightBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
+        // 设置按钮圆角或边框
+        if (self.pickerStyle.rightBorderStyle == BRBorderStyleSolid) {
+            _rightBtn.layer.cornerRadius = 6.0f;
+            _rightBtn.layer.borderColor = self.pickerStyle.rightTextColor.CGColor;
+            _rightBtn.layer.borderWidth = 1.0f;
+            _rightBtn.layer.masksToBounds = YES;
+        } else if (self.pickerStyle.rightBorderStyle == BRBorderStyleFill) {
+            _rightBtn.layer.cornerRadius = 6.0f;
+            _rightBtn.layer.masksToBounds = YES;
+        }
     }
     return _rightBtn;
 }
@@ -107,7 +126,7 @@
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         _titleLabel.font = [UIFont systemFontOfSize:14.0f * kScaleFit];
-        _titleLabel.textColor = [kDefaultThemeColor colorWithAlphaComponent:0.8f];
+        _titleLabel.textColor = [self.pickerStyle.titleTextColor colorWithAlphaComponent:0.8f];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _titleLabel;
@@ -117,7 +136,7 @@
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, kTopViewHeight, self.alertView.frame.size.width, 0.5)];
-        _lineView.backgroundColor = BR_RGB_HEX(0xf1f1f1, 1.0f);
+        _lineView.backgroundColor = self.pickerStyle.titleLineColor;
         _lineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         [self.alertView addSubview:_lineView];
     }
@@ -155,37 +174,11 @@
     self.titleLabel.textColor = [themeColor colorWithAlphaComponent:0.8f];
 }
 
-#pragma mark - 自定义UI样式
-- (void)setupCustomPickerStyle:(BRPickerStyle *)pickerStyle {
-    self.backgroundView.backgroundColor = pickerStyle.maskColor;
-    self.alertView.backgroundColor = pickerStyle.pickerColor;
-    
-    self.topView.backgroundColor = pickerStyle.titleBarColor;
-    self.leftBtn.backgroundColor = pickerStyle.titleBarColor;
-    self.rightBtn.backgroundColor = pickerStyle.titleBarColor;
-    self.lineView.backgroundColor = pickerStyle.lineColor;
-    
-    [self.leftBtn setTitleColor:pickerStyle.leftTextColor forState:UIControlStateNormal];
-    if (pickerStyle.leftBorderStyle == BRBorderStyleSolid) {
-        self.leftBtn.layer.cornerRadius = 6.0f;
-        self.leftBtn.layer.borderColor = pickerStyle.leftTextColor.CGColor;
-        self.leftBtn.layer.borderWidth = 1.0f;
-        self.leftBtn.layer.masksToBounds = YES;
-    } else if (pickerStyle.leftBorderStyle == BRBorderStyleFill) {
-        self.leftBtn.layer.cornerRadius = 6.0f;
-        self.leftBtn.layer.masksToBounds = YES;
+- (BRPickerStyle *)pickerStyle {
+    if (!_pickerStyle) {
+        _pickerStyle = [[BRPickerStyle alloc]init];
     }
-    
-    [self.rightBtn setTitleColor:pickerStyle.leftTextColor forState:UIControlStateNormal];
-    if (pickerStyle.rightBorderStyle == BRBorderStyleSolid) {
-        self.rightBtn.layer.cornerRadius = 6.0f;
-        self.rightBtn.layer.borderColor = pickerStyle.rightTextColor.CGColor;
-        self.rightBtn.layer.borderWidth = 1.0f;
-        self.rightBtn.layer.masksToBounds = YES;
-    } else if (pickerStyle.rightBorderStyle == BRBorderStyleFill) {
-        self.rightBtn.layer.cornerRadius = 6.0f;
-        self.rightBtn.layer.masksToBounds = YES;
-    }
+    return _pickerStyle;
 }
 
 - (void)dealloc {

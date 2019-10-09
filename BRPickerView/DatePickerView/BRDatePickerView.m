@@ -9,7 +9,6 @@
 
 #import "BRDatePickerView.h"
 #import "BRPickerViewMacro.h"
-#import "BRPickerStyle.h"
 
 /// 时间选择器的类型
 typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
@@ -91,14 +90,24 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 初始化时间选择器
-- (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode {
+- (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle {
     if (self = [super init]) {
-        
         self.showType = pickerMode;
+        self.pickerStyle = customStyle;
+        self.isAutoSelect = NO;
         
         [self setupSelectDateFormatter:pickerMode];
         
         [self handlerDefaultSelect];
+        
+        [self initUI];
+        
+        // 默认滚动的行
+        if (self.style == BRDatePickerStyleSystem) {
+            [self.datePicker setDate:self.selectDate animated:NO];
+        } else if (self.style == BRDatePickerStyleCustom) {
+            [self scrollToSelectDate:self.selectDate animated:NO];
+        }
     }
     return self;
 }
@@ -130,6 +139,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [self setupSelectDateFormatter:dateType];
         
         [self handlerDefaultSelect];
+        
+        [self initUI];
+        
+        // 默认滚动的行
+        if (self.style == BRDatePickerStyleSystem) {
+            [self.datePicker setDate:self.selectDate animated:NO];
+        } else if (self.style == BRDatePickerStyleCustom) {
+            [self scrollToSelectDate:self.selectDate animated:NO];
+        }
     }
     return self;
 }
@@ -215,14 +233,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     
     if (self.style == BRDatePickerStyleCustom) {
         [self initDefaultDateArray];
-    }
-    [self initUI];
-    
-    // 默认滚动的行
-    if (self.style == BRDatePickerStyleSystem) {
-        [self.datePicker setDate:self.selectDate animated:NO];
-    } else if (self.style == BRDatePickerStyleCustom) {
-        [self scrollToSelectDate:self.selectDate animated:NO];
     }
 }
 
@@ -320,17 +330,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
-    // 设置自定义样式
-    [self setupCustomPickerStyle:pickerStyle];
-    if (self.style == BRDatePickerStyleSystem) {
-        self.datePicker.backgroundColor = pickerStyle.pickerColor;
-    } else if (self.style == BRDatePickerStyleCustom) {
-        self.pickerView.backgroundColor = pickerStyle.pickerColor;
-    }
-}
-
 - (void)setTitle:(NSString *)title {
+    _title = title;
     self.titleLabel.text = self.title;
 }
 
@@ -493,14 +494,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
         _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
-        _datePicker.backgroundColor = [UIColor whiteColor];
+        _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该UIDatePicker的国际化Locale，以简体中文习惯显示日期，UIDatePicker控件默认使用iOS系统的国际化Locale
         _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CHS_CN"];
         // textColor 隐藏属性，使用KVC赋值
-        //[_datePicker setValue:[UIColor blueColor] forKey:@"textColor"];
+        [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
         // 设置时间范围
         if (self.minLimitDate) {
             _datePicker.minimumDate = self.minLimitDate;
@@ -518,7 +519,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
-        _pickerView.backgroundColor = [UIColor whiteColor];
+        _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
@@ -573,9 +574,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - UIPickerViewDelegate
 // 3.设置 pickerView 的 显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    
     // 设置分割线的颜色
-    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0f];
-    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0f];
+    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = self.pickerStyle.separatorColor;
+    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = self.pickerStyle.separatorColor;
     
     UILabel *label = (UILabel *)view;
     if (!label) {
@@ -583,6 +585,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont systemFontOfSize:20.0f * kScaleFit];
+        label.textColor = self.pickerStyle.pickerTextColor;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
         // 自适应最小字体缩放比例
