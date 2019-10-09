@@ -237,17 +237,9 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
             break;
         case BRStringPickerComponentMore:
         {
-//            NSMutableArray *tempArr = [NSMutableArray array];
-//            for (NSInteger i = 0; i < self.selectValueArr.count; i++) {
-//                if (i == component) {
-//                    [tempArr addObject:self.dataSourceArr[component][row]];
-//                } else {
-//                    [tempArr addObject:self.selectValueArr[i]];
-//                }
-//            }
-//            self.selectValueArr = tempArr;
-            
-            self.selectValueArr[component] = self.dataSourceArr[component][row]; //直接修改
+            if (component < self.selectValueArr.count) {
+                self.selectValueArr[component] = self.dataSourceArr[component][row];
+            }
             
             // 设置是否自动回调
             if (self.isAutoSelect) {
