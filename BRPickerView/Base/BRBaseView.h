@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class BRPickerStyle;
 @interface BRBaseView : UIView
 // 背景视图
 @property (nonatomic, strong) UIView *backgroundView;
@@ -39,5 +40,8 @@
 
 /** 自定义主题颜色 */
 - (void)setupThemeColor:(UIColor *)themeColor;
+
+/** 自定义样式 */
+- (void)setPickerStyle:(BRPickerStyle *)pickerStyle;
 
 @end

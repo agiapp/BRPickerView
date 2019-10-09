@@ -154,6 +154,11 @@
     self.titleLabel.textColor = [themeColor colorWithAlphaComponent:0.8f];
 }
 
+#pragma mark - 自定义样式
+- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
+    
+}
+
 - (void)dealloc {
     NSLog(@"%@ dealloc", NSStringFromClass([self class]));
 }

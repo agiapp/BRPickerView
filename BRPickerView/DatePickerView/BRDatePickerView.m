@@ -460,14 +460,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
         _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
-        _datePicker.backgroundColor = [UIColor whiteColor];
+        //_datePicker.backgroundColor = [UIColor redColor];
         // 设置子视图的大小随着父视图变化
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该UIDatePicker的国际化Locale，以简体中文习惯显示日期，UIDatePicker控件默认使用iOS系统的国际化Locale
         _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CHS_CN"];
         // textColor 隐藏属性，使用KVC赋值
-        // [_datePicker setValue:[UIColor blackColor] forKey:@"textColor"];
+        //[_datePicker setValue:[UIColor blueColor] forKey:@"textColor"];
         // 设置时间范围
         if (self.minLimitDate) {
             _datePicker.minimumDate = self.minLimitDate;
