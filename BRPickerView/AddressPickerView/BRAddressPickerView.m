@@ -17,13 +17,9 @@
     NSInteger _provinceIndex;   // 记录省选中的位置
     NSInteger _cityIndex;       // 记录市选中的位置
     NSInteger _areaIndex;       // 记录区选中的位置
-    
-    NSArray * _defaultSelectedArr;
 }
 // 地址选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
-// 保存传入的数据源
-@property (nonatomic, strong) NSArray *dataSource;
 // 省模型数组
 @property(nonatomic, strong) NSArray *provinceModelArr;
 // 市模型数组
@@ -39,14 +35,8 @@
 // 选中的区
 @property(nonatomic, strong) BRAreaModel *selectAreaModel;
 
-// 是否开启自动选择
-@property (nonatomic, assign) BOOL isAutoSelect;
 // 主题色
 @property (nonatomic, strong) UIColor *themeColor;
-// 选中后的回调
-@property (nonatomic, copy) BRAddressResultBlock resultBlock;
-// 取消选择的回调
-@property (nonatomic, copy) BRAddressCancelBlock cancelBlock;
 
 @end
 
@@ -92,6 +82,17 @@
 }
 
 #pragma mark - 初始化地址选择器
+- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode {
+    if (self = [super init]) {
+        self.showType = pickerMode;
+        _isDataSourceValid = YES;
+    
+        [self initUI];
+        [self loadData];
+    }
+    return self;
+}
+
 - (instancetype)initWithShowType:(BRAddressPickerMode)showType
                       dataSource:(NSArray *)dataSource
                  defaultSelected:(NSArray *)defaultSelectedArr
@@ -102,7 +103,7 @@
     if (self = [super init]) {
         self.showType = showType;
         self.dataSource = dataSource;
-        _defaultSelectedArr = defaultSelectedArr;
+        self.defaultSelectedArr = defaultSelectedArr;
         _isDataSourceValid = YES;
     
         self.isAutoSelect = isAutoSelect;
@@ -191,15 +192,15 @@
     __block NSString *selectCityName = nil;
     __block NSString *selectAreaName = nil;
     // 1. 获取默认选中的省市区的名称
-    if (_defaultSelectedArr) {
-        if (_defaultSelectedArr.count > 0 && [_defaultSelectedArr[0] isKindOfClass:[NSString class]]) {
-            selectProvinceName = _defaultSelectedArr[0];
+    if (self.defaultSelectedArr) {
+        if (self.defaultSelectedArr.count > 0 && [self.defaultSelectedArr[0] isKindOfClass:[NSString class]]) {
+            selectProvinceName = self.defaultSelectedArr[0];
         }
-        if (_defaultSelectedArr.count > 1 && [_defaultSelectedArr[1] isKindOfClass:[NSString class]]) {
-            selectCityName = _defaultSelectedArr[1];
+        if (self.defaultSelectedArr.count > 1 && [self.defaultSelectedArr[1] isKindOfClass:[NSString class]]) {
+            selectCityName = self.defaultSelectedArr[1];
         }
-        if (_defaultSelectedArr.count > 2 && [_defaultSelectedArr[2] isKindOfClass:[NSString class]]) {
-            selectAreaName = _defaultSelectedArr[2];
+        if (self.defaultSelectedArr.count > 2 && [self.defaultSelectedArr[2] isKindOfClass:[NSString class]]) {
+            selectAreaName = self.defaultSelectedArr[2];
         }
     }
     
@@ -301,6 +302,16 @@
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
         [self setupThemeColor:self.themeColor];
     }
+}
+
+- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
+    // 设置自定义样式
+    [self setupCustomPickerStyle:pickerStyle];
+    self.pickerView.backgroundColor = pickerStyle.pickerColor;
+}
+
+- (void)setTitle:(NSString *)title {
+    self.titleLabel.text = self.title;
 }
 
 #pragma mark - 地址选择器

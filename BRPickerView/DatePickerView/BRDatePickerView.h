@@ -74,7 +74,7 @@ typedef void(^BRDateCancelBlock)(void);
 @property (nonatomic, copy) BRDateCancelBlock cancelBlock;
 
 /// 初始化方法
-/// @param pickerMode 日期显示类型
+/// @param pickerMode 日期选择器类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;
 
 

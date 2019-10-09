@@ -103,7 +103,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return self;
 }
 
-#pragma mark - 初始化时间选择器
 - (instancetype)initWithTitle:(NSString *)title
                      dateType:(BRDatePickerMode)dateType
               defaultSelValue:(NSString *)defaultSelValue
@@ -309,7 +308,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 初始化子视图
 - (void)initUI {
     [super initUI];
-    self.titleLabel.text = _title;
+    self.titleLabel.text = self.title;
     // 添加时间选择器
     if (self.style == BRDatePickerStyleSystem) {
         [self.alertView addSubview:self.datePicker];
@@ -329,6 +328,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     } else if (self.style == BRDatePickerStyleCustom) {
         self.pickerView.backgroundColor = pickerStyle.pickerColor;
     }
+}
+
+- (void)setTitle:(NSString *)title {
+    self.titleLabel.text = self.title;
 }
 
 #pragma mark - 设置日期数据源数组
