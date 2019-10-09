@@ -125,7 +125,7 @@ typedef void(^BRDateCancelBlock)(void);
                         maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock;
+                    resultBlock:(BRDateResultBlock)resultBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 /**
  *  3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
@@ -149,6 +149,6 @@ typedef void(^BRDateCancelBlock)(void);
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRDateCancelBlock)cancelBlock;
+                    cancelBlock:(BRDateCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 @end

@@ -91,7 +91,7 @@ typedef void(^BRAddressCancelBlock)(void);
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
                                 isAutoSelect:(BOOL)isAutoSelect
                                   themeColor:(UIColor *)themeColor
-                                 resultBlock:(BRAddressResultBlock)resultBlock;
+                                 resultBlock:(BRAddressResultBlock)resultBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 /**
  *  3.显示地址选择器（支持 设置选择器类型、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -109,7 +109,7 @@ typedef void(^BRAddressCancelBlock)(void);
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock;
+                          cancelBlock:(BRAddressCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 /**
  *  4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -129,6 +129,6 @@ typedef void(^BRAddressCancelBlock)(void);
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock;
+                          cancelBlock:(BRAddressCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 @end

@@ -9,6 +9,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
+
 @class BRPickerStyle;
 @interface BRBaseView : UIView
 // 背景视图

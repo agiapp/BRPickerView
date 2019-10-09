@@ -126,34 +126,6 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return [self br_setYear:-1 month:-1 day:-1 hour:hour minute:minute second:-1];
 }
 
-+ (NSDate *)setYear:(NSInteger)year {
-    return [self br_setYear:year];
-}
-
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month {
-    return [self br_setYear:year month:month];
-}
-
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
-    return [self br_setYear:year month:month day:day];
-}
-
-+ (NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
-    return [self br_setYear:year month:month day:day hour:hour minute:minute];
-}
-
-+ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
-    return [self br_setMonth:month day:day hour:hour minute:minute];
-}
-
-+ (NSDate *)setMonth:(NSInteger)month day:(NSInteger)day {
-    return [self br_setMonth:month day:day];
-}
-
-+ (NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute {
-    return [self br_setHour:hour minute:minute];
-}
-
 #pragma mark - 日期和字符串之间的转换：NSDate --> NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

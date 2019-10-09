@@ -11,8 +11,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
-
 @interface NSDate (BRPickerView)
 /// 获取指定date的详细信息
 @property (readonly) NSInteger br_year;    // 年
@@ -39,20 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** HH:mm */
 + (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute;
 
-/** yyyy */
-+ (nullable NSDate *)setYear:(NSInteger)year BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
-/** yyyy-MM */
-+ (nullable NSDate *)setYear:(NSInteger)year month:(NSInteger)month BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
-/** yyyy-MM-dd */
-+ (nullable NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
-/** yyyy-MM-dd HH:mm */
-+ (nullable NSDate *)setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
-/** MM-dd HH:mm */
-+ (nullable NSDate *)setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
-/** MM-dd */
-+ (nullable NSDate *)setMonth:(NSInteger)month day:(NSInteger)day BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
-/** HH:mm */
-+ (nullable NSDate *)setHour:(NSInteger)hour minute:(NSInteger)minute BRPickerViewDeprecated("过期提醒：请使用带br前缀的方法");
 
 /** 日期和字符串之间的转换：NSDate --> NSString */
 + (nullable  NSString *)br_getDateString:(NSDate *)date format:(NSString *)format;

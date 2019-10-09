@@ -18,7 +18,7 @@ typedef void(^BRStringCancelBlock)(void);
 /**
  ////////////////////////////////////////////////////////////////////////
  ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致参数过多
- ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
+ ///    1. 初始化选择器（使用 initWithDataSource: 方法）
  ///    2. 设置相关属性
  ///    3. 显示选择器（使用 showWithAnimation: 方法）
  //////////////////////////////////////////////////////////////////////*/
@@ -87,7 +87,7 @@ typedef void(^BRStringCancelBlock)(void);
                   defaultSelValue:(id)defaultSelValue
                      isAutoSelect:(BOOL)isAutoSelect
                        themeColor:(UIColor *)themeColor
-                      resultBlock:(BRStringResultBlock)resultBlock;
+                      resultBlock:(BRStringResultBlock)resultBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 /**
  *  3.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
@@ -107,7 +107,7 @@ typedef void(^BRStringCancelBlock)(void);
                      isAutoSelect:(BOOL)isAutoSelect
                        themeColor:(UIColor *)themeColor
                       resultBlock:(BRStringResultBlock)resultBlock
-                      cancelBlock:(BRStringCancelBlock)cancelBlock;
+                      cancelBlock:(BRStringCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 
 @end
