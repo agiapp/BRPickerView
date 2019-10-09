@@ -22,20 +22,14 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 }
 // 字符串选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
-@property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) BRStringPickerMode type;
 @property (nonatomic, strong) NSArray *dataSourceArr;
 // 单列选择的值
 @property (nonatomic, strong) NSString *selectValue;
 // 多列选择的值
 @property (nonatomic, strong) NSMutableArray *selectValueArr;
-
-// 是否开启自动选择
-@property (nonatomic, assign) BOOL isAutoSelect;
 // 主题色
 @property (nonatomic, strong) UIColor *themeColor;
-@property (nonatomic, copy) BRStringResultBlock resultBlock;
-@property (nonatomic, copy) BRStringCancelBlock cancelBlock;
 
 @end
 
@@ -75,6 +69,18 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 }
 
 #pragma mark - 初始化自定义字符串选择器
+- (instancetype)initWithDataSource:(id)dataSource {
+    if (self = [super init]) {
+        isDataSourceValid = YES;
+        
+        [self handlerDataSource:dataSource];
+        if (isDataSourceValid) {
+            [self initUI];
+        }
+    }
+    return self;
+}
+
 - (instancetype)initWithTitle:(NSString *)title
                    dataSource:(id)dataSource
               defaultSelValue:(id)defaultSelValue
@@ -84,12 +90,13 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
                   cancelBlock:(BRStringCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.title = title;
+        self.defaultSelValue = defaultSelValue;
         self.isAutoSelect = isAutoSelect;
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
         isDataSourceValid = YES;
-        [self configDataSource:dataSource defaultSelValue:defaultSelValue];
+        [self handlerDataSource:dataSource];
         if (isDataSourceValid) {
             [self initUI];
         }
@@ -98,7 +105,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 }
 
 #pragma mark - 设置数据源
-- (void)configDataSource:(id)dataSource defaultSelValue:(id)defaultSelValue {
+- (void)handlerDataSource:(id)dataSource {
     // 1.先判断传入的数据源是否合法
     if (!dataSource) {
         isDataSourceValid = NO;
@@ -138,10 +145,11 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
         self.type = BRStringPickerComponentMore;
     }
+    
     // 4. 给选择器设置默认值
     if (self.type == BRStringPickerComponentSingle) {
-        if (defaultSelValue && [defaultSelValue isKindOfClass:[NSString class]] && [defaultSelValue length] > 0 && [self.dataSourceArr containsObject:defaultSelValue]) {
-            self.selectValue = defaultSelValue;
+        if (self.defaultSelValue && [self.defaultSelValue isKindOfClass:[NSString class]] && [self.defaultSelValue length] > 0 && [self.dataSourceArr containsObject:self.defaultSelValue]) {
+            self.selectValue = self.defaultSelValue;
         } else {
             self.selectValue = [self.dataSourceArr firstObject];
         }
@@ -152,9 +160,9 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         NSMutableArray *tempArr = [NSMutableArray array];
         for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
             NSString *selValue = nil;
-            if (defaultSelValue && [defaultSelValue isKindOfClass:[NSArray class]] && [defaultSelValue count] > 0 && i < [defaultSelValue count] && [self.dataSourceArr[i] containsObject:defaultSelValue[i]]) {
-                [tempArr addObject:defaultSelValue[i]];
-                selValue = defaultSelValue[i];
+            if (self.defaultSelValue && [self.defaultSelValue isKindOfClass:[NSArray class]] && [self.defaultSelValue count] > 0 && i < [self.defaultSelValue count] && [self.dataSourceArr[i] containsObject:self.defaultSelValue[i]]) {
+                [tempArr addObject:self.defaultSelValue[i]];
+                selValue = self.defaultSelValue[i];
             } else {
                 [tempArr addObject:[self.dataSourceArr[i] firstObject]];
                 selValue = [self.dataSourceArr[i] firstObject];
@@ -176,6 +184,16 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
         [self setupThemeColor:self.themeColor];
     }
+}
+
+- (void)setPickerStyle:(BRPickerStyle *)pickerStyle {
+    // 设置自定义样式
+    [self setupCustomPickerStyle:pickerStyle];
+    self.pickerView.backgroundColor = pickerStyle.pickerColor;
+}
+
+- (void)setTitle:(NSString *)title {
+    self.titleLabel.text = self.title;
 }
 
 #pragma mark - 字符串选择器
