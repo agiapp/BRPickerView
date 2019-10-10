@@ -11,6 +11,20 @@
 #import "BRPickerViewMacro.h"
 
 @interface BRBaseView ()
+// 背景视图
+@property (nonatomic, strong) UIView *backgroundView;
+// 弹出视图
+@property (nonatomic, strong) UIView *alertView;
+// 顶部视图
+@property (nonatomic, strong) UIView *topView;
+// 左边取消按钮
+@property (nonatomic, strong) UIButton *leftBtn;
+// 右边确定按钮
+@property (nonatomic, strong) UIButton *rightBtn;
+// 中间标题
+@property (nonatomic, strong) UILabel *titleLabel;
+// 分割线视图
+@property (nonatomic, strong) UIView *lineView;
 
 @end
 
@@ -126,7 +140,7 @@
 #pragma mark - 中间标题按钮
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.leftBtn.frame.origin.x + self.leftBtn.frame.size.width + 2, 0, self.alertView.frame.size.width - 2 * (self.leftBtn.frame.origin.x + self.leftBtn.frame.size.width + 2), kTopViewHeight)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.leftBtn.frame.origin.x + self.leftBtn.frame.size.width + 2, 0, SCREEN_WIDTH - 2 * (self.leftBtn.frame.origin.x + self.leftBtn.frame.size.width + 2), kTopViewHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         _titleLabel.font = [UIFont systemFontOfSize:14.0f * kScaleFit];
@@ -134,6 +148,11 @@
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _titleLabel;
+}
+
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    self.titleLabel.text = title;
 }
 
 #pragma mark - 分割线
@@ -149,12 +168,18 @@
 
 #pragma mark - 点击背景遮罩图层事件
 - (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
-    
+    [self dismissWithAnimation:NO];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
 }
 
 #pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
-    
+    [self dismissWithAnimation:YES];
+    if (self.cancelBlock) {
+        self.cancelBlock();
+    }
 }
 
 #pragma mark - 确定按钮的点击事件
@@ -162,20 +187,42 @@
     
 }
 
-#pragma mark - 自定义主题颜色
-- (void)setupThemeColor:(UIColor *)themeColor {
-    self.leftBtn.layer.cornerRadius = 6.0f;
-    self.leftBtn.layer.borderColor = themeColor.CGColor;
-    self.leftBtn.layer.borderWidth = 1.0f;
-    self.leftBtn.layer.masksToBounds = YES;
-    [self.leftBtn setTitleColor:themeColor forState:UIControlStateNormal];
+#pragma mark - 弹出视图方法
+- (void)showWithAnimation:(BOOL)animation {
+    [self initUI];
     
-    self.rightBtn.backgroundColor = themeColor;
-    self.rightBtn.layer.cornerRadius = 6.0f;
-    self.rightBtn.layer.masksToBounds = YES;
-    [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    self.titleLabel.textColor = [themeColor colorWithAlphaComponent:0.8f];
+    //1. 获取当前应用的主窗口
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    [keyWindow addSubview:self];
+    if (animation) {
+        // 动画前初始位置
+        CGRect rect = self.alertView.frame;
+        rect.origin.y = SCREEN_HEIGHT;
+        self.alertView.frame = rect;
+        // 浮现动画
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = self.alertView.frame;
+            rect.origin.y -= kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
+            self.alertView.frame = rect;
+        }];
+    }
+}
+
+#pragma mark - 关闭视图方法
+- (void)dismissWithAnimation:(BOOL)animation {
+    // 关闭动画
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect rect = self.alertView.frame;
+        rect.origin.y += kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
+        self.alertView.frame = rect;
+        self.backgroundView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
+
+- (void)addPickerView:(UIView *)view {
+    [self.alertView addSubview:view];
 }
 
 - (BRPickerStyle *)pickerStyle {

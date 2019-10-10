@@ -17,7 +17,6 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 };
 
 typedef void(^BRStringResultBlock)(id selectValue);
-typedef void(^BRStringCancelBlock)(void);
 
 @interface BRStringPickerView : BRBaseView
 
@@ -28,9 +27,6 @@ typedef void(^BRStringCancelBlock)(void);
  ///    2. 设置相关属性
  ///    3. 显示选择器（使用 showWithAnimation: 方法）
  //////////////////////////////////////////////////////////////////////*/
-
-/** 选择器标题 */
-@property (nonatomic, strong) NSString *title;
 
 /**
  *  1.设置数据源
@@ -59,21 +55,10 @@ typedef void(^BRStringCancelBlock)(void);
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRStringResultBlock resultBlock;
-/** 取消选择的回调 */
-@property (nonatomic, copy) BRStringCancelBlock cancelBlock;
 
 /// 初始化字符串选择器
 /// @param pickerMode 字符串选择器类型
 - (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode;
-
-
-/// 弹出视图方法
-/// @param animation 是否开启动画
-- (void)showWithAnimation:(BOOL)animation;
-
-/// 关闭视图方法
-/// @param animation 是否开启动画
-- (void)dismissWithAnimation:(BOOL)animation;
 
 
 /**
@@ -131,7 +116,7 @@ typedef void(^BRStringCancelBlock)(void);
                      isAutoSelect:(BOOL)isAutoSelect
                        themeColor:(UIColor *)themeColor
                       resultBlock:(BRStringResultBlock)resultBlock
-                      cancelBlock:(BRStringCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                      cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 
 @end

@@ -21,8 +21,6 @@
 @property (nonatomic, strong) NSString *selectValue;
 // 多列选择的值
 @property (nonatomic, strong) NSMutableArray *selectValueArr;
-// 主题色
-@property (nonatomic, strong) UIColor *themeColor;
 
 @end
 
@@ -53,7 +51,7 @@
                      isAutoSelect:(BOOL)isAutoSelect
                        themeColor:(UIColor *)themeColor
                       resultBlock:(BRStringResultBlock)resultBlock
-                      cancelBlock:(BRStringCancelBlock)cancelBlock {
+                      cancelBlock:(BRCancelBlock)cancelBlock {
     BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
     if (strPickerView->_isDataSourceValid) {
@@ -77,7 +75,7 @@
                  isAutoSelect:(BOOL)isAutoSelect
                    themeColor:(UIColor *)themeColor
                   resultBlock:(BRStringResultBlock)resultBlock
-                  cancelBlock:(BRStringCancelBlock)cancelBlock {
+                  cancelBlock:(BRCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.title = title;
         self.dataSourceArr = [self getDataSourceArr:dataSource];
@@ -89,7 +87,17 @@
         
         self.defaultSelValue = defaultSelValue;
         self.isAutoSelect = isAutoSelect;
-        self.themeColor = themeColor;
+        
+        // 兼容旧版本，快速设置主题样式
+        if (!themeColor && [themeColor isKindOfClass:[UIColor class]]) {
+            self.pickerStyle.leftTextColor = themeColor;
+            self.pickerStyle.leftBorderStyle = BRBorderStyleSolid;
+            self.pickerStyle.rightColor = themeColor;
+            self.pickerStyle.rightTextColor = [UIColor whiteColor];
+            self.pickerStyle.rightBorderStyle = BRBorderStyleFill;
+            self.pickerStyle.titleTextColor = [themeColor colorWithAlphaComponent:0.8f];
+        }
+        
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
         _isDataSourceValid = YES;
@@ -165,21 +173,10 @@
     }
 }
 
-#pragma mark - 初始化子视图
-- (void)initUI {
-    [super initUI];
-    self.titleLabel.text = self.title;
-    // 添加字符串选择器
-    [self.alertView addSubview:self.pickerView];
-    if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
-        [self setupThemeColor:self.themeColor];
-    }
-}
-
 #pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
@@ -271,10 +268,10 @@
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
     if (self.showType == BRStringPickerComponentSingle) {
-        label.frame = CGRectMake(0, 0, self.alertView.frame.size.width, 35.0f * kScaleFit);
+        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[row];
     } else if (self.showType == BRStringPickerComponentMulti) {
-        label.frame = CGRectMake(0, 0, self.alertView.frame.size.width / pickerView.numberOfComponents, 35.0f * kScaleFit);
+        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[component][row];
     }
     
@@ -284,22 +281,6 @@
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     return 35.0f * kScaleFit;
-}
-
-#pragma mark - 背景视图的点击事件
-- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
-    [self dismissWithAnimation:NO];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 取消按钮的点击事件
-- (void)clickLeftBtn {
-    [self dismissWithAnimation:YES];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
 }
 
 #pragma mark - 确定按钮的点击事件
@@ -318,38 +299,10 @@
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     [self handlerDefaultSelectData];
-    if (_isDataSourceValid) {
-        [self initUI];
-    }
+    // 添加字符串选择器
+    [self addPickerView:self.pickerView];
 
-    //1. 获取当前应用的主窗口
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    [keyWindow addSubview:self];
-    if (animation) {
-        // 动画前初始位置
-        CGRect rect = self.alertView.frame;
-        rect.origin.y = SCREEN_HEIGHT;
-        self.alertView.frame = rect;
-        // 浮现动画
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
-            self.alertView.frame = rect;
-        }];
-    }
-}
-
-#pragma mark - 关闭视图方法
-- (void)dismissWithAnimation:(BOOL)animation {
-    // 关闭动画
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
-        self.alertView.frame = rect;
-        self.backgroundView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    [super showWithAnimation:animation];
 }
 
 - (NSArray *)dataSourceArr {

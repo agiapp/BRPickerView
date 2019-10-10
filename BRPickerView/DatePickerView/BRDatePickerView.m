@@ -26,7 +26,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     NSInteger _minuteIndex;
     
     UIDatePickerMode _datePickerMode;
-    UIColor *_themeColor;
 }
 /** 时间选择器1 */
 @property (nonatomic, strong) UIDatePicker *datePicker;
@@ -84,7 +83,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRDateCancelBlock)cancelBlock {
+                    cancelBlock:(BRCancelBlock)cancelBlock {
     BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     [datePickerView showWithAnimation:YES];
 }
@@ -108,7 +107,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                  isAutoSelect:(BOOL)isAutoSelect
                    themeColor:(UIColor *)themeColor
                   resultBlock:(BRDateResultBlock)resultBlock
-                  cancelBlock:(BRDateCancelBlock)cancelBlock {
+                  cancelBlock:(BRCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.title = title;
         self.showType = dateType;
@@ -119,7 +118,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         self.isAutoSelect = isAutoSelect;
         
-        _themeColor = themeColor;
+        // 兼容旧版本，快速设置主题样式
+        if (!themeColor && [themeColor isKindOfClass:[UIColor class]]) {
+            self.pickerStyle.leftTextColor = themeColor;
+            self.pickerStyle.leftBorderStyle = BRBorderStyleSolid;
+            self.pickerStyle.rightColor = themeColor;
+            self.pickerStyle.rightTextColor = [UIColor whiteColor];
+            self.pickerStyle.rightBorderStyle = BRBorderStyleFill;
+            self.pickerStyle.titleTextColor = [themeColor colorWithAlphaComponent:0.8f];
+        }
         
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
@@ -292,28 +299,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma mark - 初始化子视图
-- (void)initUI {
-    [super initUI];
-    self.titleLabel.text = self.title;
-    // 添加时间选择器
-    if (self.style == BRDatePickerStyleSystem) {
-        [self.alertView addSubview:self.datePicker];
-    } else if (self.style == BRDatePickerStyleCustom) {
-        [self.alertView addSubview:self.pickerView];
-    }
-    if (_themeColor && [_themeColor isKindOfClass:[UIColor class]]) {
-        [self setupThemeColor:_themeColor];
-    }
-    
-    // 默认滚动的行
-    if (self.style == BRDatePickerStyleSystem) {
-        [self.datePicker setDate:self.selectDate animated:NO];
-    } else if (self.style == BRDatePickerStyleCustom) {
-        [self scrollToSelectDate:self.selectDate animated:NO];
-    }
-}
-
 #pragma mark - 设置日期数据源数组
 - (void)initDefaultDateArray {
     // 1. 设置 yearArr 数组
@@ -472,7 +457,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器1
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
+        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
@@ -497,7 +482,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器2
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
@@ -749,14 +734,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return [NSDate br_getDate:selectDateValue format:self.selectDateFormatter];
 }
 
-#pragma mark - 背景视图的点击事件
-- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
-    [self dismissWithAnimation:NO];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
 #pragma mark - 时间选择器的滚动响应事件
 - (void)didSelectValueChanged:(UIDatePicker *)sender {
     // 读取日期：datePicker.date
@@ -782,14 +759,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma mark - 取消按钮的点击事件
-- (void)clickLeftBtn {
-    [self dismissWithAnimation:YES];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     // 点击确定按钮后，执行block回调
@@ -803,36 +772,21 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     [self handlerData];
-    [self initUI];
-    
-    //1. 获取当前应用的主窗口
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    [keyWindow addSubview:self];
-    if (animation) {
-        // 动画前初始位置
-        CGRect rect = self.alertView.frame;
-        rect.origin.y = SCREEN_HEIGHT;
-        self.alertView.frame = rect;
-        // 浮现动画
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
-            self.alertView.frame = rect;
-        }];
+    // 添加时间选择器
+    if (self.style == BRDatePickerStyleSystem) {
+        [self addPickerView:self.datePicker];
+    } else if (self.style == BRDatePickerStyleCustom) {
+        [self addPickerView:self.pickerView];
     }
-}
-
-#pragma mark - 关闭视图方法
-- (void)dismissWithAnimation:(BOOL)animation {
-    // 关闭动画
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
-        self.alertView.frame = rect;
-        self.backgroundView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    
+    // 默认滚动的行
+    if (self.style == BRDatePickerStyleSystem) {
+        [self.datePicker setDate:self.selectDate animated:NO];
+    } else if (self.style == BRDatePickerStyleCustom) {
+        [self scrollToSelectDate:self.selectDate animated:NO];
+    }
+    
+    [super showWithAnimation:animation];
 }
 
 #pragma mark - getter 方法

@@ -40,7 +40,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 };
 
 typedef void(^BRDateResultBlock)(NSString *selectValue);
-typedef void(^BRDateCancelBlock)(void);
 
 @interface BRDatePickerView : BRBaseView
 
@@ -52,8 +51,6 @@ typedef void(^BRDateCancelBlock)(void);
  ///    3. 显示选择器（使用 showWithAnimation: 方法）
  //////////////////////////////////////////////////////////////////////*/
 
-/** 选择器标题 */
-@property (nonatomic, strong) NSString *title;
 /** 默认选中的时间（值为空/值格式错误时，默认就选中现在的时间） */
 @property (nonatomic, strong) NSString *defaultSelValue;
 
@@ -67,20 +64,10 @@ typedef void(^BRDateCancelBlock)(void);
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;
-/** 取消选择的回调 */
-@property (nonatomic, copy) BRDateCancelBlock cancelBlock;
 
 /// 初始化时间选择器
 /// @param pickerMode  日期选择器类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;
-
-/// 弹出视图方法
-/// @param animation 是否开启动画
-- (void)showWithAnimation:(BOOL)animation;
-
-/// 关闭视图方法
-/// @param animation 是否开启动画
-- (void)dismissWithAnimation:(BOOL)animation;
 
 
 /**
@@ -145,6 +132,6 @@ typedef void(^BRDateCancelBlock)(void);
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRDateCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                    cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 @end

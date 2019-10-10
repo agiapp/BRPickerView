@@ -34,9 +34,6 @@
 // 选中的区
 @property(nonatomic, strong) BRAreaModel *selectAreaModel;
 
-// 主题色
-@property (nonatomic, strong) UIColor *themeColor;
-
 @end
 
 @implementation BRAddressPickerView
@@ -61,7 +58,7 @@
                         isAutoSelect:(BOOL)isAutoSelect
                           themeColor:(UIColor *)themeColor
                          resultBlock:(BRAddressResultBlock)resultBlock
-                         cancelBlock:(BRAddressCancelBlock)cancelBlock {
+                         cancelBlock:(BRCancelBlock)cancelBlock {
     [self showAddressPickerWithShowType:showType dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
 }
 
@@ -72,7 +69,7 @@
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock {
+                          cancelBlock:(BRCancelBlock)cancelBlock {
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType dataSource:dataSource defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
     if (addressPickerView->_isDataSourceValid) {
@@ -96,7 +93,7 @@
                     isAutoSelect:(BOOL)isAutoSelect
                       themeColor:(UIColor *)themeColor
                      resultBlock:(BRAddressResultBlock)resultBlock
-                     cancelBlock:(BRAddressCancelBlock)cancelBlock {
+                     cancelBlock:(BRCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.showType = showType;
         self.dataSource = dataSource;
@@ -104,7 +101,17 @@
         _isDataSourceValid = YES;
     
         self.isAutoSelect = isAutoSelect;
-        self.themeColor = themeColor;
+        
+        // 兼容旧版本，快速设置主题样式
+        if (!themeColor && [themeColor isKindOfClass:[UIColor class]]) {
+            self.pickerStyle.leftTextColor = themeColor;
+            self.pickerStyle.leftBorderStyle = BRBorderStyleSolid;
+            self.pickerStyle.rightColor = themeColor;
+            self.pickerStyle.rightTextColor = [UIColor whiteColor];
+            self.pickerStyle.rightBorderStyle = BRBorderStyleFill;
+            self.pickerStyle.titleTextColor = [themeColor colorWithAlphaComponent:0.8f];
+        }
+        
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
     }
@@ -281,21 +288,10 @@
     return cityModel.arealist;
 }
 
-#pragma mark - 初始化子视图
-- (void)initUI {
-    [super initUI];
-    self.titleLabel.text = self.title;
-    // 添加时间选择器
-    [self.alertView addSubview:self.pickerView];
-    if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
-        [self setupThemeColor:self.themeColor];
-    }
-}
-
 #pragma mark - 地址选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, self.alertView.frame.size.width, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
@@ -352,9 +348,9 @@
     ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = self.pickerStyle.separatorColor;
     ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = self.pickerStyle.separatorColor;
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.alertView.frame.size.width) / pickerView.numberOfComponents, 35 * kScaleFit)];
+    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.pickerView.frame.size.width) / pickerView.numberOfComponents, 35 * kScaleFit)];
     bgView.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (self.alertView.frame.size.width) / pickerView.numberOfComponents - 10 * kScaleFit, 35 * kScaleFit)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5 * kScaleFit, 0, (self.pickerView.frame.size.width) / pickerView.numberOfComponents - 10 * kScaleFit, 35 * kScaleFit)];
     [bgView addSubview:label];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
@@ -461,22 +457,6 @@
     return 35.0f * kScaleFit;
 }
 
-#pragma mark - 背景视图的点击事件
-- (void)didTapBackgroundView:(UITapGestureRecognizer *)sender {
-    [self dismissWithAnimation:NO];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
-#pragma mark - 取消按钮的点击事件
-- (void)clickLeftBtn {
-    [self dismissWithAnimation:YES];
-    if (self.cancelBlock) {
-        self.cancelBlock();
-    }
-}
-
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
     [self dismissWithAnimation:YES];
@@ -488,37 +468,12 @@
 
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
-    [self initUI];
+    // 添加地址选择器
+    [self addPickerView:self.pickerView];
+    
     [self loadData];
     
-    // 1.获取当前应用的主窗口
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    [keyWindow addSubview:self];
-    if (animation) {
-        // 动画前初始位置
-        CGRect rect = self.alertView.frame;
-        rect.origin.y = SCREEN_HEIGHT;
-        self.alertView.frame = rect;
-        // 浮现动画
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
-            self.alertView.frame = rect;
-        }];
-    }
-}
-
-#pragma mark - 关闭视图方法
-- (void)dismissWithAnimation:(BOOL)animation {
-    // 关闭动画
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect rect = self.alertView.frame;
-        rect.origin.y += kPickerHeight + kTopViewHeight + BR_BOTTOM_MARGIN;
-        self.alertView.frame = rect;
-        self.backgroundView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    [super showWithAnimation:animation];
 }
 
 - (NSArray *)provinceModelArr {

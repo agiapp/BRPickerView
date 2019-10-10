@@ -20,7 +20,6 @@ typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
 };
 
 typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area);
-typedef void(^BRAddressCancelBlock)(void);
 
 @interface BRAddressPickerView : BRBaseView
 
@@ -32,8 +31,6 @@ typedef void(^BRAddressCancelBlock)(void);
  ///    3. 显示选择器（使用 showWithAnimation: 方法）
  //////////////////////////////////////////////////////////////////////*/
 
-/** 选择器标题 */
-@property (nonatomic, strong) NSString *title;
 /** 地区数据源 */
 @property (nonatomic, strong) NSArray *dataSource;
 /** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
@@ -43,21 +40,10 @@ typedef void(^BRAddressCancelBlock)(void);
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;
-/** 取消选择的回调 */
-@property (nonatomic, copy) BRAddressCancelBlock cancelBlock;
 
 /// 初始化地址选择器
 /// @param pickerMode 地址选择器类型
 - (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode;
-
-
-/// 弹出视图方法
-/// @param animation 是否开启动画
-- (void)showWithAnimation:(BOOL)animation;
-
-/// 关闭视图方法
-/// @param animation 是否开启动画
-- (void)dismissWithAnimation:(BOOL)animation;
 
 
 /**
@@ -105,7 +91,7 @@ typedef void(^BRAddressCancelBlock)(void);
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 /**
  *  4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -125,6 +111,6 @@ typedef void(^BRAddressCancelBlock)(void);
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
 
 @end
