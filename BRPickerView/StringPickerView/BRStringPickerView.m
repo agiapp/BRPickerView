@@ -10,19 +10,13 @@
 #import "BRStringPickerView.h"
 #import "BRPickerViewMacro.h"
 
-typedef NS_ENUM(NSInteger, BRStringPickerMode) {
-    BRStringPickerComponentSingle,  // 单列
-    BRStringPickerComponentMore     // 多列
-};
-
 @interface BRStringPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
     BOOL _isDataSourceValid; // 数据源是否合法
 }
 // 字符串选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
-@property (nonatomic, assign) BRStringPickerMode type;
-@property (nonatomic, strong) NSArray *dataSourceArr;
+@property (nonatomic, assign) BRStringPickerMode showType;
 // 单列选择的值
 @property (nonatomic, strong) NSString *selectValue;
 // 多列选择的值
@@ -68,16 +62,11 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 }
 
 #pragma mark - 初始化自定义字符串选择器
-- (instancetype)initWithDataSource:(id)dataSource customStyle:(BRPickerStyle *)customStyle {
+- (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode {
     if (self = [super init]) {
-        self.pickerStyle = customStyle;
+        self.showType = pickerMode;
         self.isAutoSelect = NO;
         _isDataSourceValid = YES;
-        
-        [self handlerDataSource:dataSource];
-        if (_isDataSourceValid) {
-            [self initUI];
-        }
     }
     return self;
 }
@@ -91,22 +80,24 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
                   cancelBlock:(BRStringCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.title = title;
+        self.dataSourceArr = [self getDataSourceArr:dataSource];
+        if ([[self.dataSourceArr firstObject] isKindOfClass:[NSString class]]) {
+            self.showType = BRStringPickerComponentSingle;
+        } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
+            self.showType = BRStringPickerComponentMulti;
+        }
+        
         self.defaultSelValue = defaultSelValue;
         self.isAutoSelect = isAutoSelect;
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
         _isDataSourceValid = YES;
-        [self handlerDataSource:dataSource];
-        if (_isDataSourceValid) {
-            [self initUI];
-        }
     }
     return self;
 }
 
-#pragma mark - 设置数据源
-- (void)handlerDataSource:(id)dataSource {
+- (NSArray *)getDataSourceArr:(id)dataSource {
     // 1.先判断传入的数据源是否合法
     if (!dataSource) {
         _isDataSourceValid = NO;
@@ -134,21 +125,19 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
             }
         }
     }
-    if (!_isDataSourceValid) {
-        return;
-    }
-    // 2. 给数据源赋值
-    self.dataSourceArr = dataArr;
     
-    // 3. 根据数据源 数组元素的类型，判断选择器的显示类型
-    if ([[self.dataSourceArr firstObject] isKindOfClass:[NSString class]]) {
-        self.type = BRStringPickerComponentSingle;
-    } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
-        self.type = BRStringPickerComponentMore;
-    }
-    
-    // 4. 给选择器设置默认值
-    if (self.type == BRStringPickerComponentSingle) {
+    return dataArr;
+}
+
+- (void)setPlistName:(NSString *)plistName {
+    NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
+    self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
+}
+
+#pragma mark - 设置默认选择的值
+- (void)handlerDefaultSelectData {
+    // 给选择器设置默认值
+    if (self.showType == BRStringPickerComponentSingle) {
         if (self.defaultSelValue && [self.defaultSelValue isKindOfClass:[NSString class]] && [self.defaultSelValue length] > 0 && [self.dataSourceArr containsObject:self.defaultSelValue]) {
             self.selectValue = self.defaultSelValue;
         } else {
@@ -157,7 +146,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
         NSInteger row = [self.dataSourceArr indexOfObject:self.selectValue];
         // 默认滚动的行
         [self.pickerView selectRow:row inComponent:0 animated:NO];
-    } else if (self.type == BRStringPickerComponentMore) {
+    } else if (self.showType == BRStringPickerComponentMulti) {
         NSMutableArray *tempArr = [NSMutableArray array];
         for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
             NSString *selValue = nil;
@@ -187,11 +176,6 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     }
 }
 
-- (void)setTitle:(NSString *)title {
-    _title = title;
-    self.titleLabel.text = self.title;
-}
-
 #pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
@@ -209,11 +193,11 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    switch (self.type) {
+    switch (self.showType) {
         case BRStringPickerComponentSingle:
             return 1;
             break;
-        case BRStringPickerComponentMore:
+        case BRStringPickerComponentMulti:
             return self.dataSourceArr.count;
             break;
             
@@ -223,11 +207,11 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    switch (self.type) {
+    switch (self.showType) {
         case BRStringPickerComponentSingle:
             return self.dataSourceArr.count;
             break;
-        case BRStringPickerComponentMore:
+        case BRStringPickerComponentMulti:
             return [self.dataSourceArr[component] count];
             break;
             
@@ -238,7 +222,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 
 #pragma mark - UIPickerViewDelegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    switch (self.type) {
+    switch (self.showType) {
         case BRStringPickerComponentSingle:
         {
             self.selectValue = self.dataSourceArr[row];
@@ -250,7 +234,7 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
             }
         }
             break;
-        case BRStringPickerComponentMore:
+        case BRStringPickerComponentMulti:
         {
             if (component < self.selectValueArr.count) {
                 self.selectValueArr[component] = self.dataSourceArr[component][row];
@@ -286,10 +270,10 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     label.adjustsFontSizeToFitWidth = YES;
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
-    if (self.type == BRStringPickerComponentSingle) {
+    if (self.showType == BRStringPickerComponentSingle) {
         label.frame = CGRectMake(0, 0, self.alertView.frame.size.width, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[row];
-    } else if (self.type == BRStringPickerComponentMore) {
+    } else if (self.showType == BRStringPickerComponentMulti) {
         label.frame = CGRectMake(0, 0, self.alertView.frame.size.width / pickerView.numberOfComponents, 35.0f * kScaleFit);
         label.text = self.dataSourceArr[component][row];
     }
@@ -323,9 +307,9 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     [self dismissWithAnimation:YES];
     // 点击确定按钮后，执行block回调
     if(_resultBlock) {
-        if (self.type == BRStringPickerComponentSingle) {
+        if (self.showType == BRStringPickerComponentSingle) {
             _resultBlock(self.selectValue);
-        } else if (self.type == BRStringPickerComponentMore) {
+        } else if (self.showType == BRStringPickerComponentMulti) {
             _resultBlock(self.selectValueArr);
         }
     }
@@ -333,6 +317,11 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
+    [self handlerDefaultSelectData];
+    if (_isDataSourceValid) {
+        [self initUI];
+    }
+
     //1. 获取当前应用的主窗口
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     [keyWindow addSubview:self];

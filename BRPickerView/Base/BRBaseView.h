@@ -13,6 +13,10 @@
 #define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
 @interface BRBaseView : UIView
+
+/** 自定义UI样式（可为空，为nil时是默认样式） */
+@property (nonatomic, strong) BRPickerStyle *pickerStyle;
+
 // 背景视图
 @property (nonatomic, strong) UIView *backgroundView;
 // 弹出视图
@@ -27,9 +31,6 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 // 分割线视图
 @property (nonatomic, strong) UIView *lineView;
-
-/** 自定义UI样式 */
-@property (nonatomic, strong) BRPickerStyle *pickerStyle;
 
 /** 初始化子视图 */
 - (void)initUI;

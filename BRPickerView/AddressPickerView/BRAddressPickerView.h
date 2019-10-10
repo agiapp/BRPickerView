@@ -11,12 +11,12 @@
 #import "BRAddressModel.h"
 
 typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
-    // 只显示省
-    BRAddressPickerModeProvince = 1,
-    // 显示省市
+    /** 显示【省市区】（默认） */
+    BRAddressPickerModeArea = 1,
+    /** 显示【省市】 */
     BRAddressPickerModeCity,
-    // 显示省市区（默认）
-    BRAddressPickerModeArea
+    /** 显示【省】 */
+    BRAddressPickerModeProvince
 };
 
 typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area);
@@ -48,8 +48,7 @@ typedef void(^BRAddressCancelBlock)(void);
 
 /// 初始化地址选择器
 /// @param pickerMode 地址选择器类型
-/// @param customStyle 自定义UI样式（可为空，为nil时是默认样式）
-- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle;
+- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode;
 
 
 /// 弹出视图方法

@@ -9,6 +9,13 @@
 
 #import "BRBaseView.h"
 
+typedef NS_ENUM(NSInteger, BRStringPickerMode) {
+    /** 单列字符串选择 */
+    BRStringPickerComponentSingle = 1,
+    /** 多列字符串选择（两列及两列以上） */
+    BRStringPickerComponentMulti
+};
+
 typedef void(^BRStringResultBlock)(id selectValue);
 typedef void(^BRStringCancelBlock)(void);
 
@@ -24,8 +31,29 @@ typedef void(^BRStringCancelBlock)(void);
 
 /** 选择器标题 */
 @property (nonatomic, strong) NSString *title;
-/** 默认选中的行(单列传字符串，多列传一维数组) */
+
+/**
+ *  1.设置数据源
+ *    单列：@[@"男", @"女", @"其他"]
+ *    两列：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]
+ *    多列：... ...
+ */
+@property (nonatomic, strong) NSArray *dataSourceArr;
+
+/**
+ *  2.设置数据源
+ *    直接传plist文件名：NSString类型（如：@"sex.plist"），要带后缀名
+ *    场景：可以将数据源（数组类型）放到plist文件中，直接传plist文件名更加简单
+ */
+@property (nonatomic, strong) NSString *plistName;
+
+/**
+ *  设置默认选中
+ *   单列：@"男"，传字符串
+ *   两列：@[@"语文", @"优秀"]，传字符串数组
+ */
 @property (nonatomic, strong) id defaultSelValue;
+
 /** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
@@ -35,9 +63,8 @@ typedef void(^BRStringCancelBlock)(void);
 @property (nonatomic, copy) BRStringCancelBlock cancelBlock;
 
 /// 初始化字符串选择器
-/// @param dataSource 数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
-/// @param customStyle 自定义UI样式（可为空，为nil时是默认样式）
-- (instancetype)initWithDataSource:(id)dataSource customStyle:(BRPickerStyle *)customStyle;
+/// @param pickerMode 字符串选择器类型
+- (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode;
 
 
 /// 弹出视图方法

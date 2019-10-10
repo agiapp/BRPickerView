@@ -90,24 +90,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 初始化时间选择器
-- (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle {
+- (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode {
     if (self = [super init]) {
         self.showType = pickerMode;
-        self.pickerStyle = customStyle;
         self.isAutoSelect = NO;
         
         [self setupSelectDateFormatter:pickerMode];
-        
-        [self handlerDefaultSelect];
-        
-        [self initUI];
-        
-        // 默认滚动的行
-        if (self.style == BRDatePickerStyleSystem) {
-            [self.datePicker setDate:self.selectDate animated:NO];
-        } else if (self.style == BRDatePickerStyleCustom) {
-            [self scrollToSelectDate:self.selectDate animated:NO];
-        }
     }
     return self;
 }
@@ -137,22 +125,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.cancelBlock = cancelBlock;
         
         [self setupSelectDateFormatter:dateType];
-        
-        [self handlerDefaultSelect];
-        
-        [self initUI];
-        
-        // 默认滚动的行
-        if (self.style == BRDatePickerStyleSystem) {
-            [self.datePicker setDate:self.selectDate animated:NO];
-        } else if (self.style == BRDatePickerStyleCustom) {
-            [self scrollToSelectDate:self.selectDate animated:NO];
-        }
     }
     return self;
 }
 
-- (void)handlerDefaultSelect {
+- (void)handlerData {
     // 1.最小日期限制
     if (self.minDate) {
         self.minLimitDate = self.minDate;
@@ -328,11 +305,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (_themeColor && [_themeColor isKindOfClass:[UIColor class]]) {
         [self setupThemeColor:_themeColor];
     }
-}
-
-- (void)setTitle:(NSString *)title {
-    _title = title;
-    self.titleLabel.text = self.title;
+    
+    // 默认滚动的行
+    if (self.style == BRDatePickerStyleSystem) {
+        [self.datePicker setDate:self.selectDate animated:NO];
+    } else if (self.style == BRDatePickerStyleCustom) {
+        [self scrollToSelectDate:self.selectDate animated:NO];
+    }
 }
 
 #pragma mark - 设置日期数据源数组
@@ -823,6 +802,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
+    [self handlerData];
+    [self initUI];
+    
     //1. 获取当前应用的主窗口
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     [keyWindow addSubview:self];

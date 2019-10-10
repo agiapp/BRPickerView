@@ -10,6 +10,10 @@
 #import "BRBaseView.h"
 #import "BRPickerViewMacro.h"
 
+@interface BRBaseView ()
+
+@end
+
 @implementation BRBaseView
 
 - (void)initUI {

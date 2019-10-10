@@ -81,15 +81,11 @@
 }
 
 #pragma mark - 初始化地址选择器
-- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode customStyle:(BRPickerStyle *)customStyle {
+- (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode {
     if (self = [super init]) {
         self.showType = pickerMode;
-        self.pickerStyle = customStyle;
         self.isAutoSelect = NO;
         _isDataSourceValid = YES;
-    
-        [self initUI];
-        [self loadData];
     }
     return self;
 }
@@ -111,9 +107,6 @@
         self.themeColor = themeColor;
         self.resultBlock = resultBlock;
         self.cancelBlock = cancelBlock;
-        
-        [self initUI];
-        [self loadData];
     }
     return self;
 }
@@ -291,23 +284,12 @@
 #pragma mark - 初始化子视图
 - (void)initUI {
     [super initUI];
-    if (self.showType == BRAddressPickerModeProvince) {
-        self.titleLabel.text = @"请选择省份";
-    } else if (self.showType == BRAddressPickerModeCity) {
-        self.titleLabel.text = @"请选择城市";
-    } else {
-        self.titleLabel.text = @"请选择地区";
-    }
+    self.titleLabel.text = self.title;
     // 添加时间选择器
     [self.alertView addSubview:self.pickerView];
     if (self.themeColor && [self.themeColor isKindOfClass:[UIColor class]]) {
         [self setupThemeColor:self.themeColor];
     }
-}
-
-- (void)setTitle:(NSString *)title {
-    _title = title;
-    self.titleLabel.text = self.title;
 }
 
 #pragma mark - 地址选择器
@@ -506,6 +488,9 @@
 
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
+    [self initUI];
+    [self loadData];
+    
     // 1.获取当前应用的主窗口
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     [keyWindow addSubview:self];
