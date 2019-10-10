@@ -140,7 +140,7 @@
 #pragma mark - 中间标题按钮
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.leftBtn.frame.origin.x + self.leftBtn.frame.size.width + 2, 0, SCREEN_WIDTH - 2 * (self.leftBtn.frame.origin.x + self.leftBtn.frame.size.width + 2), kTopViewHeight)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5 + 60 + 2, 0, SCREEN_WIDTH - 2 * (5 + 60 + 2), kTopViewHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         _titleLabel.font = [UIFont systemFontOfSize:14.0f * kScaleFit];
