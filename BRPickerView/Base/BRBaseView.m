@@ -184,7 +184,9 @@
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
-    
+    if (self.doneBlock) {
+        self.doneBlock();
+    }
 }
 
 #pragma mark - 弹出视图方法

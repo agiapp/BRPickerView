@@ -13,6 +13,7 @@
 #define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
 typedef void(^BRCancelBlock)(void);
+typedef void(^BRResultBlock)(void);
 
 @interface BRBaseView : UIView
 
@@ -21,6 +22,9 @@ typedef void(^BRCancelBlock)(void);
 
 /** 自定义UI样式（可为空，为nil时是默认样式） */
 @property (nonatomic, strong) BRPickerStyle *pickerStyle;
+
+/** 选择结果的回调 */
+@property (nonatomic, copy) BRResultBlock doneBlock;
 
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRCancelBlock cancelBlock;
@@ -36,6 +40,7 @@ typedef void(^BRCancelBlock)(void);
 /// @param animation 是否开启动画
 - (void)dismissWithAnimation:(BOOL)animation;
 
+/// 添加选择器视图（框架内部使用）
 - (void)addPickerView:(UIView *)view;
 
 @end

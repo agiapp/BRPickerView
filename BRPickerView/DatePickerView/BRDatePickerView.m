@@ -59,7 +59,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                        dateType:(BRDatePickerMode)dateType
                 defaultSelValue:(NSString *)defaultSelValue
                     resultBlock:(BRDateResultBlock)resultBlock {
-    [self showDatePickerWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:nil maxDate:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:nil maxDate:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    [datePickerView showWithAnimation:YES];
 }
 
 #pragma mark - 2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
@@ -204,16 +205,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (selectMoreThanMax) {
         self.selectDate = self.maxLimitDate;
     }
-    
-#ifdef DEBUG
-    NSLog(@"最小时间date：%@", self.minLimitDate);
-    NSLog(@"默认时间date：%@", self.selectDate);
-    NSLog(@"最大时间date：%@", self.maxLimitDate);
-    
-    NSLog(@"最小时间：%@", [NSDate br_getDateString:self.minLimitDate format:self.selectDateFormatter]);
-    NSLog(@"默认时间：%@", [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter]);
-    NSLog(@"最大时间：%@", [NSDate br_getDateString:self.maxLimitDate format:self.selectDateFormatter]);
-#endif
     
     if (self.style == BRDatePickerStyleCustom) {
         [self initDefaultDateArray];
@@ -759,16 +750,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma mark - 确定按钮的点击事件
-- (void)clickRightBtn {
-    // 点击确定按钮后，执行block回调
-    [self dismissWithAnimation:YES];
-    if (self.resultBlock) {
-        NSString *selectDateValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
-        self.resultBlock(selectDateValue);
-    }
-}
-
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     [self handlerData];
@@ -785,6 +766,16 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     } else if (self.style == BRDatePickerStyleCustom) {
         [self scrollToSelectDate:self.selectDate animated:NO];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    self.doneBlock = ^{
+        // 点击确定按钮后，执行block回调
+        [weakSelf dismissWithAnimation:YES];
+        if (weakSelf.resultBlock) {
+            NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
+            weakSelf.resultBlock(selectDateValue);
+        }
+    };
     
     [super showWithAnimation:animation];
 }

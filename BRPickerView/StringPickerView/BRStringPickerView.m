@@ -31,7 +31,11 @@
                        dataSource:(id)dataSource
                   defaultSelValue:(id)defaultSelValue
                       resultBlock:(BRStringResultBlock)resultBlock {
-    [self showStringPickerWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
+    if (strPickerView->_isDataSourceValid) {
+        [strPickerView showWithAnimation:YES];
+    }
 }
 
 #pragma mark - 2.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
@@ -283,24 +287,24 @@
     return 35.0f * kScaleFit;
 }
 
-#pragma mark - 确定按钮的点击事件
-- (void)clickRightBtn {
-    [self dismissWithAnimation:YES];
-    // 点击确定按钮后，执行block回调
-    if(_resultBlock) {
-        if (self.showType == BRStringPickerComponentSingle) {
-            _resultBlock(self.selectValue);
-        } else if (self.showType == BRStringPickerComponentMulti) {
-            _resultBlock(self.selectValueArr);
-        }
-    }
-}
-
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     [self handlerDefaultSelectData];
     // 添加字符串选择器
     [self addPickerView:self.pickerView];
+    
+    __weak typeof(self) weakSelf = self;
+    self.doneBlock = ^{
+        // 点击确定按钮后，执行block回调
+        [weakSelf dismissWithAnimation:YES];
+        if (weakSelf.resultBlock) {
+           if (self.showType == BRStringPickerComponentSingle) {
+               weakSelf.resultBlock(weakSelf.selectValue);
+           } else if (weakSelf.showType == BRStringPickerComponentMulti) {
+               weakSelf.resultBlock(weakSelf.selectValueArr);
+           }
+        }
+    };
 
     [super showWithAnimation:animation];
 }

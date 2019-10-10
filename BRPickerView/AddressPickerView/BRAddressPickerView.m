@@ -41,7 +41,11 @@
 #pragma mark - 1.显示地址选择器
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
                                  resultBlock:(BRAddressResultBlock)resultBlock {
-    [self showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
+    NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
+    if (addressPickerView->_isDataSourceValid) {
+        [addressPickerView showWithAnimation:YES];
+    }
 }
 
 #pragma mark - 2.显示地址选择器（支持 设置自动选择 和 自定义主题颜色）
@@ -457,21 +461,21 @@
     return 35.0f * kScaleFit;
 }
 
-#pragma mark - 确定按钮的点击事件
-- (void)clickRightBtn {
-    [self dismissWithAnimation:YES];
-    // 点击确定按钮后，执行回调
-    if(self.resultBlock) {
-        self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
-    }
-}
-
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation {
     // 添加地址选择器
     [self addPickerView:self.pickerView];
     
     [self loadData];
+    
+    __weak typeof(self) weakSelf = self;
+    self.doneBlock = ^{
+        // 点击确定按钮后，执行block回调
+        [weakSelf dismissWithAnimation:YES];
+        if (weakSelf.resultBlock) {
+           weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
+        }
+    };
     
     [super showWithAnimation:animation];
 }
