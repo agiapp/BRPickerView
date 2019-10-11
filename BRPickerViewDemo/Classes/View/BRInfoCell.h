@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface BRInfoCell : UITableViewCell
-@property (nonatomic, assign) BOOL isNeed;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, assign) BOOL isNext;
