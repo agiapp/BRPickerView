@@ -34,7 +34,7 @@
     BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
     NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
     if (strPickerView->_isDataSourceValid) {
-        [strPickerView showWithAnimation:YES];
+        [strPickerView showWithAnimation:YES toView:nil];
     }
 }
 
@@ -59,7 +59,7 @@
     BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
     if (strPickerView->_isDataSourceValid) {
-        [strPickerView showWithAnimation:YES];
+        [strPickerView showWithAnimation:YES toView:nil];
     }
 }
 
@@ -182,9 +182,8 @@
 #pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
-        // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
@@ -290,15 +289,15 @@
 }
 
 #pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation {
+- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
     [self handlerDefaultSelectData];
     // 添加字符串选择器
-    [self addPickerView:self.pickerView];
+    [self setPickerView:self.pickerView toView:view];
     
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
-        [weakSelf dismissWithAnimation:YES];
+        [weakSelf dismissWithAnimation:animation toView:view];
         if (weakSelf.resultBlock) {
            if (self.showType == BRStringPickerComponentSingle) {
                weakSelf.resultBlock(weakSelf.selectValue);
@@ -308,7 +307,27 @@
         }
     };
 
-    [super showWithAnimation:animation];
+    [super showWithAnimation:animation toView:view];
+}
+
+#pragma mark - 弹出选择器视图
+- (void)show {
+    [self showWithAnimation:YES toView:nil];
+}
+
+#pragma mark - 关闭选择器视图
+- (void)dismiss {
+    [self dismissWithAnimation:YES toView:nil];
+}
+
+#pragma mark - 添加选择器到指定容器视图上
+- (void)addPickerToView:(UIView *)view {
+    [self showWithAnimation:NO toView:view];
+}
+
+#pragma mark - 从指定容器视图上移除选择器
+- (void)removePickerFromView:(UIView *)view {
+    [self dismissWithAnimation:NO toView:view];
 }
 
 - (NSArray *)dataSourceArr {

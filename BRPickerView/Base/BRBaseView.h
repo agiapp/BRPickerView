@@ -23,24 +23,27 @@ typedef void(^BRResultBlock)(void);
 /** 自定义UI样式（可为空，为nil时是默认样式） */
 @property (nonatomic, strong) BRPickerStyle *pickerStyle;
 
-/** 选择结果的回调 */
-@property (nonatomic, copy) BRResultBlock doneBlock;
-
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRCancelBlock cancelBlock;
 
-/** 确定按钮的点击事件 */
-- (void)clickRightBtn;
 
-/// 弹出视图方法
+/** 选择结果的回调（框架内部使用，不推荐使用） */
+@property (nonatomic, copy) BRResultBlock doneBlock;
+
+/// 弹出视图方法（框架内部使用，不推荐使用）
 /// @param animation 是否开启动画
-- (void)showWithAnimation:(BOOL)animation;
+/// @param view 容器视图（可为nil，不传默认就添加到 keyWindow 上）
+- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view;
 
-/// 关闭视图方法
+/// 关闭视图方法（框架内部使用，不推荐使用）
 /// @param animation 是否开启动画
-- (void)dismissWithAnimation:(BOOL)animation;
+/// @param view 容器视图（可为nil，不传默认就添加到 keyWindow 上）
+- (void)dismissWithAnimation:(BOOL)animation toView:(UIView *)view;
 
-/// 添加选择器视图（框架内部使用）
-- (void)addPickerView:(UIView *)view;
+/// 设置选择器视图（框架内部使用，不推荐使用）
+/// @param pickerView 选择器视图
+/// @param view 容器视图
+- (void)setPickerView:(UIView *)pickerView toView:(UIView *)view;
+
 
 @end

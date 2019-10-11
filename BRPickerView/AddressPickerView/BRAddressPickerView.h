@@ -24,12 +24,12 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 @interface BRAddressPickerView : BRBaseView
 
 /**
- ////////////////////////////////////////////////////////////////////////
- ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致参数过多
+ //////////////////////////////////////////////////////////////////////////
+ ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致方法参数过多
  ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
  ///    2. 设置相关属性；一些公共的属性和方法参见基类文件 BRBaseView.h
  ///    3. 显示选择器（使用 showWithAnimation: 方法）
- //////////////////////////////////////////////////////////////////////*/
+ ////////////////////////////////////////////////////////////////////////*/
 
 /** 地区数据源 */
 @property (nonatomic, strong) NSArray *dataSource;
@@ -45,11 +45,26 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 /// @param pickerMode 地址选择器类型
 - (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode;
 
+/// 弹出选择器视图
+- (void)show;
+
+/// 关闭选择器视图
+- (void)dismiss;
+
+/// 添加选择器到指定容器视图上
+/// @param view 容器视图
+- (void)addPickerToView:(UIView *)view;
+
+/// 从指定容器视图上移除选择器
+/// @param view 容器视图
+- (void)removePickerFromView:(UIView *)view;
+
+
 
 /**
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 ///   【使用方式二】：快捷使用，直接选择下面其中的一个方法进行使用
-//////////////////////////////////////////////////////////////*/
+////////////////////////////////////////////////////////////////*/
 
 /**
  *  1.显示地址选择器
@@ -112,5 +127,6 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
                           cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+
 
 @end

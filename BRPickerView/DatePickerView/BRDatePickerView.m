@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                 defaultSelValue:(NSString *)defaultSelValue
                     resultBlock:(BRDateResultBlock)resultBlock {
     BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:nil maxDate:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-    [datePickerView showWithAnimation:YES];
+    [datePickerView showWithAnimation:YES toView:nil];
 }
 
 #pragma mark - 2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                     resultBlock:(BRDateResultBlock)resultBlock
                     cancelBlock:(BRCancelBlock)cancelBlock {
     BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    [datePickerView showWithAnimation:YES];
+    [datePickerView showWithAnimation:YES toView:nil];
 }
 
 #pragma mark - 初始化时间选择器
@@ -199,12 +199,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     BOOL selectLessThanMin = [self.selectDate br_compare:self.minLimitDate format:self.selectDateFormatter] == NSOrderedAscending;
     BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxLimitDate format:self.selectDateFormatter] == NSOrderedDescending;
-    NSAssert(!selectLessThanMin, @"默认选择的日期不能小于最小日期！");
-    NSAssert(!selectMoreThanMax, @"默认选择的日期不能大于最大日期！");
+    //NSAssert(!selectLessThanMin, @"默认选择的日期不能小于最小日期！");
+    //NSAssert(!selectMoreThanMax, @"默认选择的日期不能大于最大日期！");
     if (selectLessThanMin) {
+        NSLog(@"默认选择的日期不能小于最小日期！");
         self.selectDate = self.minLimitDate;
     }
     if (selectMoreThanMax) {
+        NSLog(@"默认选择的日期不能大于最大日期！");
         self.selectDate = self.maxLimitDate;
     }
     
@@ -450,9 +452,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器1
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTitleBarHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
-        // 设置子视图的大小随着父视图变化
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该UIDatePicker的国际化Locale，以简体中文习惯显示日期，UIDatePicker控件默认使用iOS系统的国际化Locale
@@ -475,9 +476,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器2
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTopViewHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
-        // 设置子视图的大小随着父视图变化
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
@@ -753,13 +753,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation {
+- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
     [self handlerData];
     // 添加时间选择器
     if (self.style == BRDatePickerStyleSystem) {
-        [self addPickerView:self.datePicker];
+        [self setPickerView:self.datePicker toView:view];
     } else if (self.style == BRDatePickerStyleCustom) {
-        [self addPickerView:self.pickerView];
+        [self setPickerView:self.pickerView toView:view];
     }
     
     // 默认滚动的行
@@ -772,14 +772,34 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
-        [weakSelf dismissWithAnimation:YES];
+        [weakSelf dismissWithAnimation:animation toView:view];
         if (weakSelf.resultBlock) {
             NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
             weakSelf.resultBlock(selectDateValue);
         }
     };
     
-    [super showWithAnimation:animation];
+    [super showWithAnimation:animation toView:view];
+}
+
+#pragma mark - 弹出选择器视图
+- (void)show {
+    [self showWithAnimation:YES toView:nil];
+}
+
+#pragma mark - 关闭选择器视图
+- (void)dismiss {
+    [self dismissWithAnimation:YES toView:nil];
+}
+
+#pragma mark - 添加选择器到指定容器视图上
+- (void)addPickerToView:(UIView *)view {
+    [self showWithAnimation:NO toView:view];
+}
+
+#pragma mark - 从指定容器视图上移除选择器
+- (void)removePickerFromView:(UIView *)view {
+    [self dismissWithAnimation:NO toView:view];
 }
 
 #pragma mark - getter 方法

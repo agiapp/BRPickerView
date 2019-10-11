@@ -12,8 +12,11 @@
 
 // 边框样式（左边取消按钮/右边确定按钮）
 typedef NS_ENUM(NSUInteger, BRBorderStyle) {
+    /** 无边框（默认） */
     BRBorderStyleNone = 0,
+    /** 有圆角和边框，且圆角半径为6，边框宽度为1，边框颜色和文本颜色保持一致 */
     BRBorderStyleSolid,
+    /** 仅有圆角，且圆角半径为6 */
     BRBorderStyleFill,
 };
 

@@ -44,12 +44,12 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 @interface BRDatePickerView : BRBaseView
 
 /**
- ////////////////////////////////////////////////////////////////////////
- ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致参数过多
+ //////////////////////////////////////////////////////////////////////////
+ ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致方法参数过多
  ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
  ///    2. 设置相关属性；一些公共的属性和方法参见基类文件 BRBaseView.h
  ///    3. 显示选择器（使用 showWithAnimation: 方法）
- //////////////////////////////////////////////////////////////////////*/
+ ////////////////////////////////////////////////////////////////////////*/
 
 /** 默认选中的时间（值为空/值格式错误时，默认就选中现在的时间） */
 @property (nonatomic, strong) NSString *defaultSelValue;
@@ -69,11 +69,27 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 /// @param pickerMode  日期选择器类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;
 
+/// 弹出选择器视图
+- (void)show;
+
+/// 关闭选择器视图
+- (void)dismiss;
+
+/// 添加选择器到指定容器视图上
+/// @param view 容器视图
+- (void)addPickerToView:(UIView *)view;
+
+/// 从指定容器视图上移除选择器
+/// @param view 容器视图
+- (void)removePickerFromView:(UIView *)view;
+
+
 
 /**
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 ///   【使用方式二】：快捷使用，直接选择下面其中的一个方法进行使用
-//////////////////////////////////////////////////////////////*/
+////////////////////////////////////////////////////////////////*/
+
 /**
  *  1.显示时间选择器
  *
@@ -133,5 +149,6 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
                     cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+
 
 @end
