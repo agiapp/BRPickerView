@@ -283,9 +283,9 @@
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
             stringPickerView.title = @"请选择性别";
             stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-            stringPickerView.defaultSelValue = textField.text;
-            stringPickerView.resultBlock = ^(id selectValue) {
-                textField.text = self.infoModel.genderStr = selectValue;
+            stringPickerView.selectValue = textField.text;
+            stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+                textField.text = self.infoModel.genderStr = resultModel.selectValue;
             };
             [stringPickerView show];
             
@@ -396,10 +396,10 @@
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
             stringPickerView.title = @"请选择学历";
             stringPickerView.plistName = @"testData1.plist";
-            stringPickerView.defaultSelValue = textField.text;
+            stringPickerView.selectValue = textField.text;
             stringPickerView.isAutoSelect = YES;
-            stringPickerView.resultBlock = ^(id selectValue) {
-                textField.text = self.infoModel.educationStr = selectValue;
+            stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+                textField.text = self.infoModel.educationStr = resultModel.selectValue;
             };
             [stringPickerView show];
             
@@ -422,10 +422,10 @@
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-            stringPickerView.defaultSelValue = [textField.text componentsSeparatedByString:@"，"];
+            stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
-            stringPickerView.resultBlock = ^(id selectValue) {
-                textField.text = self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
+            stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+                textField.text = self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue];
             };
             
             [stringPickerView show];

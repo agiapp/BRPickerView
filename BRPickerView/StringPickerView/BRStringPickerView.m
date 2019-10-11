@@ -17,10 +17,8 @@
 // 字符串选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
 @property (nonatomic, assign) BRStringPickerMode showType;
-// 单列选择的值
-@property (nonatomic, strong) NSString *selectValue;
-// 多列选择的值
-@property (nonatomic, strong) NSMutableArray *selectValueArr;
+/** 选择结果的回调 */
+@property (nonatomic, copy) BRStringResultBlock resultBlock;
 
 @end
 
@@ -85,11 +83,12 @@
         self.dataSourceArr = [self getDataSourceArr:dataSource];
         if ([[self.dataSourceArr firstObject] isKindOfClass:[NSString class]]) {
             self.showType = BRStringPickerComponentSingle;
+            self.selectValue = defaultSelValue;
         } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
             self.showType = BRStringPickerComponentMulti;
+            self.selectValueArr = defaultSelValue;
         }
         
-        self.defaultSelValue = defaultSelValue;
         self.isAutoSelect = isAutoSelect;
         
         // 兼容旧版本，快速设置主题样式
@@ -143,11 +142,12 @@
 
 #pragma mark - 设置默认选择的值
 - (void)handlerDefaultSelectData {
+    if (self.dataSourceArr.count == 0) {
+        return;
+    }
     // 给选择器设置默认值
     if (self.showType == BRStringPickerComponentSingle) {
-        if (self.defaultSelValue && [self.defaultSelValue isKindOfClass:[NSString class]] && [self.defaultSelValue length] > 0 && [self.dataSourceArr containsObject:self.defaultSelValue]) {
-            self.selectValue = self.defaultSelValue;
-        } else {
+        if (!self.selectValue || ![self.dataSourceArr containsObject:self.selectValue]) {
             self.selectValue = [self.dataSourceArr firstObject];
         }
         NSInteger row = [self.dataSourceArr indexOfObject:self.selectValue];
@@ -157,9 +157,9 @@
         NSMutableArray *tempArr = [NSMutableArray array];
         for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
             NSString *selValue = nil;
-            if (self.defaultSelValue && [self.defaultSelValue isKindOfClass:[NSArray class]] && [self.defaultSelValue count] > 0 && i < [self.defaultSelValue count] && [self.dataSourceArr[i] containsObject:self.defaultSelValue[i]]) {
-                [tempArr addObject:self.defaultSelValue[i]];
-                selValue = self.defaultSelValue[i];
+            if (self.selectValueArr && self.selectValueArr.count > 0 && i < self.selectValueArr.count && [self.dataSourceArr[i] containsObject:self.selectValueArr[i]]) {
+                [tempArr addObject:self.selectValueArr[i]];
+                selValue = self.selectValueArr[i];
             } else {
                 [tempArr addObject:[self.dataSourceArr[i] firstObject]];
                 selValue = [self.dataSourceArr[i] firstObject];
@@ -223,23 +223,21 @@
             self.selectValue = self.dataSourceArr[row];
             // 设置是否自动回调
             if (self.isAutoSelect) {
-                if(self.resultBlock) {
-                    self.resultBlock(self.selectValue);
-                }
+                [self handlerResultModelBlock];
             }
         }
             break;
         case BRStringPickerComponentMulti:
         {
             if (component < self.selectValueArr.count) {
-                self.selectValueArr[component] = self.dataSourceArr[component][row];
+                NSMutableArray *mutableArr = [self.selectValueArr mutableCopy];
+                [mutableArr replaceObjectAtIndex:component withObject:self.dataSourceArr[component][row]];
+                self.selectValueArr = [mutableArr copy];
             }
             
             // 设置是否自动回调
             if (self.isAutoSelect) {
-                if(self.resultBlock) {
-                    self.resultBlock([self.selectValueArr copy]);
-                }
+                [self handlerResultModelArrayBlock];
             }
         }
             break;
@@ -281,22 +279,70 @@
     return 35.0f * kScaleFit;
 }
 
+#pragma mark - 处理单列选择结果的回调
+- (void)handlerResultModelBlock {
+    // 1.使用方式一的回调
+    if (self.resultModelBlock) {
+        BRResultModel *resultModel = [[BRResultModel alloc]init];
+        resultModel.selectValue = self.selectValue;
+        resultModel.index = [self.dataSourceArr indexOfObject:self.selectValue];
+        self.resultModelBlock(resultModel);
+    }
+    
+    // 2.使用方式二的回调（兼容旧版本）
+    if(self.resultBlock) {
+        self.resultBlock(self.selectValue);
+    }
+    
+}
+
+#pragma mark - 处理多列选择结果的回调
+- (void)handlerResultModelArrayBlock {
+    // 1.使用方式一的回调
+    if (self.resultModelArrayBlock) {
+        NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
+        for (NSInteger i = 0; i < self.selectValueArr.count; i++) {
+            NSString *selectValue = self.selectValueArr[i];
+            NSArray *dataArr = self.dataSourceArr[i];
+            
+            BRResultModel *resultModel = [[BRResultModel alloc]init];
+            resultModel.selectValue = selectValue;
+            resultModel.index = [dataArr indexOfObject:selectValue];
+            
+            [resultModelArr addObject:resultModel];
+        }
+        self.resultModelArrayBlock([resultModelArr copy]);
+    }
+    
+    // 2.使用方式二的回调（兼容旧版本）
+    if(self.resultBlock) {
+        self.resultBlock(self.selectValueArr);
+    }
+    
+}
+
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
     [self handlerDefaultSelectData];
     // 添加字符串选择器
     [self setPickerView:self.pickerView toView:view];
     
-    __weak typeof(self) weakSelf = self;
+    @weakify(self)
     self.doneBlock = ^{
+        @strongify(self)
         // 点击确定按钮后，执行block回调
-        [weakSelf dismissWithAnimation:animation toView:view];
-        if (weakSelf.resultBlock) {
-           if (self.showType == BRStringPickerComponentSingle) {
-               weakSelf.resultBlock(weakSelf.selectValue);
-           } else if (weakSelf.showType == BRStringPickerComponentMulti) {
-               weakSelf.resultBlock(weakSelf.selectValueArr);
-           }
+        [self dismissWithAnimation:animation toView:view];
+        
+        if (!self.isAutoSelect) {
+            if (self.showType == BRStringPickerComponentSingle) {
+                
+                [self handlerResultModelBlock];
+                
+            } else if (self.showType == BRStringPickerComponentMulti) {
+                
+                [self handlerResultModelArrayBlock];
+                
+            }
         }
     };
 
@@ -330,11 +376,12 @@
     return _dataSourceArr;
 }
 
-- (NSMutableArray *)selectValueArr {
+- (NSArray<NSString *> *)selectValueArr {
     if (!_selectValueArr) {
-        _selectValueArr = [[NSMutableArray alloc]init];
+        _selectValueArr = [[NSArray alloc]init];
     }
     return _selectValueArr;
 }
+
 
 @end

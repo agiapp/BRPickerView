@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C0D234D6AA2004E801F /* BRPickerStyle.m */; };
+		451D6C1123509890004E801F /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C1023509890004E801F /* BRResultModel.m */; };
 		C5655BA12084759300331751 /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA02084759300331751 /* BRInfoCell.m */; };
 		C5655BA420848B1900331751 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA220848B1900331751 /* icon_next@2x.png */; };
 		C5655BA520848B1900331751 /* icon_next@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA320848B1900331751 /* icon_next@3x.png */; };
@@ -34,6 +35,8 @@
 /* Begin PBXFileReference section */
 		451D6C0C234D6AA2004E801F /* BRPickerStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerStyle.h; sourceTree = "<group>"; };
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
+		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
+		451D6C1023509890004E801F /* BRResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
 		C5655B9F2084759300331751 /* BRInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRInfoCell.h; sourceTree = "<group>"; };
 		C5655BA02084759300331751 /* BRInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRInfoCell.m; sourceTree = "<group>"; };
 		C5655BA220848B1900331751 /* icon_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@2x.png"; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 			children = (
 				C5ACE50C1F3D7E890069978B /* BRStringPickerView.h */,
 				C5ACE50D1F3D7E890069978B /* BRStringPickerView.m */,
+				451D6C0F23509890004E801F /* BRResultModel.h */,
+				451D6C1023509890004E801F /* BRResultModel.m */,
 			);
 			path = StringPickerView;
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 				C5655BA82084B3B000331751 /* BRInfoModel.m in Sources */,
 				C5ACE5121F3D81360069978B /* TestViewController.m in Sources */,
 				C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */,
+				451D6C1123509890004E801F /* BRResultModel.m in Sources */,
 				C5655BA12084759300331751 /* BRInfoCell.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
 				451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */,

@@ -8,6 +8,7 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRBaseView.h"
+#import "BRResultModel.h"
 
 typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     /** 单列字符串选择 */
@@ -17,6 +18,10 @@ typedef NS_ENUM(NSInteger, BRStringPickerMode) {
 };
 
 typedef void(^BRStringResultBlock)(id selectValue);
+
+typedef void(^BRStringResultModelBlock)(BRResultModel *resultModel);
+
+typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultModelArr);
 
 @interface BRStringPickerView : BRBaseView
 
@@ -43,18 +48,20 @@ typedef void(^BRStringResultBlock)(id selectValue);
  */
 @property (nonatomic, strong) NSString *plistName;
 
-/**
- *  设置默认选中
- *   单列：@"男"，传字符串
- *   两列：@[@"语文", @"优秀"]，传字符串数组
- */
-@property (nonatomic, strong) id defaultSelValue;
+/** 单列设置默认选择的值 */
+@property (nonatomic, strong) NSString *selectValue;
+
+/** 多列设置默认选择的值 */
+@property (nonatomic, strong) NSArray <NSString *>* selectValueArr;
 
 /** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
-/** 选择结果的回调 */
-@property (nonatomic, copy) BRStringResultBlock resultBlock;
+/** 单列选择结果的回调 */
+@property (nonatomic, copy) BRStringResultModelBlock resultModelBlock;
+
+/** 多列选择结果的回调 */
+@property (nonatomic, copy) BRStringResultModelArrayBlock resultModelArrayBlock;
 
 /// 初始化字符串选择器
 /// @param pickerMode 字符串选择器类型
