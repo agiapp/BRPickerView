@@ -55,4 +55,13 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** picker 中间选择文本颜色 */
 @property (nonatomic, strong) UIColor *pickerTextColor;
 
+
+
+/// 快捷设置自定义样式 - 取消/确定按钮圆角样式
+/// @param themeColor 主题颜色
++ (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor;
+
+/// 快捷设置自定义样式 - 适配默认深色模式样式
++ (instancetype)pickerStyleWithDarkModel;
+
 @end

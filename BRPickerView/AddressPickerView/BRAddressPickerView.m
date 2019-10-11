@@ -100,7 +100,7 @@
                      cancelBlock:(BRCancelBlock)cancelBlock {
     if (self = [super init]) {
         self.showType = showType;
-        self.dataSource = dataSource;
+        self.dataSourceArr = dataSource;
         self.defaultSelectedArr = defaultSelectedArr;
         _isDataSourceValid = YES;
     
@@ -108,14 +108,7 @@
         
         // 兼容旧版本，快速设置主题样式
         if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.leftTextColor = themeColor;
-            customStyle.leftBorderStyle = BRBorderStyleSolid;
-            customStyle.rightColor = themeColor;
-            customStyle.rightTextColor = [UIColor whiteColor];
-            customStyle.rightBorderStyle = BRBorderStyleFill;
-            customStyle.titleTextColor = [themeColor colorWithAlphaComponent:0.8f];
-            self.pickerStyle = customStyle;
+            self.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:themeColor];
         }
         
         self.resultBlock = resultBlock;
@@ -127,7 +120,7 @@
 #pragma mark - 获取地址数据
 - (void)loadData {
     // 如果外部没有传入地区数据源，就使用本地的数据源
-    if (!self.dataSource || self.dataSource.count == 0) {
+    if (!self.dataSourceArr || self.dataSourceArr.count == 0) {
         /*
             先拿到最外面的 bundle。
             对 framework 链接方式来说就是 framework 的 bundle 根目录，
@@ -144,7 +137,7 @@
             _isDataSourceValid = NO;
             return;
         }
-        self.dataSource = dataSource;
+        self.dataSourceArr = dataSource;
     }
     
     // 1.解析数据源
@@ -163,11 +156,11 @@
 #pragma mark - 解析数据源
 - (void)parseDataSource {
     NSMutableArray *tempArr1 = [NSMutableArray array];
-    for (NSDictionary *proviceDic in self.dataSource) {
+    for (NSDictionary *proviceDic in self.dataSourceArr) {
         BRProvinceModel *proviceModel = [[BRProvinceModel alloc]init];
         proviceModel.code = proviceDic[@"code"];
         proviceModel.name = proviceDic[@"name"];
-        proviceModel.index = [self.dataSource indexOfObject:proviceDic];
+        proviceModel.index = [self.dataSourceArr indexOfObject:proviceDic];
         NSArray *citylist = proviceDic[@"citylist"];
         NSMutableArray *tempArr2 = [NSMutableArray array];
         for (NSDictionary *cityDic in citylist) {
@@ -544,6 +537,20 @@
         _selectAreaModel.name = @"";
     }
     return _selectAreaModel;
+}
+
+- (NSArray *)dataSourceArr {
+    if (!_dataSourceArr) {
+        _dataSourceArr = [NSArray array];
+    }
+    return _dataSourceArr;
+}
+
+- (NSArray *)defaultSelectedArr {
+    if (!_defaultSelectedArr) {
+        _defaultSelectedArr = [NSArray array];
+    }
+    return _defaultSelectedArr;
 }
 
 @end

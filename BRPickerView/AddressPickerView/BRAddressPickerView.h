@@ -27,12 +27,12 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
  //////////////////////////////////////////////////////////////////////////
  ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致方法参数过多
  ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
- ///    2. 设置相关属性；一些公共的属性和方法参见基类文件 BRBaseView.h
- ///    3. 显示选择器（使用 showWithAnimation: 方法）
+ ///    2. 设置相关属性；一些公共的属性参见基类文件 BRBaseView.h
+ ///    3. 显示选择器（使用 show 方法）
  ////////////////////////////////////////////////////////////////////////*/
 
 /** 地区数据源 */
-@property (nonatomic, strong) NSArray *dataSource;
+@property (nonatomic, strong) NSArray *dataSourceArr;
 /** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
 @property (nonatomic, strong) NSArray *defaultSelectedArr;
 /** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */

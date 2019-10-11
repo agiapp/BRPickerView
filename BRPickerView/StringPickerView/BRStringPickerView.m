@@ -94,14 +94,7 @@
         
         // 兼容旧版本，快速设置主题样式
         if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.leftTextColor = themeColor;
-            customStyle.leftBorderStyle = BRBorderStyleSolid;
-            customStyle.rightColor = themeColor;
-            customStyle.rightTextColor = [UIColor whiteColor];
-            customStyle.rightBorderStyle = BRBorderStyleFill;
-            customStyle.titleTextColor = [themeColor colorWithAlphaComponent:0.8f];
-            self.pickerStyle = customStyle;
+            self.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:themeColor];
         }
         
         self.resultBlock = resultBlock;

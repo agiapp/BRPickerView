@@ -41,10 +41,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, assign) BRDatePickerMode showType;
 /** 时间选择器的类型 */
 @property (nonatomic, assign) BRDatePickerStyle style;
-/** 限制最小日期 */
-@property (nonatomic, strong) NSDate *minLimitDate;
-/** 限制最大日期 */
-@property (nonatomic, strong) NSDate *maxLimitDate;
 /** 当前选择的日期 */
 @property (nonatomic, strong) NSDate *selectDate;
 /** 选择的日期的格式 */
@@ -121,14 +117,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         // 兼容旧版本，快速设置主题样式
         if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.leftTextColor = themeColor;
-            customStyle.leftBorderStyle = BRBorderStyleSolid;
-            customStyle.rightColor = themeColor;
-            customStyle.rightTextColor = [UIColor whiteColor];
-            customStyle.rightBorderStyle = BRBorderStyleFill;
-            customStyle.titleTextColor = [themeColor colorWithAlphaComponent:0.8f];
-            self.pickerStyle = customStyle;
+            self.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:themeColor];
         }
         
         self.resultBlock = resultBlock;
@@ -141,39 +130,35 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 - (void)handlerData {
     // 1.最小日期限制
-    if (self.minDate) {
-        self.minLimitDate = self.minDate;
-    } else {
+    if (!self.minDate) {
         if (self.showType == BRDatePickerModeTime || self.showType == BRDatePickerModeCountDownTimer || self.showType == BRDatePickerModeHM) {
-            self.minLimitDate = [NSDate br_setHour:0 minute:0];
+            self.minDate = [NSDate br_setHour:0 minute:0];
         } else if (self.showType == BRDatePickerModeMDHM) {
-            self.minLimitDate = [NSDate br_setMonth:1 day:1 hour:0 minute:0];
+            self.minDate = [NSDate br_setMonth:1 day:1 hour:0 minute:0];
         } else if (self.showType == BRDatePickerModeMD) {
-            self.minLimitDate = [NSDate br_setMonth:1 day:1];
+            self.minDate = [NSDate br_setMonth:1 day:1];
         } else {
-            self.minLimitDate = [NSDate distantPast]; // 遥远的过去的一个时间点
+            self.minDate = [NSDate distantPast]; // 遥远的过去的一个时间点
         }
     }
     // 2.最大日期限制
-    if (self.maxDate) {
-        self.maxLimitDate = self.maxDate;
-    } else {
+    if (!self.maxDate) {
         if (self.showType == BRDatePickerModeTime || self.showType == BRDatePickerModeCountDownTimer || self.showType == BRDatePickerModeHM) {
-            self.maxLimitDate = [NSDate br_setHour:23 minute:59];
+            self.maxDate = [NSDate br_setHour:23 minute:59];
         } else if (self.showType == BRDatePickerModeMDHM) {
-            self.maxLimitDate = [NSDate br_setMonth:12 day:31 hour:23 minute:59];
+            self.maxDate = [NSDate br_setMonth:12 day:31 hour:23 minute:59];
         } else if (self.showType == BRDatePickerModeMD) {
-            self.maxLimitDate = [NSDate br_setMonth:12 day:31];
+            self.maxDate = [NSDate br_setMonth:12 day:31];
         } else {
-            self.maxLimitDate = [NSDate distantFuture]; // 遥远的未来的一个时间点
+            self.maxDate = [NSDate distantFuture]; // 遥远的未来的一个时间点
         }
     }
-    BOOL minMoreThanMax = [self.minLimitDate br_compare:self.maxLimitDate format:self.selectDateFormatter] == NSOrderedDescending;
+    BOOL minMoreThanMax = [self.minDate br_compare:self.maxDate format:self.selectDateFormatter] == NSOrderedDescending;
     NSAssert(!minMoreThanMax, @"最小日期不能大于最大日期！");
     if (minMoreThanMax) {
         // 如果最小日期大于了最大日期，就忽略两个值
-        self.minLimitDate = [NSDate distantPast];
-        self.maxLimitDate = [NSDate distantFuture];
+        self.minDate = [NSDate distantPast];
+        self.maxDate = [NSDate distantFuture];
     }
     
     // 3.默认选中的日期
@@ -197,17 +182,17 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 不设置默认日期，就默认选中今天的日期
         self.selectDate = [NSDate date];
     }
-    BOOL selectLessThanMin = [self.selectDate br_compare:self.minLimitDate format:self.selectDateFormatter] == NSOrderedAscending;
-    BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxLimitDate format:self.selectDateFormatter] == NSOrderedDescending;
+    BOOL selectLessThanMin = [self.selectDate br_compare:self.minDate format:self.selectDateFormatter] == NSOrderedAscending;
+    BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxDate format:self.selectDateFormatter] == NSOrderedDescending;
     //NSAssert(!selectLessThanMin, @"默认选择的日期不能小于最小日期！");
     //NSAssert(!selectMoreThanMax, @"默认选择的日期不能大于最大日期！");
     if (selectLessThanMin) {
         NSLog(@"默认选择的日期不能小于最小日期！");
-        self.selectDate = self.minLimitDate;
+        self.selectDate = self.minDate;
     }
     if (selectMoreThanMax) {
         NSLog(@"默认选择的日期不能大于最大日期！");
-        self.selectDate = self.maxLimitDate;
+        self.selectDate = self.maxDate;
     }
     
     if (self.style == BRDatePickerStyleCustom) {
@@ -307,11 +292,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     // 5.设置 minuteArr 数组
     [self setupMinuteArr:self.selectDate.br_year month:self.selectDate.br_month day:self.selectDate.br_day hour:self.selectDate.br_hour];
     // 根据 默认选择的日期 计算出 对应的索引
-    _yearIndex = self.selectDate.br_year - self.minLimitDate.br_year;
-    _monthIndex = self.selectDate.br_month - ((_yearIndex == 0) ? self.minLimitDate.br_month : 1);
-    _dayIndex = self.selectDate.br_day - ((_yearIndex == 0 && _monthIndex == 0) ? self.minLimitDate.br_day : 1);
-    _hourIndex = self.selectDate.br_hour - ((_yearIndex == 0 && _monthIndex == 0 && _dayIndex == 0) ? self.minLimitDate.br_hour : 0);
-    _minuteIndex = self.selectDate.br_minute - ((_yearIndex == 0 && _monthIndex == 0 && _dayIndex == 0 && _hourIndex == 0) ? self.minLimitDate.br_minute : 0);
+    _yearIndex = self.selectDate.br_year - self.minDate.br_year;
+    _monthIndex = self.selectDate.br_month - ((_yearIndex == 0) ? self.minDate.br_month : 1);
+    _dayIndex = self.selectDate.br_day - ((_yearIndex == 0 && _monthIndex == 0) ? self.minDate.br_day : 1);
+    _hourIndex = self.selectDate.br_hour - ((_yearIndex == 0 && _monthIndex == 0 && _dayIndex == 0) ? self.minDate.br_hour : 0);
+    _minuteIndex = self.selectDate.br_minute - ((_yearIndex == 0 && _monthIndex == 0 && _dayIndex == 0 && _hourIndex == 0) ? self.minDate.br_minute : 0);
     
 }
 
@@ -345,7 +330,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 // 设置 yearArr 数组
 - (void)setupYearArr {
     NSMutableArray *tempArr = [NSMutableArray array];
-    for (NSInteger i = self.minLimitDate.br_year; i <= self.maxLimitDate.br_year; i++) {
+    for (NSInteger i = self.minDate.br_year; i <= self.maxDate.br_year; i++) {
         [tempArr addObject:[@(i) stringValue]];
     }
     self.yearArr = [tempArr copy];
@@ -355,11 +340,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)setupMonthArr:(NSInteger)year {
     NSInteger startMonth = 1;
     NSInteger endMonth = 12;
-    if (year == self.minLimitDate.br_year) {
-        startMonth = self.minLimitDate.br_month;
+    if (year == self.minDate.br_year) {
+        startMonth = self.minDate.br_month;
     }
-    if (year == self.maxLimitDate.br_year) {
-        endMonth = self.maxLimitDate.br_month;
+    if (year == self.maxDate.br_year) {
+        endMonth = self.maxDate.br_month;
     }
     NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:(endMonth - startMonth + 1)];
     for (NSInteger i = startMonth; i <= endMonth; i++) {
@@ -372,11 +357,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)setupDayArr:(NSInteger)year month:(NSInteger)month {
     NSInteger startDay = 1;
     NSInteger endDay = [NSDate br_getDaysInYear:year month:month];
-    if (year == self.minLimitDate.br_year && month == self.minLimitDate.br_month) {
-        startDay = self.minLimitDate.br_day;
+    if (year == self.minDate.br_year && month == self.minDate.br_month) {
+        startDay = self.minDate.br_day;
     }
-    if (year == self.maxLimitDate.br_year && month == self.maxLimitDate.br_month) {
-        endDay = self.maxLimitDate.br_day;
+    if (year == self.maxDate.br_year && month == self.maxDate.br_month) {
+        endDay = self.maxDate.br_day;
     }
     NSMutableArray *tempArr = [NSMutableArray array];
     for (NSInteger i = startDay; i <= endDay; i++) {
@@ -389,11 +374,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)setupHourArr:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
     NSInteger startHour = 0;
     NSInteger endHour = 23;
-    if (year == self.minLimitDate.br_year && month == self.minLimitDate.br_month && day == self.minLimitDate.br_day) {
-        startHour = self.minLimitDate.br_hour;
+    if (year == self.minDate.br_year && month == self.minDate.br_month && day == self.minDate.br_day) {
+        startHour = self.minDate.br_hour;
     }
-    if (year == self.maxLimitDate.br_year && month == self.maxLimitDate.br_month && day == self.maxLimitDate.br_day) {
-        endHour = self.maxLimitDate.br_hour;
+    if (year == self.maxDate.br_year && month == self.maxDate.br_month && day == self.maxDate.br_day) {
+        endHour = self.maxDate.br_hour;
     }
     NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:(endHour - startHour + 1)];
     for (NSInteger i = startHour; i <= endHour; i++) {
@@ -406,11 +391,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)setupMinuteArr:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour {
     NSInteger startMinute = 0;
     NSInteger endMinute = 59;
-    if (year == self.minLimitDate.br_year && month == self.minLimitDate.br_month && day == self.minLimitDate.br_day && hour == self.minLimitDate.br_hour) {
-        startMinute = self.minLimitDate.br_minute;
+    if (year == self.minDate.br_year && month == self.minDate.br_month && day == self.minDate.br_day && hour == self.minDate.br_hour) {
+        startMinute = self.minDate.br_minute;
     }
-    if (year == self.maxLimitDate.br_year && month == self.maxLimitDate.br_month && day == self.maxLimitDate.br_day && hour == self.maxLimitDate.br_hour) {
-        endMinute = self.maxLimitDate.br_minute;
+    if (year == self.maxDate.br_year && month == self.maxDate.br_month && day == self.maxDate.br_day && hour == self.maxDate.br_hour) {
+        endMinute = self.maxDate.br_minute;
     }
     NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:(endMinute - startMinute + 1)];
     for (NSInteger i = startMinute; i <= endMinute; i++) {
@@ -422,11 +407,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 滚动到指定的时间位置
 - (void)scrollToSelectDate:(NSDate *)selectDate animated:(BOOL)animated {
     // 根据 当前选择的日期 计算出 对应的索引
-    NSInteger yearIndex = selectDate.br_year - self.minLimitDate.br_year;
-    NSInteger monthIndex = selectDate.br_month - ((yearIndex == 0) ? self.minLimitDate.br_month : 1);
-    NSInteger dayIndex = selectDate.br_day - ((yearIndex == 0 && monthIndex == 0) ? self.minLimitDate.br_day : 1);
-    NSInteger hourIndex = selectDate.br_hour - ((yearIndex == 0 && monthIndex == 0 && dayIndex == 0) ? self.minLimitDate.br_hour : 0);
-    NSInteger minuteIndex = selectDate.br_minute - ((yearIndex == 0 && monthIndex == 0 && dayIndex == 0 && hourIndex == 0) ? self.minLimitDate.br_minute : 0);
+    NSInteger yearIndex = selectDate.br_year - self.minDate.br_year;
+    NSInteger monthIndex = selectDate.br_month - ((yearIndex == 0) ? self.minDate.br_month : 1);
+    NSInteger dayIndex = selectDate.br_day - ((yearIndex == 0 && monthIndex == 0) ? self.minDate.br_day : 1);
+    NSInteger hourIndex = selectDate.br_hour - ((yearIndex == 0 && monthIndex == 0 && dayIndex == 0) ? self.minDate.br_hour : 0);
+    NSInteger minuteIndex = selectDate.br_minute - ((yearIndex == 0 && monthIndex == 0 && dayIndex == 0 && hourIndex == 0) ? self.minDate.br_minute : 0);
     
     NSArray *indexArr = [NSArray array];
     if (self.showType == BRDatePickerModeYMDHM) {
@@ -461,11 +446,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // textColor 隐藏属性，使用KVC赋值
         [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
         // 设置时间范围
-        if (self.minLimitDate) {
-            _datePicker.minimumDate = self.minLimitDate;
+        if (self.minDate) {
+            _datePicker.minimumDate = self.minDate;
         }
-        if (self.maxLimitDate) {
-             _datePicker.maximumDate = self.maxLimitDate;
+        if (self.maxDate) {
+             _datePicker.maximumDate = self.maxDate;
         }
         // 滚动改变值的响应事件
         [_datePicker addTarget:self action:@selector(didSelectValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -732,13 +717,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     // 读取日期：datePicker.date
     self.selectDate = sender.date;
     
-    BOOL selectLessThanMin = [self.selectDate br_compare:self.minLimitDate format:self.selectDateFormatter] == NSOrderedAscending;
-    BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxLimitDate format:self.selectDateFormatter] == NSOrderedDescending;
+    BOOL selectLessThanMin = [self.selectDate br_compare:self.minDate format:self.selectDateFormatter] == NSOrderedAscending;
+    BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxDate format:self.selectDateFormatter] == NSOrderedDescending;
     if (selectLessThanMin) {
-        self.selectDate = self.minLimitDate;
+        self.selectDate = self.minDate;
     }
     if (selectMoreThanMax) {
-        self.selectDate = self.maxLimitDate;
+        self.selectDate = self.maxDate;
     }
     [self.datePicker setDate:self.selectDate animated:YES];
     

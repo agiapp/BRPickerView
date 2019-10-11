@@ -24,8 +24,8 @@ typedef void(^BRStringResultBlock)(id selectValue);
  //////////////////////////////////////////////////////////////////////////
  ///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致方法参数过多
  ///    1. 初始化选择器（使用 initWithDataSource: 方法）
- ///    2. 设置相关属性；一些公共的属性和方法参见基类文件 BRBaseView.h
- ///    3. 显示选择器（使用 showWithAnimation: 方法）
+ ///    2. 设置相关属性；一些公共的属性参见基类文件 BRBaseView.h
+ ///    3. 显示选择器（使用 show 方法）
  ////////////////////////////////////////////////////////////////////////*/
 
 /**
@@ -39,7 +39,7 @@ typedef void(^BRStringResultBlock)(id selectValue);
 /**
  *  2.设置数据源
  *    直接传plist文件名：NSString类型（如：@"sex.plist"），要带后缀名
- *    场景：可以将数据源（数组类型）放到plist文件中，直接传plist文件名更加简单
+ *    场景：可以将数据源数据（数组类型）放到plist文件中，直接传plist文件名更加简单
  */
 @property (nonatomic, strong) NSString *plistName;
 
