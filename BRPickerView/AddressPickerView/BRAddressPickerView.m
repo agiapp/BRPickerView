@@ -119,8 +119,17 @@
 
 #pragma mark - 获取地址数据
 - (void)loadData {
-    // 如果外部没有传入地区数据源，就使用本地的数据源
-    if (!self.dataSourceArr || self.dataSourceArr.count == 0) {
+    if (self.dataSourceArr && self.dataSourceArr.count > 0) {
+        id element = [self.dataSourceArr firstObject];
+        // 如果传的值是解析好的模型数组
+        if ([element isKindOfClass:[BRProvinceModel class]]) {
+            self.provinceModelArr = self.dataSourceArr;
+        } else {
+            // 传的是JSON数组，就解析数据源
+            [self parseDataSource];
+        }
+    } else {
+        // 如果外部没有传入地区数据源，就使用本地的数据源
         /*
             先拿到最外面的 bundle。
             对 framework 链接方式来说就是 framework 的 bundle 根目录，
@@ -129,13 +138,10 @@
          */
         NSBundle *bundle = [NSBundle bundleForClass:[self class]];
         NSURL *url = [bundle URLForResource:@"BRPickerView" withExtension:@"bundle"];
-        NSBundle *plistBundle = [NSBundle bundleWithURL:url];
+        NSBundle *pickerViewBundle = [NSBundle bundleWithURL:url];
         
-        //NSString *filePath = [plistBundle pathForResource:@"BRCity" ofType:@"plist"];
-        //NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
-        
-        // 加载地区数据源
-        NSString *filePath = [plistBundle pathForResource:@"BRCity" ofType:@"json"];
+        // 获取本地文件
+        NSString *filePath = [pickerViewBundle pathForResource:@"BRCity" ofType:@"json"];
         NSData *data = [NSData dataWithContentsOfFile:filePath];
         NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         
@@ -144,18 +150,18 @@
             return;
         }
         self.dataSourceArr = dataSource;
+        
+        // 解析数据源
+        [self parseDataSource];
     }
     
-    // 1.解析数据源
-    [self parseDataSource];
-    
-    // 2.设置默认值
+    // 设置默认值
     [self setupDefaultValue];
     
     // 注意必须先刷新UI，再设置默认滚动
     [self.pickerView reloadAllComponents];
     
-    // 3.设置默认滚动
+    // 设置默认滚动
     [self scrollToRow:_provinceIndex secondRow:_cityIndex thirdRow:_areaIndex];
 }
 
