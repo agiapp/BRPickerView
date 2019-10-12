@@ -12,7 +12,7 @@
 @interface BRResultModel : NSObject
 /** 选择的值 */
 @property (nonatomic, copy) NSString *selectValue;
-/** 选择值对应的索引 */
+/** 选择值对应的索引（行数） */
 @property (nonatomic, assign) NSInteger index;
 
 @end

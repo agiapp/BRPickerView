@@ -131,8 +131,14 @@
         NSURL *url = [bundle URLForResource:@"BRPickerView" withExtension:@"bundle"];
         NSBundle *plistBundle = [NSBundle bundleWithURL:url];
         
-        NSString *filePath = [plistBundle pathForResource:@"BRCity" ofType:@"plist"];
-        NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
+        //NSString *filePath = [plistBundle pathForResource:@"BRCity" ofType:@"plist"];
+        //NSArray *dataSource = [NSArray arrayWithContentsOfFile:filePath];
+        
+        // 加载地区数据源
+        NSString *filePath = [plistBundle pathForResource:@"BRCity" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
         if (!dataSource || dataSource.count == 0) {
             _isDataSourceValid = NO;
             return;
@@ -282,9 +288,13 @@
 // 根据 省索引和城市索引 获取 区域模型数组
 - (NSArray *)getAreaModelArray:(NSInteger)provinceIndex cityIndex:(NSInteger)cityIndex {
     BRProvinceModel *provinceModel = self.provinceModelArr[provinceIndex];
-    BRCityModel *cityModel = provinceModel.citylist[cityIndex];
-    // 返回地区模型数组
-    return cityModel.arealist;
+    if (provinceModel.citylist && provinceModel.citylist.count > 0) {
+        BRCityModel *cityModel = provinceModel.citylist[cityIndex];
+        // 返回地区模型数组
+        return cityModel.arealist;
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - 地址选择器
@@ -403,8 +413,16 @@
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
                 self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
-                self.selectCityModel = self.cityModelArr[0];
-                self.selectAreaModel = self.areaModelArr[0];
+                if (self.cityModelArr.count > 0) {
+                    self.selectCityModel = self.cityModelArr[0];
+                } else {
+                    self.selectCityModel = nil;
+                }
+                if (self.areaModelArr.count > 0) {
+                    self.selectAreaModel = self.areaModelArr[0];
+                } else {
+                    self.selectAreaModel = nil;
+                }
             }
                 break;
             default:
@@ -427,7 +445,11 @@
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
                 self.selectCityModel = self.cityModelArr[_cityIndex];
-                self.selectAreaModel = self.areaModelArr[0];
+                if (self.areaModelArr.count > 0) {
+                    self.selectAreaModel = self.areaModelArr[0];
+                } else {
+                    self.selectAreaModel = nil;
+                }
             }
                 break;
             default:
