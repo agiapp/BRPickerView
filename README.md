@@ -1,10 +1,10 @@
 # 1. 框架介绍
 
-BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需一句代码即可完成调用，使用比较灵活支持自定义主题颜色。选择器类型主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。
+BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。高度封装，提供了两种使用方式，支持自定义主题样式，适配深色模式。
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.2.1` 。
+- 当前最新版本为： `2.3.0` 。
 - 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -17,72 +17,69 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 # 3. 更新记录
 
-- **2018-04-27（V2.2.1）**:
+#### 2019-10-12（V2.3.0）
 
-  >- 修复bug，适配iPad和横屏显示。
-  >- 优化代码，提高框架适应性，降低内存消耗。
+- 添加传统的创建对象设置属性的使用方式
+- 开放设置选择器颜色及样式，适配深色模式
+- 更新省市区数据源，数据与政府官网最新公布的一致（参见：[行政区划代码](http://www.mca.gov.cn/article/sj/xzqh/2019/)）
+- 支持将选择器添加到指定容器视图上
 
-- **2018-04-03（V2.2.0）**:
+#### 2018-04-27（V2.2.1）:
 
-  >- 时间选择器新添加了7种显示类型（BRDatePickerMode），可根据自己项目的需求选择性使用。
-  >- 适配横屏，及 iPhoneX 底部安全区域。
-  >- 修改了最小时间和最大时间的参数名称（以前版本是传 NSString 类型， 现在传 NSDate 类型）
-  >- 修复比较时间大小时出现的bug。
+- 修复bug，适配iPad和横屏显示。
+- 优化代码，提高框架适应性，降低内存消耗。
 
-- **2018-03-19（V2.1.3）**:
+#### 2018-04-03（V2.2.0）
 
-  >- 修改地址选择器确认选择后的回调参数。
-  >- 现修改如下：可通过省市区的模型获取省市区的 name（名称）、code（id）、index（索引）`resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}`
-  >- 去掉第三方依赖库 `MJExtension` ，修改为手动解析地址数据源。
+- 时间选择器新添加了7种显示类型（BRDatePickerMode），可根据自己项目的需求选择性使用。
+- 适配横屏，及 iPhoneX 底部安全区域。
+- 修改了最小时间和最大时间的参数名称（以前版本是传 NSString 类型， 现在传 NSDate 类型）
+- 修复比较时间大小时出现的bug。
 
-- **2018-03-11（V2.1.2）**:
+#### 2018-03-19（V2.1.3）
 
-  >- 重命名了Github用户名，更新项目相关的路径。（提示：pod之前的版本不受影响）
+- 修改地址选择器确认选择后的回调参数。
+- 现修改如下：可通过省市区的模型获取省市区的 name（名称）、code（id）、index（索引）`resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}`
+- 去掉第三方依赖库 `MJExtension` ，修改为手动解析地址数据源。
 
-- **2018-02-28（V2.1.1）**：
+#### 2018-03-11（V2.1.2）
 
-  >- 修复某些情况下无法用bundle加载本地数据源（BRCity.plist）bug。
+- 重命名了Github用户名，更新项目相关的路径。（提示：pod之前的版本不受影响）
 
-- **2018-01-26（V2.1.0）**:
+#### 2018-02-28（V2.1.1）
 
-  >- 给地址选择器添加了一个方法（见方法4），提供数据源参数，支持外部传入地区数据源。
-  >- 提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
+- 修复某些情况下无法用bundle加载本地数据源（BRCity.plist）bug。
 
-- **2018-01-25（V2.0.0）**：
+#### 2018-01-26（V2.1.0）
 
-  > - 更新了地址数据源（BRCity.plist），地区信息是2018年最新最全的，与微信的地区信息完全一致。
-  > - 支持自定义默认选择地址（格式：@[@"浙江省", @"杭州市", @"西湖区"]），支持下次点击进入地址选择器时，默认地址为上次选择的结果。
-  > - 修改了日期选择器、地址选择器、字符串选择器的接口方法（删除了之前的方法2）。
-  > - 添加了地址选择器显示类型，支持3种显示：只显示省份、显示省份和城市、显示省市区。
+- 给地址选择器添加了一个方法（见方法4），提供数据源参数，支持外部传入地区数据源。
+- 提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
 
+#### 2018-01-25（V2.0.0）
 
-- **2018-01-05（V1.3.0）**:
+- 更新了地址数据源（BRCity.plist），地区信息是2018年最新最全的，与微信的地区信息完全一致。
+- 支持自定义默认选择地址（格式：@[@"浙江省", @"杭州市", @"西湖区"]），支持下次点击进入地址选择器时，默认地址为上次选择的结果。
+- 修改了日期选择器、地址选择器、字符串选择器的接口方法（删除了之前的方法2）。
+- 添加了地址选择器显示类型，支持3种显示：只显示省份、显示省份和城市、显示省市区。
 
-  > - 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
-  >
-  > - 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
-  >
-  >   1> 可以直接传数组：NSArray类型；
-  >
-  >   2> 可以传plist文件名：NSString类型，带后缀名，plist文件的内容必须是数组格式。
+#### 2018-01-05（V1.3.0）
 
+- 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
+- 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
 
-- **2018-01-02（V1.2.0）**：
+#### 2018-01-02（V1.2.0）
 
-  > - 添加支持自定义主题颜色的方法。
+- 添加支持自定义主题颜色的方法。
 
-- **2017-11-26（V1.1.0）**：
+#### 2017-11-26（V1.1.0）
 
-  > - 更换第三方依赖库。
-  >
-  >   用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错）。
+- 更换第三方依赖库。
 
+- 用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错）。
 
-- **2017-11-16（V1.0.0）**：
+#### 2017-11-16（V1.0.0）
 
-  > - 初始版本！
-
-
+- 初始版本！
 
 # 4. 安装
 
@@ -111,83 +108,7 @@ BRPickerView 封装的是iOS中常用的选择器组件。高度封装，只需�
 
 #### 6.1. 时间选择器：`BRDatePickerView`
 
-​	查看 BRDatePickerView.h 头文件，里面提供了3个方法，可根据自己的需求选择其中的一个方法进行使用。
-
-```objective-c
-/**
- *  1.显示时间选择器
- *
- *  @param title            标题
- *  @param dateType         日期显示类型
- *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param resultBlock      选择结果的回调
- *
- */
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                    resultBlock:(BRDateResultBlock)resultBlock;
-
-/**
- *  2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
- *
- *  @param title            标题
- *  @param dateType         日期显示类型
- *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）
- *  @param maxDate          最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
- *  @param resultBlock      选择结果的回调
- *
- */
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                        minDate:(NSDate *)minDate
-                        maxDate:(NSDate *)maxDate
-                   isAutoSelect:(BOOL)isAutoSelect
-                     themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock;
-
-/**
- *  3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
- *
- *  @param title            标题
- *  @param dateType         日期显示类型
- *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）
- *  @param maxDate          最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
- *  @param resultBlock      选择结果的回调
- *  @param cancelBlock      取消选择的回调
- *
- */
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                        minDate:(NSDate *)minDate
-                        maxDate:(NSDate *)maxDate
-                   isAutoSelect:(BOOL)isAutoSelect
-                     themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRDateCancelBlock)cancelBlock;
-```
-
-- 使用示例（参考Demo）：
-
-```objective-c
-NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12];
-NSDate *maxDate = [NSDate date];
-[BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:weakSelf.birthdayTF.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
-    weakSelf.birthdayTF.text = selectValue;
-} cancelBlock:^{
-    NSLog(@"点击了背景或取消按钮");
-}];
-```
-
-- 时间选择器的显示类型：
+​	查看 BRDatePickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
 ```objective-c
 /// 弹出日期类型
@@ -219,6 +140,31 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 };
 ```
 
+- 使用示例（参考Demo）：
+
+```objective-c
+// 1.创建日期选择器
+BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
+// 2.设置属性
+datePickerView.title = @"出生年月日";
+datePickerView.defaultSelValue = textField.text;
+datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
+datePickerView.maxDate = [NSDate date];
+datePickerView.isAutoSelect = YES;
+datePickerView.resultBlock = ^(NSString *selectValue) {
+    NSLog(@"选择的值：%@", selectValue);
+};
+// 自定义主题样式
+BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
+customStyle.pickerTextColor = [UIColor redColor];
+customStyle.separatorColor = [UIColor redColor];
+datePickerView.pickerStyle = customStyle;
+
+// 3.显示
+[datePickerView show];
+```
+
 - 时间选择器显示类型的效果图：
 
 > 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
@@ -247,82 +193,24 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 
 #### 6.2. 地址选择器：`BRAddressPickerView`
 
-​	查看 BRAddressPickerView.h 头文件，里面提供了4个方法，可根据自己的需求选择其中的一个方法进行使用。
-
-```objective-c
-/**
- *  1.显示地址选择器
- *
- *  @param defaultSelectedArr       默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"])
- *  @param resultBlock              选择后的回调
- *
- */
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
-                                 resultBlock:(BRAddressResultBlock)resultBlock;
-
-/**
- *  2.显示地址选择器（支持 设置自动选择 和 自定义主题颜色）
- *
- *  @param defaultSelectedArr       默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"])
- *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor               自定义主题颜色
- *  @param resultBlock              选择后的回调
- *
- */
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
-                                isAutoSelect:(BOOL)isAutoSelect
-                                  themeColor:(UIColor *)themeColor
-                                 resultBlock:(BRAddressResultBlock)resultBlock;
-
-/**
- *  3.显示地址选择器（支持 设置选择器类型、设置自动选择、自定义主题颜色、取消选择的回调）
- *
- *  @param showType                 地址选择器显示类型
- *  @param defaultSelectedArr       默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"])
- *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor               自定义主题颜色
- *  @param resultBlock              选择后的回调
- *  @param cancelBlock              取消选择的回调
- *
- */
-+ (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
-                      defaultSelected:(NSArray *)defaultSelectedArr
-                         isAutoSelect:(BOOL)isAutoSelect
-                           themeColor:(UIColor *)themeColor
-                          resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock;
-
-/**
- *  4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
- *
- *  @param showType                 地址选择器显示类型
- *  @param dataSource               地区数据源
- *  @param defaultSelectedArr       默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"])
- *  @param isAutoSelect             是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor               自定义主题颜色
- *  @param resultBlock              选择后的回调
- *  @param cancelBlock              取消选择的回调
- *
- */
-+ (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
-                           dataSource:(NSArray *)dataSource
-                      defaultSelected:(NSArray *)defaultSelectedArr
-                         isAutoSelect:(BOOL)isAutoSelect
-                           themeColor:(UIColor *)themeColor
-                          resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRAddressCancelBlock)cancelBlock;
-```
+​	查看 BRAddressPickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
 - 使用示例（参考Demo）：
 
 ```objective-c
-// 【转换】：以@" "子字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
-NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@" "];
-[BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
-    weakSelf.addressTF.text = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
-} cancelBlock:^{
-    NSLog(@"点击了背景视图或取消按钮");
-}];
+/// 地址选择器
+BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
+
+addressPickerView.title = @"请选择地区";
+addressPickerView.defaultSelectedArr = @[@"浙江省", @"杭州市", @"西湖区"];
+addressPickerView.isAutoSelect = YES;
+addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
+};
+// 自定义主题样式（适配深色模式）
+addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDarkModel];
+
+[addressPickerView show];
 ```
 
 - 地址选择器的3种显示类型（showType 的3个枚举值）：
@@ -335,83 +223,38 @@ NSArray *defaultSelArr = [weakSelf.addressTF.text componentsSeparatedByString:@"
 
 #### 6.3.  自定义字符串选择器：`BRStringPickerView`
 
-​	查看 BRStringPickerView.h 头文件，里面提供了3个方法，可根据自己的需求选择其中的一个方法进行使用。
-
-```objective-c
-/**
- *  1.显示自定义字符串选择器
- *
- *  @param title            标题
- *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param resultBlock      选择后的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                      resultBlock:(BRStringResultBlock)resultBlock;
-
-/**
- *  2.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
- *
- *  @param title            标题
- *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
- *  @param resultBlock      选择后的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                       themeColor:(UIColor *)themeColor
-                      resultBlock:(BRStringResultBlock)resultBlock;
-
-/**
- *  3.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
- *
- *  @param title            标题
- *  @param dataSource       数据源（1.直接传数组：NSArray类型；2.可以传plist文件名：NSString类型，带后缀名，plist文件内容要是数组格式）
- *  @param defaultSelValue  默认选中的行(单列传字符串，多列传一维数组)
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
- *  @param resultBlock      选择后的回调
- *  @param cancelBlock      取消选择的回调
- *
- */
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                       themeColor:(UIColor *)themeColor
-                      resultBlock:(BRStringResultBlock)resultBlock
-                      cancelBlock:(BRStringCancelBlock)cancelBlock;
-```
+​	查看 BRStringPickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
 - 使用示例（参考Demo）：
 
 ```objective-c
-// 自定义单列字符串
-//NSArray *dataSource = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-NSString *dataSource = @"testData1.plist"; // 可以将数据源（上面的数组）放到plist文件中
-[BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSource defaultSelValue:weakSelf.educationTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
-    weakSelf.educationTF.text = selectValue;
-} cancelBlock:^{
-    NSLog(@"点击了背景视图或取消按钮");
-}];
+/// 单列字符串选择器
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
 
-// 自定义多列字符串
-NSArray *dataSource = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-//NSString *dataSource = @"testData3.plist"; // 可以将数据源（上面的数组）放到plist文件中
-NSArray *defaultSelArr = [weakSelf.otherTF.text componentsSeparatedByString:@"，"];
-[BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
-    weakSelf.otherTF.text = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
-} cancelBlock:^{
-    NSLog(@"点击了背景视图或取消按钮");
-}];
+stringPickerView.title = @"请选择性别";
+stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
+stringPickerView.selectValue = textField.text;
+stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+    NSLog(@"选择的值：%@", resultModel.selectValue);
+};
+
+[stringPickerView show];
+
+
+/// 多列字符串选择器
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
+
+stringPickerView.title = @"自定义多列字符串";
+stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
+stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
+stringPickerView.isAutoSelect = YES;
+stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue]);
+};
+// 自定义主题样式
+addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
+
+[stringPickerView show];
 ```
 
 - 字符串选择器效果图：
