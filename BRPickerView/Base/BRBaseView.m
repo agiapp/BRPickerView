@@ -87,7 +87,7 @@
         _leftBtn.frame = CGRectMake(5, 8, 60, 28);
         _leftBtn.backgroundColor = self.pickerStyle.leftColor;;
         _leftBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-        _leftBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
+        _leftBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
         [_leftBtn setTitleColor:self.pickerStyle.leftTextColor forState:UIControlStateNormal];
         [_leftBtn setTitle:@"取消" forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -112,7 +112,7 @@
         _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - 65, 8, 60, 28);
         _rightBtn.backgroundColor = self.pickerStyle.rightColor;
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
-        _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f * kScaleFit];
+        _rightBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
         [_rightBtn setTitleColor:self.pickerStyle.rightTextColor forState:UIControlStateNormal];
         [_rightBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -136,7 +136,7 @@
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5 + 60 + 2, 0, SCREEN_WIDTH - 2 * (5 + 60 + 2), kTitleBarHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
-        _titleLabel.font = [UIFont systemFontOfSize:14.0f * kScaleFit];
+        _titleLabel.font = [UIFont systemFontOfSize:15.0f];
         _titleLabel.textColor = [self.pickerStyle.titleTextColor colorWithAlphaComponent:0.8f];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
