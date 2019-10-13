@@ -5,7 +5,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 【**特别提示**】：
 
 - 当前最新版本为： `2.3.0` 。
-- 如果不能找到最新版本，请先执行一下 `pod setup` ，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
+- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
 
