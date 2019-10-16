@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.3.0` 。
+- 当前最新版本为： `2.3.1` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -16,6 +16,10 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+#### 2019-10-16（V2.3.1）
+
+- 将适配深色模式 pickerStyleWithDarkModel 方法从库中提取出来，防止Xcode11之前版本编译不通过
 
 #### 2019-10-12（V2.3.0）
 
@@ -208,7 +212,7 @@ addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, 
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
 };
 // 自定义主题样式（适配深色模式）
-addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDarkModel];
+addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
 
 [addressPickerView show];
 ```
