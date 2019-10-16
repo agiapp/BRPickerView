@@ -118,25 +118,5 @@
     return customStyle;
 }
 
-#pragma mark - 快捷设置自定义样式 - 适配默认深色模式样式
-+ (instancetype)pickerStyleWithDarkModel {
-    BRPickerStyle *customStyle = [[self alloc]init];
-    // 自定义主题样式（适配深色模式）
-    if (@available(iOS 13.0, *)) {
-        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2];
-        customStyle.titleBarColor = [UIColor systemBackgroundColor];
-        customStyle.leftTextColor = [UIColor labelColor];
-        customStyle.rightTextColor = [UIColor labelColor];
-        customStyle.titleTextColor = [UIColor placeholderTextColor];
-        customStyle.titleLineColor = [UIColor quaternaryLabelColor];
-        
-        customStyle.pickerColor = [UIColor systemBackgroundColor];
-        customStyle.pickerTextColor = [UIColor labelColor];
-        customStyle.separatorColor = [UIColor separatorColor];
-    }
-    
-    return customStyle;
-}
-
 
 @end

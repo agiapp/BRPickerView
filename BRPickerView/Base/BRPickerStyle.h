@@ -14,9 +14,9 @@
 typedef NS_ENUM(NSUInteger, BRBorderStyle) {
     /** 无边框（默认） */
     BRBorderStyleNone = 0,
-    /** 有圆角和边框，且圆角半径为6，边框宽度为1，边框颜色和文本颜色保持一致 */
+    /** 有圆角和边框 */
     BRBorderStyleSolid,
-    /** 仅有圆角，且圆角半径为6 */
+    /** 仅有圆角 */
     BRBorderStyleFill,
 };
 
@@ -61,7 +61,5 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /// @param themeColor 主题颜色
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor;
 
-/// 快捷设置自定义样式 - 适配默认深色模式样式
-+ (instancetype)pickerStyleWithDarkModel;
 
 @end

@@ -371,7 +371,7 @@
             addressPickerView.isAutoSelect = YES;
                         
             // 自定义主题样式（适配深色模式）
-            addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDarkModel];
+            addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
             
             addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
                 textField.text = self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
@@ -436,6 +436,27 @@
         default:
             break;
     }
+}
+
+#pragma mark - 快捷设置自定义样式 - 适配默认深色模式样式
+/// 注意：下面的颜色是iOS13新出来的系统颜色，主要用于适配深色模式，升级Xcode11以上才能编译，编译报错也可以直接注释掉
+- (BRPickerStyle *)pickerStyleWithDarkModel {
+    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+    // 自定义主题样式（适配深色模式）
+    if (@available(iOS 13.0, *)) {
+        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2];
+        customStyle.titleBarColor = [UIColor systemBackgroundColor];
+        customStyle.leftTextColor = [UIColor labelColor];
+        customStyle.rightTextColor = [UIColor labelColor];
+        customStyle.titleTextColor = [UIColor placeholderTextColor];
+        customStyle.titleLineColor = [UIColor quaternaryLabelColor];
+        
+        customStyle.pickerColor = [UIColor systemBackgroundColor];
+        customStyle.pickerTextColor = [UIColor labelColor];
+        customStyle.separatorColor = [UIColor separatorColor];
+    }
+    
+    return customStyle;
 }
 
 //#pragma mark - 刷新指定行的数据
