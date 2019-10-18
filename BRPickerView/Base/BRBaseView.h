@@ -19,6 +19,10 @@ typedef void(^BRResultBlock)(void);
 
 /** 选择器标题 */
 @property (nonatomic, strong) NSString *title;
+/** 左边按钮标题 */
+@property (nonatomic, strong) NSString *leftBtnTitle;
+/** 右边按钮标题 */
+@property (nonatomic, strong) NSString *rightBtnTitle;
 
 /** 自定义UI样式（可为空，为nil时是默认样式） */
 @property (nonatomic, strong) BRPickerStyle *pickerStyle;

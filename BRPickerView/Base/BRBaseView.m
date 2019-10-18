@@ -89,7 +89,7 @@
         _leftBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
         _leftBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
         [_leftBtn setTitleColor:self.pickerStyle.leftTextColor forState:UIControlStateNormal];
-        [_leftBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [_leftBtn setTitle:self.leftBtnTitle forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
         // 设置按钮圆角或边框
         if (self.pickerStyle.leftBorderStyle == BRBorderStyleSolid) {
@@ -114,7 +114,7 @@
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
         _rightBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
         [_rightBtn setTitleColor:self.pickerStyle.rightTextColor forState:UIControlStateNormal];
-        [_rightBtn setTitle:@"确定" forState:UIControlStateNormal];
+        [_rightBtn setTitle:self.rightBtnTitle forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
         // 设置按钮圆角或边框
         if (self.pickerStyle.rightBorderStyle == BRBorderStyleSolid) {
@@ -244,6 +244,20 @@
         _pickerStyle = [[BRPickerStyle alloc]init];
     }
     return _pickerStyle;
+}
+
+- (NSString *)leftBtnTitle {
+    if (!_leftBtnTitle) {
+        _leftBtnTitle = @"取消";
+    }
+    return _leftBtnTitle;
+}
+
+- (NSString *)rightBtnTitle {
+    if (!_rightBtnTitle) {
+        _rightBtnTitle = @"确定";
+    }
+    return _rightBtnTitle;
 }
 
 - (void)dealloc {
