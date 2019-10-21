@@ -199,7 +199,8 @@
             CGRect rect = self.alertView.frame;
             rect.origin.y = SCREEN_HEIGHT;
             self.alertView.frame = rect;
-            // 浮现动画
+            // 弹出动画
+            self.maskView.alpha = 1;
             [UIView animateWithDuration:0.3 animations:^{
                 CGRect rect = self.alertView.frame;
                 rect.origin.y -= kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
