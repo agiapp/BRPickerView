@@ -250,9 +250,12 @@
 // 自定义 pickerView 的 label
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
-    //设置分割线的颜色
-    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = self.pickerStyle.separatorColor;
-    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = self.pickerStyle.separatorColor;
+    // 设置分割线的颜色
+    for (UIView *subView in pickerView.subviews) {
+        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
+            subView.backgroundColor = self.pickerStyle.separatorColor;
+        }
+    }
     
     UILabel *label = [[UILabel alloc]init];
     label.backgroundColor = [UIColor clearColor];
