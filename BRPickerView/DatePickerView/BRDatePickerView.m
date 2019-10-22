@@ -445,6 +445,31 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CHS_CN"];
         // textColor 隐藏属性，使用KVC赋值
         [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
+        
+/*
+        // 通过 NSInvocation 来改变默认选中字体的状态
+        SEL selector= NSSelectorFromString(@"setHighlightsToday:");
+        // 创建NSInvocation
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDatePicker instanceMethodSignatureForSelector:selector]];
+        BOOL no = NO;
+        [invocation setSelector:selector];
+        [invocation setArgument:&no atIndex:2];
+        // 让invocation执行setHighlightsToday方法
+        [invocation invokeWithTarget:_datePicker];
+        
+        
+        // 设置分割线颜色
+        for (UIView *view in _datePicker.subviews) {
+            if ([view isKindOfClass:[UIView class]]) {
+                for (UIView *subView in view.subviews) {
+                    if (subView.frame.size.height < 1) {
+                        subView.backgroundColor = self.pickerStyle.separatorColor;
+                    }
+                }
+            }
+        }
+ */
+        
         // 设置时间范围
         if (self.minDate) {
             _datePicker.minimumDate = self.minDate;
@@ -516,10 +541,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - UIPickerViewDelegate
 // 3.设置 pickerView 的 显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    
     // 设置分割线的颜色
-    ((UIView *)[pickerView.subviews objectAtIndex:1]).backgroundColor = self.pickerStyle.separatorColor;
-    ((UIView *)[pickerView.subviews objectAtIndex:2]).backgroundColor = self.pickerStyle.separatorColor;
+    for (UIView *subView in pickerView.subviews) {
+        // 获取分割线view
+        if (subView.frame.size.height <= 1) {
+            subView.backgroundColor = self.pickerStyle.separatorColor;
+        }
+    }
     
     UILabel *label = (UILabel *)view;
     if (!label) {
@@ -641,7 +669,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 4) {
             _minuteIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%@-%02ld-%02ld %02ld:%02ld", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue], [self.hourArr[_hourIndex] integerValue], [self.minuteArr[_minuteIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%@-%02d-%02d %02d:%02d", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] intValue], [self.dayArr[_dayIndex] intValue], [self.hourArr[_hourIndex] intValue], [self.minuteArr[_minuteIndex] intValue]];
     } else if (self.showType == BRDatePickerModeMDHM) {
         if (component == 0) {
             _monthIndex = row;
@@ -661,7 +689,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 3) {
             _minuteIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%02ld-%02ld %02ld:%02ld", [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue], [self.hourArr[_hourIndex] integerValue], [self.minuteArr[_minuteIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%02d-%02d %02d:%02d", [self.monthArr[_monthIndex] intValue], [self.dayArr[_dayIndex] intValue], [self.hourArr[_hourIndex] intValue], [self.minuteArr[_minuteIndex] intValue]];
     } else if (self.showType == BRDatePickerModeYMD) {
         if (component == 0) {
             _yearIndex = row;
@@ -675,7 +703,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 2) {
             _dayIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%@-%02ld-%02ld", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%@-%02d-%02d", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] intValue], [self.dayArr[_dayIndex] intValue]];
     } else if (self.showType == BRDatePickerModeYM) {
         if (component == 0) {
             _yearIndex = row;
@@ -684,7 +712,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             _monthIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%@-%02ld", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%@-%02d", self.yearArr[_yearIndex], [self.monthArr[_monthIndex] intValue]];
     } else if (self.showType == BRDatePickerModeY) {
         if (component == 0) {
             _yearIndex = row;
@@ -698,7 +726,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             _dayIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%02ld-%02ld", [self.monthArr[_monthIndex] integerValue], [self.dayArr[_dayIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%02d-%02d", [self.monthArr[_monthIndex] intValue], [self.dayArr[_dayIndex] intValue]];
     } else if (self.showType == BRDatePickerModeHM) {
         if (component == 0) {
             _hourIndex = row;
@@ -707,7 +735,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             _minuteIndex = row;
         }
-        selectDateValue = [NSString stringWithFormat:@"%02ld:%02ld", [self.hourArr[_hourIndex] integerValue], [self.minuteArr[_minuteIndex] integerValue]];
+        selectDateValue = [NSString stringWithFormat:@"%02d:%02d", [self.hourArr[_hourIndex] intValue], [self.minuteArr[_minuteIndex] intValue]];
     }
     return [NSDate br_getDate:selectDateValue format:self.selectDateFormatter];
 }
@@ -824,3 +852,4 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 @end
+
