@@ -541,10 +541,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - UIPickerViewDelegate
 // 3.设置 pickerView 的 显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    
     // 设置分割线的颜色
     for (UIView *subView in pickerView.subviews) {
-        // 获取分割线view
-        if (subView.frame.size.height <= 1) {
+        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
             subView.backgroundColor = self.pickerStyle.separatorColor;
         }
     }
