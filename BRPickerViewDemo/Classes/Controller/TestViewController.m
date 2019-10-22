@@ -306,7 +306,7 @@
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"出生年月日";
             datePickerView.defaultSelValue = textField.text;
-            datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
+            //datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
             datePickerView.maxDate = [NSDate date];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSString *selectValue) {
