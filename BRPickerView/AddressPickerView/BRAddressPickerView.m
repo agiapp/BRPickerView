@@ -380,10 +380,10 @@
     if (component == 0) {
         BRProvinceModel *model = self.provinceModelArr[row];
         label.text = model.name;
-    }else if (component == 1){
+    } else if (component == 1) {
         BRCityModel *model = self.cityModelArr[row];
         label.text = model.name;
-    }else if (component == 2){
+    } else if (component == 2) {
         BRAreaModel *model = self.areaModelArr[row];
         label.text = model.name;
     }
@@ -409,7 +409,7 @@
                 [self.pickerView reloadComponent:1];
                 [self.pickerView selectRow:0 inComponent:1 animated:YES];
                 self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
-                self.selectCityModel = self.cityModelArr[0];
+                self.selectCityModel = self.cityModelArr.count > 0 ? self.cityModelArr[0] : nil;
                 self.selectAreaModel = nil;
             }
                 break;
@@ -422,16 +422,8 @@
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
                 self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
-                if (self.cityModelArr.count > 0) {
-                    self.selectCityModel = self.cityModelArr[0];
-                } else {
-                    self.selectCityModel = nil;
-                }
-                if (self.areaModelArr.count > 0) {
-                    self.selectAreaModel = self.areaModelArr[0];
-                } else {
-                    self.selectAreaModel = nil;
-                }
+                self.selectCityModel = self.cityModelArr.count > 0 ? self.cityModelArr[0] : nil;
+                self.selectAreaModel = self.areaModelArr.count > 0 ? self.areaModelArr[0] : nil;
             }
                 break;
             default:
@@ -454,11 +446,7 @@
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
                 self.selectCityModel = self.cityModelArr[_cityIndex];
-                if (self.areaModelArr.count > 0) {
-                    self.selectAreaModel = self.areaModelArr[0];
-                } else {
-                    self.selectAreaModel = nil;
-                }
+                self.selectAreaModel = self.areaModelArr.count > 0 ? self.areaModelArr[0] : nil;
             }
                 break;
             default:
