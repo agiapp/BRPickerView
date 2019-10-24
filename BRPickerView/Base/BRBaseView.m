@@ -184,14 +184,17 @@
 
 #pragma mark - 弹出视图方法
 - (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
-    [self initUI];
     if (view) {
-        self.maskView.hidden = YES;
-        self.titleBarView.hidden = YES;
         self.frame = view.bounds;
+        self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self addSubview:self.alertView];
         self.alertView.frame = view.bounds;
         [view addSubview:self];
+        
     } else {
+        
+        [self initUI];
+        
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         [keyWindow addSubview:self];
         if (animation) {
