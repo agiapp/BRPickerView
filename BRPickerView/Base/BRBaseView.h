@@ -30,8 +30,7 @@ typedef void(^BRResultBlock)(void);
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRCancelBlock cancelBlock;
 
-
-/** 选择结果的回调（框架内部使用，不推荐使用） */
+/** 选择结果的回调（框架内部使用） */
 @property (nonatomic, copy) BRResultBlock doneBlock;
 
 
@@ -44,8 +43,7 @@ typedef void(^BRResultBlock)(void);
 - (void)removePickerFromView:(UIView *)view;
 
 
-
-/// 设置选择器视图（框架内部使用，不推荐使用）
+/// 添加 pickerView 到 alertView（框架内部使用）
 /// @param pickerView 选择器视图
 /// @param view 容器视图
 - (void)setPickerView:(UIView *)pickerView toView:(UIView *)view;

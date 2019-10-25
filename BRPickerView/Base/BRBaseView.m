@@ -187,12 +187,8 @@
     if (view) {
         self.frame = view.bounds;
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self addSubview:self.alertView];
-        self.alertView.frame = view.bounds;
         [view addSubview:self];
-        
     } else {
-        
         [self initUI];
         
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -231,10 +227,11 @@
 - (void)setPickerView:(UIView *)pickerView toView:(UIView *)view {
     if (view) {
         self.frame = view.bounds;
-        self.alertView.frame = view.bounds;
         pickerView.frame = view.bounds;
+        [self addSubview:pickerView];
+    } else {
+        [self.alertView addSubview:pickerView];
     }
-    [self.alertView addSubview:pickerView];
 }
 
 - (BRPickerStyle *)pickerStyle {

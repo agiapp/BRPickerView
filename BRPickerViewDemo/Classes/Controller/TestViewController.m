@@ -79,11 +79,11 @@
         
         // 1.创建选择器容器视图
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 80, SCREEN_WIDTH - 60, 200)];
-        containerView.backgroundColor = [UIColor clearColor];
+        containerView.backgroundColor = [UIColor redColor];
         [_footerView addSubview:containerView];
         
         // 2.创建选择器
-        BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
+        BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeCity];
         addressPickerView.isAutoSelect = YES;
         addressPickerView.defaultSelectedArr = [self.titleLabel.text componentsSeparatedByString:@" "];
         addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
