@@ -25,10 +25,13 @@ Pod::Spec.new do |s|
   # GitHib下载地址和版本
   s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => s.version.to_s }
 
+
+  s.public_header_files = 'BRPickerView/BRPickerView.h'
+    
   # 本地框架源文件的位置（包含所有文件）
   #s.source_files  = "BRPickerView/**/*.{h,m}"
   # 一级目录（pod库中根目录所含文件）
-  s.source_files  = "BRPickerView/*.h"
+  s.source_files  = "BRPickerView/BRPickerView.h"
   
   # 二级目录（根目录是s，使用s.subspec设置子目录，这里设置子目录为ss）
   s.subspec 'Base' do |ss|
@@ -36,14 +39,17 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'DatePickerView' do |ss|
+    ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/DatePickerView/*.{h,m}'
   end
   
   s.subspec 'AddressPickerView' do |ss|
+    ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/AddressPickerView/*.{h,m}'
   end
   
   s.subspec 'StringPickerView' do |ss|
+    ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/StringPickerView/*.{h,m}'
   end
   
