@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   # 框架支持的平台和版本
   s.platform     = :ios, "8.0"
 
-  # GitHib下载地址和版本
+  # GitHub下载地址和版本
   s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => s.version.to_s }
 
 
