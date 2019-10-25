@@ -224,6 +224,11 @@
     }
 }
 
+#pragma mark - 添加子视图到选择器上
+- (void)addSubViewToPicker:(UIView *)subView {
+    
+}
+
 - (void)setPickerView:(UIView *)pickerView toView:(UIView *)view {
     if (view) {
         self.frame = view.bounds;

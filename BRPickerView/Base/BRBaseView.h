@@ -34,13 +34,19 @@ typedef void(^BRResultBlock)(void);
 @property (nonatomic, copy) BRResultBlock doneBlock;
 
 
-/// 添加选择器到指定容器视图上
+/// 扩展一：添加选择器到指定容器视图上
+/// 应用场景：可以将选择器添加到任何视图上，也支持重构选择器视图弹框更多的样式
 /// @param view 容器视图
 - (void)addPickerToView:(UIView *)view;
 
 /// 从指定容器视图上移除选择器
 /// @param view 容器视图
 - (void)removePickerFromView:(UIView *)view;
+
+/// 扩展二：添加子视图到选择器上
+/// 应用场景：可以添加一些固定的标题、数值的单位等到选择器中间任意位置
+/// @param subView 子视图
+- (void)addSubViewToPicker:(UIView *)subView;
 
 
 /// 添加 pickerView 到 alertView（框架内部使用）

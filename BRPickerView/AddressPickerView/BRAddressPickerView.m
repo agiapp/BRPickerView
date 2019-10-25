@@ -492,6 +492,11 @@
     [super addPickerToView:view];
 }
 
+#pragma mark - 重写父类方法
+- (void)addSubViewToPicker:(UIView *)subView {
+    [self.pickerView addSubview:subView];
+}
+
 #pragma mark - 弹出选择器视图
 - (void)show {
     [self addPickerToView:nil];
