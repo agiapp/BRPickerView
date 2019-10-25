@@ -44,7 +44,7 @@
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
     NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
     if (addressPickerView->_isDataSourceValid) {
-        [addressPickerView showWithAnimation:YES toView:nil];
+        [addressPickerView show];
     }
 }
 
@@ -77,7 +77,7 @@
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType dataSource:dataSource defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
     if (addressPickerView->_isDataSourceValid) {
-        [addressPickerView showWithAnimation:YES toView:nil];
+        [addressPickerView show];
     }
 }
 
@@ -398,7 +398,7 @@
         switch (self.showType) {
             case BRAddressPickerModeProvince:
             {
-                self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
+                self.selectProvinceModel = self.provinceModelArr.count > _provinceIndex ? self.provinceModelArr[_provinceIndex] : nil;
                 self.selectCityModel = nil;
                 self.selectAreaModel = nil;
             }
@@ -408,7 +408,7 @@
                 self.cityModelArr = [self getCityModelArray:_provinceIndex];
                 [self.pickerView reloadComponent:1];
                 [self.pickerView selectRow:0 inComponent:1 animated:YES];
-                self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
+                self.selectProvinceModel = self.provinceModelArr.count > _provinceIndex ? self.provinceModelArr[_provinceIndex] : nil;
                 self.selectCityModel = self.cityModelArr.count > 0 ? self.cityModelArr[0] : nil;
                 self.selectAreaModel = nil;
             }
@@ -421,7 +421,7 @@
                 [self.pickerView selectRow:0 inComponent:1 animated:YES];
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
-                self.selectProvinceModel = self.provinceModelArr[_provinceIndex];
+                self.selectProvinceModel = self.provinceModelArr.count > _provinceIndex ? self.provinceModelArr[_provinceIndex] : nil;
                 self.selectCityModel = self.cityModelArr.count > 0 ? self.cityModelArr[0] : nil;
                 self.selectAreaModel = self.areaModelArr.count > 0 ? self.areaModelArr[0] : nil;
             }
@@ -436,7 +436,7 @@
         switch (self.showType) {
             case BRAddressPickerModeCity:
             {
-                self.selectCityModel = self.cityModelArr[_cityIndex];
+                self.selectCityModel = self.cityModelArr.count > _cityIndex ? self.cityModelArr[_cityIndex] : nil;
                 self.selectAreaModel = nil;
             }
                 break;
@@ -445,7 +445,7 @@
                 self.areaModelArr = [self getAreaModelArray:_provinceIndex cityIndex:_cityIndex];
                 [self.pickerView reloadComponent:2];
                 [self.pickerView selectRow:0 inComponent:2 animated:YES];
-                self.selectCityModel = self.cityModelArr[_cityIndex];
+                self.selectCityModel = self.cityModelArr.count > _cityIndex ? self.cityModelArr[_cityIndex] : nil;
                 self.selectAreaModel = self.areaModelArr.count > 0 ? self.areaModelArr[0] : nil;
             }
                 break;
@@ -457,7 +457,7 @@
         // 保存选择的地区的索引
         _areaIndex = row;
         if (self.showType == BRAddressPickerModeArea) {
-            self.selectAreaModel = self.areaModelArr[_areaIndex];
+            self.selectAreaModel = self.areaModelArr.count > _areaIndex ? self.areaModelArr[_areaIndex] : nil;
         }
     }
     
@@ -474,8 +474,8 @@
     return 35.0f * kScaleFit;
 }
 
-#pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
+#pragma mark - 重写父类方法
+- (void)addPickerToView:(UIView *)view {
     // 添加地址选择器
     [self setPickerView:self.pickerView toView:view];
     [self loadData];
@@ -483,33 +483,23 @@
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
-        [weakSelf dismissWithAnimation:animation toView:view];
+        [weakSelf removePickerFromView:view];
         if (weakSelf.resultBlock) {
            weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
         }
     };
     
-    [super showWithAnimation:animation toView:view];
+    [super addPickerToView:view];
 }
 
 #pragma mark - 弹出选择器视图
 - (void)show {
-    [self showWithAnimation:YES toView:nil];
+    [self addPickerToView:nil];
 }
 
 #pragma mark - 关闭选择器视图
 - (void)dismiss {
-    [self dismissWithAnimation:YES toView:nil];
-}
-
-#pragma mark - 添加选择器到指定容器视图上
-- (void)addPickerToView:(UIView *)view {
-    [self showWithAnimation:NO toView:view];
-}
-
-#pragma mark - 从指定容器视图上移除选择器
-- (void)removePickerFromView:(UIView *)view {
-    [self dismissWithAnimation:NO toView:view];
+    [self removePickerFromView:nil];
 }
 
 - (NSArray *)provinceModelArr {

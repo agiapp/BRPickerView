@@ -34,15 +34,16 @@ typedef void(^BRResultBlock)(void);
 /** 选择结果的回调（框架内部使用，不推荐使用） */
 @property (nonatomic, copy) BRResultBlock doneBlock;
 
-/// 弹出视图方法（框架内部使用，不推荐使用）
-/// @param animation 是否开启动画
-/// @param view 容器视图（可为nil，不传默认就添加到 keyWindow 上）
-- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view;
 
-/// 关闭视图方法（框架内部使用，不推荐使用）
-/// @param animation 是否开启动画
-/// @param view 容器视图（可为nil，不传默认就添加到 keyWindow 上）
-- (void)dismissWithAnimation:(BOOL)animation toView:(UIView *)view;
+/// 添加选择器到指定容器视图上
+/// @param view 容器视图
+- (void)addPickerToView:(UIView *)view;
+
+/// 从指定容器视图上移除选择器
+/// @param view 容器视图
+- (void)removePickerFromView:(UIView *)view;
+
+
 
 /// 设置选择器视图（框架内部使用，不推荐使用）
 /// @param pickerView 选择器视图

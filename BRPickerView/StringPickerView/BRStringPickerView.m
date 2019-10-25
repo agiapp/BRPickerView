@@ -32,7 +32,7 @@
     BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
     NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
     if (strPickerView->_isDataSourceValid) {
-        [strPickerView showWithAnimation:YES toView:nil];
+        [strPickerView show];
     }
 }
 
@@ -57,7 +57,7 @@
     BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
     NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
     if (strPickerView->_isDataSourceValid) {
-        [strPickerView showWithAnimation:YES toView:nil];
+        [strPickerView show];
     }
 }
 
@@ -324,8 +324,8 @@
     
 }
 
-#pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
+#pragma mark - 重写父类方法
+- (void)addPickerToView:(UIView *)view {
     [self handlerDefaultSelectData];
     // 添加字符串选择器
     [self setPickerView:self.pickerView toView:view];
@@ -334,7 +334,7 @@
     self.doneBlock = ^{
         @strongify(self)
         // 点击确定按钮后，执行block回调
-        [self dismissWithAnimation:animation toView:view];
+        [self removePickerFromView:view];
         
         if (!self.isAutoSelect) {
             if (self.showType == BRStringPickerComponentSingle) {
@@ -349,27 +349,17 @@
         }
     };
 
-    [super showWithAnimation:animation toView:view];
+    [super addPickerToView:view];
 }
 
 #pragma mark - 弹出选择器视图
 - (void)show {
-    [self showWithAnimation:YES toView:nil];
+    [self addPickerToView:nil];
 }
 
 #pragma mark - 关闭选择器视图
 - (void)dismiss {
-    [self dismissWithAnimation:YES toView:nil];
-}
-
-#pragma mark - 添加选择器到指定容器视图上
-- (void)addPickerToView:(UIView *)view {
-    [self showWithAnimation:NO toView:view];
-}
-
-#pragma mark - 从指定容器视图上移除选择器
-- (void)removePickerFromView:(UIView *)view {
-    [self dismissWithAnimation:NO toView:view];
+    [self removePickerFromView:nil];
 }
 
 - (NSArray *)dataSourceArr {

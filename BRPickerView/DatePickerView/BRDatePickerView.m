@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                 defaultSelValue:(NSString *)defaultSelValue
                     resultBlock:(BRDateResultBlock)resultBlock {
     BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:nil maxDate:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-    [datePickerView showWithAnimation:YES toView:nil];
+    [datePickerView show];
 }
 
 #pragma mark - 2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                     resultBlock:(BRDateResultBlock)resultBlock
                     cancelBlock:(BRCancelBlock)cancelBlock {
     BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    [datePickerView showWithAnimation:YES toView:nil];
+    [datePickerView show];
 }
 
 #pragma mark - 初始化时间选择器
@@ -765,8 +765,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
+#pragma mark - 重写父类方法
+- (void)addPickerToView:(UIView *)view {
     [self handlerData];
     // 添加时间选择器
     if (self.style == BRDatePickerStyleSystem) {
@@ -785,34 +785,24 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
-        [weakSelf dismissWithAnimation:animation toView:view];
+        [weakSelf removePickerFromView:view];
         if (weakSelf.resultBlock) {
             NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
             weakSelf.resultBlock(selectDateValue);
         }
     };
     
-    [super showWithAnimation:animation toView:view];
+    [super addPickerToView:view];
 }
 
 #pragma mark - 弹出选择器视图
 - (void)show {
-    [self showWithAnimation:YES toView:nil];
+    [self addPickerToView:nil];
 }
 
 #pragma mark - 关闭选择器视图
 - (void)dismiss {
-    [self dismissWithAnimation:YES toView:nil];
-}
-
-#pragma mark - 添加选择器到指定容器视图上
-- (void)addPickerToView:(UIView *)view {
-    [self showWithAnimation:NO toView:view];
-}
-
-#pragma mark - 从指定容器视图上移除选择器
-- (void)removePickerFromView:(UIView *)view {
-    [self dismissWithAnimation:NO toView:view];
+    [self removePickerFromView:nil];
 }
 
 #pragma mark - getter 方法

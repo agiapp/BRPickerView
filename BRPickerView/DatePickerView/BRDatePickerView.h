@@ -75,14 +75,6 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 /// 关闭选择器视图
 - (void)dismiss;
 
-/// 添加选择器到指定容器视图上
-/// @param view 容器视图
-- (void)addPickerToView:(UIView *)view;
-
-/// 从指定容器视图上移除选择器
-/// @param view 容器视图
-- (void)removePickerFromView:(UIView *)view;
-
 
 
 

@@ -161,7 +161,7 @@
 
 #pragma mark - 点击背景遮罩图层事件
 - (void)didTapMaskView:(UITapGestureRecognizer *)sender {
-    [self dismissWithAnimation:YES toView:nil];
+    [self removePickerFromView:nil];
     if (self.cancelBlock) {
         self.cancelBlock();
     }
@@ -169,7 +169,7 @@
 
 #pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
-    [self dismissWithAnimation:YES toView:nil];
+    [self removePickerFromView:nil];
     if (self.cancelBlock) {
         self.cancelBlock();
     }
@@ -182,8 +182,8 @@
     }
 }
 
-#pragma mark - 弹出视图方法
-- (void)showWithAnimation:(BOOL)animation toView:(UIView *)view {
+#pragma mark - 添加视图方法
+- (void)addPickerToView:(UIView *)view {
     if (view) {
         self.frame = view.bounds;
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -197,40 +197,34 @@
         
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         [keyWindow addSubview:self];
-        if (animation) {
-            // 动画前初始位置
+        // 动画前初始位置
+        CGRect rect = self.alertView.frame;
+        rect.origin.y = SCREEN_HEIGHT;
+        self.alertView.frame = rect;
+        // 弹出动画
+        self.maskView.alpha = 1;
+        [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y = SCREEN_HEIGHT;
+            rect.origin.y -= kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
-            // 弹出动画
-            self.maskView.alpha = 1;
-            [UIView animateWithDuration:0.3 animations:^{
-                CGRect rect = self.alertView.frame;
-                rect.origin.y -= kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
-                self.alertView.frame = rect;
-            }];
-        }
+        }];
     }
 }
 
-#pragma mark - 关闭视图方法
-- (void)dismissWithAnimation:(BOOL)animation toView:(UIView *)view {
+#pragma mark - 移除视图方法
+- (void)removePickerFromView:(UIView *)view {
     if (view) {
         [self removeFromSuperview];
     } else {
-        if (animation) {
-            // 关闭动画
-            [UIView animateWithDuration:0.2 animations:^{
-                CGRect rect = self.alertView.frame;
-                rect.origin.y += kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
-                self.alertView.frame = rect;
-                self.maskView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [self removeFromSuperview];
-            }];
-        } else {
+        // 关闭动画
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect rect = self.alertView.frame;
+            rect.origin.y += kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
+            self.alertView.frame = rect;
+            self.maskView.alpha = 0;
+        } completion:^(BOOL finished) {
             [self removeFromSuperview];
-        }
+        }];
     }
 }
 
