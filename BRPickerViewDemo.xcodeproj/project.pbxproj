@@ -214,8 +214,8 @@
 		C5ACE51C1F3D904F0069978B /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				C5A158F11FBD893900B3B3BA /* BRBaseView.h */,
 				459A260A2362F0280048F06D /* BRPickerViewMacro.h */,
+				C5A158F11FBD893900B3B3BA /* BRBaseView.h */,
 				C5A158F01FBD893900B3B3BA /* BRBaseView.m */,
 				451D6C0C234D6AA2004E801F /* BRPickerStyle.h */,
 				451D6C0D234D6AA2004E801F /* BRPickerStyle.m */,
