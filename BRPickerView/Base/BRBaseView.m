@@ -130,7 +130,7 @@
     return _rightBtn;
 }
 
-#pragma mark - 中间标题按钮
+#pragma mark - 中间标题label
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5 + 60 + 2, 0, SCREEN_WIDTH - 2 * (5 + 60 + 2), kTitleBarHeight)];
