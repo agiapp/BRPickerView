@@ -35,18 +35,17 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 
 /** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
 @property (nonatomic, strong) NSArray *defaultSelectedArr;
-/** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */
+
+/** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;
-
 /**
  *  地区数据源（不传默认就获取框架内 BRCity.json 文件的数据）
  *  可以传 JSON数组 或 模型数组(NSArray <BRProvinceModel *>*)，要注意JSON结构与BRCity.json保持一致
  */
 @property (nonatomic, strong) NSArray *dataSourceArr;
-
 
 /// 初始化地址选择器
 /// @param pickerMode 地址选择器类型
@@ -57,6 +56,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 
 /// 关闭选择器视图
 - (void)dismiss;
+
 
 
 

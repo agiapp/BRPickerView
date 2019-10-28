@@ -42,7 +42,6 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  *    多列：... ...
  */
 @property (nonatomic, strong) NSArray *dataSourceArr;
-
 /**
  *  2.设置数据源
  *    直接传plist文件名：NSString类型（如：@"sex.plist"），要带后缀名
@@ -56,7 +55,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
 /** 多列设置默认选择的值 */
 @property (nonatomic, strong) NSArray <NSString *>* selectValueArr;
 
-/** 是否自动选择，即选择完(滚动完)执行结果回调，默认为NO */
+/** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 单列选择结果的回调 */
