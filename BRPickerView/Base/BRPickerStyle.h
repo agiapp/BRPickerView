@@ -26,6 +26,9 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 背景遮罩视图颜色 */
 @property (nonatomic, strong) UIColor *maskColor;
 
+/** 选择器弹框顶部左右圆角的半径 */
+@property (nonatomic, assign) NSInteger topCornerRadius;
+
 /** 标题栏背景颜色 */
 @property (nonatomic, strong) UIColor *titleBarColor;
 /** 标题栏下边框线颜色 */
@@ -35,6 +38,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIColor *leftColor;
 /** 左边取消按钮文本颜色 */
 @property (nonatomic, strong) UIColor *leftTextColor;
+/** 左边取消按钮文本字体 */
+@property (nonatomic, strong) UIFont *leftTextFont;
 /** 左边取消按钮边框样式 */
 @property (nonatomic, assign) BRBorderStyle leftBorderStyle;
 
@@ -45,6 +50,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIColor *rightColor;
 /** 右边确定按钮文本颜色 */
 @property (nonatomic, strong) UIColor *rightTextColor;
+/** 右边确定按钮文本字体 */
+@property (nonatomic, strong) UIFont *rightTextFont;
 /** 右边确定按钮边框样式 */
 @property (nonatomic, assign) BRBorderStyle rightBorderStyle;
 

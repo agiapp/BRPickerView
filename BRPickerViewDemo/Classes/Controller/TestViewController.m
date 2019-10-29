@@ -312,6 +312,15 @@
             datePickerView.resultBlock = ^(NSString *selectValue) {
                 textField.text = self.infoModel.birthdayStr = selectValue;
             };
+            
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.topCornerRadius = 16.0f;
+            customStyle.titleLineColor = [UIColor clearColor];
+            customStyle.rightTextColor = [UIColor grayColor];
+            datePickerView.pickerStyle = customStyle;
+            datePickerView.leftBtnTitle = @"";
+            datePickerView.rightBtnTitle = @"      ✕";
+            
             [datePickerView show];
             
         }

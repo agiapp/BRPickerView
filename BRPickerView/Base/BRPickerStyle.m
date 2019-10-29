@@ -56,6 +56,13 @@
     return _leftTextColor;
 }
 
+- (UIFont *)leftTextFont {
+    if (!_leftTextFont) {
+        _leftTextFont = [UIFont systemFontOfSize:16.0f];
+    }
+    return _leftTextFont;
+}
+
 - (BRBorderStyle)leftBorderStyle {
     if (!_leftBorderStyle) {
         _leftBorderStyle = BRBorderStyleNone;
@@ -82,6 +89,13 @@
         _rightTextColor = kDefaultTextColor;
     }
     return _rightTextColor;
+}
+
+- (UIFont *)rightTextFont {
+    if (!_rightTextFont) {
+        _rightTextFont = [UIFont systemFontOfSize:16.0f];
+    }
+    return _rightTextFont;
 }
 
 - (BRBorderStyle)rightBorderStyle {

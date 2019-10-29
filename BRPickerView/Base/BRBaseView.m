@@ -65,6 +65,10 @@
     if (!_alertView) {
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kTitleBarHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, kTitleBarHeight + kPickerHeight + BR_BOTTOM_MARGIN)];
         _alertView.backgroundColor = self.pickerStyle.pickerColor;
+        if (self.pickerStyle.topCornerRadius > 0) {
+            _alertView.layer.cornerRadius = self.pickerStyle.topCornerRadius;
+            _alertView.layer.masksToBounds = YES;
+        }
         _alertView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
     return _alertView;
@@ -87,7 +91,7 @@
         _leftBtn.frame = CGRectMake(5, 8, 60, 28);
         _leftBtn.backgroundColor = self.pickerStyle.leftColor;;
         _leftBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-        _leftBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
+        _leftBtn.titleLabel.font = self.pickerStyle.leftTextFont;
         [_leftBtn setTitleColor:self.pickerStyle.leftTextColor forState:UIControlStateNormal];
         [_leftBtn setTitle:self.leftBtnTitle forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -112,7 +116,7 @@
         _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - 65, 8, 60, 28);
         _rightBtn.backgroundColor = self.pickerStyle.rightColor;
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
-        _rightBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
+        _rightBtn.titleLabel.font = self.pickerStyle.rightTextFont;
         [_rightBtn setTitleColor:self.pickerStyle.rightTextColor forState:UIControlStateNormal];
         [_rightBtn setTitle:self.rightBtnTitle forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
