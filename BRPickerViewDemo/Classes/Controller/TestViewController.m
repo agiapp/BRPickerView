@@ -309,6 +309,7 @@
             //datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
             datePickerView.maxDate = [NSDate date];
             datePickerView.isAutoSelect = YES;
+            datePickerView.hiddenDateUnit = YES;
             datePickerView.resultBlock = ^(NSString *selectValue) {
                 textField.text = self.infoModel.birthdayStr = selectValue;
             };
@@ -412,6 +413,7 @@
             // 自定义弹框样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
+            customStyle.separatorColor = [UIColor clearColor];
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
@@ -445,6 +447,7 @@
             BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
             customStyle.pickerTextColor = [UIColor redColor];
             customStyle.separatorColor = [UIColor redColor];
+            customStyle.titleTextColor = [UIColor redColor];
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
