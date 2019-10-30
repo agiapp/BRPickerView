@@ -313,10 +313,12 @@
                 textField.text = self.infoModel.birthdayStr = selectValue;
             };
             
+            // 自定义弹框样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.topCornerRadius = 16.0f;
             customStyle.titleLineColor = [UIColor clearColor];
-            customStyle.rightTextColor = [UIColor grayColor];
+            customStyle.rightTextColor = [UIColor lightGrayColor];
+            customStyle.rightTextFont = [UIFont systemFontOfSize:20.0f];
             datePickerView.pickerStyle = customStyle;
             datePickerView.leftBtnTitle = @"";
             datePickerView.rightBtnTitle = @"      ✕";
@@ -341,17 +343,13 @@
             datePickerView.minDate = [NSDate br_setHour:8 minute:10];
             datePickerView.maxDate = [NSDate br_setHour:20 minute:35];
             datePickerView.isAutoSelect = YES;
-            
-            // 自定义主题样式
-            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
-            customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
-            customStyle.pickerTextColor = [UIColor redColor];
-            customStyle.separatorColor = [UIColor redColor];
-            datePickerView.pickerStyle = customStyle;
-            
             datePickerView.resultBlock = ^(NSString *selectValue) {
                 textField.text = self.infoModel.birthdayStr = selectValue;
             };
+            
+            // 自定义弹框样式
+            datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor darkGrayColor]];
+            
             [datePickerView show];
             
         }
@@ -378,13 +376,13 @@
             addressPickerView.title = @"请选择地区";
             addressPickerView.defaultSelectedArr = [textField.text componentsSeparatedByString:@" "];
             addressPickerView.isAutoSelect = YES;
-                        
-            // 自定义主题样式（适配深色模式）
-            addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
-            
             addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
                 textField.text = self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
             };
+            
+            // 自定义弹框样式（适配深色模式）
+            addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
+            
             [addressPickerView show];
             
         }
@@ -410,6 +408,12 @@
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 textField.text = self.infoModel.educationStr = resultModel.selectValue;
             };
+            
+            // 自定义弹框样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
+            stringPickerView.pickerStyle = customStyle;
+            
             [stringPickerView show];
             
         }
@@ -436,6 +440,12 @@
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 textField.text = self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue];
             };
+            
+            // 自定义弹框样式
+            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
+            customStyle.pickerTextColor = [UIColor redColor];
+            customStyle.separatorColor = [UIColor redColor];
+            stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
             
