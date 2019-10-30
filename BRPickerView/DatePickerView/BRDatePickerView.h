@@ -39,12 +39,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeHM
 };
 
-typedef NS_ENUM(NSInteger, BRDateUnitType) {
-    BRDateUnitTypeAll = 0,
-    BRDateUnitTypeOnlyCenter,
-    BRDateUnitTypeNone
-};
-
 typedef void(^BRDateResultBlock)(NSString *selectValue);
 
 @interface BRDatePickerView : BRBaseView
@@ -70,8 +64,8 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 /** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
-/** 日期单位的显示类型 */
-@property (nonatomic, assign) BRDateUnitType unitType;
+/** 隐藏日期单位，默认为NO */
+@property (nonatomic, assign) BOOL hiddenDateUnit;
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;

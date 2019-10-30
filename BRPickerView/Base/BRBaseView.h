@@ -37,7 +37,7 @@ typedef void(^BRResultBlock)(void);
  *  设置语言（不设置或为nil时，将随系统的语言自动改变）
  *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
  */
-@property(nonatomic, copy) NSString *language;
+@property(nonatomic, strong) NSString *language;
 
 
 /// 扩展一：添加选择器到指定容器视图上

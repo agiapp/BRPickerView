@@ -442,8 +442,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
-        // 设置该UIDatePicker的国际化Locale，以简体中文习惯显示日期，UIDatePicker控件默认使用iOS系统的国际化Locale
-        _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"zh_CHS_CN"];
+        // 设置该UIDatePicker的国际化Locale
+        if (self.language && self.language.length > 0) {
+            _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.language];
+        }
         // textColor 隐藏属性，使用KVC赋值
         [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
         
@@ -853,35 +855,35 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 - (NSString *)getYearUnit {
-    if (self.unitType == BRDateUnitTypeAll) {
+    if (!self.hiddenDateUnit) {
         return [NSBundle br_localizedStringForKey:@"年" language:self.language];
     }
     return @"";
 }
 
 - (NSString *)getMonthUnit {
-    if (self.unitType == BRDateUnitTypeAll) {
+    if (!self.hiddenDateUnit) {
         return [NSBundle br_localizedStringForKey:@"月" language:self.language];
     }
     return @"";
 }
 
 - (NSString *)getDayUnit {
-    if (self.unitType == BRDateUnitTypeAll) {
+    if (!self.hiddenDateUnit) {
         return [NSBundle br_localizedStringForKey:@"日" language:self.language];
     }
     return @"";
 }
 
 - (NSString *)getHourUnit {
-    if (self.unitType == BRDateUnitTypeAll) {
+    if (!self.hiddenDateUnit) {
         return [NSBundle br_localizedStringForKey:@"时" language:self.language];
     }
     return @"";
 }
 
 - (NSString *)getMinuteUnit {
-    if (self.unitType == BRDateUnitTypeAll) {
+    if (!self.hiddenDateUnit) {
         return [NSBundle br_localizedStringForKey:@"分" language:self.language];
     }
     return @"";
