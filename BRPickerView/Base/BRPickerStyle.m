@@ -77,6 +77,13 @@
     return _titleTextColor;
 }
 
+- (UIFont *)titleTextFont {
+    if (!_titleTextFont) {
+        _titleTextFont = [UIFont systemFontOfSize:15.0f];
+    }
+    return _titleTextFont;
+}
+
 - (UIColor *)rightColor {
     if (!_rightColor) {
         _rightColor = [UIColor clearColor];

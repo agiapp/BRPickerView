@@ -10,6 +10,7 @@
 #import "BRBaseView.h"
 #import "BRResultModel.h"
 
+/// 字符串选择器类型
 typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     /** 单列字符串选择 */
     BRStringPickerComponentSingle = 1,

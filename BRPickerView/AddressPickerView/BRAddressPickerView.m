@@ -9,6 +9,7 @@
 
 #import "BRAddressPickerView.h"
 #import "BRPickerViewMacro.h"
+#import "NSBundle+BRPickerView.h"
 
 @interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
@@ -130,20 +131,7 @@
         }
     } else {
         // 如果外部没有传入地区数据源，就使用本地的数据源
-        /*
-            先拿到最外面的 bundle。
-            对 framework 链接方式来说就是 framework 的 bundle 根目录，
-            对静态库链接方式来说就是 target client 的 main bundle，
-            然后再去找下面名为 BRPickerView 的 bundle 对象。
-         */
-        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-        NSURL *url = [bundle URLForResource:@"BRPickerView" withExtension:@"bundle"];
-        NSBundle *pickerViewBundle = [NSBundle bundleWithURL:url];
-        
-        // 获取本地文件
-        NSString *filePath = [pickerViewBundle pathForResource:@"BRCity" ofType:@"json"];
-        NSData *data = [NSData dataWithContentsOfFile:filePath];
-        NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSArray *dataSource = [NSBundle br_addressJsonArray];
         
         if (!dataSource || dataSource.count == 0) {
             _isDataSourceValid = NO;

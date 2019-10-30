@@ -10,6 +10,7 @@
 #import "BRBaseView.h"
 #import "BRAddressModel.h"
 
+/// 地址选择器类型
 typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
     /** 显示【省市区】（默认） */
     BRAddressPickerModeArea = 1,

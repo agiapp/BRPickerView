@@ -33,6 +33,12 @@ typedef void(^BRResultBlock)(void);
 /** 选择结果的回调（框架内部使用） */
 @property (nonatomic, copy) BRResultBlock doneBlock;
 
+/**
+ *  设置语言（不设置或为nil时，将随系统的语言自动改变）
+ *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
+ */
+@property(nonatomic, copy) NSString *language;
+
 
 /// 扩展一：添加选择器到指定容器视图上
 /// 应用场景：可将选择器（picker）添加到任何视图（UIView）上，也支持自定义更多的弹框样式

@@ -9,6 +9,7 @@
 
 #import "BRBaseView.h"
 #import "BRPickerViewMacro.h"
+#import "NSBundle+BRPickerView.h"
 
 @interface BRBaseView ()
 // 遮罩背景视图
@@ -140,9 +141,10 @@
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5 + 60 + 2, 0, SCREEN_WIDTH - 2 * (5 + 60 + 2), kTitleBarHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
-        _titleLabel.font = [UIFont systemFontOfSize:15.0f];
-        _titleLabel.textColor = [self.pickerStyle.titleTextColor colorWithAlphaComponent:0.8f];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.font = self.pickerStyle.titleTextFont;
+        _titleLabel.textColor = self.pickerStyle.titleTextColor;
+        _titleLabel.text = self.title;
     }
     return _titleLabel;
 }
@@ -156,11 +158,6 @@
         [self.alertView addSubview:_lineView];
     }
     return _lineView;
-}
-
-#pragma mark - setter方法
-- (void)setTitle:(NSString *)title {
-    self.titleLabel.text = title;
 }
 
 #pragma mark - 点击背景遮罩图层事件
@@ -252,14 +249,14 @@
 
 - (NSString *)leftBtnTitle {
     if (!_leftBtnTitle) {
-        _leftBtnTitle = @"取消";
+        _leftBtnTitle = [NSBundle br_localizedStringForKey:@"取消" language:self.language];
     }
     return _leftBtnTitle;
 }
 
 - (NSString *)rightBtnTitle {
     if (!_rightBtnTitle) {
-        _rightBtnTitle = @"确定";
+        _rightBtnTitle = [NSBundle br_localizedStringForKey:@"确定" language:self.language];
     }
     return _rightBtnTitle;
 }

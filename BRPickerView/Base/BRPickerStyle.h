@@ -45,6 +45,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 中间标题文本颜色 */
 @property (nonatomic, strong) UIColor *titleTextColor;
+/** 中间标题文本字体 */
+@property (nonatomic, strong) UIFont *titleTextFont;
 
 /** 右边确定按钮背景颜色 */
 @property (nonatomic, strong) UIColor *rightColor;
@@ -61,7 +63,6 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIColor *separatorColor;
 /** picker 中间选择文本颜色 */
 @property (nonatomic, strong) UIColor *pickerTextColor;
-
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式
