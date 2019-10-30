@@ -11,6 +11,7 @@
 
 @implementation NSBundle (BRPickerView)
 
+#pragma mark - 获取 BRPickerView.bundle
 + (instancetype)br_pickerBundle {
     static NSBundle *pickerBundle = nil;
     if (pickerBundle == nil) {
@@ -27,17 +28,19 @@
     return pickerBundle;
 }
 
+#pragma mark - 获取城市JSON数据
 + (NSArray *)br_addressJsonArray {
-    static NSArray *dataSource = nil;
-    if (dataSource == nil) {
+    static NSArray *cityArray = nil;
+    if (cityArray == nil) {
         // 获取本地JSON文件
         NSString *filePath = [[self br_pickerBundle] pathForResource:@"BRCity" ofType:@"json"];
         NSData *data = [NSData dataWithContentsOfFile:filePath];
-        dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        cityArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     }
-    return dataSource;
+    return cityArray;
 }
 
+#pragma mark - 获取国际化后的文本
 + (NSString *)br_localizedStringForKey:(NSString *)key language:(NSString *)language {
     return [self br_localizedStringForKey:key value:nil language:language];
 }
@@ -45,7 +48,7 @@
 + (NSString *)br_localizedStringForKey:(NSString *)key value:(NSString *)value language:(NSString *)language {
     static NSBundle *bundle = nil;
     if (bundle == nil) {
-        // 如果配置中没有配置语言，将随系统的语言自动改变
+        // 如果没有手动设置语言，将随系统的语言自动改变
         if (!language) {
             // 系统默认语言
             language = [NSLocale preferredLanguages].firstObject;
@@ -63,10 +66,11 @@
             language = @"en";
         }
         
-        // 从BRPickerView.bundle中查找资源
+        // 从 BRPickerView.bundle 中查找资源
         bundle = [NSBundle bundleWithPath:[[NSBundle br_pickerBundle] pathForResource:language ofType:@"lproj"]];
     }
     value = [bundle localizedStringForKey:key value:value table:nil];
+    
     return [[NSBundle mainBundle] localizedStringForKey:key value:value table:nil];
 }
 
