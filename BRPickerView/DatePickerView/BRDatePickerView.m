@@ -592,55 +592,55 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)setDateLabelText:(UILabel *)label component:(NSInteger)component row:(NSInteger)row {
     if (self.showType == BRDatePickerModeYMDHM) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.yearArr[row], [self getYearUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.yearArr[row], [self getYearUnit]];
         } else if (component == 1) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.monthArr[row], [self getMonthUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.monthArr[row], [self getMonthUnit]];
         } else if (component == 2) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.dayArr[row], [self getDayUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.dayArr[row], [self getDayUnit]];
         } else if (component == 3) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.hourArr[row], [self getHourUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.hourArr[row], [self getHourUnit]];
         } else if (component == 4) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.minuteArr[row], [self getMinuteUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.minuteArr[row], [self getMinuteUnit]];
         }
     } else if (self.showType == BRDatePickerModeMDHM) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.monthArr[row], [self getMonthUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.monthArr[row], [self getMonthUnit]];
         } else if (component == 1) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.dayArr[row], [self getDayUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.dayArr[row], [self getDayUnit]];
         } else if (component == 2) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.hourArr[row], [self getHourUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.hourArr[row], [self getHourUnit]];
         } else if (component == 3) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.minuteArr[row], [self getMinuteUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.minuteArr[row], [self getMinuteUnit]];
         }
     } else if (self.showType == BRDatePickerModeYMD) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.yearArr[row], [self getYearUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.yearArr[row], [self getYearUnit]];
         } else if (component == 1) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.monthArr[row], [self getMonthUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.monthArr[row], [self getMonthUnit]];
         } else if (component == 2) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.dayArr[row], [self getDayUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.dayArr[row], [self getDayUnit]];
         }
     } else if (self.showType == BRDatePickerModeYM) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.yearArr[row], [self getYearUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.yearArr[row], [self getYearUnit]];
         } else if (component == 1) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.monthArr[row], [self getMonthUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.monthArr[row], [self getMonthUnit]];
         }
     } else if (self.showType == BRDatePickerModeY) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.yearArr[row], [self getYearUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.yearArr[row], [self getYearUnit]];
         }
     } else if (self.showType == BRDatePickerModeMD) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.monthArr[row], [self getMonthUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.monthArr[row], [self getMonthUnit]];
         } else if (component == 1) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.dayArr[row], [self getDayUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.dayArr[row], [self getDayUnit]];
         }
     } else if (self.showType == BRDatePickerModeHM) {
         if (component == 0) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.hourArr[row], [self getHourUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.hourArr[row], [self getHourUnit]];
         } else if (component == 1) {
-            label.text = [NSString stringWithFormat:@"%@ %@", self.minuteArr[row], [self getMinuteUnit]];
+            label.text = [NSString stringWithFormat:@"%@%@", self.minuteArr[row], [self getMinuteUnit]];
         }
     }
 }

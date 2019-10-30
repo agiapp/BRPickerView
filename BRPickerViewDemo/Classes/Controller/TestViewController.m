@@ -309,7 +309,6 @@
             //datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
             datePickerView.maxDate = [NSDate date];
             datePickerView.isAutoSelect = YES;
-            datePickerView.hiddenDateUnit = YES;
             datePickerView.resultBlock = ^(NSString *selectValue) {
                 textField.text = self.infoModel.birthdayStr = selectValue;
             };
