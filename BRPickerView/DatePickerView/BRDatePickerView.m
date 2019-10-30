@@ -555,7 +555,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         label = [[UILabel alloc]init];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:20.0f * kScaleFit];
+        label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
@@ -564,6 +564,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     // 给选择器上的label赋值
     [self setDateLabelText:label component:component row:row];
+    
     return label;
 }
 

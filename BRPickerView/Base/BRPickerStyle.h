@@ -63,6 +63,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIColor *separatorColor;
 /** picker 中间选择文本颜色 */
 @property (nonatomic, strong) UIColor *pickerTextColor;
+/** picker 文本字体大小 */
+@property (nonatomic, strong) UIFont *pickerTextFont;
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式

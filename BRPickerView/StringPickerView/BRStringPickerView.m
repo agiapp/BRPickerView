@@ -261,7 +261,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = self.pickerStyle.pickerTextColor;
-    label.font = [UIFont systemFontOfSize:18.0f * kScaleFit];
+    label.font = self.pickerStyle.pickerTextFont;
     // 字体自适应属性
     label.adjustsFontSizeToFitWidth = YES;
     // 自适应最小字体缩放比例

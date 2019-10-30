@@ -126,6 +126,13 @@
     return _pickerTextColor;
 }
 
+- (UIFont *)pickerTextFont {
+    if (!_pickerTextFont) {
+        _pickerTextFont = [UIFont systemFontOfSize:18.0f * kScaleFit];
+    }
+    return _pickerTextFont;
+}
+
 #pragma mark - 快捷设置自定义样式 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];
