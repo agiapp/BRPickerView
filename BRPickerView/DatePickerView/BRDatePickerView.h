@@ -56,15 +56,15 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 /** 默认选中的时间（默认选中当前时间） */
 @property (nonatomic, strong) NSString *defaultSelValue;
 
-/** 最小时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate） */
+/** 最小时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）*/
 @property (nonatomic, strong) NSDate *minDate;
-/** 最大时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate） */
+/** 最大时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）*/
 @property (nonatomic, strong) NSDate *maxDate;
 
 /** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
-/** 隐藏日期单位，默认为NO */
+/** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
 @property (nonatomic, assign) BOOL hiddenDateUnit;
 
 /** 选择结果的回调 */
