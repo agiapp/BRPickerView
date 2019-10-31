@@ -366,6 +366,7 @@
             stringPickerView.title = @"请选择学历";
             stringPickerView.plistName = @"testData1.plist";
             stringPickerView.selectIndex = self.educationSelectIndex;
+            //stringPickerView.selectValue = textField.text;
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.educationSelectIndex = resultModel.index;
@@ -390,6 +391,7 @@
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
             stringPickerView.selectIndexs = self.otherSelectIndexArr;
+            //stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 self.otherSelectIndexArr = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];

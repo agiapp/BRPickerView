@@ -169,9 +169,9 @@
                     row = [self.selectIndexs[i] integerValue];
                 }
             } else {
-                if (self.currentSelectValues.count > 0) {
+                if (self.currentSelectValues.count > 0 && i < self.currentSelectValues.count) {
                     NSString *value = self.currentSelectValues[i];
-                    if (i < self.currentSelectValues.count && [self.dataSourceArr[i] containsObject:value]) {
+                    if ([self.dataSourceArr[i] containsObject:value]) {
                         row = [self.dataSourceArr[i] indexOfObject:value];
                     }
                 }
