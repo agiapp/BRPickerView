@@ -133,6 +133,13 @@
     return _pickerTextFont;
 }
 
+- (CGFloat)rowHeight {
+    if (!_rowHeight) {
+        _rowHeight = 35.0f * kScaleFit;
+    }
+    return _rowHeight;
+}
+
 #pragma mark - 快捷设置自定义样式 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];

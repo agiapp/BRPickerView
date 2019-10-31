@@ -65,6 +65,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIColor *pickerTextColor;
 /** picker 文本字体大小 */
 @property (nonatomic, strong) UIFont *pickerTextFont;
+/** picker 行高 */
+@property (nonatomic, assign) CGFloat rowHeight;
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式

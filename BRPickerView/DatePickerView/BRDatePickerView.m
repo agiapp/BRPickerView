@@ -586,7 +586,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 35.0f * kScaleFit;
+    return self.pickerStyle.rowHeight;
 }
 
 - (void)setDateLabelText:(UILabel *)label component:(NSInteger)component row:(NSInteger)row {

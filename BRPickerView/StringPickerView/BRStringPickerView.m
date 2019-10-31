@@ -279,10 +279,10 @@
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
     if (self.showType == BRStringPickerComponentSingle) {
-        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, 35.0f * kScaleFit);
+        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, self.pickerStyle.rowHeight);
         label.text = self.dataSourceArr[row];
     } else if (self.showType == BRStringPickerComponentMulti) {
-        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, 35.0f * kScaleFit);
+        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, self.pickerStyle.rowHeight);
         label.text = self.dataSourceArr[component][row];
     }
     
@@ -291,7 +291,7 @@
 
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 35.0f * kScaleFit;
+    return self.pickerStyle.rowHeight;
 }
 
 #pragma mark - 处理单列选择结果的回调

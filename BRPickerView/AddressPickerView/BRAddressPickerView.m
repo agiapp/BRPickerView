@@ -460,7 +460,7 @@
 
 // 设置行高
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 35.0f * kScaleFit;
+    return self.pickerStyle.rowHeight;
 }
 
 #pragma mark - 重写父类方法
