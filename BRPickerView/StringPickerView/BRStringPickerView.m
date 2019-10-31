@@ -153,9 +153,13 @@
     }
     // 给选择器设置默认值
     if (self.showType == BRStringPickerComponentSingle) {
-        if (!self.selectIndex) {
+        if (self.selectIndex > 0) {
+            self.selectIndex = (self.selectIndex < self.dataSourceArr.count ? self.selectIndex : 0);
+        } else {
             if (self.currentSelectValue && [self.dataSourceArr containsObject:self.currentSelectValue]) {
                 self.selectIndex = [self.dataSourceArr indexOfObject:self.currentSelectValue];
+            } else {
+                self.selectIndex = 0;
             }
         }
         [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
@@ -166,7 +170,8 @@
             NSInteger row = 0;
             if (self.selectIndexs.count > 0) {
                 if (i < self.selectIndexs.count) {
-                    row = [self.selectIndexs[i] integerValue];
+                    NSInteger index = [self.selectIndexs[i] integerValue];
+                    row = ((index > 0 && index < [self.dataSourceArr[i] count]) ? index : 0);
                 }
             } else {
                 if (self.currentSelectValues.count > 0 && i < self.currentSelectValues.count) {
