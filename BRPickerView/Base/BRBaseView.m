@@ -86,14 +86,23 @@
 
 #pragma mark - 左边取消按钮
 - (UIButton *)leftBtn {
-    if (!_leftBtn) {
+    if (!_leftBtn && !self.pickerStyle.hideLeftBtn) {
         _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _leftBtn.frame = CGRectMake(5, 8, self.pickerStyle.leftBtnWidth, 28);
         _leftBtn.backgroundColor = self.pickerStyle.leftColor;;
         _leftBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
         _leftBtn.titleLabel.font = self.pickerStyle.leftTextFont;
         [_leftBtn setTitleColor:self.pickerStyle.leftTextColor forState:UIControlStateNormal];
-        [_leftBtn setTitle:self.pickerStyle.leftBtnTitle forState:UIControlStateNormal];
+        
+        if (!_leftButtonIsDoneButton)
+        {
+            [_leftBtn setTitle:self.pickerStyle.leftBtnTitle forState:UIControlStateNormal];
+        }
+        else
+        {
+            [_leftBtn setTitle:self.pickerStyle.rightBtnTitle forState:UIControlStateNormal];
+        }
+        
         if (self.pickerStyle.leftBtnImage) {
             [_leftBtn setImage:self.pickerStyle.leftBtnImage forState:UIControlStateNormal];
         }
@@ -114,14 +123,23 @@
 
 #pragma mark - 右边确定按钮
 - (UIButton *)rightBtn {
-    if (!_rightBtn) {
+    if (!_rightBtn && !self.pickerStyle.hideRightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - self.pickerStyle.rightBtnWidth - 5, 8, self.pickerStyle.rightBtnWidth, 28);
         _rightBtn.backgroundColor = self.pickerStyle.rightColor;
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
         _rightBtn.titleLabel.font = self.pickerStyle.rightTextFont;
         [_rightBtn setTitleColor:self.pickerStyle.rightTextColor forState:UIControlStateNormal];
-        [_rightBtn setTitle:self.pickerStyle.rightBtnTitle forState:UIControlStateNormal];
+        
+        if (!_leftButtonIsDoneButton)
+        {
+            [_rightBtn setTitle:self.pickerStyle.rightBtnTitle forState:UIControlStateNormal];
+        }
+        else
+        {
+            [_rightBtn setTitle:self.pickerStyle.leftBtnTitle forState:UIControlStateNormal];
+        }
+        
         if (self.pickerStyle.rightBtnImage) {
             [_rightBtn setImage:self.pickerStyle.rightBtnImage forState:UIControlStateNormal];
         }
@@ -175,17 +193,38 @@
 
 #pragma mark - 取消按钮的点击事件
 - (void)clickLeftBtn {
-    [self removePickerFromView:nil];
-    if (self.cancelBlock) {
-        self.cancelBlock();
+    
+    if (!_leftButtonIsDoneButton)
+    {
+        [self removePickerFromView:nil];
+        if (self.cancelBlock) {
+            self.cancelBlock();
+        }
+    }
+    else
+    {
+        if (self.doneBlock) {
+            self.doneBlock();
+        }
     }
 }
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickRightBtn {
-    if (self.doneBlock) {
-        self.doneBlock();
+    
+    if (!_leftButtonIsDoneButton)
+    {
+        if (self.doneBlock) {
+            self.doneBlock();
+        }
     }
+    else
+    {
+        [self removePickerFromView:nil];
+        if (self.cancelBlock) {
+            self.cancelBlock();
+        }
+    }        
 }
 
 #pragma mark - 添加视图方法
