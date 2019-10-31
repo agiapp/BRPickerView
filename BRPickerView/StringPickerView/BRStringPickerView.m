@@ -14,12 +14,12 @@
 {
     BOOL _isDataSourceValid; // 数据源是否合法
 }
-// 字符串选择器
+/** 字符串选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
+/** 字符串选择器类型 */
 @property (nonatomic, assign) BRStringPickerMode showType;
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRStringResultBlock resultBlock;
-
 /** 单列选择的值 */
 @property (nonatomic, strong) NSString *currentSelectValue;
 /** 多列选择的值 */
@@ -126,16 +126,6 @@
     } else {
         _isDataSourceValid = NO;
     }
-    // 判断数组是否合法（即数组的所有元素是否是同一种数据类型）
-    if (_isDataSourceValid) {
-        Class itemClass = [[dataArr firstObject] class];
-        for (id obj in dataArr) {
-            if (![obj isKindOfClass:itemClass]) {
-                _isDataSourceValid = NO;
-                break;
-            }
-        }
-    }
     
     return dataArr;
 }
@@ -143,7 +133,9 @@
 #pragma mark - setter 方法
 - (void)setPlistName:(NSString *)plistName {
     NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
-    self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
+    if (path && path.length > 0) {
+        self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
+    }
 }
 
 - (void)setSelectValue:(NSString *)selectValue {
