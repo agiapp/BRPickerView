@@ -42,21 +42,21 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  *    两列：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]
  *    多列：... ...
  */
-@property (nonatomic, strong) NSArray *dataSourceArr;
+@property (nonatomic, copy) NSArray *dataSourceArr;
 /**
  *  2.设置数据源
  *    直接传plist文件名：NSString类型（如：@"sex.plist"），要带后缀名
  *    场景：可以将数据源数据（数组类型）放到plist文件中，直接传plist文件名更加简单
  */
-@property (nonatomic, strong) NSString *plistName;
+@property (nonatomic, copy) NSString *plistName;
 
 /** 单列设置默认选中的位置 */
 @property (nonatomic, assign) NSInteger selectIndex;
-@property (nonatomic, strong) NSString *selectValue BRPickerViewDeprecated("过期提醒：推荐使用 selectIndex");
+@property (nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("过期提醒：推荐使用 selectIndex");
 
 /** 多列设置默认选中的位置 */
-@property (nonatomic, strong) NSArray <NSNumber *>* selectIndexs;
-@property (nonatomic, strong) NSArray <NSString *>* selectValueArr BRPickerViewDeprecated("过期提醒：推荐使用 selectIndexs");
+@property (nonatomic, copy) NSArray <NSNumber *>* selectIndexs;
+@property (nonatomic, copy) NSArray <NSString *>* selectValueArr BRPickerViewDeprecated("过期提醒：推荐使用 selectIndexs");
 
 /** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;

@@ -21,11 +21,11 @@
 // 地址选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
 // 省模型数组
-@property(nonatomic, strong) NSArray *provinceModelArr;
+@property(nonatomic, copy) NSArray *provinceModelArr;
 // 市模型数组
-@property(nonatomic, strong) NSArray *cityModelArr;
+@property(nonatomic, copy) NSArray *cityModelArr;
 // 区模型数组
-@property(nonatomic, strong) NSArray *areaModelArr;
+@property(nonatomic, copy) NSArray *areaModelArr;
 // 显示类型
 @property (nonatomic, assign) BRAddressPickerMode showType;
 // 选中的省

@@ -18,11 +18,11 @@ typedef void(^BRResultBlock)(void);
 @interface BRBaseView : UIView
 
 /** 选择器标题 */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 /** 左边按钮标题 */
-@property (nonatomic, strong) NSString *leftBtnTitle;
+@property (nonatomic, copy) NSString *leftBtnTitle;
 /** 右边按钮标题 */
-@property (nonatomic, strong) NSString *rightBtnTitle;
+@property (nonatomic, copy) NSString *rightBtnTitle;
 
 /** 自定义UI样式（可为空，为nil时是默认样式） */
 @property (nonatomic, strong) BRPickerStyle *pickerStyle;
@@ -30,7 +30,7 @@ typedef void(^BRResultBlock)(void);
  *  设置语言（不设置或为nil时，将随系统的语言自动改变）
  *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
  */
-@property(nonatomic, strong) NSString *language;
+@property(nonatomic, copy) NSString *language;
 
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRCancelBlock cancelBlock;

@@ -33,11 +33,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 /** 时间选择器2 */
 @property (nonatomic, strong) UIPickerView *pickerView;
 /// 日期存储数组
-@property(nonatomic, strong) NSArray *yearArr;
-@property(nonatomic, strong) NSArray *monthArr;
-@property(nonatomic, strong) NSArray *dayArr;
-@property(nonatomic, strong) NSArray *hourArr;
-@property(nonatomic, strong) NSArray *minuteArr;
+@property(nonatomic, copy) NSArray *yearArr;
+@property(nonatomic, copy) NSArray *monthArr;
+@property(nonatomic, copy) NSArray *dayArr;
+@property(nonatomic, copy) NSArray *hourArr;
+@property(nonatomic, copy) NSArray *minuteArr;
 /** 显示类型 */
 @property (nonatomic, assign) BRDatePickerMode showType;
 /** 时间选择器的类型 */
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 /** 当前选择的日期 */
 @property (nonatomic, strong) NSDate *selectDate;
 /** 选择的日期的格式 */
-@property (nonatomic, strong) NSString *selectDateFormatter;
+@property (nonatomic, copy) NSString *selectDateFormatter;
 
 @end
 

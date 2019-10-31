@@ -21,9 +21,9 @@
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRStringResultBlock resultBlock;
 /** 单列选择的值 */
-@property (nonatomic, strong) NSString *currentSelectValue;
+@property (nonatomic, copy) NSString *currentSelectValue;
 /** 多列选择的值 */
-@property (nonatomic, strong) NSArray <NSString *>* currentSelectValues;
+@property (nonatomic, copy) NSArray <NSString *>* currentSelectValues;
 
 @end
 

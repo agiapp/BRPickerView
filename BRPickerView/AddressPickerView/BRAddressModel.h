@@ -18,7 +18,7 @@
 /** 省的索引 */
 @property (nonatomic, assign) NSInteger index;
 /** 城市数组 */
-@property (nonatomic, strong) NSArray *citylist;
+@property (nonatomic, copy) NSArray *citylist;
 
 @end
 
@@ -31,7 +31,7 @@
 /** 市的索引 */
 @property (nonatomic, assign) NSInteger index;
 /** 地区数组 */
-@property (nonatomic, strong) NSArray *arealist;
+@property (nonatomic, copy) NSArray *arealist;
 
 @end
 

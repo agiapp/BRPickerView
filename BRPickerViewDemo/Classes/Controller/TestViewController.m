@@ -18,12 +18,12 @@
 @property (nonatomic, strong) UIView *footerView;
 @property (nonatomic, strong) UILabel *titleLabel;
 
-@property (nonatomic, strong) NSArray *titleArr;
+@property (nonatomic, copy) NSArray *titleArr;
 
 @property (nonatomic, strong) BRInfoModel *infoModel;
 @property (nonatomic, assign) NSInteger genderSelectIndex;
 @property (nonatomic, assign) NSInteger educationSelectIndex;
-@property (nonatomic, strong) NSArray <NSNumber *> *otherSelectIndexArr;
+@property (nonatomic, copy) NSArray <NSNumber *> *otherSelectIndexArr;
 
 @end
 
