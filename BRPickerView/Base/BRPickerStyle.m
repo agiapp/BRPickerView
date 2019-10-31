@@ -65,7 +65,7 @@
 }
 
 - (NSString *)leftBtnTitle {
-    if (!_leftBtnTitle) {
+    if (!_leftBtnTitle && !_leftBtnImage) {
         _leftBtnTitle = [NSBundle br_localizedStringForKey:@"取消" language:self.language];
     }
     return _leftBtnTitle;
@@ -114,7 +114,7 @@
 }
 
 - (NSString *)rightBtnTitle {
-    if (!_rightBtnTitle) {
+    if (!_rightBtnTitle && !_rightBtnImage) {
         _rightBtnTitle = [NSBundle br_localizedStringForKey:@"确定" language:self.language];
     }
     return _rightBtnTitle;
