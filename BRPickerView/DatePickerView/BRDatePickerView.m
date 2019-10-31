@@ -47,6 +47,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 /** 选择的日期的格式 */
 @property (nonatomic, copy) NSString *selectDateFormatter;
 
+/** 是否执行过选择结果的回调（防止 isAutoSelect=YES 时，执行回调两次） */
+@property (nonatomic, assign, getter=isHasResultValue) BOOL hasResultValue;
+
 @end
 
 @implementation BRDatePickerView
@@ -109,7 +112,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self = [super init]) {
         self.title = title;
         self.showType = dateType;
-        self.defaultSelValue = defaultSelValue;
+        self.selectValue = defaultSelValue;
         
         self.minDate = minDate;
         self.maxDate = maxDate;
@@ -163,8 +166,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     
     // 3.默认选中的日期
-    if (self.defaultSelValue && self.defaultSelValue.length > 0) {
-        NSDate *defaultSelDate = [NSDate br_getDate:self.defaultSelValue format:self.selectDateFormatter];
+    if (self.selectValue && self.selectValue.length > 0) {
+        NSDate *defaultSelDate = [NSDate br_getDate:self.selectValue format:self.selectDateFormatter];
         if (!defaultSelDate) {
             BRErrorLog(@"参数格式错误！参数 defaultSelValue 的正确格式是：%@", self.selectDateFormatter);
             NSAssert(defaultSelDate, @"参数格式错误！请检查形参 defaultSelValue 的格式");
@@ -185,14 +188,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     BOOL selectLessThanMin = [self.selectDate br_compare:self.minDate format:self.selectDateFormatter] == NSOrderedAscending;
     BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxDate format:self.selectDateFormatter] == NSOrderedDescending;
-    //NSAssert(!selectLessThanMin, @"默认选择的日期不能小于最小日期！");
-    //NSAssert(!selectMoreThanMax, @"默认选择的日期不能大于最大日期！");
     if (selectLessThanMin) {
-        NSLog(@"默认选择的日期不能小于最小日期！");
+        BRErrorLog(@"默认选择的日期不能小于最小日期！");
         self.selectDate = self.minDate;
     }
     if (selectMoreThanMax) {
-        NSLog(@"默认选择的日期不能大于最大日期！");
+        BRErrorLog(@"默认选择的日期不能大于最大日期！");
         self.selectDate = self.maxDate;
     }
     
@@ -576,6 +577,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     self.selectDate = [self getDidSelectedDate:component row:row];
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
+        self.hasResultValue = YES;
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
             NSString *selectDateValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
@@ -790,9 +792,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
         [weakSelf removePickerFromView:view];
-        if (weakSelf.resultBlock) {
-            NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
-            weakSelf.resultBlock(selectDateValue);
+        // 先判断一下，防止重复执行回调
+        if (!weakSelf.hasResultValue) {
+            if (weakSelf.resultBlock) {
+                NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
+                weakSelf.resultBlock(selectDateValue);
+            }
         }
     };
     
@@ -816,6 +821,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 关闭选择器视图
 - (void)dismiss {
     [self removePickerFromView:nil];
+}
+
+#pragma mark - setter 方法
+- (void)setDefaultSelValue:(NSString *)defaultSelValue {
+    self.selectValue = defaultSelValue;
 }
 
 #pragma mark - getter 方法

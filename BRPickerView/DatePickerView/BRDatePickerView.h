@@ -54,7 +54,8 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 ////////////////////////////////////////////////////////////////////////*/
 
 /** 默认选中的时间（默认选中当前时间） */
-@property (nonatomic, copy) NSString *defaultSelValue;
+@property (nonatomic, copy) NSString *selectValue;
+@property (nonatomic, copy) NSString *defaultSelValue BRPickerViewDeprecated("过期提醒：推荐使用 selectValue");
 
 /** 最小时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）*/
 @property (nonatomic, strong) NSDate *minDate;
