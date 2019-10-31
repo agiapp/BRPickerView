@@ -9,7 +9,6 @@
 
 #import "BRBaseView.h"
 #import "BRPickerViewMacro.h"
-#import "NSBundle+BRPickerView.h"
 
 @interface BRBaseView ()
 // 遮罩背景视图
@@ -89,12 +88,15 @@
 - (UIButton *)leftBtn {
     if (!_leftBtn) {
         _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _leftBtn.frame = CGRectMake(5, 8, 60, 28);
+        _leftBtn.frame = CGRectMake(5, 8, self.pickerStyle.leftBtnWidth, 28);
         _leftBtn.backgroundColor = self.pickerStyle.leftColor;;
         _leftBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
         _leftBtn.titleLabel.font = self.pickerStyle.leftTextFont;
         [_leftBtn setTitleColor:self.pickerStyle.leftTextColor forState:UIControlStateNormal];
-        [_leftBtn setTitle:self.leftBtnTitle forState:UIControlStateNormal];
+        [_leftBtn setTitle:self.pickerStyle.leftBtnTitle forState:UIControlStateNormal];
+        if (self.pickerStyle.leftBtnImage) {
+            [_leftBtn setImage:self.pickerStyle.leftBtnImage forState:UIControlStateNormal];
+        }
         [_leftBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
         // 设置按钮圆角或边框
         if (self.pickerStyle.leftBorderStyle == BRBorderStyleSolid) {
@@ -114,12 +116,15 @@
 - (UIButton *)rightBtn {
     if (!_rightBtn) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - 65, 8, 60, 28);
+        _rightBtn.frame = CGRectMake(self.alertView.frame.size.width - self.pickerStyle.rightBtnWidth - 5, 8, self.pickerStyle.rightBtnWidth, 28);
         _rightBtn.backgroundColor = self.pickerStyle.rightColor;
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
         _rightBtn.titleLabel.font = self.pickerStyle.rightTextFont;
         [_rightBtn setTitleColor:self.pickerStyle.rightTextColor forState:UIControlStateNormal];
-        [_rightBtn setTitle:self.rightBtnTitle forState:UIControlStateNormal];
+        [_rightBtn setTitle:self.pickerStyle.rightBtnTitle forState:UIControlStateNormal];
+        if (self.pickerStyle.rightBtnImage) {
+            [_rightBtn setImage:self.pickerStyle.rightBtnImage forState:UIControlStateNormal];
+        }
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
         // 设置按钮圆角或边框
         if (self.pickerStyle.rightBorderStyle == BRBorderStyleSolid) {
@@ -245,20 +250,6 @@
         _pickerStyle = [[BRPickerStyle alloc]init];
     }
     return _pickerStyle;
-}
-
-- (NSString *)leftBtnTitle {
-    if (!_leftBtnTitle) {
-        _leftBtnTitle = [NSBundle br_localizedStringForKey:@"取消" language:self.language];
-    }
-    return _leftBtnTitle;
-}
-
-- (NSString *)rightBtnTitle {
-    if (!_rightBtnTitle) {
-        _rightBtnTitle = [NSBundle br_localizedStringForKey:@"确定" language:self.language];
-    }
-    return _rightBtnTitle;
 }
 
 - (void)dealloc {

@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
     BRBorderStyleFill,
 };
 
-/// 选择器视图样式
+/// 选择器视图配置
 @interface BRPickerStyle : NSObject
 
 /** 背景遮罩视图颜色 */
@@ -42,6 +42,12 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIFont *leftTextFont;
 /** 左边取消按钮边框样式 */
 @property (nonatomic, assign) BRBorderStyle leftBorderStyle;
+/** 左边取消按钮宽度 */
+@property (nonatomic, assign) CGFloat leftBtnWidth;
+/** 左边取消按钮图片 */
+@property (nonatomic, strong) UIImage *leftBtnImage;
+/** 左边取消按钮标题 */
+@property (nonatomic, copy) NSString *leftBtnTitle;
 
 /** 中间标题文本颜色 */
 @property (nonatomic, strong) UIColor *titleTextColor;
@@ -56,6 +62,12 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIFont *rightTextFont;
 /** 右边确定按钮边框样式 */
 @property (nonatomic, assign) BRBorderStyle rightBorderStyle;
+/** 右边确定按钮宽度 */
+@property (nonatomic, assign) CGFloat rightBtnWidth;
+/** 右边确定按钮图片 */
+@property (nonatomic, strong) UIImage *rightBtnImage;
+/** 右边确定按钮标题 */
+@property (nonatomic, copy) NSString *rightBtnTitle;
 
 /** picker 选择器视图背景颜色 */
 @property (nonatomic, strong) UIColor *pickerColor;
@@ -67,6 +79,13 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIFont *pickerTextFont;
 /** picker 行高 */
 @property (nonatomic, assign) CGFloat rowHeight;
+
+
+/**
+ *  设置语言（不设置或为nil时，将随系统的语言自动改变）
+ *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
+ */
+@property(nonatomic, copy) NSString *language;
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式

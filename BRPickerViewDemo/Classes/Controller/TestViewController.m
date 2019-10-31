@@ -298,8 +298,6 @@
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"出生年月日";
-            datePickerView.leftBtnTitle = @"";
-            datePickerView.rightBtnTitle = @"      ✕";
             datePickerView.defaultSelValue = textField.text;
             //datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
             datePickerView.maxDate = [NSDate date];
@@ -315,6 +313,8 @@
             customStyle.rightTextColor = [UIColor lightGrayColor];
             customStyle.rightTextFont = [UIFont systemFontOfSize:20.0f];
             customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
+            customStyle.leftBtnTitle = @"";
+            customStyle.rightBtnTitle = @"      ✕";
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];

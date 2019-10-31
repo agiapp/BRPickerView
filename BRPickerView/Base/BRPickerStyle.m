@@ -9,6 +9,7 @@
 
 #import "BRPickerStyle.h"
 #import "BRPickerViewMacro.h"
+#import "NSBundle+BRPickerView.h"
 
 @implementation BRPickerStyle
 
@@ -63,11 +64,18 @@
     return _leftTextFont;
 }
 
-- (BRBorderStyle)leftBorderStyle {
-    if (!_leftBorderStyle) {
-        _leftBorderStyle = BRBorderStyleNone;
+- (NSString *)leftBtnTitle {
+    if (!_leftBtnTitle) {
+        _leftBtnTitle = [NSBundle br_localizedStringForKey:@"取消" language:self.language];
     }
-    return _leftBorderStyle;
+    return _leftBtnTitle;
+}
+
+- (CGFloat)leftBtnWidth {
+    if (!_leftBtnWidth) {
+        _leftBtnWidth = 60.0f;
+    }
+    return _leftBtnWidth;
 }
 
 - (UIColor *)titleTextColor {
@@ -105,11 +113,18 @@
     return _rightTextFont;
 }
 
-- (BRBorderStyle)rightBorderStyle {
-    if (!_rightBorderStyle) {
-        _rightBorderStyle = BRBorderStyleNone;
+- (NSString *)rightBtnTitle {
+    if (!_rightBtnTitle) {
+        _rightBtnTitle = [NSBundle br_localizedStringForKey:@"确定" language:self.language];
     }
-    return _rightBorderStyle;
+    return _rightBtnTitle;
+}
+
+- (CGFloat)rightBtnWidth {
+    if (!_rightBtnWidth) {
+        _rightBtnWidth = 60.0f;
+    }
+    return _rightBtnWidth;
 }
 
 - (UIColor *)separatorColor {

@@ -443,8 +443,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该UIDatePicker的国际化Locale
-        if (self.language && self.language.length > 0) {
-            _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.language];
+        if (self.pickerStyle.language && self.pickerStyle.language.length > 0) {
+            _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
         }
         // textColor 隐藏属性，使用KVC赋值
         [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
@@ -856,35 +856,35 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 - (NSString *)getYearUnit {
     if (!self.hiddenDateUnit) {
-        return [NSBundle br_localizedStringForKey:@"年" language:self.language];
+        return [NSBundle br_localizedStringForKey:@"年" language:self.pickerStyle.language];
     }
     return @"";
 }
 
 - (NSString *)getMonthUnit {
     if (!self.hiddenDateUnit) {
-        return [NSBundle br_localizedStringForKey:@"月" language:self.language];
+        return [NSBundle br_localizedStringForKey:@"月" language:self.pickerStyle.language];
     }
     return @"";
 }
 
 - (NSString *)getDayUnit {
     if (!self.hiddenDateUnit) {
-        return [NSBundle br_localizedStringForKey:@"日" language:self.language];
+        return [NSBundle br_localizedStringForKey:@"日" language:self.pickerStyle.language];
     }
     return @"";
 }
 
 - (NSString *)getHourUnit {
     if (!self.hiddenDateUnit) {
-        return [NSBundle br_localizedStringForKey:@"时" language:self.language];
+        return [NSBundle br_localizedStringForKey:@"时" language:self.pickerStyle.language];
     }
     return @"";
 }
 
 - (NSString *)getMinuteUnit {
     if (!self.hiddenDateUnit) {
-        return [NSBundle br_localizedStringForKey:@"分" language:self.language];
+        return [NSBundle br_localizedStringForKey:@"分" language:self.pickerStyle.language];
     }
     return @"";
 }
