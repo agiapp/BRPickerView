@@ -35,7 +35,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 ////////////////////////////////////////////////////////////////////////*/
 
 /** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
-@property (nonatomic, copy) NSArray *defaultSelectedArr;
+@property (nonatomic, copy) NSArray <NSString *>* defaultSelectedArr;
 
 /** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;

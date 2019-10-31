@@ -298,7 +298,7 @@
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"出生年月日";
-            datePickerView.defaultSelValue = textField.text;
+            datePickerView.selectValue = textField.text;
             //datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
             datePickerView.maxDate = [NSDate date];
             datePickerView.isAutoSelect = YES;
@@ -326,7 +326,7 @@
             // 出生时刻
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHM];
             datePickerView.title = @"出生时刻";
-            datePickerView.defaultSelValue = textField.text;
+            datePickerView.selectValue = textField.text;
             datePickerView.minDate = [NSDate br_setHour:8 minute:10];
             datePickerView.maxDate = [NSDate br_setHour:20 minute:35];
             datePickerView.isAutoSelect = YES;

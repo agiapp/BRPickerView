@@ -35,6 +35,9 @@
 // 选中的区
 @property(nonatomic, strong) BRAreaModel *selectAreaModel;
 
+/** 是否执行过选择结果的回调（防止 isAutoSelect=YES 时，执行回调两次） */
+@property (nonatomic, assign, getter=isHasResultValue) BOOL hasResultValue;
+
 @end
 
 @implementation BRAddressPickerView
@@ -193,13 +196,13 @@
     __block NSString *selectAreaName = nil;
     // 1. 获取默认选中的省市区的名称
     if (self.defaultSelectedArr) {
-        if (self.defaultSelectedArr.count > 0 && [self.defaultSelectedArr[0] isKindOfClass:[NSString class]]) {
+        if (self.defaultSelectedArr.count > 0) {
             selectProvinceName = self.defaultSelectedArr[0];
         }
-        if (self.defaultSelectedArr.count > 1 && [self.defaultSelectedArr[1] isKindOfClass:[NSString class]]) {
+        if (self.defaultSelectedArr.count > 1) {
             selectCityName = self.defaultSelectedArr[1];
         }
-        if (self.defaultSelectedArr.count > 2 && [self.defaultSelectedArr[2] isKindOfClass:[NSString class]]) {
+        if (self.defaultSelectedArr.count > 2) {
             selectAreaName = self.defaultSelectedArr[2];
         }
     }
@@ -452,6 +455,7 @@
     
     // 自动获取数据，滚动完就执行回调
     if (self.isAutoSelect) {
+        self.hasResultValue = YES;
         if (self.resultBlock) {
             self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
         }
@@ -473,8 +477,12 @@
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
         [weakSelf removePickerFromView:view];
-        if (weakSelf.resultBlock) {
-           weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
+        
+        // 先判断一下，防止重复执行回调
+        if (!weakSelf.hasResultValue) {
+            if (weakSelf.resultBlock) {
+               weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
+            }
         }
     };
     
