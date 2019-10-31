@@ -78,6 +78,11 @@
     return _leftBtnWidth;
 }
 
+-(bool)hideLeftBtn
+{
+    return _hideLeftBtn;
+}
+
 - (UIColor *)titleTextColor {
     if (!_titleTextColor) {
         _titleTextColor = [kDefaultTextColor colorWithAlphaComponent:0.8f];
@@ -125,6 +130,11 @@
         _rightBtnWidth = 60.0f;
     }
     return _rightBtnWidth;
+}
+
+-(bool)hideRightBtn
+{
+    return _hideRightBtn;
 }
 
 - (UIColor *)separatorColor {
