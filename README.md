@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
 // 2.设置属性
 datePickerView.title = @"出生年月日";
-datePickerView.defaultSelValue = textField.text;
+datePickerView.selectValue = @"2019-10-30";
 datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
 datePickerView.maxDate = [NSDate date];
 datePickerView.isAutoSelect = YES;
@@ -243,7 +243,7 @@ BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPicker
 
 stringPickerView.title = @"请选择性别";
 stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-stringPickerView.selectValue = textField.text;
+stringPickerView.selectIndex = 1;
 stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
     NSLog(@"选择的值：%@", resultModel.selectValue);
 };
@@ -256,7 +256,7 @@ BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPicker
 
 stringPickerView.title = @"自定义多列字符串";
 stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
+stringPickerView.selectIndexs = @[@2, @3];
 stringPickerView.isAutoSelect = YES;
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue]);
