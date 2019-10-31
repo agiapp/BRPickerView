@@ -13,12 +13,17 @@
 #import "BRPickerViewMacro.h"
 
 @interface TestViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *footerView;
-@property (nonatomic, strong) BRInfoModel *infoModel;
+@property (nonatomic, strong) UILabel *titleLabel;
+
 @property (nonatomic, strong) NSArray *titleArr;
 
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) BRInfoModel *infoModel;
+@property (nonatomic, assign) NSInteger genderSelectIndex;
+@property (nonatomic, assign) NSInteger educationSelectIndex;
+@property (nonatomic, strong) NSArray <NSNumber *> *otherSelectIndexArr;
 
 @end
 
@@ -274,18 +279,15 @@
     switch (textField.tag) {
         case 1:
         {
-/*
-            [BRStringPickerView showStringPickerWithTitle:@"请选择性别" dataSource:@[@"男", @"女", @"其他"] defaultSelValue:textField.text resultBlock:^(id selectValue) {
-                textField.text = self.infoModel.genderStr = selectValue;
-            }];
- */
-            /// 使用方式一
+            // 性别
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
             stringPickerView.title = @"请选择性别";
             stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-            stringPickerView.selectValue = textField.text;
+            stringPickerView.selectIndex = self.genderSelectIndex ;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
-                textField.text = self.infoModel.genderStr = resultModel.selectValue;
+                self.genderSelectIndex = resultModel.index;
+                self.infoModel.genderStr = resultModel.selectValue;
+                textField.text = resultModel.selectValue;
             };
             [stringPickerView show];
             
@@ -293,16 +295,7 @@
             break;
         case 2:
         {
-/*
-            NSDate *minDate = [NSDate br_setYear:1990 month:3 day:12];
-            NSDate *maxDate = [NSDate date];
-            [BRDatePickerView showDatePickerWithTitle:@"出生日期" dateType:BRDatePickerModeYMD defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:nil resultBlock:^(NSString *selectValue) {
-                textField.text = self.infoModel.birthdayStr = selectValue;
-            } cancelBlock:^{
-                NSLog(@"点击了背景或取消按钮");
-            }];
- */
-            /// 使用方式一
+            // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"出生年月日";
             datePickerView.leftBtnTitle = @"";
@@ -330,14 +323,7 @@
             break;
         case 3:
         {
-/*
-            NSDate *minDate = [NSDate br_setHour:8 minute:10];
-            NSDate *maxDate = [NSDate br_setHour:20 minute:35];
-            [BRDatePickerView showDatePickerWithTitle:@"出生时刻" dateType:BRDatePickerModeTime defaultSelValue:textField.text minDate:minDate maxDate:maxDate isAutoSelect:YES themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
-                textField.text = self.infoModel.birthtimeStr = selectValue;
-            }];
- */
-            /// 使用方式一
+            // 出生时刻
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHM];
             datePickerView.title = @"出生时刻";
             datePickerView.defaultSelValue = textField.text;
@@ -357,22 +343,7 @@
             break;
         case 5:
         {
-/*
-            // 【转换】：以@" "自字符串为基准将字符串分离成数组，如：@"浙江省 杭州市 西湖区" ——》@[@"浙江省", @"杭州市", @"西湖区"]
-            NSArray *defaultSelArr = [textField.text componentsSeparatedByString:@" "];
-            // NSArray *dataSource = [weakSelf getAddressDataSource];  //从外部传入地区数据源
-            NSArray *dataSource = nil; // dataSource 为空时，就默认使用框架内部提供的数据源（即 BRCity.plist）
-            [BRAddressPickerView showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:dataSource defaultSelected:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
-                textField.text = self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
-                NSLog(@"省[%@]：%@，%@", @(province.index), province.code, province.name);
-                NSLog(@"市[%@]：%@，%@", @(city.index), city.code, city.name);
-                NSLog(@"区[%@]：%@，%@", @(area.index), area.code, area.name);
-                NSLog(@"--------------------");
-            } cancelBlock:^{
-                NSLog(@"点击了背景视图或取消按钮");
-            }];
-*/
-            /// 使用方式一
+            // 地区
             BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
             addressPickerView.title = @"请选择地区";
             addressPickerView.defaultSelectedArr = [textField.text componentsSeparatedByString:@" "];
@@ -390,24 +361,16 @@
             break;
         case 6:
         {
-/*
-            // NSArray *dataSource = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-            NSString *dataSource = @"testData1.plist"; // 可以将数据源（上面的数组）放到plist文件中
-            [BRStringPickerView showStringPickerWithTitle:@"学历" dataSource:dataSource defaultSelValue:textField.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
-                textField.text = self.infoModel.educationStr = selectValue;
-            } cancelBlock:^{
-                NSLog(@"点击了背景视图或取消按钮");
-            }];
- */
-            
-            /// 使用方式一
+            // 学历
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
             stringPickerView.title = @"请选择学历";
             stringPickerView.plistName = @"testData1.plist";
-            stringPickerView.selectValue = textField.text;
+            stringPickerView.selectIndex = self.educationSelectIndex;
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
-                textField.text = self.infoModel.educationStr = resultModel.selectValue;
+                self.educationSelectIndex = resultModel.index;
+                self.infoModel.educationStr = resultModel.selectValue;
+                textField.text = resultModel.selectValue;
             };
             
             // 自定义弹框样式
@@ -422,25 +385,16 @@
             break;
         case 7:
         {
-/*
-            NSArray *dataSource = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-            // NSString *dataSource = @"testData3.plist"; // 可以将数据源（上面的数组）放到plist文件中
-            NSArray *defaultSelArr = [textField.text componentsSeparatedByString:@"，"];
-            [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:BR_RGB_HEX(0xff7998, 1.0f) resultBlock:^(id selectValue) {
-                textField.text = self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", selectValue[0], selectValue[1]];
-            } cancelBlock:^{
-                NSLog(@"点击了背景视图或取消按钮");
-            }];
-*/
-
-            /// 使用方式一
+            /// 其它
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-            stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
+            stringPickerView.selectIndexs = self.otherSelectIndexArr;
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-                textField.text = self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue];
+                self.otherSelectIndexArr = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
+                self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue];
+                textField.text = self.infoModel.otherStr;
             };
             
             // 自定义弹框样式
@@ -499,6 +453,13 @@
         _infoModel = [[BRInfoModel alloc]init];
     }
     return _infoModel;
+}
+
+- (NSArray<NSNumber *> *)otherSelectIndexArr {
+    if (!_otherSelectIndexArr) {
+        _otherSelectIndexArr = [NSArray array];
+    }
+    return _otherSelectIndexArr;
 }
 
 @end

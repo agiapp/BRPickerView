@@ -50,18 +50,19 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  */
 @property (nonatomic, strong) NSString *plistName;
 
-/** 单列设置默认选择的值 */
-@property (nonatomic, strong) NSString *selectValue;
+/** 单列设置默认选中的位置 */
+@property (nonatomic, assign) NSInteger selectIndex;
+@property (nonatomic, strong) NSString *selectValue BRPickerViewDeprecated("过期提醒：推荐使用 selectIndex");
 
-/** 多列设置默认选择的值 */
-@property (nonatomic, strong) NSArray <NSString *>* selectValueArr;
+/** 多列设置默认选中的位置 */
+@property (nonatomic, strong) NSArray <NSNumber *>* selectIndexs;
+@property (nonatomic, strong) NSArray <NSString *>* selectValueArr BRPickerViewDeprecated("过期提醒：推荐使用 selectIndexs");
 
 /** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 单列选择结果的回调 */
 @property (nonatomic, copy) BRStringResultModelBlock resultModelBlock;
-
 /** 多列选择结果的回调 */
 @property (nonatomic, copy) BRStringResultModelArrayBlock resultModelArrayBlock;
 

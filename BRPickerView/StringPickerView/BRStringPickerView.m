@@ -10,7 +10,7 @@
 #import "BRStringPickerView.h"
 #import "BRPickerViewMacro.h"
 
-@interface BRStringPickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
+@interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
 {
     BOOL _isDataSourceValid; // 数据源是否合法
 }
@@ -19,6 +19,11 @@
 @property (nonatomic, assign) BRStringPickerMode showType;
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRStringResultBlock resultBlock;
+
+/** 单列选择的值 */
+@property (nonatomic, strong) NSString *currentSelectValue;
+/** 多列选择的值 */
+@property (nonatomic, strong) NSArray <NSString *>* currentSelectValues;
 
 @end
 
@@ -83,10 +88,10 @@
         self.dataSourceArr = [self getDataSourceArr:dataSource];
         if ([[self.dataSourceArr firstObject] isKindOfClass:[NSString class]]) {
             self.showType = BRStringPickerComponentSingle;
-            self.selectValue = defaultSelValue;
+            self.currentSelectValue = defaultSelValue;
         } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
             self.showType = BRStringPickerComponentMulti;
-            self.selectValueArr = defaultSelValue;
+            self.currentSelectValues = defaultSelValue;
         }
         
         self.isAutoSelect = isAutoSelect;
@@ -135,9 +140,18 @@
     return dataArr;
 }
 
+#pragma mark - setter 方法
 - (void)setPlistName:(NSString *)plistName {
     NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
     self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
+}
+
+- (void)setSelectValue:(NSString *)selectValue {
+    self.currentSelectValue = selectValue;
+}
+
+- (void)setSelectValueArr:(NSArray<NSString *> *)selectValueArr {
+    self.currentSelectValues = selectValueArr;
 }
 
 #pragma mark - 设置默认选择的值
@@ -147,28 +161,34 @@
     }
     // 给选择器设置默认值
     if (self.showType == BRStringPickerComponentSingle) {
-        if (!self.selectValue || ![self.dataSourceArr containsObject:self.selectValue]) {
-            self.selectValue = [self.dataSourceArr firstObject];
-        }
-        NSInteger row = [self.dataSourceArr indexOfObject:self.selectValue];
-        // 默认滚动的行
-        [self.pickerView selectRow:row inComponent:0 animated:NO];
-    } else if (self.showType == BRStringPickerComponentMulti) {
-        NSMutableArray *tempArr = [NSMutableArray array];
-        for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
-            NSString *selValue = nil;
-            if (self.selectValueArr && self.selectValueArr.count > 0 && i < self.selectValueArr.count && [self.dataSourceArr[i] containsObject:self.selectValueArr[i]]) {
-                [tempArr addObject:self.selectValueArr[i]];
-                selValue = self.selectValueArr[i];
-            } else {
-                [tempArr addObject:[self.dataSourceArr[i] firstObject]];
-                selValue = [self.dataSourceArr[i] firstObject];
+        if (!self.selectIndex) {
+            if (self.currentSelectValue && [self.dataSourceArr containsObject:self.currentSelectValue]) {
+                self.selectIndex = [self.dataSourceArr indexOfObject:self.currentSelectValue];
             }
-            NSInteger row = [self.dataSourceArr[i] indexOfObject:selValue];
-            // 默认滚动的行
-            [self.pickerView selectRow:row inComponent:i animated:NO];
         }
-        self.selectValueArr = tempArr;
+        [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
+        
+    } else if (self.showType == BRStringPickerComponentMulti) {
+        NSMutableArray *mSelectIndexs = [[NSMutableArray alloc]init];
+        for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
+            NSInteger row = 0;
+            if (self.selectIndexs.count > 0) {
+                if (i < self.selectIndexs.count) {
+                    row = [self.selectIndexs[i] integerValue];
+                }
+            } else {
+                if (self.currentSelectValues.count > 0) {
+                    NSString *value = self.currentSelectValues[i];
+                    if (i < self.currentSelectValues.count && [self.dataSourceArr[i] containsObject:value]) {
+                        row = [self.dataSourceArr[i] indexOfObject:value];
+                    }
+                }
+            }
+            [self.pickerView selectRow:row inComponent:i animated:NO];
+            [mSelectIndexs addObject:@(row)];
+        }
+        
+        self.selectIndexs = [mSelectIndexs copy];
     }
 }
 
@@ -220,7 +240,7 @@
     switch (self.showType) {
         case BRStringPickerComponentSingle:
         {
-            self.selectValue = self.dataSourceArr[row];
+            self.selectIndex = row;
             // 设置是否自动回调
             if (self.isAutoSelect) {
                 [self handlerResultModelBlock];
@@ -229,10 +249,10 @@
             break;
         case BRStringPickerComponentMulti:
         {
-            if (component < self.selectValueArr.count) {
-                NSMutableArray *mutableArr = [self.selectValueArr mutableCopy];
-                [mutableArr replaceObjectAtIndex:component withObject:self.dataSourceArr[component][row]];
-                self.selectValueArr = [mutableArr copy];
+            if (component < self.selectIndexs.count) {
+                NSMutableArray *mutableArr = [self.selectIndexs mutableCopy];
+                [mutableArr replaceObjectAtIndex:component withObject:@(row)];
+                self.selectIndexs = [mutableArr copy];
             }
             
             // 设置是否自动回调
@@ -287,14 +307,15 @@
     // 1.使用方式一的回调
     if (self.resultModelBlock) {
         BRResultModel *resultModel = [[BRResultModel alloc]init];
-        resultModel.selectValue = self.selectValue;
-        resultModel.index = [self.dataSourceArr indexOfObject:self.selectValue];
+        resultModel.selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
+        resultModel.index = self.selectIndex;
         self.resultModelBlock(resultModel);
     }
     
     // 2.使用方式二的回调（兼容旧版本）
     if(self.resultBlock) {
-        self.resultBlock(self.selectValue);
+        NSString *selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
+        self.resultBlock(selectValue);
     }
     
 }
@@ -304,14 +325,12 @@
     // 1.使用方式一的回调
     if (self.resultModelArrayBlock) {
         NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
-        for (NSInteger i = 0; i < self.selectValueArr.count; i++) {
-            NSString *selectValue = self.selectValueArr[i];
+        for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
+            NSInteger index = [self.selectIndexs[i] integerValue];
             NSArray *dataArr = self.dataSourceArr[i];
-            
             BRResultModel *resultModel = [[BRResultModel alloc]init];
-            resultModel.selectValue = selectValue;
-            resultModel.index = [dataArr indexOfObject:selectValue];
-            
+            resultModel.selectValue = index < dataArr.count ? dataArr[index] : nil;
+            resultModel.index = index;
             [resultModelArr addObject:resultModel];
         }
         self.resultModelArrayBlock([resultModelArr copy]);
@@ -319,7 +338,14 @@
     
     // 2.使用方式二的回调（兼容旧版本）
     if(self.resultBlock) {
-        self.resultBlock(self.selectValueArr);
+        NSMutableArray *mSelectValueArr = [[NSMutableArray alloc]init];
+        for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
+            NSInteger index = [self.selectIndexs[i] integerValue];
+            NSArray *dataArr = self.dataSourceArr[i];
+            NSString *selectValue = index < dataArr.count ? dataArr[index] : nil;
+            [mSelectValueArr addObject:selectValue];
+        }
+        self.resultBlock([mSelectValueArr copy]);
     }
     
 }
@@ -374,12 +400,18 @@
     return _dataSourceArr;
 }
 
-- (NSArray<NSString *> *)selectValueArr {
-    if (!_selectValueArr) {
-        _selectValueArr = [[NSArray alloc]init];
+- (NSArray<NSNumber *> *)selectIndexs {
+    if (!_selectIndexs) {
+        _selectIndexs = [NSArray array];
     }
-    return _selectValueArr;
+    return _selectIndexs;
 }
 
+- (NSArray<NSString *> *)currentSelectValues {
+    if (!_currentSelectValues) {
+        _currentSelectValues = [NSArray array];
+    }
+    return _currentSelectValues;
+}
 
 @end
