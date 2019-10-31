@@ -48,6 +48,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIImage *leftBtnImage;
 /** 左边取消按钮标题 */
 @property (nonatomic, copy) NSString *leftBtnTitle;
+/** Hide left button */
+@property (nonatomic, assign) bool hideLeftBtn;
 
 /** 中间标题文本颜色 */
 @property (nonatomic, strong) UIColor *titleTextColor;
@@ -68,6 +70,8 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIImage *rightBtnImage;
 /** 右边确定按钮标题 */
 @property (nonatomic, copy) NSString *rightBtnTitle;
+/** Hide right button */
+@property (nonatomic, assign) bool hideRightBtn;
 
 /** picker 选择器视图背景颜色 */
 @property (nonatomic, strong) UIColor *pickerColor;
