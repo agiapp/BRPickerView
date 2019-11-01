@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "BRPickerViewMacro.h"
 
 // 边框样式（左边取消按钮/右边确定按钮）
 typedef NS_ENUM(NSUInteger, BRBorderStyle) {
@@ -20,72 +21,110 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
     BRBorderStyleFill,
 };
 
-/// 选择器视图配置
+/// view style
 @interface BRPickerStyle : NSObject
 
-/** 背景遮罩视图颜色 */
+/** maskView backgroundColor */
 @property (nonatomic, strong) UIColor *maskColor;
+/** hidden maskView */
+@property (nonatomic, assign) BOOL hiddenMaskView;
 
-/** 选择器弹框顶部左右圆角的半径 */
+/** alertView backgroundColor */
+@property (nonatomic, strong) UIColor *alertViewColor;
+/** alertView frame */
+@property (nonatomic, assign) CGRect alertViewFrame;
+/** alertView top cornerRadius  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
-/** 标题栏背景颜色 */
+/** titleBarView backgroundColor */
 @property (nonatomic, strong) UIColor *titleBarColor;
-/** 标题栏下边框线颜色 */
+/** titleBarView frame */
+@property (nonatomic, assign) CGRect titleBarFrame;
+/** lineView(titleBarView border-bottom) backgroundColor */
 @property (nonatomic, strong) UIColor *titleLineColor;
+/** hidden lineView */
+@property (nonatomic, assign) BOOL hiddenLineView;
 
-/** 左边取消按钮背景颜色 */
-@property (nonatomic, strong) UIColor *leftColor;
-/** 左边取消按钮文本颜色 */
-@property (nonatomic, strong) UIColor *leftTextColor;
-/** 左边取消按钮文本字体 */
-@property (nonatomic, strong) UIFont *leftTextFont;
-/** 左边取消按钮边框样式 */
-@property (nonatomic, assign) BRBorderStyle leftBorderStyle;
-/** 左边取消按钮宽度 */
-@property (nonatomic, assign) CGFloat leftBtnWidth;
-/** 左边取消按钮图片 */
-@property (nonatomic, strong) UIImage *leftBtnImage;
-/** 左边取消按钮标题 */
-@property (nonatomic, copy) NSString *leftBtnTitle;
-
-/** 中间标题文本颜色 */
+/** titleLabel backgroundColor */
+@property (nonatomic, strong) UIColor *titleLabelColor;
+/** titleLabel textColor */
 @property (nonatomic, strong) UIColor *titleTextColor;
-/** 中间标题文本字体 */
+/** titleLabel font */
 @property (nonatomic, strong) UIFont *titleTextFont;
+/** titleLabel frame */
+@property (nonatomic, assign) CGRect titleLabelFrame;
+/** hidden titleLabel */
+@property (nonatomic, assign) BOOL hiddenTitleLabel;
 
-/** 右边确定按钮背景颜色 */
-@property (nonatomic, strong) UIColor *rightColor;
-/** 右边确定按钮文本颜色 */
-@property (nonatomic, strong) UIColor *rightTextColor;
-/** 右边确定按钮文本字体 */
-@property (nonatomic, strong) UIFont *rightTextFont;
-/** 右边确定按钮边框样式 */
-@property (nonatomic, assign) BRBorderStyle rightBorderStyle;
-/** 右边确定按钮宽度 */
-@property (nonatomic, assign) CGFloat rightBtnWidth;
-/** 右边确定按钮图片 */
-@property (nonatomic, strong) UIImage *rightBtnImage;
-/** 右边确定按钮标题 */
-@property (nonatomic, copy) NSString *rightBtnTitle;
+/** cancel button backgroundColor */
+@property (nonatomic, strong) UIColor *cancelColor;
+/** cancel button titleColor */
+@property (nonatomic, strong) UIColor *cancelTextColor;
+/** cancel button font */
+@property (nonatomic, strong) UIFont *cancelTextFont;
+/** cancel button borderStyle */
+@property (nonatomic, assign) BRBorderStyle cancelBorderStyle;
+/** cancel button frame */
+@property (nonatomic, assign) CGRect cancelBtnFrame;
+/** cancel button image */
+@property (nonatomic, strong) UIImage *cancelBtnImage;
+/** cancel button title */
+@property (nonatomic, copy) NSString *cancelBtnTitle;
+/** hidden cancel button */
+@property (nonatomic, assign) BOOL hiddenCancelBtn;
 
-/** picker 选择器视图背景颜色 */
+/** done button backgroundColor */
+@property (nonatomic, strong) UIColor *doneColor;
+/** done button titleColor */
+@property (nonatomic, strong) UIColor *doneTextColor;
+/** done button font */
+@property (nonatomic, strong) UIFont *doneTextFont;
+/** done button borderStyle */
+@property (nonatomic, assign) BRBorderStyle doneBorderStyle;
+/** done button frame */
+@property (nonatomic, assign) CGRect doneBtnFrame;
+/** done button image */
+@property (nonatomic, strong) UIImage *doneBtnImage;
+/** done button title */
+@property (nonatomic, copy) NSString *doneBtnTitle;
+/** hidden done button */
+@property (nonatomic, assign) BOOL hiddenDoneBtn;
+
+/** picker backgroundColor */
 @property (nonatomic, strong) UIColor *pickerColor;
-/** picker 中间分割线颜色 */
+/** picker separatorColor */
 @property (nonatomic, strong) UIColor *separatorColor;
-/** picker 中间选择文本颜色 */
+/** picker center label textColor */
 @property (nonatomic, strong) UIColor *pickerTextColor;
-/** picker 文本字体大小 */
+/** picker center label font */
 @property (nonatomic, strong) UIFont *pickerTextFont;
-/** picker 行高 */
+/** picker rowHeight */
 @property (nonatomic, assign) CGFloat rowHeight;
-
 
 /**
  *  设置语言（不设置或为nil时，将随系统的语言自动改变）
  *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
  */
 @property(nonatomic, copy) NSString *language;
+
+
+//------------------------------------------ Deprecated properties ------------------------------------------
+
+@property (nonatomic, strong) UIColor *leftColor BRPickerViewDeprecated("Use the cancelColor instead");
+@property (nonatomic, strong) UIColor *leftTextColor BRPickerViewDeprecated("Use the cancelTextColor instead");
+@property (nonatomic, strong) UIFont *leftTextFont BRPickerViewDeprecated("Use the cancelTextFont instead");
+@property (nonatomic, assign) BRBorderStyle leftBorderStyle BRPickerViewDeprecated("Use the cancelBorderStyle instead");
+@property (nonatomic, assign) CGFloat leftBtnWidth BRPickerViewDeprecated("Use the cancelBtnFrame instead");
+@property (nonatomic, strong) UIImage *leftBtnImage BRPickerViewDeprecated("Use the cancelBtnImage instead");
+@property (nonatomic, copy) NSString *leftBtnTitle BRPickerViewDeprecated("Use the cancelBtnTitle instead");
+
+@property (nonatomic, strong) UIColor *rightColor BRPickerViewDeprecated("Use the doneColor instead");
+@property (nonatomic, strong) UIColor *rightTextColor BRPickerViewDeprecated("Use the doneTextColor instead");
+@property (nonatomic, strong) UIFont *rightTextFont BRPickerViewDeprecated("Use the doneTextFont instead");
+@property (nonatomic, assign) BRBorderStyle rightBorderStyle BRPickerViewDeprecated("Use the doneBorderStyle instead");
+@property (nonatomic, assign) CGFloat rightBtnWidth BRPickerViewDeprecated("Use the doneBtnFrame instead");
+@property (nonatomic, strong) UIImage *rightBtnImage BRPickerViewDeprecated("Use the doneBtnImage instead");
+@property (nonatomic, copy) NSString *rightBtnTitle BRPickerViewDeprecated("Use the doneBtnTitle instead");
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式

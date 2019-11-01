@@ -3,12 +3,11 @@
 //  BRPickerViewDemo
 //
 //  Created by 任波 on 2019/10/2.
-//  Copyright © 2019年 91renb. All rights reserved.
+//  Copydone © 2019年 91renb. All dones reserved.
 //
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRPickerStyle.h"
-#import "BRPickerViewMacro.h"
 #import "NSBundle+BRPickerView.h"
 
 @implementation BRPickerStyle
@@ -22,11 +21,18 @@
     return _maskColor;
 }
 
-- (UIColor *)pickerColor {
-    if (!_pickerColor) {
-        _pickerColor = [UIColor whiteColor];
+- (UIColor *)alertViewColor {
+    if (!_alertViewColor) {
+        _alertViewColor = self.pickerColor;
     }
-    return _pickerColor;
+    return _alertViewColor;
+}
+
+- (CGRect)alertViewFrame {
+    if (CGRectEqualToRect(_alertViewFrame, CGRectZero) || _alertViewFrame.size.height == 0) {
+        _alertViewFrame = CGRectMake(0, SCREEN_HEIGHT - kTitleBarHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, kTitleBarHeight + kPickerHeight + BR_BOTTOM_MARGIN);
+    }
+    return _alertViewFrame;
 }
 
 - (UIColor *)titleBarColor {
@@ -36,6 +42,13 @@
     return _titleBarColor;
 }
 
+- (CGRect)titleBarFrame {
+    if (CGRectEqualToRect(_titleBarFrame, CGRectZero) || _titleBarFrame.size.height == 0) {
+        _titleBarFrame = CGRectMake(0, 0, self.alertViewFrame.size.width, kTitleBarHeight);
+    }
+    return _titleBarFrame;
+}
+
 - (UIColor *)titleLineColor {
     if (!_titleLineColor) {
         _titleLineColor = BR_RGB_HEX(0xf1f1f1, 1.0f);
@@ -43,39 +56,46 @@
     return _titleLineColor;
 }
 
-- (UIColor *)leftColor {
-    if (!_leftColor) {
-        _leftColor = [UIColor clearColor];
+- (UIColor *)cancelColor {
+    if (!_cancelColor) {
+        _cancelColor = [UIColor clearColor];
     }
-    return _leftColor;
+    return _cancelColor;
 }
 
-- (UIColor *)leftTextColor {
-    if (!_leftTextColor) {
-        _leftTextColor = kDefaultTextColor;
+- (UIColor *)cancelTextColor {
+    if (!_cancelTextColor) {
+        _cancelTextColor = kDefaultTextColor;
     }
-    return _leftTextColor;
+    return _cancelTextColor;
 }
 
-- (UIFont *)leftTextFont {
-    if (!_leftTextFont) {
-        _leftTextFont = [UIFont systemFontOfSize:16.0f];
+- (UIFont *)cancelTextFont {
+    if (!_cancelTextFont) {
+        _cancelTextFont = [UIFont systemFontOfSize:16.0f];
     }
-    return _leftTextFont;
+    return _cancelTextFont;
 }
 
-- (NSString *)leftBtnTitle {
-    if (!_leftBtnTitle && !_leftBtnImage) {
-        _leftBtnTitle = [NSBundle br_localizedStringForKey:@"取消" language:self.language];
+- (NSString *)cancelBtnTitle {
+    if (!_cancelBtnTitle && !_cancelBtnImage) {
+        _cancelBtnTitle = [NSBundle br_localizedStringForKey:@"取消" language:self.language];
     }
-    return _leftBtnTitle;
+    return _cancelBtnTitle;
 }
 
-- (CGFloat)leftBtnWidth {
-    if (!_leftBtnWidth) {
-        _leftBtnWidth = 60.0f;
+- (CGRect)cancelBtnFrame {
+    if (CGRectEqualToRect(_cancelBtnFrame, CGRectZero) || _cancelBtnFrame.size.height == 0) {
+        _cancelBtnFrame = CGRectMake(5, 8, 60, 28);
     }
-    return _leftBtnWidth;
+    return _cancelBtnFrame;
+}
+
+- (UIColor *)titleLabelColor {
+    if (!_titleLabelColor) {
+        _titleLabelColor = [UIColor clearColor];
+    }
+    return _titleLabelColor;
 }
 
 - (UIColor *)titleTextColor {
@@ -92,39 +112,53 @@
     return _titleTextFont;
 }
 
-- (UIColor *)rightColor {
-    if (!_rightColor) {
-        _rightColor = [UIColor clearColor];
+- (CGRect)titleLabelFrame {
+    if (CGRectEqualToRect(_titleLabelFrame, CGRectZero) || _titleLabelFrame.size.height == 0) {
+        _titleLabelFrame = CGRectMake(5 + 60 + 2, 0, self.titleBarFrame.size.width - 2 * (5 + 60 + 2), kTitleBarHeight);
     }
-    return _rightColor;
+    return _titleLabelFrame;
 }
 
-- (UIColor *)rightTextColor {
-    if (!_rightTextColor) {
-        _rightTextColor = kDefaultTextColor;
+- (UIColor *)doneColor {
+    if (!_doneColor) {
+        _doneColor = [UIColor clearColor];
     }
-    return _rightTextColor;
+    return _doneColor;
 }
 
-- (UIFont *)rightTextFont {
-    if (!_rightTextFont) {
-        _rightTextFont = [UIFont systemFontOfSize:16.0f];
+- (UIColor *)doneTextColor {
+    if (!_doneTextColor) {
+        _doneTextColor = kDefaultTextColor;
     }
-    return _rightTextFont;
+    return _doneTextColor;
 }
 
-- (NSString *)rightBtnTitle {
-    if (!_rightBtnTitle && !_rightBtnImage) {
-        _rightBtnTitle = [NSBundle br_localizedStringForKey:@"确定" language:self.language];
+- (UIFont *)doneTextFont {
+    if (!_doneTextFont) {
+        _doneTextFont = [UIFont systemFontOfSize:16.0f];
     }
-    return _rightBtnTitle;
+    return _doneTextFont;
 }
 
-- (CGFloat)rightBtnWidth {
-    if (!_rightBtnWidth) {
-        _rightBtnWidth = 60.0f;
+- (NSString *)doneBtnTitle {
+    if (!_doneBtnTitle && !_doneBtnImage) {
+        _doneBtnTitle = [NSBundle br_localizedStringForKey:@"确定" language:self.language];
     }
-    return _rightBtnWidth;
+    return _doneBtnTitle;
+}
+
+- (CGRect)doneBtnFrame {
+    if (CGRectEqualToRect(_doneBtnFrame, CGRectZero) || _doneBtnFrame.size.height == 0) {
+        _doneBtnFrame = CGRectMake(self.titleBarFrame.size.width - 60 - 5, 8, 60, 28);
+    }
+    return _doneBtnFrame;
+}
+
+- (UIColor *)pickerColor {
+    if (!_pickerColor) {
+        _pickerColor = [UIColor whiteColor];
+    }
+    return _pickerColor;
 }
 
 - (UIColor *)separatorColor {
@@ -159,13 +193,71 @@
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];
     if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-        customStyle.leftTextColor = themeColor;
-        customStyle.leftBorderStyle = BRBorderStyleSolid;
-        customStyle.rightColor = themeColor;
-        customStyle.rightTextColor = [UIColor whiteColor];
-        customStyle.rightBorderStyle = BRBorderStyleFill;
+        customStyle.cancelTextColor = themeColor;
+        customStyle.cancelBorderStyle = BRBorderStyleSolid;
+        customStyle.doneColor = themeColor;
+        customStyle.doneTextColor = [UIColor whiteColor];
+        customStyle.doneBorderStyle = BRBorderStyleFill;
     }
     return customStyle;
+}
+
+
+#pragma mark - setter
+- (void)setLeftColor:(UIColor *)leftColor {
+    _cancelColor = leftColor;
+}
+
+- (void)setLeftTextColor:(UIColor *)leftTextColor {
+    _cancelTextColor = leftTextColor;
+}
+
+- (void)setLeftTextFont:(UIFont *)leftTextFont {
+    _cancelTextFont = leftTextFont;
+}
+
+- (void)setLeftBorderStyle:(BRBorderStyle)leftBorderStyle {
+    _cancelBorderStyle = leftBorderStyle;
+}
+
+- (void)setLeftBtnWidth:(CGFloat)leftBtnWidth {
+    _cancelBtnFrame = CGRectMake(5, 8, leftBtnWidth, 28);
+}
+
+- (void)setLeftBtnImage:(UIImage *)leftBtnImage {
+    _cancelBtnImage = leftBtnImage;
+}
+
+- (void)setLeftBtnTitle:(NSString *)leftBtnTitle {
+    _cancelBtnTitle = leftBtnTitle;
+}
+
+- (void)setRightColor:(UIColor *)rightColor {
+    _doneColor = rightColor;
+}
+
+- (void)setRightTextColor:(UIColor *)rightTextColor {
+    _doneTextColor = rightTextColor;
+}
+
+- (void)setRightTextFont:(UIFont *)rightTextFont {
+    _doneTextFont = rightTextFont;
+}
+
+- (void)setRightBorderStyle:(BRBorderStyle)rightBorderStyle {
+    _doneBorderStyle = rightBorderStyle;
+}
+
+- (void)setRightBtnWidth:(CGFloat)rightBtnWidth {
+    _doneBtnFrame = CGRectMake(self.titleBarFrame.size.width - rightBtnWidth - 5, 8, rightBtnWidth, 28);
+}
+
+- (void)setRightBtnImage:(UIImage *)rightBtnImage {
+    _doneBtnImage = rightBtnImage;
+}
+
+- (void)setRightBtnTitle:(NSString *)rightBtnTitle {
+    _doneBtnTitle = rightBtnTitle;
 }
 
 
