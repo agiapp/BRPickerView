@@ -26,78 +26,112 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 设置 maskView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;
+
 /** 隐藏 maskView */
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
+
 /** 设置 alertView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *alertViewColor;
+
 /** 设置 alertView 顶部左边和右边的圆角  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
+
 /** 设置 titleBarView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleBarColor;
+
 /** 设置 titleBarView 的高度（height）*/
 @property (nonatomic, assign) CGFloat titleBarHeight;
+
 /** 设置 titleBarView 底部边框的背景颜色（border-bottom backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLineColor;
+
 /** 隐藏 titleBarView 底部边框（border-bottom） */
 @property (nonatomic, assign) BOOL hiddenTitleBottomBorder;
 
+
 /** 设置 titleLabel 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLabelColor;
+
 /** 设置 titleLabel 文本颜色（textColor）*/
 @property (nonatomic, strong) UIColor *titleTextColor;
+
 /** 设置 titleLabel 字体大小（font）*/
 @property (nonatomic, strong) UIFont *titleTextFont;
+
 /** 设置 titleLabel 的 frame */
 @property (nonatomic, assign) CGRect titleLabelFrame;
+
 /** 隐藏 titleLabel */
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
 
+
 /** 设置 cancelBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *cancelColor;
+
 /** 设置 cancelBtn 标题的颜色（titleColor）*/
 @property (nonatomic, strong) UIColor *cancelTextColor;
+
 /** 设置 cancelBtn 标题的字体（font）*/
 @property (nonatomic, strong) UIFont *cancelTextFont;
+
 /** 设置 cancelBtn 的边框样式（borderStyle）*/
 @property (nonatomic, assign) BRBorderStyle cancelBorderStyle;
+
 /** 设置 cancelBtn 的 frame */
 @property (nonatomic, assign) CGRect cancelBtnFrame;
+
 /** 设置 cancelBtn 的 image */
 @property (nonatomic, strong) UIImage *cancelBtnImage;
+
 /** 设置 cancelBtn 的 title */
 @property (nonatomic, copy) NSString *cancelBtnTitle;
+
 /** 隐藏 cancelBtn */
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
+
 /** 设置 doneBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *doneColor;
+
 /** 设置 doneBtn 标题的颜色（titleColor）*/
 @property (nonatomic, strong) UIColor *doneTextColor;
+
 /** 设置 doneBtn 标题的字体（font）*/
 @property (nonatomic, strong) UIFont *doneTextFont;
+
 /** 设置 doneBtn 的边框样式（borderStyle）*/
 @property (nonatomic, assign) BRBorderStyle doneBorderStyle;
+
 /** 设置 doneBtn 的 frame */
 @property (nonatomic, assign) CGRect doneBtnFrame;
+
 /** 设置 doneBtn 的 image */
 @property (nonatomic, strong) UIImage *doneBtnImage;
+
 /** 设置 doneBtn 的 title */
 @property (nonatomic, copy) NSString *doneBtnTitle;
+
 /** 隐藏 doneBtn */
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
+
 /** 设置 picker 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *pickerColor;
+
 /** 设置 picker 中间两条分割线的背景颜色（separatorColor）*/
 @property (nonatomic, strong) UIColor *separatorColor;
+
 /** 设置 picker 文本的颜色（textColor）*/
 @property (nonatomic, strong) UIColor *pickerTextColor;
+
 /** 设置 picker 文本的字体（font）*/
 @property (nonatomic, strong) UIFont *pickerTextFont;
+
 /** 设置 picker 的行高（rowHeight）*/
 @property (nonatomic, assign) CGFloat rowHeight;
+
 
 /**
  *  设置语言（不设置或为nil时，将随系统的语言自动改变）
