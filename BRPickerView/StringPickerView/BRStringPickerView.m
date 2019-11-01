@@ -195,7 +195,7 @@
 #pragma mark - 字符串选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;

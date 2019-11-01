@@ -439,7 +439,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器1
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, kTitleBarHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight, SCREEN_WIDTH, kPickerHeight)];
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
@@ -490,7 +490,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器2
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarHeight + 0.5, SCREEN_WIDTH, kPickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight, SCREEN_WIDTH, kPickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;

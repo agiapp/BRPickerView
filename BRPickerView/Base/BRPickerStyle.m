@@ -28,13 +28,6 @@
     return _alertViewColor;
 }
 
-- (CGRect)alertViewFrame {
-    if (CGRectEqualToRect(_alertViewFrame, CGRectZero) || _alertViewFrame.size.height == 0) {
-        _alertViewFrame = CGRectMake(0, SCREEN_HEIGHT - kTitleBarHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, kTitleBarHeight + kPickerHeight + BR_BOTTOM_MARGIN);
-    }
-    return _alertViewFrame;
-}
-
 - (UIColor *)titleBarColor {
     if (!_titleBarColor) {
         _titleBarColor = kBRToolBarColor;
@@ -42,11 +35,11 @@
     return _titleBarColor;
 }
 
-- (CGRect)titleBarFrame {
-    if (CGRectEqualToRect(_titleBarFrame, CGRectZero) || _titleBarFrame.size.height == 0) {
-        _titleBarFrame = CGRectMake(0, 0, self.alertViewFrame.size.width, kTitleBarHeight);
+- (CGFloat)titleBarHeight {
+    if (!_titleBarHeight) {
+        _titleBarHeight = 44.0f;
     }
-    return _titleBarFrame;
+    return _titleBarHeight;
 }
 
 - (UIColor *)titleLineColor {
@@ -114,7 +107,7 @@
 
 - (CGRect)titleLabelFrame {
     if (CGRectEqualToRect(_titleLabelFrame, CGRectZero) || _titleLabelFrame.size.height == 0) {
-        _titleLabelFrame = CGRectMake(5 + 60 + 2, 0, self.titleBarFrame.size.width - 2 * (5 + 60 + 2), kTitleBarHeight);
+        _titleLabelFrame = CGRectMake(5 + 60 + 2, 0, SCREEN_WIDTH - 2 * (5 + 60 + 2), 44);
     }
     return _titleLabelFrame;
 }
@@ -149,7 +142,7 @@
 
 - (CGRect)doneBtnFrame {
     if (CGRectEqualToRect(_doneBtnFrame, CGRectZero) || _doneBtnFrame.size.height == 0) {
-        _doneBtnFrame = CGRectMake(self.titleBarFrame.size.width - 60 - 5, 8, 60, 28);
+        _doneBtnFrame = CGRectMake(SCREEN_WIDTH - 60 - 5, 8, 60, 28);
     }
     return _doneBtnFrame;
 }
@@ -249,7 +242,7 @@
 }
 
 - (void)setRightBtnWidth:(CGFloat)rightBtnWidth {
-    _doneBtnFrame = CGRectMake(self.titleBarFrame.size.width - rightBtnWidth - 5, 8, rightBtnWidth, 28);
+    _doneBtnFrame = CGRectMake(SCREEN_WIDTH - rightBtnWidth - 5, 8, rightBtnWidth, 28);
 }
 
 - (void)setRightBtnImage:(UIImage *)rightBtnImage {

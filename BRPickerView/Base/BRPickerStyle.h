@@ -26,24 +26,22 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** maskView backgroundColor */
 @property (nonatomic, strong) UIColor *maskColor;
-/** hidden maskView */
+/** Hidden maskView */
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
 /** alertView backgroundColor */
 @property (nonatomic, strong) UIColor *alertViewColor;
-/** alertView frame */
-@property (nonatomic, assign) CGRect alertViewFrame;
 /** alertView top cornerRadius  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
 /** titleBarView backgroundColor */
 @property (nonatomic, strong) UIColor *titleBarColor;
-/** titleBarView frame */
-@property (nonatomic, assign) CGRect titleBarFrame;
-/** lineView(titleBarView border-bottom) backgroundColor */
+/** titleBarView height */
+@property (nonatomic, assign) CGFloat titleBarHeight;
+/** titleBarView border-bottom backgroundColor */
 @property (nonatomic, strong) UIColor *titleLineColor;
-/** hidden lineView */
-@property (nonatomic, assign) BOOL hiddenLineView;
+/** Hidden titleBarView border-bottom */
+@property (nonatomic, assign) BOOL hiddenTitleBottomBorder;
 
 /** titleLabel backgroundColor */
 @property (nonatomic, strong) UIColor *titleLabelColor;
@@ -53,7 +51,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIFont *titleTextFont;
 /** titleLabel frame */
 @property (nonatomic, assign) CGRect titleLabelFrame;
-/** hidden titleLabel */
+/** Hidden titleLabel */
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
 
 /** cancel button backgroundColor */
@@ -70,7 +68,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIImage *cancelBtnImage;
 /** cancel button title */
 @property (nonatomic, copy) NSString *cancelBtnTitle;
-/** hidden cancel button */
+/** Hidden cancel button */
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
 /** done button backgroundColor */
@@ -87,7 +85,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, strong) UIImage *doneBtnImage;
 /** done button title */
 @property (nonatomic, copy) NSString *doneBtnTitle;
-/** hidden done button */
+/** Hidden done button */
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
 /** picker backgroundColor */

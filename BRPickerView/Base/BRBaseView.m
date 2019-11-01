@@ -23,8 +23,6 @@
 @property (nonatomic, strong) UIButton *doneBtn;
 // 中间标题
 @property (nonatomic, strong) UILabel *titleLabel;
-// 标题栏下边框分割线
-@property (nonatomic, strong) UIView *lineView;
 
 @end
 
@@ -52,9 +50,6 @@
     if (!self.pickerStyle.hiddenDoneBtn) {
         [self.titleBarView addSubview:self.doneBtn];
     }
-    if (!self.pickerStyle.hiddenLineView) {
-        [self.titleBarView addSubview:self.lineView];
-    }
 }
 
 #pragma mark - 背景遮罩图层
@@ -74,11 +69,11 @@
 #pragma mark - 弹出视图
 - (UIView *)alertView {
     if (!_alertView) {
-        _alertView = [[UIView alloc]initWithFrame:self.pickerStyle.alertViewFrame];
+        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.titleBarHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, self.pickerStyle.titleBarHeight + kPickerHeight + BR_BOTTOM_MARGIN)];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor;
         if (self.pickerStyle.topCornerRadius > 0) {
-            _alertView.layer.cornerRadius = self.pickerStyle.topCornerRadius;
-            _alertView.layer.masksToBounds = YES;
+            // 设置顶部圆角
+            [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
         }
         _alertView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
@@ -88,9 +83,13 @@
 #pragma mark - 顶部标题栏视图
 - (UIView *)titleBarView {
     if (!_titleBarView) {
-        _titleBarView =[[UIView alloc]initWithFrame:self.pickerStyle.titleBarFrame];
+        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+        if (!self.pickerStyle.hiddenTitleBottomBorder) {
+            // 设置底部分割线
+            [self br_setView:_titleBarView borderColor:self.pickerStyle.titleLineColor borderWidth:0.5f];
+        }
     }
     return _titleBarView;
 }
@@ -169,16 +168,6 @@
     return _titleLabel;
 }
 
-#pragma mark - 分割线
-- (UIView *)lineView {
-    if (!_lineView) {
-        _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, self.titleBarView.frame.size.height - 0.5, self.titleBarView.frame.size.width, 0.5)];
-        _lineView.backgroundColor = self.pickerStyle.titleLineColor;
-        _lineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-    }
-    return _lineView;
-}
-
 #pragma mark - 点击背景遮罩图层事件
 - (void)didTapMaskView:(UITapGestureRecognizer *)sender {
     [self removePickerFromView:nil];
@@ -223,7 +212,7 @@
         }
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
+            rect.origin.y -= kPickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -237,7 +226,7 @@
         // 关闭动画
         [UIView animateWithDuration:0.2 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y += kPickerHeight + kTitleBarHeight + BR_BOTTOM_MARGIN;
+            rect.origin.y += kPickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
             if (!self.pickerStyle.hiddenMaskView) {
                 self.maskView.alpha = 0;
@@ -268,6 +257,33 @@
         _pickerStyle = [[BRPickerStyle alloc]init];
     }
     return _pickerStyle;
+}
+
+#pragma mark - 设置 view 的部分圆角
+// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
+- (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
+    UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
+    [shape setPath:rounded.CGPath];
+    view.layer.mask = shape;
+}
+
+#pragma mark - 设置 view 底部的边框线
+- (void)br_setView:(UIView *)view borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth {
+    // 线的路径
+    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint:CGPointMake(0.0f, view.frame.size.height)];
+    [bezierPath addLineToPoint:CGPointMake(view.frame.size.width, view.frame.size.height)];
+    
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.strokeColor = borderColor.CGColor;
+    shapeLayer.fillColor = [UIColor clearColor].CGColor;
+    // 添加路径
+    shapeLayer.path = bezierPath.CGPath;
+    // 线宽度
+    shapeLayer.lineWidth = borderWidth;
+    
+    [view.layer addSublayer:shapeLayer];
 }
 
 - (void)dealloc {
