@@ -36,7 +36,7 @@
 }
 
 - (CGFloat)titleBarHeight {
-    if (!_titleBarHeight) {
+    if (_titleBarHeight < 44.0f) {
         _titleBarHeight = 44.0f;
     }
     return _titleBarHeight;

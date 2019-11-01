@@ -45,7 +45,7 @@ typedef void(^BRResultBlock)(void);
 - (void)addSubViewToPicker:(UIView *)customView;
 
 /// 扩展三：添加自定义视图到标题栏（titleBar）上
-/// 应用场景：设置标题栏高度，添加一些固定的标题、数值的单位等到标题栏底部
+/// 应用场景：先设置标题栏高度，再添加一些固定的标题、数值的单位等到标题栏底部
 /// @param customView 自定义视图
 - (void)addSubViewToTitleBar:(UIView *)customView;
 

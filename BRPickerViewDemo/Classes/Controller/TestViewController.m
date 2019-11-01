@@ -404,8 +404,6 @@
             customStyle.pickerTextColor = [UIColor redColor];
             customStyle.separatorColor = [UIColor redColor];
             customStyle.titleTextColor = [UIColor redColor];
-            customStyle.titleBarColor = [UIColor redColor];
-            customStyle.titleBarHeight = 100;
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
