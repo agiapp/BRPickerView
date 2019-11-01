@@ -21,82 +21,82 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
     BRBorderStyleFill,
 };
 
-/// view style
+/// 选择器配置
 @interface BRPickerStyle : NSObject
 
-/** maskView backgroundColor */
+/** 设置 maskView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;
-/** Hidden maskView */
+/** 隐藏 maskView */
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
-/** alertView backgroundColor */
+/** 设置 alertView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *alertViewColor;
-/** alertView top cornerRadius  */
+/** 设置 alertView 顶部左边和右边的圆角  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
-/** titleBarView backgroundColor */
+/** 设置 titleBarView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleBarColor;
-/** titleBarView height */
+/** 设置 titleBarView 的高度（height）*/
 @property (nonatomic, assign) CGFloat titleBarHeight;
-/** titleBarView border-bottom backgroundColor */
+/** 设置 titleBarView 底部边框的背景颜色（border-bottom backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLineColor;
-/** Hidden titleBarView border-bottom */
+/** 隐藏 titleBarView 底部边框（border-bottom） */
 @property (nonatomic, assign) BOOL hiddenTitleBottomBorder;
 
-/** titleLabel backgroundColor */
+/** 设置 titleLabel 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLabelColor;
-/** titleLabel textColor */
+/** 设置 titleLabel 文本颜色（textColor）*/
 @property (nonatomic, strong) UIColor *titleTextColor;
-/** titleLabel font */
+/** 设置 titleLabel 字体大小（font）*/
 @property (nonatomic, strong) UIFont *titleTextFont;
-/** titleLabel frame */
+/** 设置 titleLabel 的 frame */
 @property (nonatomic, assign) CGRect titleLabelFrame;
-/** Hidden titleLabel */
+/** 隐藏 titleLabel */
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
 
-/** cancel button backgroundColor */
+/** 设置 cancelBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *cancelColor;
-/** cancel button titleColor */
+/** 设置 cancelBtn 标题的颜色（titleColor）*/
 @property (nonatomic, strong) UIColor *cancelTextColor;
-/** cancel button font */
+/** 设置 cancelBtn 标题的字体（font）*/
 @property (nonatomic, strong) UIFont *cancelTextFont;
-/** cancel button borderStyle */
+/** 设置 cancelBtn 的边框样式（borderStyle）*/
 @property (nonatomic, assign) BRBorderStyle cancelBorderStyle;
-/** cancel button frame */
+/** 设置 cancelBtn 的 frame */
 @property (nonatomic, assign) CGRect cancelBtnFrame;
-/** cancel button image */
+/** 设置 cancelBtn 的 image */
 @property (nonatomic, strong) UIImage *cancelBtnImage;
-/** cancel button title */
+/** 设置 cancelBtn 的 title */
 @property (nonatomic, copy) NSString *cancelBtnTitle;
-/** Hidden cancel button */
+/** 隐藏 cancelBtn */
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
-/** done button backgroundColor */
+/** 设置 doneBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *doneColor;
-/** done button titleColor */
+/** 设置 doneBtn 标题的颜色（titleColor）*/
 @property (nonatomic, strong) UIColor *doneTextColor;
-/** done button font */
+/** 设置 doneBtn 标题的字体（font）*/
 @property (nonatomic, strong) UIFont *doneTextFont;
-/** done button borderStyle */
+/** 设置 doneBtn 的边框样式（borderStyle）*/
 @property (nonatomic, assign) BRBorderStyle doneBorderStyle;
-/** done button frame */
+/** 设置 doneBtn 的 frame */
 @property (nonatomic, assign) CGRect doneBtnFrame;
-/** done button image */
+/** 设置 doneBtn 的 image */
 @property (nonatomic, strong) UIImage *doneBtnImage;
-/** done button title */
+/** 设置 doneBtn 的 title */
 @property (nonatomic, copy) NSString *doneBtnTitle;
-/** Hidden done button */
+/** 隐藏 doneBtn */
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
-/** picker backgroundColor */
+/** 设置 picker 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *pickerColor;
-/** picker separatorColor */
+/** 设置 picker 中间两条分割线的背景颜色（separatorColor）*/
 @property (nonatomic, strong) UIColor *separatorColor;
-/** picker center label textColor */
+/** 设置 picker 文本的颜色（textColor）*/
 @property (nonatomic, strong) UIColor *pickerTextColor;
-/** picker center label font */
+/** 设置 picker 文本的字体（font）*/
 @property (nonatomic, strong) UIFont *pickerTextFont;
-/** picker rowHeight */
+/** 设置 picker 的行高（rowHeight）*/
 @property (nonatomic, assign) CGFloat rowHeight;
 
 /**
