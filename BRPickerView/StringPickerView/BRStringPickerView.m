@@ -382,8 +382,8 @@
 }
 
 #pragma mark - 重写父类方法
-- (void)addSubViewToPicker:(UIView *)subView {
-    [self.pickerView addSubview:subView];
+- (void)addSubViewToPicker:(UIView *)customView {
+    [self.pickerView addSubview:customView];
 }
 
 #pragma mark - 弹出选择器视图

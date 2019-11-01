@@ -237,9 +237,14 @@
     }
 }
 
-#pragma mark - 添加子视图到选择器上
-- (void)addSubViewToPicker:(UIView *)subView {
+#pragma mark - 添加自定义视图到选择器（picker）上
+- (void)addSubViewToPicker:(UIView *)customView {
     
+}
+
+#pragma mark - 添加自定义视图到标题栏（titleBar）上
+- (void)addSubViewToTitleBar:(UIView *)customView {
+    [self.titleBarView addSubview:customView];
 }
 
 - (void)setPickerView:(UIView *)pickerView toView:(UIView *)view {

@@ -39,11 +39,15 @@ typedef void(^BRResultBlock)(void);
 /// @param view 容器视图
 - (void)removePickerFromView:(UIView *)view;
 
-/// 扩展二：添加子视图到选择器上
-/// 应用场景：可以添加一些固定的标题、数值的单位等到选择器上
-/// @param subView 子视图
-- (void)addSubViewToPicker:(UIView *)subView;
+/// 扩展二：添加自定义视图到选择器（picker）上
+/// 应用场景：可以添加一些固定的标题、数值的单位等到选择器中间
+/// @param customView 自定义视图
+- (void)addSubViewToPicker:(UIView *)customView;
 
+/// 扩展三：添加自定义视图到标题栏（titleBar）上
+/// 应用场景：设置标题栏高度，添加一些固定的标题、数值的单位等到标题栏底部
+/// @param customView 自定义视图
+- (void)addSubViewToTitleBar:(UIView *)customView;
 
 /// 添加 picker 到 alertView（框架内部使用）
 /// @param pickerView 选择器视图

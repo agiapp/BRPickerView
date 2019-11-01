@@ -310,11 +310,11 @@
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.topCornerRadius = 16.0f;
             customStyle.titleLineColor = [UIColor clearColor];
-            customStyle.rightTextColor = [UIColor lightGrayColor];
-            customStyle.rightTextFont = [UIFont systemFontOfSize:20.0f];
+            customStyle.doneTextColor = [UIColor lightGrayColor];
+            customStyle.doneTextFont = [UIFont systemFontOfSize:20.0f];
             customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
-            customStyle.leftBtnTitle = @"";
-            customStyle.rightBtnTitle = @"      ✕";
+            customStyle.cancelBtnTitle = @"";
+            customStyle.doneBtnTitle = @"      ✕";
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
@@ -404,6 +404,8 @@
             customStyle.pickerTextColor = [UIColor redColor];
             customStyle.separatorColor = [UIColor redColor];
             customStyle.titleTextColor = [UIColor redColor];
+            customStyle.titleBarColor = [UIColor redColor];
+            customStyle.titleBarHeight = 100;
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
@@ -424,8 +426,8 @@
     if (@available(iOS 13.0, *)) {
         customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2];
         customStyle.titleBarColor = [UIColor systemBackgroundColor];
-        customStyle.leftTextColor = [UIColor labelColor];
-        customStyle.rightTextColor = [UIColor labelColor];
+        customStyle.cancelTextColor = [UIColor labelColor];
+        customStyle.doneTextColor = [UIColor labelColor];
         customStyle.titleTextColor = [UIColor placeholderTextColor];
         customStyle.titleLineColor = [UIColor quaternaryLabelColor];
         

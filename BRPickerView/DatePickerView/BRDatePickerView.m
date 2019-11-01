@@ -805,11 +805,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 重写父类方法
-- (void)addSubViewToPicker:(UIView *)subView {
+- (void)addSubViewToPicker:(UIView *)customView {
     if (self.style == BRDatePickerStyleSystem) {
-        [self.datePicker addSubview:subView];
+        [self.datePicker addSubview:customView];
     } else if (self.style == BRDatePickerStyleCustom) {
-        [self.pickerView addSubview:subView];
+        [self.pickerView addSubview:customView];
     }
 }
 
