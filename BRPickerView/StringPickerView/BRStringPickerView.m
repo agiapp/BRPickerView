@@ -306,7 +306,7 @@
 
 #pragma mark - 处理单列选择结果的回调
 - (void)handlerResultModelBlock {
-    // 1.使用方式一的回调
+    // 1.用法1 的回调
     if (self.resultModelBlock) {
         BRResultModel *resultModel = [[BRResultModel alloc]init];
         resultModel.selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
@@ -314,7 +314,7 @@
         self.resultModelBlock(resultModel);
     }
     
-    // 2.使用方式二的回调（兼容旧版本）
+    // 2.用法2 的回调（兼容旧版本）
     if(self.resultBlock) {
         NSString *selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
         self.resultBlock(selectValue);
@@ -324,7 +324,7 @@
 
 #pragma mark - 处理多列选择结果的回调
 - (void)handlerResultModelArrayBlock {
-    // 1.使用方式一的回调
+    // 1.用法1 的回调
     if (self.resultModelArrayBlock) {
         NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
@@ -338,7 +338,7 @@
         self.resultModelArrayBlock([resultModelArr copy]);
     }
     
-    // 2.使用方式二的回调（兼容旧版本）
+    // 2.用法2 的回调（兼容旧版本）
     if(self.resultBlock) {
         NSMutableArray *mSelectValueArr = [[NSMutableArray alloc]init];
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {

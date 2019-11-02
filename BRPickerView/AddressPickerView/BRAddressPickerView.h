@@ -27,7 +27,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 /**
 //////////////////////////////////////////////////////////////////////////
 ///
-///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致方法参数过多
+///   【用法1】：传统的创建对象设置属性方式（推荐！）
 ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
 ///    2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
 ///    3. 显示选择器（使用 show 方法）
@@ -36,9 +36,6 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 
 /** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
 @property (nonatomic, copy) NSArray <NSString *>* defaultSelectedArr;
-
-/** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
-@property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;
@@ -61,13 +58,13 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 
 
 
-//======================================== 华丽的分割线（以下为旧版本使用方式） ========================================
+//======================================== 华丽的分割线（以下为旧版本用法） ========================================
 
 
 /**
 //////////////////////////////////////////////////////////////////////////
 ///
-///   【使用方式二】：快捷使用，直接选择下面其中的一个方法进行使用
+///   【用法2】：快捷使用，直接选择下面其中的一个方法进行使用
 ///
 ////////////////////////////////////////////////////////////////////////*/
 
@@ -93,7 +90,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
                                 isAutoSelect:(BOOL)isAutoSelect
                                   themeColor:(UIColor *)themeColor
-                                 resultBlock:(BRAddressResultBlock)resultBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                                 resultBlock:(BRAddressResultBlock)resultBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
 
 /**
  *  3.显示地址选择器（支持 设置选择器类型、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -111,7 +108,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
 
 /**
  *  4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -131,7 +128,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
 
 
 @end

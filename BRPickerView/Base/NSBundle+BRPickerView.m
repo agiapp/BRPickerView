@@ -67,7 +67,7 @@
         }
         
         // 从 BRPickerView.bundle 中查找资源
-        bundle = [NSBundle bundleWithPath:[[NSBundle br_pickerBundle] pathForResource:language ofType:@"lproj"]];
+        bundle = [NSBundle bundleWithPath:[[self br_pickerBundle] pathForResource:language ofType:@"lproj"]];
     }
     value = [bundle localizedStringForKey:key value:value table:nil];
     

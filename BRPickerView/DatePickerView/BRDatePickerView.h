@@ -46,7 +46,7 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 /**
 //////////////////////////////////////////////////////////////////////////
 ///
-///   【使用方式一】：传统的创建对象设置属性方式，好处是避免使用方式二导致方法参数过多
+///   【用法1】：传统的创建对象设置属性方式（推荐！）
 ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
 ///    2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
 ///    3. 显示选择器（使用 show 方法）
@@ -55,15 +55,12 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 
 /** 默认选中的时间（默认选中当前时间） */
 @property (nonatomic, copy) NSString *selectValue;
-@property (nonatomic, copy) NSString *defaultSelValue BRPickerViewDeprecated("过期提醒：推荐使用 selectValue");
+@property (nonatomic, copy) NSString *defaultSelValue BRPickerViewDeprecated("推荐使用 selectValue");
 
 /** 最小时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）*/
 @property (nonatomic, strong) NSDate *minDate;
 /** 最大时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）*/
 @property (nonatomic, strong) NSDate *maxDate;
-
-/** 是否自动选择，即滑动选择器后就执行结果回调，默认为NO */
-@property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
 @property (nonatomic, assign) BOOL hiddenDateUnit;
@@ -84,13 +81,13 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 
 
 
-//======================================== 华丽的分割线（以下为旧版本使用方式） ========================================
+//======================================== 华丽的分割线（以下为旧版本用法） ========================================
 
 
 /**
 //////////////////////////////////////////////////////////////////////////
 ///
-///   【使用方式二】：快捷使用，直接选择下面其中的一个方法进行使用
+///   【用法2】：快捷使用，直接选择下面其中的一个方法进行使用
 ///
 ////////////////////////////////////////////////////////////////////////*/
 
@@ -128,7 +125,7 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
                         maxDate:(NSDate *)maxDate
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                    resultBlock:(BRDateResultBlock)resultBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
 
 /**
  *  3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
@@ -152,7 +149,7 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
                    isAutoSelect:(BOOL)isAutoSelect
                      themeColor:(UIColor *)themeColor
                     resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("过期提醒：推荐【使用方式一】，支持自定义UI样式");
+                    cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
 
 
 @end
