@@ -21,17 +21,19 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
     BRBorderStyleFill,
 };
 
-/// 选择器配置
 @interface BRPickerStyle : NSObject
 
 
-/** 设置 maskView 的背景颜色（backgroundColor）*/
+///////////////////////////// 背景遮罩视图（maskView） /////////////////////////////
+
+/** 设置背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;
 
 /** 隐藏 maskView */
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
 
+////////////////////////////// 弹框视图（alertView） //////////////////////////////
 
 /** 设置 alertView 弹框视图的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *alertViewColor;
@@ -40,6 +42,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
 
+//////////////////////////// 标题栏视图（titleBarView） ////////////////////////////
 
 /** 设置 titleBarView 标题栏的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleBarColor;
@@ -57,6 +60,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenTitleBarView;
 
 
+///////////////////////// 标题栏中间标题label（titleLabel） /////////////////////////
 
 /** 设置 titleLabel 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLabelColor;
@@ -74,6 +78,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
 
 
+/////////////////////////////// 取消按钮（cancelBtn） //////////////////////////////
 
 /** 设置 cancelBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *cancelColor;
@@ -100,6 +105,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
 
+/////////////////////////////// 确定按钮（doneBtn） ///////////////////////////////
 
 /** 设置 doneBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *doneColor;
@@ -126,6 +132,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
 
+//////////////////////////// 选择器（pickerView） ////////////////////////////
 
 /** 设置 picker 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *pickerColor;
@@ -143,13 +150,11 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) CGFloat rowHeight;
 
 
-
 /**
  *  设置语言（不设置或为nil时，将随系统的语言自动改变）
  *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
  */
 @property(nonatomic, copy) NSString *language;
-
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式
