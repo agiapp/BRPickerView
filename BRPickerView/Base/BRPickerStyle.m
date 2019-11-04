@@ -46,8 +46,12 @@
 }
 
 - (CGFloat)titleBarHeight {
-    if (_titleBarHeight < 44.0f) {
-        _titleBarHeight = 44.0f;
+    if (!self.hiddenTitleBarView) {
+        if (_titleBarHeight < 44.0f && (!self.hiddenCancelBtn || !self.hiddenDoneBtn || !self.hiddenTitleLabel)) {
+            _titleBarHeight = 44.0f;
+        }
+    } else {
+        _titleBarHeight = 0;
     }
     return _titleBarHeight;
 }
