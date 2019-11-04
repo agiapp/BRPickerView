@@ -10,6 +10,9 @@
 #import "BRPickerStyle.h"
 #import "NSBundle+BRPickerView.h"
 
+// 标题颜色
+#define kDefaultTextColor BR_RGB_HEX(0x333333, 1.0)
+
 @implementation BRPickerStyle
 
 /// 设置默认样式
@@ -28,9 +31,16 @@
     return _alertViewColor;
 }
 
+- (UIColor *)shadowLineColor {
+    if (!_shadowLineColor) {
+        _shadowLineColor = BR_RGB_HEX(0xcccccc, 1.0f);
+    }
+    return _shadowLineColor;
+}
+
 - (UIColor *)titleBarColor {
     if (!_titleBarColor) {
-        _titleBarColor = kBRToolBarColor;
+        _titleBarColor = BR_RGB_HEX(0xfdfdfd, 1.0f);
     }
     return _titleBarColor;
 }

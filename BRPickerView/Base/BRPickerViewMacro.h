@@ -40,11 +40,6 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 // 底部安全区域远离高度
 #define BR_BOTTOM_MARGIN ((CGFloat)(BR_IS_iPhoneX ? 34 : 0))
 
-// 默认主题颜色
-#define kDefaultTextColor BR_RGB_HEX(0x333333, 1.0)
-// topView视图的背景颜色
-#define kBRToolBarColor BR_RGB_HEX(0xFDFDFD, 1.0f)
-
 // 静态库中编写 Category 时的便利宏，用于解决 Category 方法从静态库中加载需要特别设置的问题
 #ifndef BRSYNTH_DUMMY_CLASS
 
@@ -58,7 +53,11 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 #define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
 
 // 打印错误日志
-#define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])
+#ifdef DEBUG
+    #define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])
+#else
+    #define BRErrorLog(...)
+#endif
 
 /**
  合成弱引用/强引用

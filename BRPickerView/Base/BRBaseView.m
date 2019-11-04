@@ -55,7 +55,7 @@
     }
 }
 
-#pragma mark - 背景遮罩图层
+#pragma mark - 背景遮罩视图
 - (UIView *)maskView {
     if (!_maskView) {
         _maskView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
@@ -69,7 +69,7 @@
     return _maskView;
 }
 
-#pragma mark - 弹出视图
+#pragma mark - 弹框视图
 - (UIView *)alertView {
     if (!_alertView) {
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.titleBarHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, self.pickerStyle.titleBarHeight + kPickerHeight + BR_BOTTOM_MARGIN)];
@@ -77,28 +77,32 @@
         if (self.pickerStyle.topCornerRadius > 0) {
             // 设置顶部圆角
             [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
+        } else {
+            if (!self.pickerStyle.hiddenShadowLine) {
+                // 设置弹框视图顶部边框线
+                [self br_setView:_alertView borderColor:self.pickerStyle.shadowLineColor borderWidth:1.0f isTop:YES];
+            }
         }
         _alertView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
     return _alertView;
 }
 
-#pragma mark - 顶部标题栏视图
+#pragma mark - 标题栏视图
 - (UIView *)titleBarView {
     if (!_titleBarView) {
         _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-        
         if (!self.pickerStyle.hiddenTitleBottomBorder) {
-            // 设置底部分割线
-            [self br_setView:_titleBarView borderColor:self.pickerStyle.titleLineColor borderWidth:0.5f];
+            // 设置标题栏底部分割线
+            [self br_setView:_titleBarView borderColor:self.pickerStyle.titleLineColor borderWidth:0.5f isTop:NO];
         }
     }
     return _titleBarView;
 }
 
-#pragma mark - 左边取消按钮
+#pragma mark - 取消按钮
 - (UIButton *)cancelBtn {
     if (!_cancelBtn) {
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -128,7 +132,7 @@
     return _cancelBtn;
 }
 
-#pragma mark - 右边确定按钮
+#pragma mark - 确定按钮
 - (UIButton *)doneBtn {
     if (!_doneBtn) {
         _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -279,12 +283,12 @@
     view.layer.mask = shape;
 }
 
-#pragma mark - 设置 view 底部的边框线
-- (void)br_setView:(UIView *)view borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth {
+#pragma mark - 设置 view 顶部/底部的边框线
+- (void)br_setView:(UIView *)view borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth isTop:(BOOL)isTop {
     // 线的路径
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-    [bezierPath moveToPoint:CGPointMake(0.0f, view.frame.size.height)];
-    [bezierPath addLineToPoint:CGPointMake(view.frame.size.width, view.frame.size.height)];
+    [bezierPath moveToPoint:CGPointMake(0.0f, isTop ? 0 : view.frame.size.height)];
+    [bezierPath addLineToPoint:CGPointMake(view.frame.size.width, isTop ? 0 : view.frame.size.height)];
     
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.strokeColor = borderColor.CGColor;

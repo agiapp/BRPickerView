@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;
 
-/** 隐藏 maskView */
+/** 隐藏 maskView，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
 
@@ -40,6 +40,12 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 设置 alertView 弹框视图顶部左边和右边的圆角  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
+
+/** 设置 alertView 弹框视图顶部边框线颜色  */
+@property (nonatomic, strong) UIColor *shadowLineColor;
+
+/** 隐藏 alertView 弹框视图顶部边框线，默认为 NO */
+@property (nonatomic, assign) BOOL hiddenShadowLine;
 
 
 //////////////////////////// 标题栏视图（titleBarView） ////////////////////////////
@@ -53,10 +59,10 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 titleBarView 标题栏底部边框的背景颜色（border-bottom backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLineColor;
 
-/** 隐藏 titleBarView 标题栏底部边框（border-bottom） */
+/** 隐藏 titleBarView 标题栏底部边框（border-bottom），默认为 NO  */
 @property (nonatomic, assign) BOOL hiddenTitleBottomBorder;
 
-/** 隐藏 titleBarView */
+/** 隐藏 titleBarView，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenTitleBarView;
 
 
@@ -74,7 +80,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 titleLabel 的 frame */
 @property (nonatomic, assign) CGRect titleLabelFrame;
 
-/** 隐藏 titleLabel */
+/** 隐藏 titleLabel，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
 
 
@@ -101,7 +107,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 cancelBtn 的 title */
 @property (nonatomic, copy) NSString *cancelBtnTitle;
 
-/** 隐藏 cancelBtn */
+/** 隐藏 cancelBtn，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
 
@@ -128,7 +134,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 doneBtn 的 title */
 @property (nonatomic, copy) NSString *doneBtnTitle;
 
-/** 隐藏 doneBtn */
+/** 隐藏 doneBtn，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
 
