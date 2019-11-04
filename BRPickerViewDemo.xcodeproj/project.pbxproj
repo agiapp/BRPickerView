@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C0D234D6AA2004E801F /* BRPickerStyle.m */; };
 		451D6C1123509890004E801F /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C1023509890004E801F /* BRResultModel.m */; };
-		4565392323702BA30074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4565392223702BA30074BBBC /* BRPickerView.bundle */; };
+		45653925237032D90074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45653924237032D90074BBBC /* BRPickerView.bundle */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		C5655BA12084759300331751 /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA02084759300331751 /* BRInfoCell.m */; };
 		C5655BA420848B1900331751 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA220848B1900331751 /* icon_next@2x.png */; };
@@ -37,7 +37,7 @@
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
 		451D6C1023509890004E801F /* BRResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
-		4565392223702BA30074BBBC /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
+		45653924237032D90074BBBC /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
@@ -163,7 +163,6 @@
 				C5ACE4F31F3D5A8B0069978B /* DatePickerView */,
 				C5ACE4F11F3D5A8B0069978B /* AddressPickerView */,
 				C5ACE4F41F3D5A8B0069978B /* StringPickerView */,
-				4565392223702BA30074BBBC /* BRPickerView.bundle */,
 			);
 			path = BRPickerView;
 			sourceTree = SOURCE_ROOT;
@@ -224,6 +223,7 @@
 				459A260A2362F0280048F06D /* BRPickerViewMacro.h */,
 				459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */,
 				459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */,
+				45653924237032D90074BBBC /* BRPickerView.bundle */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -298,7 +298,7 @@
 				C5655BA520848B1900331751 /* icon_next@3x.png in Resources */,
 				C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */,
 				C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */,
-				4565392323702BA30074BBBC /* BRPickerView.bundle in Resources */,
+				45653925237032D90074BBBC /* BRPickerView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
