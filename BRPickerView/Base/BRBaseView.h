@@ -10,8 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "BRPickerStyle.h"
 
-#define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
-
 typedef void(^BRCancelBlock)(void);
 typedef void(^BRResultBlock)(void);
 

@@ -8,7 +8,6 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "BRStringPickerView.h"
-#import "BRPickerViewMacro.h"
 
 @interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
 {
