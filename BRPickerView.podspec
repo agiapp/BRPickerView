@@ -54,7 +54,7 @@ Pod::Spec.new do |s|
   end
   
   # 框架包含的资源包
-  s.resources  = "BRPickerView/AddressPickerView/BRPickerView.bundle"
+  s.resources  = "BRPickerView/Base/BRPickerView.bundle"
 
   # 框架要求ARC环境下使用
   s.requires_arc = true

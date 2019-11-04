@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C0D234D6AA2004E801F /* BRPickerStyle.m */; };
 		451D6C1123509890004E801F /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C1023509890004E801F /* BRResultModel.m */; };
+		456538F8236FF1A20074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 456538F7236FF1A20074BBBC /* BRPickerView.bundle */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		C5655BA12084759300331751 /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA02084759300331751 /* BRInfoCell.m */; };
 		C5655BA420848B1900331751 /* icon_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA220848B1900331751 /* icon_next@2x.png */; };
 		C5655BA520848B1900331751 /* icon_next@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5655BA320848B1900331751 /* icon_next@3x.png */; };
 		C5655BA82084B3B000331751 /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA72084B3B000331751 /* BRInfoModel.m */; };
-		C57E775C204699B2004A2425 /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C57E775B204699B2004A2425 /* BRPickerView.bundle */; };
 		C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A158F01FBD893900B3B3BA /* BRBaseView.m */; };
 		C5ACE4DB1F3D58BD0069978B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DA1F3D58BD0069978B /* main.m */; };
 		C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */; };
@@ -37,6 +37,7 @@
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
 		451D6C1023509890004E801F /* BRResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
+		456538F7236FF1A20074BBBC /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
@@ -46,7 +47,6 @@
 		C5655BA320848B1900331751 /* icon_next@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_next@3x.png"; sourceTree = "<group>"; };
 		C5655BA62084B3B000331751 /* BRInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
 		C5655BA72084B3B000331751 /* BRInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
-		C57E775B204699B2004A2425 /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		C5A158F01FBD893900B3B3BA /* BRBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
 		C5A158F11FBD893900B3B3BA /* BRBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
 		C5ACE4D61F3D58BD0069978B /* BRPickerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRPickerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,7 +174,6 @@
 				C5ACE5041F3D7C4F0069978B /* BRAddressPickerView.m */,
 				C5ACE5061F3D7D060069978B /* BRAddressModel.h */,
 				C5ACE5071F3D7D060069978B /* BRAddressModel.m */,
-				C57E775B204699B2004A2425 /* BRPickerView.bundle */,
 			);
 			path = AddressPickerView;
 			sourceTree = "<group>";
@@ -224,6 +223,7 @@
 				459A260A2362F0280048F06D /* BRPickerViewMacro.h */,
 				459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */,
 				459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */,
+				456538F7236FF1A20074BBBC /* BRPickerView.bundle */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -291,7 +291,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5655BA420848B1900331751 /* icon_next@2x.png in Resources */,
-				C57E775C204699B2004A2425 /* BRPickerView.bundle in Resources */,
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
 				C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
@@ -299,6 +298,7 @@
 				C5655BA520848B1900331751 /* icon_next@3x.png in Resources */,
 				C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */,
 				C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */,
+				456538F8236FF1A20074BBBC /* BRPickerView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

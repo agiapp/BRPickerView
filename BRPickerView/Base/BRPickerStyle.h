@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /// 选择器配置
 @interface BRPickerStyle : NSObject
 
+
 /** 设置 maskView 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;
 
@@ -31,24 +32,30 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
 
-/** 设置 alertView 的背景颜色（backgroundColor）*/
+
+/** 设置 alertView 弹框视图的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *alertViewColor;
 
-/** 设置 alertView 顶部左边和右边的圆角  */
+/** 设置 alertView 弹框视图顶部左边和右边的圆角  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
 
-/** 设置 titleBarView 的背景颜色（backgroundColor）*/
+
+/** 设置 titleBarView 标题栏的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleBarColor;
 
-/** 设置 titleBarView 的高度（height）*/
+/** 设置 titleBarView 标题栏的高度（height）*/
 @property (nonatomic, assign) CGFloat titleBarHeight;
 
-/** 设置 titleBarView 底部边框的背景颜色（border-bottom backgroundColor）*/
+/** 设置 titleBarView 标题栏底部边框的背景颜色（border-bottom backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLineColor;
 
-/** 隐藏 titleBarView 底部边框（border-bottom） */
+/** 隐藏 titleBarView 标题栏底部边框（border-bottom） */
 @property (nonatomic, assign) BOOL hiddenTitleBottomBorder;
+
+/** 隐藏 titleBarView */
+@property (nonatomic, assign) BOOL hiddenTitleBarView;
+
 
 
 /** 设置 titleLabel 的背景颜色（backgroundColor）*/
@@ -65,6 +72,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 隐藏 titleLabel */
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
+
 
 
 /** 设置 cancelBtn 的背景颜色（backgroundColor）*/
@@ -92,6 +100,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
 
+
 /** 设置 doneBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *doneColor;
 
@@ -117,6 +126,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
 
+
 /** 设置 picker 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *pickerColor;
 
@@ -133,30 +143,13 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) CGFloat rowHeight;
 
 
+
 /**
  *  设置语言（不设置或为nil时，将随系统的语言自动改变）
  *  language: zh-Hans（简体中文）、zh-Hant（繁体中文）、en（英语 ）
  */
 @property(nonatomic, copy) NSString *language;
 
-
-//------------------------------------------ Deprecated properties ------------------------------------------
-
-@property (nonatomic, strong) UIColor *leftColor BRPickerViewDeprecated("Use the cancelColor instead");
-@property (nonatomic, strong) UIColor *leftTextColor BRPickerViewDeprecated("Use the cancelTextColor instead");
-@property (nonatomic, strong) UIFont *leftTextFont BRPickerViewDeprecated("Use the cancelTextFont instead");
-@property (nonatomic, assign) BRBorderStyle leftBorderStyle BRPickerViewDeprecated("Use the cancelBorderStyle instead");
-@property (nonatomic, assign) CGFloat leftBtnWidth BRPickerViewDeprecated("Use the cancelBtnFrame instead");
-@property (nonatomic, strong) UIImage *leftBtnImage BRPickerViewDeprecated("Use the cancelBtnImage instead");
-@property (nonatomic, copy) NSString *leftBtnTitle BRPickerViewDeprecated("Use the cancelBtnTitle instead");
-
-@property (nonatomic, strong) UIColor *rightColor BRPickerViewDeprecated("Use the doneColor instead");
-@property (nonatomic, strong) UIColor *rightTextColor BRPickerViewDeprecated("Use the doneTextColor instead");
-@property (nonatomic, strong) UIFont *rightTextFont BRPickerViewDeprecated("Use the doneTextFont instead");
-@property (nonatomic, assign) BRBorderStyle rightBorderStyle BRPickerViewDeprecated("Use the doneBorderStyle instead");
-@property (nonatomic, assign) CGFloat rightBtnWidth BRPickerViewDeprecated("Use the doneBtnFrame instead");
-@property (nonatomic, strong) UIImage *rightBtnImage BRPickerViewDeprecated("Use the doneBtnImage instead");
-@property (nonatomic, copy) NSString *rightBtnTitle BRPickerViewDeprecated("Use the doneBtnTitle instead");
 
 
 /// 快捷设置自定义样式 - 取消/确定按钮圆角样式

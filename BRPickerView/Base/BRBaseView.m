@@ -39,16 +39,19 @@
     
     [self addSubview:self.alertView];
     
-    [self.alertView addSubview:self.titleBarView];
-    
-    if (!self.pickerStyle.hiddenTitleLabel) {
-        [self.titleBarView addSubview:self.titleLabel];
-    }
-    if (!self.pickerStyle.hiddenCancelBtn) {
-        [self.titleBarView addSubview:self.cancelBtn];
-    }
-    if (!self.pickerStyle.hiddenDoneBtn) {
-        [self.titleBarView addSubview:self.doneBtn];
+    // 是否隐藏标题栏
+    if (!self.pickerStyle.hiddenTitleBarView) {
+        [self.alertView addSubview:self.titleBarView];
+
+        if (!self.pickerStyle.hiddenTitleLabel) {
+            [self.titleBarView addSubview:self.titleLabel];
+        }
+        if (!self.pickerStyle.hiddenCancelBtn) {
+            [self.titleBarView addSubview:self.cancelBtn];
+        }
+        if (!self.pickerStyle.hiddenDoneBtn) {
+            [self.titleBarView addSubview:self.doneBtn];
+        }
     }
 }
 
@@ -86,6 +89,7 @@
         _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+        
         if (!self.pickerStyle.hiddenTitleBottomBorder) {
             // 设置底部分割线
             [self br_setView:_titleBarView borderColor:self.pickerStyle.titleLineColor borderWidth:0.5f];
@@ -244,7 +248,9 @@
 
 #pragma mark - 添加自定义视图到标题栏（titleBar）上
 - (void)addSubViewToTitleBar:(UIView *)customView {
-    [self.titleBarView addSubview:customView];
+    if (!self.pickerStyle.hiddenTitleBarView) {
+        [self.titleBarView addSubview:customView];
+    }
 }
 
 - (void)setPickerView:(UIView *)pickerView toView:(UIView *)view {
