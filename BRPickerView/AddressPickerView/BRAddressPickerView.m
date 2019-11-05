@@ -208,16 +208,14 @@
             @weakify(self)
             [self.provinceModelArr enumerateObjectsUsingBlock:^(BRProvinceModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
-                if (self.selectIndexs.count > 0 && [self.selectIndexs[0] integerValue] > 0 && [self.selectIndexs[0] integerValue] == idx) {
-                    self.provinceIndex = [self.selectIndexs[0] integerValue];
+                if (selectProvinceName && [model.name isEqualToString:selectProvinceName]) {
+                    self.provinceIndex = idx;
                     self.selectProvinceModel = model;
                     *stop = YES;
-                } else {
-                    if (selectProvinceName && [model.name isEqualToString:selectProvinceName]) {
-                        self.provinceIndex = idx;
-                        self.selectProvinceModel = model;
-                        *stop = YES;
-                    }
+                }
+                if (idx == self.provinceModelArr.count - 1) {
+                    self.provinceIndex = 0;
+                    self.selectProvinceModel = self.provinceModelArr[self.provinceIndex];
                 }
             }];
         }
@@ -238,6 +236,10 @@
                     self.selectCityModel = model;
                     *stop = YES;
                 }
+                if (idx == self.cityModelArr.count - 1) {
+                    self.cityIndex = 0;
+                    self.selectCityModel = self.cityModelArr[self.cityIndex];
+                }
             }];
         }
     }
@@ -256,6 +258,10 @@
                     self.areaIndex = idx;
                     self.selectAreaModel = model;
                     *stop = YES;
+                }
+                if (idx == self.areaModelArr.count - 1) {
+                    self.areaIndex = 0;
+                    self.selectAreaModel = self.areaModelArr[self.areaIndex];
                 }
             }];
         }
