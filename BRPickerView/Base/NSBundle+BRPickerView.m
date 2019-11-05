@@ -9,6 +9,8 @@
 #import "NSBundle+BRPickerView.h"
 #import "BRBaseView.h"
 
+BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
+
 @implementation NSBundle (BRPickerView)
 
 #pragma mark - 获取 BRPickerView.bundle

@@ -66,7 +66,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenTitleBarView;
 
 
-///////////////////////// 标题栏中间标题label（titleLabel） /////////////////////////
+////////////////////////// 标题栏中间label（titleLabel） //////////////////////////
 
 /** 设置 titleLabel 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLabelColor;

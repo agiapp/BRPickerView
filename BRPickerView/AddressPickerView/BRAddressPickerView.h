@@ -27,7 +27,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 /**
 //////////////////////////////////////////////////////////////////////////
 ///
-///   【用法1】：传统的创建对象设置属性方式（推荐！）
+///   【用法一】：推荐使用！！！
 ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
 ///    2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
 ///    3. 显示选择器（使用 show 方法）
@@ -64,7 +64,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 /**
 //////////////////////////////////////////////////////////////////////////
 ///
-///   【用法2】：快捷使用，直接选择下面其中的一个方法进行使用
+///   【用法二】：快捷使用，直接选择下面其中的一个方法进行使用
 ///
 ////////////////////////////////////////////////////////////////////////*/
 
@@ -90,7 +90,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 + (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
                                 isAutoSelect:(BOOL)isAutoSelect
                                   themeColor:(UIColor *)themeColor
-                                 resultBlock:(BRAddressResultBlock)resultBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
+                                 resultBlock:(BRAddressResultBlock)resultBlock BRPickerViewDeprecated("请使用【用法一】，支持更多的自定义样式");
 
 /**
  *  3.显示地址选择器（支持 设置选择器类型、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -108,7 +108,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
+                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法一】，支持更多的自定义样式");
 
 /**
  *  4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
@@ -128,7 +128,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
                          isAutoSelect:(BOOL)isAutoSelect
                            themeColor:(UIColor *)themeColor
                           resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法1】，支持更多的自定义样式");
+                          cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法一】，支持更多的自定义样式");
 
 
 @end
