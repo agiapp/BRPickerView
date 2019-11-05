@@ -23,7 +23,8 @@
 @property (nonatomic, strong) BRInfoModel *infoModel;
 @property (nonatomic, assign) NSInteger genderSelectIndex;
 @property (nonatomic, assign) NSInteger educationSelectIndex;
-@property (nonatomic, copy) NSArray <NSNumber *> *otherSelectIndexArr;
+@property (nonatomic, copy) NSArray <NSNumber *> *addressSelectIndexs;
+@property (nonatomic, copy) NSArray <NSNumber *> *otherSelectIndexs;
 
 @end
 
@@ -90,7 +91,7 @@
         // 2.创建选择器
         BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeCity];
         addressPickerView.isAutoSelect = YES;
-        addressPickerView.defaultSelectedArr = [self.titleLabel.text componentsSeparatedByString:@" "];
+        addressPickerView.selectIndexs = @[@10, @0];
         addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
             self.titleLabel.text = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
         };
@@ -346,9 +347,11 @@
             // 地区
             BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
             addressPickerView.title = @"请选择地区";
-            addressPickerView.defaultSelectedArr = [textField.text componentsSeparatedByString:@" "];
+            //addressPickerView.defaultSelectedArr = [textField.text componentsSeparatedByString:@" "];
+            addressPickerView.selectIndexs = self.addressSelectIndexs;
             addressPickerView.isAutoSelect = YES;
             addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+                self.addressSelectIndexs = @[@(province.index), @(city.index), @(area.index)];
                 textField.text = self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
             };
             
@@ -390,11 +393,11 @@
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-            stringPickerView.selectIndexs = self.otherSelectIndexArr;
+            stringPickerView.selectIndexs = self.otherSelectIndexs;
             //stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-                self.otherSelectIndexArr = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
+                self.otherSelectIndexs = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
                 self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue];
                 textField.text = self.infoModel.otherStr;
             };
@@ -457,11 +460,18 @@
     return _infoModel;
 }
 
-- (NSArray<NSNumber *> *)otherSelectIndexArr {
-    if (!_otherSelectIndexArr) {
-        _otherSelectIndexArr = [NSArray array];
+- (NSArray<NSNumber *> *)addressSelectIndexs {
+    if (!_addressSelectIndexs) {
+        _addressSelectIndexs = [NSArray array];
     }
-    return _otherSelectIndexArr;
+    return _addressSelectIndexs;
+}
+
+- (NSArray<NSNumber *> *)otherSelectIndexs {
+    if (!_otherSelectIndexs) {
+        _otherSelectIndexs = [NSArray array];
+    }
+    return _otherSelectIndexs;
 }
 
 @end

@@ -204,7 +204,6 @@
     return _pickerView;
 }
 
-
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.showType) {
