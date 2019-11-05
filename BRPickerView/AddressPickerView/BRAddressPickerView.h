@@ -44,7 +44,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 /**
  *  地区数据源（不传或为nil，默认就获取框架内 BRCity.json 文件的数据）
  *  1.可以传 JSON数组，要注意 层级结构 和 key 要与 BRCity.json 保持一致
- *  2.可以传 模型数组(NSArray <BRProvinceModel *>* 类型)，自己解析只需要注意层级结构就行
+ *  2.可以传 模型数组(NSArray <BRProvinceModel *>* 类型)，自己解析数据源 只需要注意层级结构就行
  */
 @property (nonatomic, copy) NSArray *dataSourceArr;
 

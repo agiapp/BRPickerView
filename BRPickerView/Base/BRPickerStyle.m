@@ -189,8 +189,15 @@
     return _pickerTextFont;
 }
 
+- (CGFloat)pickerHeight {
+    if (_pickerHeight < 40) {
+        _pickerHeight = 216.0f;
+    }
+    return _pickerHeight;
+}
+
 - (CGFloat)rowHeight {
-    if (!_rowHeight) {
+    if (_rowHeight < 20) {
         _rowHeight = 35.0f * kScaleFit;
     }
     return _rowHeight;

@@ -152,6 +152,9 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 picker 文本的字体（font）*/
 @property (nonatomic, strong) UIFont *pickerTextFont;
 
+/** 设置 picker 的高度（height），系统默认高度为 216 */
+@property (nonatomic, assign) CGFloat pickerHeight;
+
 /** 设置 picker 的行高（rowHeight）*/
 @property (nonatomic, assign) CGFloat rowHeight;
 

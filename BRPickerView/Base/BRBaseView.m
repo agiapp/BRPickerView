@@ -71,7 +71,7 @@
 #pragma mark - 弹框视图
 - (UIView *)alertView {
     if (!_alertView) {
-        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.titleBarHeight - kPickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, self.pickerStyle.titleBarHeight + kPickerHeight + BR_BOTTOM_MARGIN)];
+        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.titleBarHeight - self.pickerStyle.pickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + BR_BOTTOM_MARGIN)];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor;
         if (self.pickerStyle.topCornerRadius > 0) {
             // 设置顶部圆角
@@ -219,7 +219,7 @@
         }
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y -= kPickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
+            rect.origin.y -= self.pickerStyle.pickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
         }];
     }
@@ -233,7 +233,7 @@
         // 关闭动画
         [UIView animateWithDuration:0.2 animations:^{
             CGRect rect = self.alertView.frame;
-            rect.origin.y += kPickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
+            rect.origin.y += self.pickerStyle.pickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;
             if (!self.pickerStyle.hiddenMaskView) {
                 self.maskView.alpha = 0;
