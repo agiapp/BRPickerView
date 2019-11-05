@@ -34,8 +34,9 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 ///
 ////////////////////////////////////////////////////////////////////////*/
 
-/** 默认选中的值(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
-@property (nonatomic, copy) NSArray <NSString *>* defaultSelectedArr;
+/** 默认选中的位置(传数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
+@property (nonatomic, copy) NSArray <NSNumber *>* selectIndexs;
+@property (nonatomic, copy) NSArray <NSString *>* defaultSelectedArr BRPickerViewDeprecated("推荐使用 selectIndexs");
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRAddressResultBlock resultBlock;

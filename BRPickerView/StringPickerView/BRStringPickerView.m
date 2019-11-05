@@ -149,7 +149,7 @@
 }
 
 #pragma mark - 设置默认选择的值
-- (void)handlerDefaultSelectData {
+- (void)handlerDefaultSelectValue {
     if (self.dataSourceArr.count == 0) {
         return;
     }
@@ -353,7 +353,7 @@
 
 #pragma mark - 重写父类方法
 - (void)addPickerToView:(UIView *)view {
-    [self handlerDefaultSelectData];
+    [self handlerDefaultSelectValue];
     // 添加字符串选择器
     [self setPickerView:self.pickerView toView:view];
     
