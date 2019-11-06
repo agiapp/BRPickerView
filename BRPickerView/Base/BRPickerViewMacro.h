@@ -36,7 +36,7 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 #define BR_STATUSBAR_HEIGHT ([UIApplication sharedApplication].statusBarFrame.size.height)
 #define BR_IS_iPhoneX ((BR_STATUSBAR_HEIGHT == 44) ? YES : NO)
 // 底部安全区域远离高度
-#define BR_BOTTOM_MARGIN ((CGFloat)(BR_IS_iPhoneX ? 34 : 0))
+#define BR_BOTTOM_MARGIN ((CGFloat)(BR_IS_iPhoneX ? ((SCREEN_WIDTH < SCREEN_HEIGHT) ? 34 : 21) : 0))
 
 // 静态库中编写 Category 时的便利宏，用于解决 Category 方法从静态库中加载需要特别设置的问题
 #ifndef BRSYNTH_DUMMY_CLASS

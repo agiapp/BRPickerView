@@ -38,6 +38,20 @@
     [self initUI];
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    UIEdgeInsets safeInsets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        safeInsets = self.view.safeAreaInsets;
+        NSLog(@"safeInsets=%@", NSStringFromUIEdgeInsets(safeInsets));
+    }
+    CGRect tableViewFrame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    tableViewFrame.origin.x += safeInsets.left;
+    tableViewFrame.size.width -= 2 * safeInsets.left;
+    self.tableView.frame = tableViewFrame;
+}
+
 - (void)loadData {
     NSLog(@"-----加载数据-----");
     self.infoModel.nameStr = @"";
@@ -68,11 +82,13 @@
 
 - (UIView *)footerView {
     if (!_footerView) {
-        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
+        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 300)];
         _footerView.backgroundColor = [UIColor clearColor];
+        _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         // 地区显示label
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 30, SCREEN_WIDTH - 100, 30)];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 30, _footerView.frame.size.width - 100, 30)];
         titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         titleLabel.font = [UIFont systemFontOfSize:16.0f];
         if (@available(iOS 13.0, *)) {
             titleLabel.textColor = [UIColor labelColor];
@@ -84,8 +100,9 @@
         [_footerView addSubview:titleLabel];
         
         // 1.创建选择器容器视图
-        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 80, SCREEN_WIDTH - 60, 200)];
-        containerView.backgroundColor = [UIColor whiteColor];
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 80, _footerView.frame.size.width - 60, 200)];
+        containerView.backgroundColor = [UIColor redColor];
+        containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
         
         // 2.创建选择器
@@ -337,7 +354,10 @@
             };
             
             // 自定义弹框样式
-            datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor darkGrayColor]];
+            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor darkGrayColor]];
+            customStyle.cancelBtnFrame = CGRectMake(SCREEN_WIDTH - 60 - 5, 8, 60, 28);
+            customStyle.doneBtnFrame = CGRectMake(5, 8, 60, 28);
+            datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
             

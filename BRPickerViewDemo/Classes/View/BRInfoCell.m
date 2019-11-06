@@ -34,7 +34,7 @@
     // 调整cell分割线的边距：top, left, bottom, right
     //self.separatorInset = UIEdgeInsetsMake(0, kLeftMargin, 0, kLeftMargin);
     self.titleLabel.frame = CGRectMake(kLeftMargin, 0, 100, kRowHeight);
-    self.nextImageView.frame = CGRectMake(SCREEN_WIDTH - kLeftMargin - 14, (kRowHeight - 14) / 2, 14, 14);
+    self.nextImageView.frame = CGRectMake(self.contentView.bounds.size.width - kLeftMargin - 14, (kRowHeight - 14) / 2, 14, 14);
     self.textField.frame = CGRectMake(self.nextImageView.frame.origin.x - 200, 0, 200, kRowHeight);
     if (self.isNext) {
         self.nextImageView.hidden = NO;
@@ -52,7 +52,7 @@
         } else {
             _titleLabel.textColor = [UIColor blackColor];
         }
-        _titleLabel.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
+        _titleLabel.font = [UIFont systemFontOfSize:16.0f];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _titleLabel;
@@ -62,7 +62,7 @@
     if (!_textField) {
         _textField = [[UITextField alloc]init];
         _textField.backgroundColor = [UIColor clearColor];
-        _textField.font = [UIFont systemFontOfSize:16.0f * kScaleFit];
+        _textField.font = [UIFont systemFontOfSize:16.0f];
         _textField.textAlignment = NSTextAlignmentRight;
         if (@available(iOS 13.0, *)) {
             _textField.textColor = [UIColor labelColor];

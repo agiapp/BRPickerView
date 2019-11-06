@@ -54,6 +54,38 @@
     }
 }
 
+#pragma mark - 适配子视图
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (_cancelBtn || _doneBtn) {
+        UIEdgeInsets safeInsets = UIEdgeInsetsZero;
+        if (@available(iOS 11.0, *)) {
+            safeInsets = self.safeAreaInsets;
+            //NSLog(@"safeInsets=%@", NSStringFromUIEdgeInsets(safeInsets));
+            //NSLog(@"self.bounds=%@", NSStringFromCGRect(self.bounds));
+        }
+        if (_cancelBtn) {
+            CGRect cancelBtnFrame = self.pickerStyle.cancelBtnFrame;
+            if (cancelBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
+                cancelBtnFrame.origin.x += safeInsets.left;
+            } else {
+                cancelBtnFrame.origin.x = self.bounds.size.width - cancelBtnFrame.size.width - safeInsets.right - 5;
+            }
+            self.cancelBtn.frame = cancelBtnFrame;
+        }
+        if (_doneBtn) {
+            CGRect doneBtnFrame = self.pickerStyle.doneBtnFrame;
+            if (doneBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
+                doneBtnFrame.origin.x += safeInsets.left;
+            } else {
+                doneBtnFrame.origin.x = self.bounds.size.width - doneBtnFrame.size.width - safeInsets.right - 5;
+            }
+            self.doneBtn.frame = doneBtnFrame;
+        }
+    }
+}
+
 #pragma mark - 背景遮罩视图
 - (UIView *)maskView {
     if (!_maskView) {
@@ -107,7 +139,6 @@
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _cancelBtn.frame = self.pickerStyle.cancelBtnFrame;
         _cancelBtn.backgroundColor = self.pickerStyle.cancelColor;;
-        _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
         _cancelBtn.titleLabel.font = self.pickerStyle.cancelTextFont;
         [_cancelBtn setTitleColor:self.pickerStyle.cancelTextColor forState:UIControlStateNormal];
         if (self.pickerStyle.cancelBtnImage) {
@@ -137,7 +168,6 @@
         _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _doneBtn.frame = self.pickerStyle.doneBtnFrame;
         _doneBtn.backgroundColor = self.pickerStyle.doneColor;
-        _doneBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
         _doneBtn.titleLabel.font = self.pickerStyle.doneTextFont;
         [_doneBtn setTitleColor:self.pickerStyle.doneTextColor forState:UIControlStateNormal];
         if (self.pickerStyle.doneBtnImage) {
