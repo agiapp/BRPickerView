@@ -310,12 +310,11 @@
             // 自定义弹框样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.topCornerRadius = 16.0f;
-            customStyle.titleLineColor = [UIColor clearColor];
-            customStyle.doneTextColor = [UIColor lightGrayColor];
-            customStyle.doneTextFont = [UIFont systemFontOfSize:20.0f];
+            customStyle.hiddenTitleBottomBorder = YES;
+            customStyle.hiddenCancelBtn = YES;
+            customStyle.doneBtnImage = [UIImage imageNamed:@"icon_close"];
+            customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 0, 44, 44);
             customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
-            customStyle.cancelBtnTitle = @"";
-            customStyle.doneBtnTitle = @"      ✕";
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
