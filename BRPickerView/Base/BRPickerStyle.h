@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
     /** 有圆角和边框 */
     BRBorderStyleSolid,
     /** 仅有圆角 */
-    BRBorderStyleFill,
+    BRBorderStyleFill
 };
 
 @interface BRPickerStyle : NSObject

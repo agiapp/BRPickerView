@@ -126,36 +126,42 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return [self br_setYear:-1 month:-1 day:-1 hour:hour minute:minute second:-1];
 }
 
-#pragma mark - 日期和字符串之间的转换：NSDate 转 NSString
+#pragma mark - NSDate时间 和 字符串时间 之间的转换：NSDate 转 NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    // 不设置会默认使用当前所在的时区
+    // dateFormatter.timeZone = [NSTimeZone systemTimeZone];
+    // 设置日期格式
+    dateFormatter.dateFormat = format;
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    
+    return dateString;
+}
+
+#pragma mark - NSDate时间 和 字符串时间 之间的转换：NSString 转 NSDate
++ (NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = format;
-    NSString *destDateString = [dateFormatter stringFromDate:date];
-    
-    return destDateString;
-}
-
-#pragma mark - 日期和字符串之间的转换：NSString 转 NSDate
-+ (NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [NSLocale currentLocale];
+    // 一些夏令时时间（如：1949-05-01等），会导致 NSDateFormatter 格式化失败，返回null
+    NSDate *date = [dateFormatter dateFromString:dateString];
+    if (!date) {
+        date = [NSDate date];
+    }
     
     // 设置转换后的目标日期时区
     NSTimeZone *toTimeZone = [NSTimeZone localTimeZone];
     // 转换后源日期与世界标准时间的偏移量（解决8小时时间差问题）
-    NSInteger toGMTOffset = [toTimeZone secondsFromGMTForDate:[NSDate date]];
-    // 设置时区，NSDate存储的是世界标准时间(UTC)，输出时需要根据时区转换为本地时间（及中国时区的时间）
+    NSInteger toGMTOffset = [toTimeZone secondsFromGMTForDate:date];
+    // 设置时区：字符串时间是当前时区的时间，NSDate存储的是世界标准时间(零时区的时间)
     dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:toGMTOffset];
     
-    // 设置日期格式
-    dateFormatter.dateFormat = format;
-    NSDate *destDate = [dateFormatter dateFromString:dateString];
+    date = [dateFormatter dateFromString:dateString];
     
-    return destDate;
+    return date;
 }
 
-#pragma mark - 算法1：获取某个月的天数（通过年月求每月天数）
+#pragma mark - 获取某个月的天数（通过年月求每月天数）
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month {
     BOOL isLeapYear = year % 4 == 0 ? (year % 100 == 0 ? (year % 400 == 0 ? YES : NO) : YES) : NO;
     switch (month) {
@@ -183,16 +189,6 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
             break;
     }
     return 0;
-}
-
-#pragma mark - 算法2：获取某个月的天数（通过年月求每月天数）
-+ (NSUInteger)br_getDaysInYear2:(NSInteger)year month:(NSInteger)month {
-    NSDate *date = [NSDate br_getDate:[NSString stringWithFormat:@"%@-%@", @(year), @(month)] format:@"yyyy-MM"];
-    // 指定日历的算法(这里按公历)
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    // 只要给个时间给日历,就会帮你计算出来。
-    NSRange range = [calendar rangeOfUnit:NSCalendarUnitDay inUnit: NSCalendarUnitMonth forDate:date];
-    return range.length;
 }
 
 #pragma mark - 获取 日期加上/减去某天数后的新日期

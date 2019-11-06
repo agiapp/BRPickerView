@@ -85,7 +85,7 @@
         
         // 1.创建选择器容器视图
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 80, SCREEN_WIDTH - 60, 200)];
-        containerView.backgroundColor = [UIColor redColor];
+        containerView.backgroundColor = [UIColor whiteColor];
         [_footerView addSubview:containerView];
         
         // 2.创建选择器
@@ -297,14 +297,15 @@
         case 2:
         {
             // 出生年月日
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDHM];
             datePickerView.title = @"出生年月日";
-            datePickerView.selectValue = textField.text;
-            //datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
-            datePickerView.maxDate = [NSDate date];
+            datePickerView.selectValue = self.infoModel.birthdayStr;
+            //datePickerView.minDate = [NSDate br_setYear:1948 month:5 day:1 hour:0 minute:0];
+            datePickerView.maxDate = [NSDate br_setYear:1950 month:5 day:1 hour:0 minute:0];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSString *selectValue) {
-                textField.text = self.infoModel.birthdayStr = selectValue;
+                self.infoModel.birthdayStr = selectValue;
+                textField.text = selectValue;
             };
             
             // 自定义弹框样式
@@ -326,12 +327,13 @@
             // 出生时刻
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHM];
             datePickerView.title = @"出生时刻";
-            datePickerView.selectValue = textField.text;
+            datePickerView.selectValue = self.infoModel.birthtimeStr;
             datePickerView.minDate = [NSDate br_setHour:8 minute:10];
             datePickerView.maxDate = [NSDate br_setHour:20 minute:35];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSString *selectValue) {
-                textField.text = self.infoModel.birthdayStr = selectValue;
+                self.infoModel.birthtimeStr = selectValue;
+                textField.text = selectValue;
             };
             
             // 自定义弹框样式
@@ -346,12 +348,13 @@
             // 地区
             BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
             addressPickerView.title = @"请选择地区";
-            //addressPickerView.defaultSelectedArr = [textField.text componentsSeparatedByString:@" "];
+            //addressPickerView.defaultSelectedArr = [self.infoModel.addressStr componentsSeparatedByString:@" "];
             addressPickerView.selectIndexs = self.addressSelectIndexs;
             addressPickerView.isAutoSelect = YES;
             addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
                 self.addressSelectIndexs = @[@(province.index), @(city.index), @(area.index)];
-                textField.text = self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
+                self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
+                textField.text = self.infoModel.addressStr;
             };
             
             // 自定义弹框样式（适配深色模式）
@@ -368,7 +371,7 @@
             stringPickerView.title = @"请选择学历";
             stringPickerView.plistName = @"testData1.plist";
             stringPickerView.selectIndex = self.educationSelectIndex;
-            //stringPickerView.selectValue = textField.text;
+            //stringPickerView.selectValue = self.infoModel.educationStr;
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.educationSelectIndex = resultModel.index;
@@ -393,7 +396,7 @@
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
             stringPickerView.selectIndexs = self.otherSelectIndexs;
-            //stringPickerView.selectValueArr = [textField.text componentsSeparatedByString:@"，"];
+            //stringPickerView.selectValueArr = [self.infoModel.otherStr componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 self.otherSelectIndexs = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
