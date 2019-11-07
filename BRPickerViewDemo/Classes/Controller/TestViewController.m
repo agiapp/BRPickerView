@@ -300,11 +300,10 @@
         case 2:
         {
             // 出生年月日
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDHM];
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"出生年月日";
             datePickerView.selectValue = self.infoModel.birthdayStr;
-            //datePickerView.minDate = [NSDate br_setYear:1948 month:5 day:1 hour:0 minute:0];
-            datePickerView.maxDate = [NSDate br_setYear:1950 month:5 day:1 hour:0 minute:0];
+            datePickerView.minDate = [NSDate br_setYear:1948 month:5 day:1];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSString *selectValue) {
                 self.infoModel.birthdayStr = selectValue;
@@ -341,9 +340,6 @@
             
             // 自定义弹框样式
             BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor darkGrayColor]];
-            customStyle.topCornerRadius = 16.0f;
-            customStyle.cancelBtnFrame = CGRectMake(SCREEN_WIDTH - 60 - 5, 8, 60, 28);
-            customStyle.doneBtnFrame = CGRectMake(5, 8, 60, 28);
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];

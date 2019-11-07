@@ -109,6 +109,14 @@
             // 设置顶部圆角
             _alertView.layer.cornerRadius = self.pickerStyle.topCornerRadius;
             _alertView.layer.masksToBounds = YES;
+            
+            if (!self.pickerStyle.hiddenMaskView) {
+                // 遮住底部左右两边的圆角
+                UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.topCornerRadius, _alertView.frame.size.width, self.pickerStyle.topCornerRadius)];
+                bgView.backgroundColor = self.pickerStyle.alertViewColor;
+                bgView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+                [self.maskView addSubview:bgView];
+            }
         }
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
