@@ -23,6 +23,11 @@
 // 中间标题
 @property (nonatomic, strong) UILabel *titleLabel;
 
+// 取消按钮离屏幕边缘的距离
+@property (nonatomic, assign) CGFloat cancelBtnMargin;
+// 确定按钮离屏幕边缘的距离
+@property (nonatomic, assign) CGFloat doneBtnMargin;
+
 @end
 
 @implementation BRBaseView
@@ -48,9 +53,21 @@
         }
         if (!self.pickerStyle.hiddenCancelBtn) {
             [self.titleBarView addSubview:self.cancelBtn];
+            // 获取边距
+            if (self.pickerStyle.cancelBtnFrame.origin.x < self.bounds.size.width / 2) {
+                self.cancelBtnMargin = self.pickerStyle.cancelBtnFrame.origin.x;
+            } else {
+                self.cancelBtnMargin = self.bounds.size.width - self.pickerStyle.cancelBtnFrame.origin.x - self.pickerStyle.cancelBtnFrame.size.width;
+            }
         }
         if (!self.pickerStyle.hiddenDoneBtn) {
             [self.titleBarView addSubview:self.doneBtn];
+            // 获取边距
+            if (self.pickerStyle.doneBtnFrame.origin.x < self.bounds.size.width / 2) {
+                self.doneBtnMargin = self.pickerStyle.doneBtnFrame.origin.x;
+            } else {
+                self.doneBtnMargin = self.bounds.size.width - self.pickerStyle.doneBtnFrame.origin.x - self.pickerStyle.doneBtnFrame.size.width;
+            }
         }
     }
 }
@@ -62,27 +79,31 @@
         UIEdgeInsets safeInsets = UIEdgeInsetsZero;
         if (@available(iOS 11.0, *)) {
             safeInsets = self.safeAreaInsets;
-        }
-        if (_cancelBtn) {
-            CGRect cancelBtnFrame = self.pickerStyle.cancelBtnFrame;
-            CGFloat rightMargin = MIN(self.bounds.size.width, self.bounds.size.height) - cancelBtnFrame.origin.x - cancelBtnFrame.size.width;
-            if (cancelBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
-                cancelBtnFrame.origin.x += safeInsets.left;
-            } else {
-                cancelBtnFrame.origin.x = self.bounds.size.width - cancelBtnFrame.size.width - safeInsets.right - rightMargin;
+            
+            if (_cancelBtn) {
+                CGRect cancelBtnFrame = self.pickerStyle.cancelBtnFrame;
+                if (cancelBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
+                    cancelBtnFrame.origin.x += safeInsets.left;
+                } else {
+                    cancelBtnFrame.origin.x = self.bounds.size.width - cancelBtnFrame.size.width - safeInsets.right - self.cancelBtnMargin;
+                }
+                self.cancelBtn.frame = cancelBtnFrame;
             }
-            self.cancelBtn.frame = cancelBtnFrame;
-        }
-        if (_doneBtn) {
-            CGRect doneBtnFrame = self.pickerStyle.doneBtnFrame;
-            CGFloat rightMargin = MIN(self.bounds.size.width, self.bounds.size.height) - doneBtnFrame.origin.x - doneBtnFrame.size.width;
-            if (doneBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
-                doneBtnFrame.origin.x += safeInsets.left;
-            } else {
-                doneBtnFrame.origin.x = self.bounds.size.width - doneBtnFrame.size.width - safeInsets.right - rightMargin;
+            if (_doneBtn) {
+                CGRect doneBtnFrame = self.pickerStyle.doneBtnFrame;
+                if (doneBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
+                    doneBtnFrame.origin.x += safeInsets.left;
+                } else {
+                    doneBtnFrame.origin.x = self.bounds.size.width - doneBtnFrame.size.width - safeInsets.right - self.doneBtnMargin;
+                }
+                self.doneBtn.frame = doneBtnFrame;
             }
-            self.doneBtn.frame = doneBtnFrame;
         }
+    }
+    // 重新绘制圆角
+    if (_alertView && self.pickerStyle.topCornerRadius > 0) {
+        // 设置顶部圆角
+        [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
     }
 }
 
@@ -105,19 +126,6 @@
     if (!_alertView) {
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.titleBarHeight - self.pickerStyle.pickerHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + BR_BOTTOM_MARGIN)];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor;
-        if (self.pickerStyle.topCornerRadius > 0) {
-            // 设置顶部圆角
-            _alertView.layer.cornerRadius = self.pickerStyle.topCornerRadius;
-            _alertView.layer.masksToBounds = YES;
-            
-            if (!self.pickerStyle.hiddenMaskView) {
-                // 遮住底部左右两边的圆角
-                UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - self.pickerStyle.topCornerRadius, _alertView.frame.size.width, self.pickerStyle.topCornerRadius)];
-                bgView.backgroundColor = self.pickerStyle.alertViewColor;
-                bgView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-                [self.maskView addSubview:bgView];
-            }
-        }
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
             UIView *shadowLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _alertView.frame.size.width, 1.0f)];
@@ -317,6 +325,15 @@
         _pickerStyle = [[BRPickerStyle alloc]init];
     }
     return _pickerStyle;
+}
+
+#pragma mark - 设置 view 的部分圆角
+// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
+- (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
+    UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
+    [shape setPath:rounded.CGPath];
+    view.layer.mask = shape;
 }
 
 - (void)dealloc {
