@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.4.0` 。
+- 当前最新版本为： `2.4.2` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -16,6 +16,12 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+#### 2019-11-07（V2.4.2）
+
+- 日期选择器添加：BRDatePickerModeYMDH（yyyy-MM-dd HH）类型
+- 地址选择器添加：selectIndexs 属性，可根据索引去设置默认选择
+- 适配横屏及刘海屏安全区域显示效果
 
 #### 2019-11-04（V2.4.0）
 
@@ -144,9 +150,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeDateAndTime,       // yyyy-MM-dd HH:mm
     // UIDatePickerModeCountDownTimer
     BRDatePickerModeCountDownTimer,    // HH:mm
-    // --- 以下7种是自定义样式 ---
+    // --- 以下8种是自定义样式 ---
     // 年月日时分
     BRDatePickerModeYMDHM,      // yyyy-MM-dd HH:mm
+  	// 年月日时
+    BRDatePickerModeYMDH,      // yyyy-MM-dd HH
     // 月日时分
     BRDatePickerModeMDHM,       // MM-dd HH:mm
     // 年月日
@@ -224,7 +232,8 @@ datePickerView.pickerStyle = customStyle;
 BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
 
 addressPickerView.title = @"请选择地区";
-addressPickerView.defaultSelectedArr = @[@"浙江省", @"杭州市", @"西湖区"];
+//addressPickerView.defaultSelectedArr = @[@"浙江省", @"杭州市", @"西湖区"];
+addressPickerView.selectIndexs = @[@10, @0, @4];
 addressPickerView.isAutoSelect = YES;
 addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);

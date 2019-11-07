@@ -72,7 +72,7 @@
     }
 }
 
-#pragma mark - 适配屏幕，更新子视图布局
+#pragma mark - 适配屏幕安全区域，更新子视图布局
 - (void)layoutSubviews {
     [super layoutSubviews];
     if (_cancelBtn || _doneBtn) {
@@ -100,7 +100,7 @@
             }
         }
     }
-    // 重新绘制圆角
+    
     if (_alertView && self.pickerStyle.topCornerRadius > 0) {
         // 设置顶部圆角
         [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];

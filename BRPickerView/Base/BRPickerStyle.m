@@ -184,7 +184,7 @@
 
 - (UIFont *)pickerTextFont {
     if (!_pickerTextFont) {
-        _pickerTextFont = [UIFont systemFontOfSize:18.0f * kScaleFit];
+        _pickerTextFont = [UIFont systemFontOfSize:18.0f];
     }
     return _pickerTextFont;
 }
@@ -198,7 +198,7 @@
 
 - (CGFloat)rowHeight {
     if (_rowHeight < 20) {
-        _rowHeight = 35.0f * kScaleFit;
+        _rowHeight = 35.0f;
     }
     return _rowHeight;
 }
