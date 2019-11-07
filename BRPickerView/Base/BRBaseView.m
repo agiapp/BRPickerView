@@ -41,6 +41,7 @@
     // 是否隐藏标题栏
     if (!self.pickerStyle.hiddenTitleBarView) {
         [self.alertView addSubview:self.titleBarView];
+        [self.alertView sendSubviewToBack:self.titleBarView];
 
         if (!self.pickerStyle.hiddenTitleLabel) {
             [self.titleBarView addSubview:self.titleLabel];
@@ -54,32 +55,31 @@
     }
 }
 
-#pragma mark - 适配子视图
+#pragma mark - 适配屏幕，更新子视图布局
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     if (_cancelBtn || _doneBtn) {
         UIEdgeInsets safeInsets = UIEdgeInsetsZero;
         if (@available(iOS 11.0, *)) {
             safeInsets = self.safeAreaInsets;
-            //NSLog(@"safeInsets=%@", NSStringFromUIEdgeInsets(safeInsets));
-            //NSLog(@"self.bounds=%@", NSStringFromCGRect(self.bounds));
         }
         if (_cancelBtn) {
             CGRect cancelBtnFrame = self.pickerStyle.cancelBtnFrame;
+            CGFloat rightMargin = MIN(self.bounds.size.width, self.bounds.size.height) - cancelBtnFrame.origin.x - cancelBtnFrame.size.width;
             if (cancelBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
                 cancelBtnFrame.origin.x += safeInsets.left;
             } else {
-                cancelBtnFrame.origin.x = self.bounds.size.width - cancelBtnFrame.size.width - safeInsets.right - 5;
+                cancelBtnFrame.origin.x = self.bounds.size.width - cancelBtnFrame.size.width - safeInsets.right - rightMargin;
             }
             self.cancelBtn.frame = cancelBtnFrame;
         }
         if (_doneBtn) {
             CGRect doneBtnFrame = self.pickerStyle.doneBtnFrame;
+            CGFloat rightMargin = MIN(self.bounds.size.width, self.bounds.size.height) - doneBtnFrame.origin.x - doneBtnFrame.size.width;
             if (doneBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
                 doneBtnFrame.origin.x += safeInsets.left;
             } else {
-                doneBtnFrame.origin.x = self.bounds.size.width - doneBtnFrame.size.width - safeInsets.right - 5;
+                doneBtnFrame.origin.x = self.bounds.size.width - doneBtnFrame.size.width - safeInsets.right - rightMargin;
             }
             self.doneBtn.frame = doneBtnFrame;
         }
@@ -107,12 +107,15 @@
         _alertView.backgroundColor = self.pickerStyle.alertViewColor;
         if (self.pickerStyle.topCornerRadius > 0) {
             // 设置顶部圆角
-            [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
-        } else {
-            if (!self.pickerStyle.hiddenShadowLine) {
-                // 设置弹框视图顶部边框线
-                [self br_setView:_alertView borderColor:self.pickerStyle.shadowLineColor borderWidth:1.0f isTop:YES];
-            }
+            _alertView.layer.cornerRadius = self.pickerStyle.topCornerRadius;
+            _alertView.layer.masksToBounds = YES;
+        }
+        if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
+            // 设置弹框视图顶部边框线
+            UIView *shadowLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _alertView.frame.size.width, 1.0f)];
+            shadowLineView.backgroundColor = self.pickerStyle.shadowLineColor;
+            shadowLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [_alertView addSubview:shadowLineView];
         }
         _alertView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
@@ -124,10 +127,13 @@
     if (!_titleBarView) {
         _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
-        _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+        _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         if (!self.pickerStyle.hiddenTitleBottomBorder) {
             // 设置标题栏底部分割线
-            [self br_setView:_titleBarView borderColor:self.pickerStyle.titleLineColor borderWidth:0.5f isTop:NO];
+            UIView *titleLineView = [[UIView alloc]initWithFrame:CGRectMake(0, _titleBarView.frame.size.height - 0.5f, _titleBarView.frame.size.width, 0.5f)];
+            titleLineView.backgroundColor = self.pickerStyle.titleLineColor;
+            titleLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [_titleBarView addSubview:titleLineView];
         }
     }
     return _titleBarView;
@@ -138,6 +144,7 @@
     if (!_cancelBtn) {
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _cancelBtn.frame = self.pickerStyle.cancelBtnFrame;
+        _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _cancelBtn.backgroundColor = self.pickerStyle.cancelColor;;
         _cancelBtn.titleLabel.font = self.pickerStyle.cancelTextFont;
         [_cancelBtn setTitleColor:self.pickerStyle.cancelTextColor forState:UIControlStateNormal];
@@ -167,6 +174,7 @@
     if (!_doneBtn) {
         _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _doneBtn.frame = self.pickerStyle.doneBtnFrame;
+        _doneBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _doneBtn.backgroundColor = self.pickerStyle.doneColor;
         _doneBtn.titleLabel.font = self.pickerStyle.doneTextFont;
         [_doneBtn setTitleColor:self.pickerStyle.doneTextColor forState:UIControlStateNormal];
@@ -196,7 +204,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]initWithFrame:self.pickerStyle.titleLabelFrame];
         _titleLabel.backgroundColor = self.pickerStyle.titleLabelColor;
-        _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+        _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.font = self.pickerStyle.titleTextFont;
         _titleLabel.textColor = self.pickerStyle.titleTextColor;
@@ -301,33 +309,6 @@
         _pickerStyle = [[BRPickerStyle alloc]init];
     }
     return _pickerStyle;
-}
-
-#pragma mark - 设置 view 的部分圆角
-// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
-- (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
-    UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
-    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
-    [shape setPath:rounded.CGPath];
-    view.layer.mask = shape;
-}
-
-#pragma mark - 设置 view 顶部/底部的边框线
-- (void)br_setView:(UIView *)view borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth isTop:(BOOL)isTop {
-    // 线的路径
-    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-    [bezierPath moveToPoint:CGPointMake(0.0f, isTop ? 0 : view.frame.size.height)];
-    [bezierPath addLineToPoint:CGPointMake(view.frame.size.width, isTop ? 0 : view.frame.size.height)];
-    
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    shapeLayer.strokeColor = borderColor.CGColor;
-    shapeLayer.fillColor = [UIColor clearColor].CGColor;
-    // 添加路径
-    shapeLayer.path = bezierPath.CGPath;
-    // 线宽度
-    shapeLayer.lineWidth = borderWidth;
-    
-    [view.layer addSublayer:shapeLayer];
 }
 
 - (void)dealloc {

@@ -38,20 +38,6 @@
     [self initUI];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    
-    UIEdgeInsets safeInsets = UIEdgeInsetsZero;
-    if (@available(iOS 11.0, *)) {
-        safeInsets = self.view.safeAreaInsets;
-        NSLog(@"safeInsets=%@", NSStringFromUIEdgeInsets(safeInsets));
-    }
-    CGRect tableViewFrame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    tableViewFrame.origin.x += safeInsets.left;
-    tableViewFrame.size.width -= 2 * safeInsets.left;
-    self.tableView.frame = tableViewFrame;
-}
-
 - (void)loadData {
     NSLog(@"-----加载数据-----");
     self.infoModel.nameStr = @"";
@@ -355,6 +341,7 @@
             
             // 自定义弹框样式
             BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor darkGrayColor]];
+            customStyle.topCornerRadius = 16.0f;
             customStyle.cancelBtnFrame = CGRectMake(SCREEN_WIDTH - 60 - 5, 8, 60, 28);
             customStyle.doneBtnFrame = CGRectMake(5, 8, 60, 28);
             datePickerView.pickerStyle = customStyle;
