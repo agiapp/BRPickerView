@@ -41,8 +41,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, assign) BRDatePickerMode showType;
 /** 时间选择器的类型 */
 @property (nonatomic, assign) BRDatePickerStyle style;
-/** 当前选择的日期 */
-@property (nonatomic, strong) NSDate *selectDate;
 /** 选择的日期的格式 */
 @property (nonatomic, copy) NSString *selectDateFormatter;
 
@@ -165,25 +163,27 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     
     // 3.默认选中的日期
-    if (self.selectValue && self.selectValue.length > 0) {
-        NSDate *defaultSelDate = [NSDate br_getDate:self.selectValue format:self.selectDateFormatter];
-        if (!defaultSelDate) {
-            BRErrorLog(@"参数格式错误！参数 defaultSelValue 的正确格式是：%@", self.selectDateFormatter);
-            NSAssert(defaultSelDate, @"参数格式错误！请检查形参 defaultSelValue 的格式");
-            defaultSelDate = [NSDate date]; // 默认值参数格式错误时，重置/忽略默认值，防止在 Release 环境下崩溃！
-        }
-        if (self.showType == BRDatePickerModeTime || self.showType == BRDatePickerModeCountDownTimer || self.showType == BRDatePickerModeHM) {
-            self.selectDate = [NSDate br_setHour:defaultSelDate.br_hour minute:defaultSelDate.br_minute];
-        } else if (self.showType == BRDatePickerModeMDHM) {
-            self.selectDate = [NSDate br_setMonth:defaultSelDate.br_month day:defaultSelDate.br_day hour:defaultSelDate.br_hour minute:defaultSelDate.br_minute];
-        } else if (self.showType == BRDatePickerModeMD) {
-            self.selectDate = [NSDate br_setMonth:defaultSelDate.br_month day:defaultSelDate.br_day];
+    if (!self.selectDate) {
+        if (self.selectValue && self.selectValue.length > 0) {
+            NSDate *defaultSelDate = [NSDate br_getDate:self.selectValue format:self.selectDateFormatter];
+            if (!defaultSelDate) {
+                BRErrorLog(@"参数格式错误！参数 defaultSelValue 的正确格式是：%@", self.selectDateFormatter);
+                NSAssert(defaultSelDate, @"参数格式错误！请检查形参 defaultSelValue 的格式");
+                defaultSelDate = [NSDate date]; // 默认值参数格式错误时，重置/忽略默认值，防止在 Release 环境下崩溃！
+            }
+            if (self.showType == BRDatePickerModeTime || self.showType == BRDatePickerModeCountDownTimer || self.showType == BRDatePickerModeHM) {
+                self.selectDate = [NSDate br_setHour:defaultSelDate.br_hour minute:defaultSelDate.br_minute];
+            } else if (self.showType == BRDatePickerModeMDHM) {
+                self.selectDate = [NSDate br_setMonth:defaultSelDate.br_month day:defaultSelDate.br_day hour:defaultSelDate.br_hour minute:defaultSelDate.br_minute];
+            } else if (self.showType == BRDatePickerModeMD) {
+                self.selectDate = [NSDate br_setMonth:defaultSelDate.br_month day:defaultSelDate.br_day];
+            } else {
+                self.selectDate = defaultSelDate;
+            }
         } else {
-            self.selectDate = defaultSelDate;
+            // 不设置默认日期，就默认选中今天的日期
+            self.selectDate = [NSDate date];
         }
-    } else {
-        // 不设置默认日期，就默认选中今天的日期
-        self.selectDate = [NSDate date];
     }
     BOOL selectLessThanMin = [self.selectDate br_compare:self.minDate format:self.selectDateFormatter] == NSOrderedAscending;
     BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxDate format:self.selectDateFormatter] == NSOrderedDescending;
@@ -592,7 +592,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
             NSString *selectDateValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
-            self.resultBlock(selectDateValue);
+            self.resultBlock(self.selectDate, selectDateValue);
         }
     }
 }
@@ -807,7 +807,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
             NSString *selectDateValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
-            self.resultBlock(selectDateValue);
+            self.resultBlock(self.selectDate, selectDateValue);
         }
     }
 }
@@ -837,7 +837,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (!weakSelf.hasResultValue) {
             if (weakSelf.resultBlock) {
                 NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
-                weakSelf.resultBlock(selectDateValue);
+                weakSelf.resultBlock(weakSelf.selectDate, selectDateValue);
             }
         }
     };
@@ -862,11 +862,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 关闭选择器视图
 - (void)dismiss {
     [self removePickerFromView:nil];
-}
-
-#pragma mark - setter 方法
-- (void)setDefaultSelValue:(NSString *)defaultSelValue {
-    self.selectValue = defaultSelValue;
 }
 
 #pragma mark - getter 方法

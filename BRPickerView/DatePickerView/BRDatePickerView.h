@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeHM
 };
 
-typedef void(^BRDateResultBlock)(NSString *selectValue);
+typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 
 @interface BRDatePickerView : BRBaseView
 
@@ -55,9 +55,9 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 ///
 ////////////////////////////////////////////////////////////////////////*/
 
-/** 默认选中的时间（默认选中当前时间） */
-@property (nonatomic, copy) NSString *selectValue;
-@property (nonatomic, copy) NSString *defaultSelValue BRPickerViewDeprecated("推荐使用 selectValue");
+/** 设置默认选中的时间（不设置或为nil时，默认就选中当前时间）*/
+@property (nonatomic, strong) NSDate *selectDate;
+@property (nonatomic, copy) NSString *selectValue;  // 推荐使用 selectDate
 
 /** 最小时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）*/
 @property (nonatomic, strong) NSDate *minDate;
@@ -67,7 +67,7 @@ typedef void(^BRDateResultBlock)(NSString *selectValue);
 /** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
 @property (nonatomic, assign) BOOL hiddenDateUnit;
 
-/** 选择结果的回调 */
+/** 选择结果的回调（提示：新增了 selectDate 参数） */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;
 
 /// 初始化时间选择器

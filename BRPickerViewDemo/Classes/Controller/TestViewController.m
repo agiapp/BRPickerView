@@ -10,7 +10,6 @@
 #import "BRPickerView.h"
 #import "BRInfoCell.h"
 #import "BRInfoModel.h"
-#import "BRPickerViewMacro.h"
 
 @interface TestViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
@@ -305,7 +304,7 @@
             datePickerView.selectValue = self.infoModel.birthdayStr;
             datePickerView.minDate = [NSDate br_setYear:1948 month:5 day:1];
             datePickerView.isAutoSelect = YES;
-            datePickerView.resultBlock = ^(NSString *selectValue) {
+            datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
             };
@@ -333,7 +332,7 @@
             datePickerView.minDate = [NSDate br_setHour:8 minute:10];
             datePickerView.maxDate = [NSDate br_setHour:20 minute:35];
             datePickerView.isAutoSelect = YES;
-            datePickerView.resultBlock = ^(NSString *selectValue) {
+            datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.infoModel.birthtimeStr = selectValue;
                 textField.text = selectValue;
             };
