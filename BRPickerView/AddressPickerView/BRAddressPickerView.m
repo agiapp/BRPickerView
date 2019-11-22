@@ -159,23 +159,23 @@
     NSMutableArray *tempArr1 = [NSMutableArray array];
     for (NSDictionary *proviceDic in self.dataSourceArr) {
         BRProvinceModel *proviceModel = [[BRProvinceModel alloc]init];
-        proviceModel.code = proviceDic[@"code"];
-        proviceModel.name = proviceDic[@"name"];
+        proviceModel.code = [proviceDic objectForKey:@"code"];
+        proviceModel.name = [proviceDic objectForKey:@"name"];
         proviceModel.index = [self.dataSourceArr indexOfObject:proviceDic];
-        NSArray *citylist = proviceDic[@"citylist"];
+        NSArray *cityList = [proviceDic.allKeys containsObject:@"cityList"] ? [proviceDic objectForKey:@"cityList"] : [proviceDic objectForKey:@"citylist"];
         NSMutableArray *tempArr2 = [NSMutableArray array];
-        for (NSDictionary *cityDic in citylist) {
+        for (NSDictionary *cityDic in cityList) {
             BRCityModel *cityModel = [[BRCityModel alloc]init];
-            cityModel.code = cityDic[@"code"];
-            cityModel.name = cityDic[@"name"];
-            cityModel.index = [citylist indexOfObject:cityDic];
-            NSArray *arealist = cityDic[@"arealist"];
+            cityModel.code = [cityDic objectForKey:@"code"];
+            cityModel.name = [cityDic objectForKey:@"name"];
+            cityModel.index = [cityList indexOfObject:cityDic];
+            NSArray *areaList = [cityDic.allKeys containsObject:@"areaList"] ? [cityDic objectForKey:@"areaList"] : [cityDic objectForKey:@"arealist"];
             NSMutableArray *tempArr3 = [NSMutableArray array];
-            for (NSDictionary *areaDic in arealist) {
+            for (NSDictionary *areaDic in areaList) {
                 BRAreaModel *areaModel = [[BRAreaModel alloc]init];
-                areaModel.code = areaDic[@"code"];
-                areaModel.name = areaDic[@"name"];
-                areaModel.index = [arealist indexOfObject:areaDic];
+                areaModel.code = [areaDic objectForKey:@"code"];
+                areaModel.name = [areaDic objectForKey:@"name"];
+                areaModel.index = [areaList indexOfObject:areaDic];
                 [tempArr3 addObject:areaModel];
             }
             cityModel.arealist = [tempArr3 copy];

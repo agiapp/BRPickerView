@@ -72,14 +72,12 @@
     }
 }
 
-#pragma mark - 适配屏幕安全区域，更新子视图布局
+#pragma mark - 适配横屏安全区域，更新子视图布局
 - (void)layoutSubviews {
     [super layoutSubviews];
     if (_cancelBtn || _doneBtn) {
-        UIEdgeInsets safeInsets = UIEdgeInsetsZero;
         if (@available(iOS 11.0, *)) {
-            safeInsets = self.safeAreaInsets;
-            
+            UIEdgeInsets safeInsets = self.safeAreaInsets;
             if (_cancelBtn) {
                 CGRect cancelBtnFrame = self.pickerStyle.cancelBtnFrame;
                 if (cancelBtnFrame.origin.x < MIN(self.bounds.size.width / 2, self.bounds.size.height / 2)) {
