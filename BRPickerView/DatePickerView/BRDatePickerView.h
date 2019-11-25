@@ -12,7 +12,7 @@
 
 /// 日期选择器格式
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
-    // --- 以下4种是系统自带的样式 ---
+    // ----- 以下4种是系统自带的样式 -----
     /** 【HH:mm】UIDatePickerModeTime */
     BRDatePickerModeTime = 1,
     /** 【yyyy-MM-dd】UIDatePickerModeDate */
@@ -22,7 +22,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // --- 以下8种是自定义样式 ---
+    // ----- 以下8种是自定义样式 -----
+    /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
+    BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
     BRDatePickerModeYMDHM,
     /** 【yyyy-MM-dd HH】年月日时 */
@@ -37,6 +39,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeY,
     /** 【MM-dd】月日 */
     BRDatePickerModeMD,
+    /** 【HH:mm:ss】时分秒 */
+    BRDatePickerModeHMS,
     /** 【HH:mm】时分 */
     BRDatePickerModeHM
 };
@@ -46,14 +50,14 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 @interface BRDatePickerView : BRBaseView
 
 /**
-//////////////////////////////////////////////////////////////////////////
-///
-///   【用法一】：推荐使用！！！
-///    1. 初始化选择器（使用 initWithPickerMode: 方法）
-///    2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
-///    3. 显示选择器（使用 show 方法）
-///
-////////////////////////////////////////////////////////////////////////*/
+ //////////////////////////////////////////////////////////////////////////
+ ///
+ ///   【用法一】：推荐使用！！！
+ ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
+ ///    2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
+ ///    3. 显示选择器（使用 show 方法）
+ ///
+ ////////////////////////////////////////////////////////////////////////*/
 
 /** 设置默认选中的时间（不设置或为nil时，默认就选中当前时间）*/
 @property (nonatomic, strong) NSDate *selectDate;
@@ -87,11 +91,11 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 
 
 /**
-//////////////////////////////////////////////////////////////////////////
-///
-///   【用法二】：快捷使用，直接选择下面其中的一个方法进行使用
-///
-////////////////////////////////////////////////////////////////////////*/
+ //////////////////////////////////////////////////////////////////////////
+ ///
+ ///   【用法二】：快捷使用，直接选择下面其中的一个方法进行使用
+ ///
+ ////////////////////////////////////////////////////////////////////////*/
 
 /**
  *  1.显示时间选择器

@@ -28,12 +28,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month;
 /** yyyy-MM-dd */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
+/** yyyy-MM-dd HH */
++ (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour;
 /** yyyy-MM-dd HH:mm */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
+/** yyyy-MM-dd HH:mm:ss */
++ (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 /** MM-dd HH:mm */
 + (nullable NSDate *)br_setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
 /** MM-dd */
 + (nullable NSDate *)br_setMonth:(NSInteger)month day:(NSInteger)day;
+/** HH:mm:ss */
++ (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 /** HH:mm */
 + (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute;
 
