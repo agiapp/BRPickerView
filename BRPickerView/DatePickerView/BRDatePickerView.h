@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // ----- 以下10种是自定义样式 -----
+    // ----- 以下11种是自定义样式 -----
     /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
     BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeYMDH,
     /** 【MM-dd HH:mm】月日时分 */
     BRDatePickerModeMDHM,
+    /** 【yyyy-MM-ddEEE】年月日星期 */
+    BRDatePickerModeYMDE,
     /** 【yyyy-MM-dd】年月日 */
     BRDatePickerModeYMD,
     /** 【yyyy-MM】年月 */

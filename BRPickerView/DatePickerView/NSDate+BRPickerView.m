@@ -76,13 +76,13 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     NSCalendar *calendar = [NSDate calendar];
     // 初始化日期组件
     NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
-    if (year >= 0) {
+    if (year > 0) {
         components.year = year;
     }
-    if (month >= 0) {
+    if (month > 0) {
         components.month = month;
     }
-    if (day >= 0) {
+    if (day > 0) {
         components.day = day;
     }
     if (hour >= 0) {
@@ -111,27 +111,27 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month {
-    return [self br_setYear:year month:month day:-1 hour:0 minute:0 second:0];
+    return [self br_setYear:year month:month day:0 hour:0 minute:0 second:0];
 }
 
 + (NSDate *)br_setYear:(NSInteger)year {
-    return [self br_setYear:year month:-1 day:-1 hour:0 minute:0 second:0];
+    return [self br_setYear:year month:0 day:0 hour:0 minute:0 second:0];
 }
 
 + (NSDate *)br_setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
-    return [self br_setYear:-1 month:month day:day hour:hour minute:minute second:0];
+    return [self br_setYear:0 month:month day:day hour:hour minute:minute second:0];
 }
 
 + (NSDate *)br_setMonth:(NSInteger)month day:(NSInteger)day {
-    return [self br_setYear:-1 month:month day:day hour:0 minute:0 second:0];
+    return [self br_setYear:0 month:month day:day hour:0 minute:0 second:0];
 }
 
 + (NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
-    return [self br_setYear:-1 month:-1 day:-1 hour:hour minute:minute second:second];
+    return [self br_setYear:0 month:0 day:0 hour:hour minute:minute second:second];
 }
 
 + (NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute {
-    return [self br_setYear:-1 month:-1 day:-1 hour:hour minute:minute second:0];
+    return [self br_setYear:0 month:0 day:0 hour:hour minute:minute second:0];
 }
 
 #pragma mark - NSDate时间 和 字符串时间 之间的转换：NSDate 转 NSString
