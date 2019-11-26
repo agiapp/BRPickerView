@@ -11,9 +11,9 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-| ![效果图1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE1.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif?raw=true) |
-| :--------------------------------------: | :--------------------------------------: |
-|               框架Demo运行效果图1               |               框架Demo运行效果图2               |
+| ![效果图1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/a.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/b.gif?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                     框架Demo运行效果图1                      |                     框架Demo运行效果图2                      |
 
 # 3. 更新记录
 
@@ -215,27 +215,33 @@ datePickerView.pickerStyle = customStyle;
 
 > 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
 
-| ![样式1：UIDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type1.png?raw=true) | ![样式2：UIDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type2.png?raw=true) |
-| :--------------------------------------: | :--------------------------------------: |
-|         样式1：BRDatePickerModeTime         |         样式2：BRDatePickerModeDate         |
-|                                          |                                          |
-| ![样式3：UIDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type3.png?raw=true) | ![样式4：UIDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type4.png?raw=true) |
-|     样式3：BRDatePickerModeDateAndTime      |    样式4：BRDatePickerModeCountDownTimer    |
+| ![样式1：BRDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type1.png?raw=true) | ![样式2：BRDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type2.png?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                 样式1：BRDatePickerModeTime                  |                 样式2：BRDatePickerModeDate                  |
+|                                                              |                                                              |
+| ![样式3：BRDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type3.png?raw=true) | ![样式4：BRDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type4.png?raw=true) |
+|              样式3：BRDatePickerModeDateAndTime              |            样式4：BRDatePickerModeCountDownTimer             |
 
-> 以下7种样式是使用 UIPickerView 类 进行封装的。
+> 以下11种样式是使用 UIPickerView 类 进行封装的。
 
-| ![样式5： BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type5.png?raw=true) | ![样式6： BRDatePickerModeMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type6.png?raw=true) |
-| :--------------------------------------: | :--------------------------------------: |
-|        样式5： BRDatePickerModeYMDHM        |        样式6： BRDatePickerModeMDHM         |
-|                                          |                                          |
-| ![样式7： BRDatePickerModeYMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type7.png?raw=true) | ![样式8： BRDatePickerModeYM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type8.png?raw=true) |
-|         样式7： BRDatePickerModeYMD         |         样式8： BRDatePickerModeYM          |
-|                                          |                                          |
-| ![样式9： BRDatePickerModeY](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type9.png?raw=true) | ![样式10： BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type10.png?raw=true) |
-|          样式9： BRDatePickerModeY          |         样式10： BRDatePickerModeMD         |
-|                                          |                                          |
-| ![样式11：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/date_type11.png?raw=true) |                                          |
-|        样式11：  BRDatePickerModeHM         |                                          |
+| ![样式5：BRDatePickerModeYMDHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type5.png?raw=true) | ![样式6：BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type6.png?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                样式5：BRDatePickerModeYMDHMS                 |                 样式6：BRDatePickerModeYMDHM                 |
+|                                                              |                                                              |
+| ![样式7：BRDatePickerModeYMDH](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type7.png?raw=true) | ![样式8：BRDatePickerModeMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type8.png?raw=true) |
+|                 样式7：BRDatePickerModeYMDH                  |                 样式8：BRDatePickerModeMDHM                  |
+|                                                              |                                                              |
+| ![样式9：BRDatePickerModeYMDE](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type9.png?raw=true) | ![样式10：BRDatePickerModeYMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type10.png?raw=true) |
+|                 样式9：BRDatePickerModeYMDE                  |                 样式10：BRDatePickerModeYMD                  |
+|                                                              |                                                              |
+| ![样式11：BRDatePickerModeYM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type11.png?raw=true) | ![样式12：BRDatePickerModeY](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type12.png?raw=true) |
+|                  样式11：BRDatePickerModeYM                  |                  样式12：BRDatePickerModeY                   |
+|                                                              |                                                              |
+| ![样式13：BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
+|                  样式13：BRDatePickerModeMD                  |                  样式14：BRDatePickerModeHMS                   |
+|                                                              |                                                              |
+| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) |  |
+|                  样式15：BRDatePickerModeHM                  |                           |
 
 #### 6.2. 地址选择器：`BRAddressPickerView`
 
@@ -262,11 +268,11 @@ addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
 
 - 地址选择器的3种显示类型（showType 的3个枚举值）：
 
-| ![省份](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeCity.png?raw=true) |
-| :--------------------------------------: | :--------------------------------------: |
-|     样式1：BRAddressPickerModeProvince      |       样式2：BRAddressPickerModeCity        |
-| ![地区](https://github.com/91renb/BRPickerView/blob/0fb77e50ea397cbcb41be8778045eda7a77293bd/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/BRAddressPickerModeArea.png?raw=true) |                                          |
-|       样式3：BRAddressPickerModeArea        |                                          |
+| ![省份](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeCity.png?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|              样式1：BRAddressPickerModeProvince              |                样式2：BRAddressPickerModeCity                |
+| ![地区](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeArea.png?raw=true) |                                                              |
+|                样式3：BRAddressPickerModeArea                |                                                              |
 
 #### 6.3.  自定义字符串选择器：`BRStringPickerView`
 
@@ -306,13 +312,13 @@ addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColo
 
 - 字符串选择器效果图：
 
-| ![自定义单列字符串](https://github.com/91renb/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_single.png?raw=true) | ![自定义多列字符串](https://github.com/91renb/BRPickerView/blob/d400c274ff270ac4c805ac8b33f9ea3988e927e4/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more.png?raw=true) |
-| :--------------------------------------: | :--------------------------------------: |
-|            单列字符串选择器（默认主题色样式）             |            双列字符串选择器（自定义主题色样式）            |
+| ![自定义单列字符串](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_single.png?raw=true) | ![自定义多列字符串](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_more.png?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|              单列字符串选择器（默认主题色样式）              |             双列字符串选择器（自定义主题色样式）             |
 
-| ![3列效果图](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more3.png?raw=true) | ![4列效果图](https://github.com/91renb/BRPickerView/blob/fca58dbf6ac3c5f7f781e13cefdc27fdeaf59476/BRPickerViewDemo/%E6%95%88%E6%9E%9C%E5%9B%BE/string_more4.png?raw=true) |
-| :--------------------------------------: | :--------------------------------------: |
-|            3列字符串选择器（自定义主题色样式）            |            4列字符串选择器（自定义主题色样式）            |
+| ![3列效果图](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_more3.png?raw=true) | ![4列效果图](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_more4.png?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|             3列字符串选择器（自定义主题色样式）              |             4列字符串选择器（自定义主题色样式）              |
 
 # 7. 许可证
 
