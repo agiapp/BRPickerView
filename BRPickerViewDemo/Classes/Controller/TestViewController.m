@@ -20,7 +20,10 @@
 @property (nonatomic, copy) NSArray *titleArr;
 
 @property (nonatomic, strong) BRInfoModel *infoModel;
+
 @property (nonatomic, assign) NSInteger genderSelectIndex;
+@property (nonatomic, strong) NSDate *birthdaySelectDate;
+@property (nonatomic, strong) NSDate *birthtimeSelectDate;
 @property (nonatomic, assign) NSInteger educationSelectIndex;
 @property (nonatomic, copy) NSArray <NSNumber *> *addressSelectIndexs;
 @property (nonatomic, copy) NSArray <NSNumber *> *otherSelectIndexs;
@@ -301,10 +304,11 @@
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"出生年月日";
-            datePickerView.selectValue = self.infoModel.birthdayStr;
+            datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:5 day:1];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
+                self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
             };
@@ -326,13 +330,14 @@
         case 3:
         {
             // 出生时刻
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHM];
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHMS];
             datePickerView.title = @"出生时刻";
-            datePickerView.selectValue = self.infoModel.birthtimeStr;
-            datePickerView.minDate = [NSDate br_setHour:8 minute:10];
-            datePickerView.maxDate = [NSDate br_setHour:20 minute:35];
+            datePickerView.selectDate = self.birthtimeSelectDate;
+            datePickerView.minDate = [NSDate br_setHour:10 minute:10 second:0];
+            datePickerView.maxDate = [NSDate br_setHour:20 minute:35 second:0];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
+                self.birthtimeSelectDate = selectDate;
                 self.infoModel.birthtimeStr = selectValue;
                 textField.text = selectValue;
             };
@@ -377,8 +382,8 @@
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.educationSelectIndex = resultModel.index;
-                self.infoModel.educationStr = resultModel.selectValue;
-                textField.text = resultModel.selectValue;
+                self.infoModel.educationStr = resultModel.name;
+                textField.text = self.infoModel.educationStr;
             };
             
             // 自定义弹框样式
@@ -402,7 +407,7 @@
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 self.otherSelectIndexs = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
-                self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue];
+                self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].name, resultModelArr[1].name];
                 textField.text = self.infoModel.otherStr;
             };
             

@@ -1066,8 +1066,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 - (NSString *)getWeekday:(NSInteger)dayRow {
-    NSString *dateString = [NSString stringWithFormat:@"%@-%@-%@", @(self.selectDate.br_year), @(self.selectDate.br_month), self.dayArr[dayRow]];
-    NSDate *date = [NSDate br_getDate:dateString format:@"yyyy-MM-dd"];
+    NSInteger day = [self.dayArr[dayRow] integerValue];
+    NSDate *date = [NSDate br_setYear:self.selectDate.br_year month:self.selectDate.br_month day:day];
     switch (date.br_weekday - 1) {
         case 0:
         {

@@ -307,8 +307,8 @@
     // 1.用法一 的回调
     if (self.resultModelBlock) {
         BRResultModel *resultModel = [[BRResultModel alloc]init];
-        resultModel.selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
         resultModel.index = self.selectIndex;
+        resultModel.name = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
         self.resultModelBlock(resultModel);
     }
     
@@ -317,7 +317,6 @@
         NSString *selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
         self.resultBlock(selectValue);
     }
-    
 }
 
 #pragma mark - 处理多列选择结果的回调
@@ -329,8 +328,8 @@
             NSInteger index = [self.selectIndexs[i] integerValue];
             NSArray *dataArr = self.dataSourceArr[i];
             BRResultModel *resultModel = [[BRResultModel alloc]init];
-            resultModel.selectValue = index < dataArr.count ? dataArr[index] : nil;
             resultModel.index = index;
+            resultModel.name = index < dataArr.count ? dataArr[index] : nil;
             [resultModelArr addObject:resultModel];
         }
         self.resultModelArrayBlock([resultModelArr copy]);
