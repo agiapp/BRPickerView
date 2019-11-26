@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.4.2` 。
+- 当前最新版本为： `2.4.3` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 2. 效果演示
@@ -16,6 +16,14 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 |               框架Demo运行效果图1               |               框架Demo运行效果图2               |
 
 # 3. 更新记录
+
+#### 2019-11-26（V2.4.3）
+
+- 日期选择器新增以下三种选择类型：
+
+  `BRDatePickerModeYMDHMS`（年月日时分秒）、`BRDatePickerModeYMDE`（年月日星期）、`BRDatePickerModeHMS`（时分秒）
+
+- 更新地址选择器地区数据源
 
 #### 2019-11-07（V2.4.2）
 
@@ -139,34 +147,41 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 ​	查看 BRDatePickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
 ```objective-c
-/// 弹出日期类型
+/// 日期选择器类型
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
-    // --- 以下4种是系统自带的样式 ---
-    // UIDatePickerModeTime
-    BRDatePickerModeTime,              // HH:mm
-    // UIDatePickerModeDate
-    BRDatePickerModeDate,              // yyyy-MM-dd
-    // UIDatePickerModeDateAndTime
-    BRDatePickerModeDateAndTime,       // yyyy-MM-dd HH:mm
-    // UIDatePickerModeCountDownTimer
-    BRDatePickerModeCountDownTimer,    // HH:mm
-    // --- 以下8种是自定义样式 ---
-    // 年月日时分
-    BRDatePickerModeYMDHM,      // yyyy-MM-dd HH:mm
-  	// 年月日时
-    BRDatePickerModeYMDH,      // yyyy-MM-dd HH
-    // 月日时分
-    BRDatePickerModeMDHM,       // MM-dd HH:mm
-    // 年月日
-    BRDatePickerModeYMD,        // yyyy-MM-dd
-    // 年月
-    BRDatePickerModeYM,         // yyyy-MM
-    // 年
-    BRDatePickerModeY,          // yyyy
-    // 月日
-    BRDatePickerModeMD,         // MM-dd
-    // 时分
-    BRDatePickerModeHM          // HH:mm
+    // ----- 以下4种是系统自带的样式 -----
+    /** 【HH:mm】UIDatePickerModeTime */
+    BRDatePickerModeTime = 1,
+    /** 【yyyy-MM-dd】UIDatePickerModeDate */
+    BRDatePickerModeDate,
+    /** 【yyyy-MM-dd HH:mm】 UIDatePickerModeDateAndTime */
+    BRDatePickerModeDateAndTime,
+    /** 【HH:mm】UIDatePickerModeCountDownTimer */
+    BRDatePickerModeCountDownTimer,
+    
+    // ----- 以下11种是自定义样式 -----
+    /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
+    BRDatePickerModeYMDHMS,
+    /** 【yyyy-MM-dd HH:mm】年月日时分 */
+    BRDatePickerModeYMDHM,
+    /** 【yyyy-MM-dd HH】年月日时 */
+    BRDatePickerModeYMDH,
+    /** 【MM-dd HH:mm】月日时分 */
+    BRDatePickerModeMDHM,
+    /** 【yyyy-MM-ddEEE】年月日星期 */
+    BRDatePickerModeYMDE,
+    /** 【yyyy-MM-dd】年月日 */
+    BRDatePickerModeYMD,
+    /** 【yyyy-MM】年月 */
+    BRDatePickerModeYM,
+    /** 【yyyy】年 */
+    BRDatePickerModeY,
+    /** 【MM-dd】月日 */
+    BRDatePickerModeMD,
+    /** 【HH:mm:ss】时分秒 */
+    BRDatePickerModeHMS,
+    /** 【HH:mm】时分 */
+    BRDatePickerModeHM
 };
 ```
 
@@ -176,12 +191,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 // 1.创建日期选择器
 BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
 // 2.设置属性
-datePickerView.title = @"出生年月日";
-datePickerView.selectValue = @"2019-10-30";
-datePickerView.minDate = [NSDate br_setYear:1990 month:3 day:12];
+datePickerView.title = @"选择年月日";
+// datePickerView.selectValue = @"2019-10-30";
+datePickerView.selectDate = [NSDate br_setYear:2019 month:10 day:30];
+datePickerView.minDate = [NSDate br_setYear:1949 month:3 day:12];
 datePickerView.maxDate = [NSDate date];
 datePickerView.isAutoSelect = YES;
-datePickerView.resultBlock = ^(NSString *selectValue) {
+datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
     NSLog(@"选择的值：%@", selectValue);
 };
 // 自定义主题样式
@@ -266,7 +282,7 @@ stringPickerView.title = @"请选择性别";
 stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
 stringPickerView.selectIndex = 1;
 stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
-    NSLog(@"选择的值：%@", resultModel.selectValue);
+    NSLog(@"选择的值：%@", resultModel.name);
 };
 
 [stringPickerView show];
@@ -280,7 +296,7 @@ stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4�
 stringPickerView.selectIndexs = @[@2, @3];
 stringPickerView.isAutoSelect = YES;
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].selectValue, resultModelArr[1].selectValue]);
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].name, resultModelArr[1].name]);
 };
 // 自定义主题样式
 addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
