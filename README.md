@@ -1,4 +1,4 @@
-# 1. 框架介绍
+# BRPickerView
 
 BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期选择器、时间选择器、地址选择器、自定义字符串选择器。高度封装，提供了两种使用方式，支持自定义主题样式，适配深色模式。
 
@@ -7,7 +7,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 - 当前最新版本为： `2.4.3` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
-# 2. 效果演示
+# 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
@@ -15,111 +15,9 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                     框架Demo运行效果图1                      |                     框架Demo运行效果图2                      |
 
-# 3. 更新记录
+# 安装
 
-#### 2019-11-26（V2.4.3）
-
-- 日期选择器新增以下三种选择类型：
-
-  `BRDatePickerModeYMDHMS`（年月日时分秒）、`BRDatePickerModeYMDE`（年月日星期）、`BRDatePickerModeHMS`（时分秒）
-
-- 更新地址选择器地区数据源
-
-#### 2019-11-07（V2.4.2）
-
-- 日期选择器添加：BRDatePickerModeYMDH（yyyy-MM-dd HH）类型
-- 地址选择器添加：selectIndexs 属性，可根据索引去设置默认选择
-- 适配横屏及刘海屏安全区域显示效果
-
-#### 2019-11-04（V2.4.0）
-
-- 优化选择器子目录管理，方便轻量级、模块化集成
-
-  `pod 'BRPickerView'`	// 集成全部的功能
-
-  `pod 'BRPickerView/DatePickerView'`	// 仅集成日期选择器的功能
-
-  `pod 'BRPickerView/AddressPickerView'`	// 仅集成地址选择器的功能
-
-  `pod 'BRPickerView/StringPickerView'`	// 仅集成字符串选择器的功能
-
-#### 2019-11-01（V2.3.8）
-
-- 优化代码，添加更多的自定义样式属性
-
-#### 2019-10-30（V2.3.6）
-
-- 优化代码，添加国际化支持
-
-#### 2019-10-26（V2.3.5）
-
-- 添加传统的创建对象设置属性的使用方式
-- 开放设置选择器颜色及样式，适配深色模式
-- 更新省市区数据源，数据与政府官网最新公布的一致（参见：[行政区划代码](http://www.mca.gov.cn/article/sj/xzqh/2019/)）
-- 支持将选择器添加到指定容器视图上（见BaseView.h文件，扩展一方法）
-- 支持将子视图添加到选择器上（见BaseView.h文件，扩展二方法）
-- 优化代码，配置Pod库的层级目录
-
-#### 2018-04-27（V2.2.1）:
-
-- 修复bug，适配iPad和横屏显示。
-- 优化代码，提高框架适应性，降低内存消耗。
-
-#### 2018-04-03（V2.2.0）
-
-- 时间选择器新添加了7种显示类型（BRDatePickerMode），可根据自己项目的需求选择性使用。
-- 适配横屏，及 iPhoneX 底部安全区域。
-- 修改了最小时间和最大时间的参数名称（以前版本是传 NSString 类型， 现在传 NSDate 类型）
-- 修复比较时间大小时出现的bug。
-
-#### 2018-03-19（V2.1.3）
-
-- 修改地址选择器确认选择后的回调参数。
-- 现修改如下：可通过省市区的模型获取省市区的 name（名称）、code（id）、index（索引）`resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}`
-- 去掉第三方依赖库 `MJExtension` ，修改为手动解析地址数据源。
-
-#### 2018-03-11（V2.1.2）
-
-- 重命名了Github用户名，更新项目相关的路径。（提示：pod之前的版本不受影响）
-
-#### 2018-02-28（V2.1.1）
-
-- 修复某些情况下无法用bundle加载本地数据源（BRCity.plist）bug。
-
-#### 2018-01-26（V2.1.0）
-
-- 给地址选择器添加了一个方法（见方法4），提供数据源参数，支持外部传入地区数据源。
-- 提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
-
-#### 2018-01-25（V2.0.0）
-
-- 更新了地址数据源（BRCity.plist），地区信息是2018年最新最全的，与微信的地区信息完全一致。
-- 支持自定义默认选择地址（格式：@[@"浙江省", @"杭州市", @"西湖区"]），支持下次点击进入地址选择器时，默认地址为上次选择的结果。
-- 修改了日期选择器、地址选择器、字符串选择器的接口方法（删除了之前的方法2）。
-- 添加了地址选择器显示类型，支持3种显示：只显示省份、显示省份和城市、显示省市区。
-
-#### 2018-01-05（V1.3.0）
-
-- 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
-- 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
-
-#### 2018-01-02（V1.2.0）
-
-- 添加支持自定义主题颜色的方法。
-
-#### 2017-11-26（V1.1.0）
-
-- 更换第三方依赖库。
-
-- 用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错）。
-
-#### 2017-11-16（V1.0.0）
-
-- 初始版本！
-
-# 4. 安装
-
-#### 4.1. CocoaPods
+#### 1. CocoaPods
 
 1. 在 Podfile 中添加 `pod 'BRPickerView'`。
 
@@ -128,21 +26,21 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 3. 导入头文件 ` #import <BRPickerView.h>`。
 
 
-#### 4.2. 手动导入
+#### 2. 手动导入
 
 1. 将与 `README.md` 同级目录下的 `BRPickerView` 文件夹拽入项目中
 
 2. 导入头文件 ` #import "BRPickerView.h"`。
 
 
-# 5. 系统要求
+# 系统要求
 
 - iOS 8.0+
 - ARC
 
-# 6. 使用
+# 使用
 
-#### 6.1. 时间选择器：`BRDatePickerView`
+#### 1. 时间选择器：`BRDatePickerView`
 
 ​	查看 BRDatePickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
@@ -238,12 +136,12 @@ datePickerView.pickerStyle = customStyle;
 |                  样式11：BRDatePickerModeYM                  |                  样式12：BRDatePickerModeY                   |
 |                                                              |                                                              |
 | ![样式13：BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
-|                  样式13：BRDatePickerModeMD                  |                  样式14：BRDatePickerModeHMS                   |
+|                  样式13：BRDatePickerModeMD                  |                 样式14：BRDatePickerModeHMS                  |
 |                                                              |                                                              |
-| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) |  |
-|                  样式15：BRDatePickerModeHM                  |                           |
+| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type15.png?raw=true) |                                                              |
+|                  样式15：BRDatePickerModeHM                  |                                                              |
 
-#### 6.2. 地址选择器：`BRAddressPickerView`
+#### 2. 地址选择器：`BRAddressPickerView`
 
 ​	查看 BRAddressPickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
@@ -274,7 +172,7 @@ addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
 | ![地区](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeArea.png?raw=true) |                                                              |
 |                样式3：BRAddressPickerModeArea                |                                                              |
 
-#### 6.3.  自定义字符串选择器：`BRStringPickerView`
+#### 3.  自定义字符串选择器：`BRStringPickerView`
 
 ​	查看 BRStringPickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
@@ -320,6 +218,107 @@ addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColo
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |             3列字符串选择器（自定义主题色样式）              |             4列字符串选择器（自定义主题色样式）              |
 
-# 7. 许可证
+# 更新记录
+
+#### 2019-11-26（V2.4.3）
+
+- 日期选择器新增以下三种选择类型：
+
+  `BRDatePickerModeYMDHMS`（年月日时分秒）、`BRDatePickerModeYMDE`（年月日星期）、`BRDatePickerModeHMS`（时分秒）
+
+- 更新地址选择器地区数据源
+
+#### 2019-11-07（V2.4.2）
+
+- 日期选择器添加：BRDatePickerModeYMDH（yyyy-MM-dd HH）类型
+- 地址选择器添加：selectIndexs 属性，可根据索引去设置默认选择
+- 适配横屏及刘海屏安全区域显示效果
+
+#### 2019-11-04（V2.4.0）
+
+- 优化选择器子目录管理，方便轻量级、模块化集成
+
+  `pod 'BRPickerView'`	// 集成全部的功能
+
+  `pod 'BRPickerView/DatePickerView'`	// 仅集成日期选择器的功能
+
+  `pod 'BRPickerView/AddressPickerView'`	// 仅集成地址选择器的功能
+
+  `pod 'BRPickerView/StringPickerView'`	// 仅集成字符串选择器的功能
+
+#### 2019-11-01（V2.3.8）
+
+- 优化代码，添加更多的自定义样式属性
+
+#### 2019-10-30（V2.3.6）
+
+- 优化代码，添加国际化支持
+
+#### 2019-10-26（V2.3.5）
+
+- 添加传统的创建对象设置属性的使用方式
+- 开放设置选择器颜色及样式，适配深色模式
+- 更新省市区数据源，数据与政府官网最新公布的一致（参见：[行政区划代码](http://www.mca.gov.cn/article/sj/xzqh/2019/)）
+- 支持将选择器添加到指定容器视图上（见BaseView.h文件，扩展一方法）
+- 支持将子视图添加到选择器上（见BaseView.h文件，扩展二方法）
+- 优化代码，配置Pod库的层级目录
+
+#### 2018-04-27（V2.2.1）:
+
+- 修复bug，适配iPad和横屏显示。
+- 优化代码，提高框架适应性，降低内存消耗。
+
+#### 2018-04-03（V2.2.0）
+
+- 时间选择器新添加了7种显示类型（BRDatePickerMode），可根据自己项目的需求选择性使用。
+- 适配横屏，及 iPhoneX 底部安全区域。
+- 修改了最小时间和最大时间的参数名称（以前版本是传 NSString 类型， 现在传 NSDate 类型）
+- 修复比较时间大小时出现的bug。
+
+#### 2018-03-19（V2.1.3）
+
+- 修改地址选择器确认选择后的回调参数。
+- 现修改如下：可通过省市区的模型获取省市区的 name（名称）、code（id）、index（索引）`resultBlock:^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {}`
+- 去掉第三方依赖库 `MJExtension` ，修改为手动解析地址数据源。
+
+#### 2018-03-11（V2.1.2）
+
+- 重命名了Github用户名，更新项目相关的路径。（提示：pod之前的版本不受影响）
+
+#### 2018-02-28（V2.1.1）
+
+- 修复某些情况下无法用bundle加载本地数据源（BRCity.plist）bug。
+
+#### 2018-01-26（V2.1.0）
+
+- 给地址选择器添加了一个方法（见方法4），提供数据源参数，支持外部传入地区数据源。
+- 提示：要注意数据源格式，参考 BRCity.json。可以把 BRCity.json 文件的内容放到后台去维护，通过后台接口获取地区数据源（即 BRCity.json 文件的内容）。
+
+#### 2018-01-25（V2.0.0）
+
+- 更新了地址数据源（BRCity.plist），地区信息是2018年最新最全的，与微信的地区信息完全一致。
+- 支持自定义默认选择地址（格式：@[@"浙江省", @"杭州市", @"西湖区"]），支持下次点击进入地址选择器时，默认地址为上次选择的结果。
+- 修改了日期选择器、地址选择器、字符串选择器的接口方法（删除了之前的方法2）。
+- 添加了地址选择器显示类型，支持3种显示：只显示省份、显示省份和城市、显示省市区。
+
+#### 2018-01-05（V1.3.0）
+
+- 添加取消选择的回调方法（点击背景或取消按钮会执行 `cancelBlock` ）
+- 合并了字符串选择器 数组数据源和plist数据源对应的方法，`dataSource` 参数支持两种类型：
+
+#### 2018-01-02（V1.2.0）
+
+- 添加支持自定义主题颜色的方法。
+
+#### 2017-11-26（V1.1.0）
+
+- 更换第三方依赖库。
+- 用MJExtension 替换了 原来的YYModel，以前没有注意导入YYModel，同时又导入YYKit会导致重复导入而冲突（另外使用YYModel时，手动导入和pod导入 其中的头文件和方法名也不一样，所以很容易出错）。
+
+#### 2017-11-16（V1.0.0）
+
+- 初始版本！
+
+# 许可证
 
 BRPickerView 使用 MIT 许可证，详情见 LICENSE 文件。
