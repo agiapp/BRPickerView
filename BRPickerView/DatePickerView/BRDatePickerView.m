@@ -790,7 +790,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else if (component == 1) {
             label.text = [self getMonthText:row];
         } else if (component == 2) {
-            label.text = [NSString stringWithFormat:@"%@%@", [self getDayText:row], [self getWeekday:row]];
+            label.text = [self getDayText:row];
         }
     } else if (self.showType == BRDatePickerModeYMD) {
         if (component == 0) {
@@ -1244,7 +1244,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         return [NSBundle br_localizedStringForKey:@"今天" language:self.pickerStyle.language];
     }
     NSString *dayUnit = !self.hiddenDateUnit ? [NSBundle br_localizedStringForKey:@"日" language:self.pickerStyle.language] : @"";
-    return [NSString stringWithFormat:@"%@%@", dayString, dayUnit];
+    dayString = [NSString stringWithFormat:@"%@%@", dayString, dayUnit];
+    if (self.showType == BRDatePickerModeYMDE) {
+        dayString = [NSString stringWithFormat:@"%@%@", dayString, [self getWeekday:row]];
+    }
+    return dayString;
 }
 
 - (NSString *)getHourText:(NSInteger)row {
