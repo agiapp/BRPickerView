@@ -65,15 +65,15 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 @property (nonatomic, strong) NSDate *selectDate;
 @property (nonatomic, copy) NSString *selectValue;  // 推荐使用 selectDate
 
-/** 最小时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）*/
+/** 最小时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nonatomic, strong) NSDate *minDate;
-/** 最大时间（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）*/
+/** 最大时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nonatomic, strong) NSDate *maxDate;
 
 /** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
 @property (nonatomic, assign) BOOL hiddenDateUnit;
 
-/** 是否添加 至今，默认为 NO */
+/** 是否添加“至今”，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
 /** 选择结果的回调（提示：新增了 selectDate 参数） */
