@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.4.3` 。
+- 当前最新版本为： `2.4.5` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -95,6 +95,8 @@ datePickerView.selectDate = [NSDate br_setYear:2019 month:10 day:30];
 datePickerView.minDate = [NSDate br_setYear:1949 month:3 day:12];
 datePickerView.maxDate = [NSDate date];
 datePickerView.isAutoSelect = YES;
+// datePickerView.addToNow = YES;  // 是否添加“至今”
+// datePickerView.showToday = YES; // 是否显示“今天”
 datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
     NSLog(@"选择的值：%@", selectValue);
 };
@@ -219,6 +221,14 @@ addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColo
 |             3列字符串选择器（自定义主题色样式）              |             4列字符串选择器（自定义主题色样式）              |
 
 # 更新记录
+
+#### 2019-11-28（V2.4.5）
+
+- 日期选择器新增选择 ”至今“ 和 显示 ”今天“ 的功能，见以下两个属性：
+
+  `showToday` ：控制是否显示 “今天” ，默认为 NO
+
+  `addToNow`：控制是否添加选择 “至今”，默认为 NO
 
 #### 2019-11-26（V2.4.3）
 

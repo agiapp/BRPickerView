@@ -302,15 +302,21 @@
         case 2:
         {
             // 出生年月日
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
-            datePickerView.title = @"出生年月日";
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDE];
+            datePickerView.title = @"请选择年月日";
             datePickerView.selectDate = self.birthdaySelectDate;
-            datePickerView.minDate = [NSDate br_setYear:1948 month:5 day:1];
+            datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1 hour:1 minute:1 second:1];
             datePickerView.isAutoSelect = YES;
+            // datePickerView.addToNow = YES;
+            datePickerView.showToday = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
+                
+                NSLog(@"selectValue=%@", selectValue);
+                NSLog(@"selectDate=%@", selectDate);
+                NSLog(@"---------------------------------");
             };
             
             // 自定义弹框样式
