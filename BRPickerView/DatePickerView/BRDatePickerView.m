@@ -558,7 +558,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return [tempArr copy];
 }
 
-#pragma mark - 滚动到指定的时间位置
+#pragma mark - 滚动到指定时间的位置
 - (void)scrollToSelectDate:(NSDate *)selectDate animated:(BOOL)animated {
     // 根据 当前选择的日期 计算出 对应的索引
     NSInteger yearIndex = selectDate.br_year - self.minDate.br_year;
@@ -660,7 +660,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1.指定pickerview有几个表盘(几列)
+// 1. 设置 picker 的列数
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     if (self.showType == BRDatePickerModeYMDHMS) {
         return 6;
@@ -686,7 +686,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return 0;
 }
 
-// 2.指定每个表盘上有几行数据
+// 2. 设置 picker 每列的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     NSArray *rowsArr = [NSArray array];
     if (self.showType == BRDatePickerModeYMDHMS) {
@@ -714,7 +714,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - UIPickerViewDelegate
-// 3.设置 pickerView 的 显示内容
+// 3. 设置 picker 的 显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
     // 设置分割线的颜色
@@ -835,7 +835,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return label;
 }
 
-// 4.选中时回调的委托方法，在此方法中实现省份和城市间的联动
+// 4. 时间选择器2 每次滚动后的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     BOOL isSelectNow = NO;
     if (self.showType == BRDatePickerModeYMDHMS) {
@@ -1138,7 +1138,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return self.pickerStyle.rowHeight;
 }
 
-#pragma mark - 时间选择器的滚动响应事件
+#pragma mark - 时间选择器1 滚动后的响应事件
 - (void)didSelectValueChanged:(UIDatePicker *)sender {
     // 读取日期：datePicker.date
     self.selectDate = sender.date;
@@ -1188,6 +1188,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 先判断一下，防止重复执行回调
         if (!weakSelf.hasResultValue) {
             if (weakSelf.resultBlock) {
+                weakSelf.selectValue = weakSelf.selectValue ? weakSelf.selectValue : [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
                 weakSelf.resultBlock(weakSelf.selectDate, weakSelf.selectValue);
             }
         }
@@ -1238,8 +1239,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 - (NSString *)getDayText:(NSInteger)row {
+    NSString *dayString = self.dayArr[row];
+    if (self.isShowToday && self.selectDate.br_year == [NSDate date].br_year && self.selectDate.br_month == [NSDate date].br_month && [dayString integerValue] == [NSDate date].br_day) {
+        return [NSBundle br_localizedStringForKey:@"今天" language:self.pickerStyle.language];
+    }
     NSString *dayUnit = !self.hiddenDateUnit ? [NSBundle br_localizedStringForKey:@"日" language:self.pickerStyle.language] : @"";
-    return [NSString stringWithFormat:@"%@%@", self.dayArr[row], dayUnit];
+    return [NSString stringWithFormat:@"%@%@", dayString, dayUnit];
 }
 
 - (NSString *)getHourText:(NSInteger)row {

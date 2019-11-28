@@ -73,6 +73,9 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
 @property (nonatomic, assign) BOOL hiddenDateUnit;
 
+/** 是否显示“今天”，默认为 NO  */
+@property (nonatomic, assign, getter=isShowToday) BOOL showToday;
+
 /** 是否添加“至今”，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
