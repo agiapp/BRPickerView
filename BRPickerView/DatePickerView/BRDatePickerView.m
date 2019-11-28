@@ -333,6 +333,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.minuteArr = nil;
         self.secondArr = nil;
         
+        self.monthIndex = 0;
+        self.dayIndex = 0;
+        self.hourIndex = 0;
+        self.minuteIndex = 0;
+        self.secondIndex = 0;
+        
         return;
     }
     
