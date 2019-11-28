@@ -203,6 +203,14 @@
     return _rowHeight;
 }
 
+- (NSString *)language {
+    if (!_language) {
+        // 跟随系统的首选语言自动改变
+        _language = [NSLocale preferredLanguages].firstObject;
+    }
+    return _language;
+}
+
 #pragma mark - 快捷设置自定义样式 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];

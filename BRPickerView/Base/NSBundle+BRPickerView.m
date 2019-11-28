@@ -52,7 +52,7 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
     if (bundle == nil) {
         // 如果没有手动设置语言，将随系统的语言自动改变
         if (!language) {
-            // 系统默认语言
+            // 系统首选语言
             language = [NSLocale preferredLanguages].firstObject;
         }
         
@@ -61,7 +61,7 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
         } else if ([language hasPrefix:@"zh"]) {
             if ([language rangeOfString:@"Hans"].location != NSNotFound) {
                 language = @"zh-Hans"; // 简体中文
-            } else { // zh-Hant\zh-HK\zh-TW
+            } else { // zh-Hant、zh-HK、zh-TW
                 language = @"zh-Hant"; // 繁體中文
             }
         } else {

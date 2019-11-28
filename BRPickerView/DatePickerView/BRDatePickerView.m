@@ -602,10 +602,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
-        // 设置该UIDatePicker的国际化Locale
-        if (self.pickerStyle.language && self.pickerStyle.language.length > 0) {
-            _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
-        }
+        // 设置该 UIDatePicker 的国际化 Locale
+        _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
         // textColor 隐藏属性，使用KVC赋值
         [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
         
