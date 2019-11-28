@@ -420,23 +420,23 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     
     // 判断是否需要添加“至今”
-    switch (self.showType) {
-        case BRDatePickerModeYMDHMS:
-        case BRDatePickerModeYMDHM:
-        case BRDatePickerModeYMDH:
-        case BRDatePickerModeYMDE:
-        case BRDatePickerModeYMD:
-        case BRDatePickerModeYM:
-        case BRDatePickerModeY:
-        {
-            if (self.isAddToNow) {
+    if (self.isAddToNow) {
+        switch (self.showType) {
+            case BRDatePickerModeYMDHMS:
+            case BRDatePickerModeYMDHM:
+            case BRDatePickerModeYMDH:
+            case BRDatePickerModeYMDE:
+            case BRDatePickerModeYMD:
+            case BRDatePickerModeYM:
+            case BRDatePickerModeY:
+            {
                 [tempArr addObject:[self getNowString]];
             }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        default:
-            break;
     }
 
     return [tempArr copy];
@@ -458,19 +458,20 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     
     // 判断是否需要添加“至今”
-    switch (self.showType) {
-        case BRDatePickerModeMDHM:
-        case BRDatePickerModeMD:
-        {
-            if (self.isAddToNow) {
+    if (self.isAddToNow) {
+        switch (self.showType) {
+            case BRDatePickerModeMDHM:
+            case BRDatePickerModeMD:
+            {
                 [tempArr addObject:[self getNowString]];
             }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        default:
-            break;
     }
+    
     return [tempArr copy];
 }
 
@@ -507,18 +508,18 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     
     // 判断是否需要添加“至今”
-    switch (self.showType) {
-        case BRDatePickerModeHMS:
-        case BRDatePickerModeHM:
-        {
-            if (self.isAddToNow) {
+    if (self.isAddToNow) {
+        switch (self.showType) {
+            case BRDatePickerModeHMS:
+            case BRDatePickerModeHM:
+            {
                 [tempArr addObject:[self getNowString]];
             }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        default:
-            break;
     }
     return [tempArr copy];
 }
