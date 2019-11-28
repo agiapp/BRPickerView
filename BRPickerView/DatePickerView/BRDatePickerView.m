@@ -873,13 +873,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *yearString = self.yearArr[self.yearIndex];
         if (![yearString isEqualToString:[self getNowString]]) {
-            NSInteger year = [self.yearArr[self.yearIndex] integerValue];
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
-            NSInteger day = [self.dayArr[self.dayIndex] integerValue];
-            NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
-            NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
-            NSInteger second = [self.secondArr[self.secondIndex] integerValue];
+            int year = [self.yearArr[self.yearIndex] intValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
+            int day = [self.dayArr[self.dayIndex] intValue];
+            int hour = [self.hourArr[self.hourIndex] intValue];
+            int minute = [self.minuteArr[self.minuteIndex] intValue];
+            int second = [self.secondArr[self.secondIndex] intValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute second:second];
+            self.selectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -914,12 +915,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *yearString = self.yearArr[self.yearIndex];
         if (![yearString isEqualToString:[self getNowString]]) {
-            NSInteger year = [self.yearArr[self.yearIndex] integerValue];
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
-            NSInteger day = [self.dayArr[self.dayIndex] integerValue];
-            NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
-            NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
+            int year = [self.yearArr[self.yearIndex] intValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
+            int day = [self.dayArr[self.dayIndex] intValue];
+            int hour = [self.hourArr[self.hourIndex] intValue];
+            int minute = [self.minuteArr[self.minuteIndex] intValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute];
+            self.selectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d", year, month, day, hour, minute];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -947,11 +949,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *yearString = self.yearArr[self.yearIndex];
         if (![yearString isEqualToString:[self getNowString]]) {
-            NSInteger year = [self.yearArr[self.yearIndex] integerValue];
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
-            NSInteger day = [self.dayArr[self.dayIndex] integerValue];
-            NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
+            int year = [self.yearArr[self.yearIndex] intValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
+            int day = [self.dayArr[self.dayIndex] intValue];
+            int hour = [self.hourArr[self.hourIndex] intValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day hour:hour];
+            self.selectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d", year, month, day, hour];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -979,11 +982,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *monthString = self.monthArr[self.monthIndex];
         if (![monthString isEqualToString:[self getNowString]]) {
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
-            NSInteger day = [self.dayArr[self.dayIndex] integerValue];
-            NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
-            NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
+            int day = [self.dayArr[self.dayIndex] intValue];
+            int hour = [self.hourArr[self.hourIndex] intValue];
+            int minute = [self.minuteArr[self.minuteIndex] intValue];
             self.selectDate = [NSDate br_setMonth:month day:day hour:hour minute:minute];
+            self.selectValue = [NSString stringWithFormat:@"%02d-%02d %02d:%02d", month, day, hour, minute];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1005,10 +1009,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *yearString = self.yearArr[self.yearIndex];
         if (![yearString isEqualToString:[self getNowString]]) {
-            NSInteger year = [self.yearArr[self.yearIndex] integerValue];
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
-            NSInteger day = [self.dayArr[self.dayIndex] integerValue];
+            int year = [self.yearArr[self.yearIndex] intValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
+            int day = [self.dayArr[self.dayIndex] intValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day];
+            self.selectValue = [NSString stringWithFormat:@"%04d-%02d-%02d", year, month, day];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1025,9 +1030,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *yearString = self.yearArr[self.yearIndex];
         if (![yearString isEqualToString:[self getNowString]]) {
-            NSInteger year = [self.yearArr[self.yearIndex] integerValue];
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
+            int year = [self.yearArr[self.yearIndex] intValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
             self.selectDate = [NSDate br_setYear:year month:month];
+            self.selectValue = [NSString stringWithFormat:@"%04d-%02d", year, month];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1040,8 +1046,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *yearString = self.yearArr[self.yearIndex];
         if (![yearString isEqualToString:[self getNowString]]) {
-            NSInteger year = [self.yearArr[self.yearIndex] integerValue];
+            int year = [self.yearArr[self.yearIndex] intValue];
             self.selectDate = [NSDate br_setYear:year];
+            self.selectValue = [NSString stringWithFormat:@"%04d", year];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1058,9 +1065,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *monthString = self.monthArr[self.monthIndex];
         if (![monthString isEqualToString:[self getNowString]]) {
-            NSInteger month = [self.monthArr[self.monthIndex] integerValue];
-            NSInteger day = [self.dayArr[self.dayIndex] integerValue];
+            int month = [self.monthArr[self.monthIndex] intValue];
+            int day = [self.dayArr[self.dayIndex] intValue];
             self.selectDate = [NSDate br_setMonth:month day:day];
+            self.selectValue = [NSString stringWithFormat:@"%02d-%02d", month, day];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1082,10 +1090,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *hourString = self.hourArr[self.hourIndex];
         if (![hourString isEqualToString:[self getNowString]]) {
-            NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
-            NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
-            NSInteger second = [self.secondArr[self.secondIndex] integerValue];
+            int hour = [self.hourArr[self.hourIndex] intValue];
+            int minute = [self.minuteArr[self.minuteIndex] intValue];
+            int second = [self.secondArr[self.secondIndex] intValue];
             self.selectDate = [NSDate br_setHour:hour minute:minute second:second];
+            self.selectValue = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, minute, second];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1102,9 +1111,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *hourString = self.hourArr[self.hourIndex];
         if (![hourString isEqualToString:[self getNowString]]) {
-            NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
-            NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
+            int hour = [self.hourArr[self.hourIndex] intValue];
+            int minute = [self.minuteArr[self.minuteIndex] intValue];
             self.selectDate = [NSDate br_setHour:hour minute:minute];
+            self.selectValue = [NSString stringWithFormat:@"%02d:%02d", hour, minute];
         } else {
             isSelectNow = YES;
             self.selectDate = [NSDate date];
@@ -1117,8 +1127,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     if (isSelectNow) {
         self.selectValue = [self getNowString];
-    } else {
-        self.selectValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
     }
     
     // 设置是否开启自动回调
