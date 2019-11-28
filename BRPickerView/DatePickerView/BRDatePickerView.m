@@ -333,12 +333,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.minuteArr = nil;
         self.secondArr = nil;
         
-        self.monthIndex = 0;
-        self.dayIndex = 0;
-        self.hourIndex = 0;
-        self.minuteIndex = 0;
-        self.secondIndex = 0;
-        
         return;
     }
     
@@ -725,6 +719,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
             NSInteger second = [self.secondArr[self.secondIndex] integerValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute second:second];
+        } else {
+            self.selectDate = [NSDate date];
         }
     } else if (self.showType == BRDatePickerModeYMDHM) {
         if (component == 0) {
@@ -760,6 +756,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
             NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute];
+        } else {
+            self.selectDate = [NSDate date];
         }
     } else if (self.showType == BRDatePickerModeYMDH) {
         if (component == 0) {
@@ -787,6 +785,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             NSInteger day = [self.dayArr[self.dayIndex] integerValue];
             NSInteger hour = [self.hourArr[self.hourIndex] integerValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day hour:hour];
+        } else {
+            self.selectDate = [NSDate date];
         }
     } else if (self.showType == BRDatePickerModeMDHM) {
         if (component == 0) {
@@ -831,6 +831,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             NSInteger month = [self.monthArr[self.monthIndex] integerValue];
             NSInteger day = [self.dayArr[self.dayIndex] integerValue];
             self.selectDate = [NSDate br_setYear:year month:month day:day];
+        } else {
+            self.selectDate = [NSDate date];
         }
     } else if (self.showType == BRDatePickerModeYM) {
         if (component == 0) {
@@ -845,6 +847,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             NSInteger year = [self.yearArr[self.yearIndex] integerValue];
             NSInteger month = [self.monthArr[self.monthIndex] integerValue];
             self.selectDate = [NSDate br_setYear:year month:month];
+        } else {
+            self.selectDate = [NSDate date];
         }
     } else if (self.showType == BRDatePickerModeY) {
         if (component == 0) {
@@ -854,6 +858,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (![yearString isEqualToString:[self getNowString]]) {
             NSInteger year = [self.yearArr[self.yearIndex] integerValue];
             self.selectDate = [NSDate br_setYear:year];
+        } else {
+            self.selectDate = [NSDate date];
         }
     } else if (self.showType == BRDatePickerModeMD) {
         if (component == 0) {
@@ -896,17 +902,22 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.selectDate = [NSDate br_setHour:hour minute:minute];
     }
     
+    // 由 至今 滚动到 其它时间时，回滚到上次选择的位置
+    if ([self.selectValue isEqualToString:[self getNowString]] && ![yearString isEqualToString:[self getNowString]]) {
+        [self scrollToSelectDate:self.selectDate animated:NO];
+    }
+    if ([yearString isEqualToString:[self getNowString]]) {
+        self.selectValue = yearString;
+    } else {
+        self.selectValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
+    }
+    
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
         self.hasResultValue = YES;
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
-            if ([yearString isEqualToString:[self getNowString]]) {
-                self.resultBlock([NSDate date], yearString);
-            } else {
-                NSString *selectDateValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
-                self.resultBlock(self.selectDate, selectDateValue);
-            }
+            self.resultBlock(self.selectDate, self.selectValue);
         }
     }
 }
@@ -1027,12 +1038,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     [self.datePicker setDate:self.selectDate animated:YES];
     
+    self.selectValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
+    
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
-            NSString *selectDateValue = [NSDate br_getDateString:self.selectDate format:self.selectDateFormatter];
-            self.resultBlock(self.selectDate, selectDateValue);
+            self.resultBlock(self.selectDate, self.selectValue);
         }
     }
 }
@@ -1061,8 +1073,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 先判断一下，防止重复执行回调
         if (!weakSelf.hasResultValue) {
             if (weakSelf.resultBlock) {
-                NSString *selectDateValue = [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
-                weakSelf.resultBlock(weakSelf.selectDate, selectDateValue);
+                weakSelf.resultBlock(weakSelf.selectDate, weakSelf.selectValue);
             }
         }
     };
