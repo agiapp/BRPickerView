@@ -190,12 +190,12 @@
         _doneBtn.frame = self.pickerStyle.doneBtnFrame;
         _doneBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _doneBtn.backgroundColor = self.pickerStyle.doneColor;
-        _doneBtn.titleLabel.font = self.pickerStyle.doneTextFont;
-        [_doneBtn setTitleColor:self.pickerStyle.doneTextColor forState:UIControlStateNormal];
         if (self.pickerStyle.doneBtnImage) {
             [_doneBtn setImage:self.pickerStyle.doneBtnImage forState:UIControlStateNormal];
         }
         if (self.pickerStyle.doneBtnTitle) {
+            _doneBtn.titleLabel.font = self.pickerStyle.doneTextFont;
+            [_doneBtn setTitleColor:self.pickerStyle.doneTextColor forState:UIControlStateNormal];
             [_doneBtn setTitle:self.pickerStyle.doneBtnTitle forState:UIControlStateNormal];
         }
         [_doneBtn addTarget:self action:@selector(clickDoneBtn) forControlEvents:UIControlEventTouchUpInside];

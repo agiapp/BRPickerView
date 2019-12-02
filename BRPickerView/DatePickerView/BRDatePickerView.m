@@ -397,7 +397,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma setter 方法
+#pragma mark - setter 方法
 - (void)setAddToNow:(BOOL)addToNow {
     _addToNow = addToNow;
     if (addToNow) {
