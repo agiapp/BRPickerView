@@ -48,9 +48,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 /** 选择的日期的格式 */
 @property (nonatomic, copy) NSString *selectDateFormatter;
 
-/** 是否执行过选择结果的回调（防止 isAutoSelect=YES 时，执行回调两次） */
-@property (nonatomic, assign, getter=isHasResultValue) BOOL hasResultValue;
-
 @end
 
 @implementation BRDatePickerView
@@ -1131,7 +1128,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
-        self.hasResultValue = YES;
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
             self.resultBlock(self.selectDate, self.selectValue);
@@ -1191,12 +1187,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
         [weakSelf removePickerFromView:view];
-        // 先判断一下，防止重复执行回调
-        if (!weakSelf.hasResultValue) {
-            if (weakSelf.resultBlock) {
-                weakSelf.selectValue = weakSelf.selectValue ? weakSelf.selectValue : [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
-                weakSelf.resultBlock(weakSelf.selectDate, weakSelf.selectValue);
-            }
+        
+        if (!weakSelf.isAutoSelect && weakSelf.resultBlock) {
+            weakSelf.selectValue = weakSelf.selectValue ? weakSelf.selectValue : [NSDate br_getDateString:weakSelf.selectDate format:weakSelf.selectDateFormatter];
+            weakSelf.resultBlock(weakSelf.selectDate, weakSelf.selectValue);
         }
     };
     

@@ -39,9 +39,6 @@
 
 @property (nonatomic, copy) NSArray <NSString *>* currentSelectValues;
 
-/** 是否执行过选择结果的回调（防止 isAutoSelect=YES 时，执行回调两次） */
-@property (nonatomic, assign, getter=isHasResultValue) BOOL hasResultValue;
-
 @end
 
 @implementation BRAddressPickerView
@@ -463,7 +460,6 @@
     
     // 自动获取数据，滚动完就执行回调
     if (self.isAutoSelect) {
-        self.hasResultValue = YES;
         if (self.resultBlock) {
             self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
         }
@@ -486,11 +482,8 @@
         // 点击确定按钮后，执行block回调
         [weakSelf removePickerFromView:view];
         
-        // 先判断一下，防止重复执行回调
-        if (!weakSelf.hasResultValue) {
-            if (weakSelf.resultBlock) {
-                weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
-            }
+        if (!weakSelf.isAutoSelect && weakSelf.resultBlock) {
+            weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
         }
     };
     

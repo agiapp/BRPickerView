@@ -24,9 +24,6 @@
 /** 多列选择的值 */
 @property (nonatomic, copy) NSArray <NSString *>* currentSelectValues;
 
-/** 是否执行过选择结果的回调（防止 isAutoSelect=YES 时，执行回调两次） */
-@property (nonatomic, assign, getter=isHasResultValue) BOOL hasResultValue;
-
 @end
 
 @implementation BRStringPickerView
@@ -241,7 +238,6 @@
             self.selectIndex = row;
             // 设置是否自动回调
             if (self.isAutoSelect) {
-                self.hasResultValue = YES;
                 [self handlerResultModelBlock];
             }
         }
@@ -256,7 +252,6 @@
             
             // 设置是否自动回调
             if (self.isAutoSelect) {
-                self.hasResultValue = YES;
                 [self handlerResultModelArrayBlock];
             }
         }
@@ -361,8 +356,7 @@
         // 点击确定按钮后，执行block回调
         [self removePickerFromView:view];
         
-        // 先判断一下，防止重复执行回调
-        if (!self.hasResultValue) {
+        if (!self.isAutoSelect) {
             if (self.showType == BRStringPickerComponentSingle) {
                 
                 [self handlerResultModelBlock];
