@@ -9,12 +9,17 @@
 /* Begin PBXBuildFile section */
 		451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C0D234D6AA2004E801F /* BRPickerStyle.m */; };
 		451D6C1123509890004E801F /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C1023509890004E801F /* BRResultModel.m */; };
-		453661D42384CF4E00684A78 /* 2019年9月县以上行政区划代码.json in Resources */ = {isa = PBXBuildFile; fileRef = 453661D22384CF4E00684A78 /* 2019年9月县以上行政区划代码.json */; };
-		453661D52384CF4E00684A78 /* 2019年5月县以上行政区划代码.json in Resources */ = {isa = PBXBuildFile; fileRef = 453661D32384CF4E00684A78 /* 2019年5月县以上行政区划代码.json */; };
 		45653925237032D90074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45653924237032D90074BBBC /* BRPickerView.bundle */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
-		C5655BA12084759300331751 /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA02084759300331751 /* BRInfoCell.m */; };
-		C5655BA82084B3B000331751 /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5655BA72084B3B000331751 /* BRInfoModel.m */; };
+		45E81D042399387700B8878A /* testData1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* testData1.plist */; };
+		45E81D052399387700B8878A /* testData3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF72399387700B8878A /* testData3.plist */; };
+		45E81D062399387700B8878A /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81CF92399387700B8878A /* TestViewController.m */; };
+		45E81D072399387700B8878A /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81CFD2399387700B8878A /* BRInfoModel.m */; };
+		45E81D082399387700B8878A /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D002399387700B8878A /* BRInfoCell.m */; };
+		45E81D092399387700B8878A /* 2019年9月县以上行政区划代码.json in Resources */ = {isa = PBXBuildFile; fileRef = 45E81D012399387700B8878A /* 2019年9月县以上行政区划代码.json */; };
+		45E81D0A2399387700B8878A /* 2019年5月县以上行政区划代码.json in Resources */ = {isa = PBXBuildFile; fileRef = 45E81D022399387700B8878A /* 2019年5月县以上行政区划代码.json */; };
+		45E81D1123993A0500B8878A /* BRMutableDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D1023993A0500B8878A /* BRMutableDatePickerView.m */; };
+		45E81D1423993AFB00B8878A /* Test2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D1323993AFB00B8878A /* Test2ViewController.m */; };
 		C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A158F01FBD893900B3B3BA /* BRBaseView.m */; };
 		C5ACE4DB1F3D58BD0069978B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DA1F3D58BD0069978B /* main.m */; };
 		C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */; };
@@ -25,10 +30,6 @@
 		C5ACE5081F3D7D060069978B /* BRAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5071F3D7D060069978B /* BRAddressModel.m */; };
 		C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */; };
 		C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE50D1F3D7E890069978B /* BRStringPickerView.m */; };
-		C5ACE5121F3D81360069978B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE5111F3D81360069978B /* TestViewController.m */; };
-		C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D32018D38100FECAD5 /* testData1.plist */; };
-		C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D52018D39900FECAD5 /* testData2.plist */; };
-		C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5EB52D72018D5DF00FECAD5 /* testData3.plist */; };
 		C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */; };
 /* End PBXBuildFile section */
 
@@ -37,16 +38,24 @@
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
 		451D6C1023509890004E801F /* BRResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
-		453661D22384CF4E00684A78 /* 2019年9月县以上行政区划代码.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2019年9月县以上行政区划代码.json"; sourceTree = "<group>"; };
-		453661D32384CF4E00684A78 /* 2019年5月县以上行政区划代码.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2019年5月县以上行政区划代码.json"; sourceTree = "<group>"; };
 		45653924237032D90074BBBC /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
-		C5655B9F2084759300331751 /* BRInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRInfoCell.h; sourceTree = "<group>"; };
-		C5655BA02084759300331751 /* BRInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRInfoCell.m; sourceTree = "<group>"; };
-		C5655BA62084B3B000331751 /* BRInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
-		C5655BA72084B3B000331751 /* BRInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
+		45E81CF62399387700B8878A /* testData1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testData1.plist; sourceTree = "<group>"; };
+		45E81CF72399387700B8878A /* testData3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testData3.plist; sourceTree = "<group>"; };
+		45E81CF92399387700B8878A /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		45E81CFA2399387700B8878A /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		45E81CFC2399387700B8878A /* BRInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
+		45E81CFD2399387700B8878A /* BRInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
+		45E81CFF2399387700B8878A /* BRInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoCell.h; sourceTree = "<group>"; };
+		45E81D002399387700B8878A /* BRInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoCell.m; sourceTree = "<group>"; };
+		45E81D012399387700B8878A /* 2019年9月县以上行政区划代码.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2019年9月县以上行政区划代码.json"; sourceTree = "<group>"; };
+		45E81D022399387700B8878A /* 2019年5月县以上行政区划代码.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2019年5月县以上行政区划代码.json"; sourceTree = "<group>"; };
+		45E81D0F23993A0500B8878A /* BRMutableDatePickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRMutableDatePickerView.h; sourceTree = "<group>"; };
+		45E81D1023993A0500B8878A /* BRMutableDatePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRMutableDatePickerView.m; sourceTree = "<group>"; };
+		45E81D1223993AFB00B8878A /* Test2ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test2ViewController.h; sourceTree = "<group>"; };
+		45E81D1323993AFB00B8878A /* Test2ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test2ViewController.m; sourceTree = "<group>"; };
 		C5A158F01FBD893900B3B3BA /* BRBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
 		C5A158F11FBD893900B3B3BA /* BRBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
 		C5ACE4D61F3D58BD0069978B /* BRPickerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRPickerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,12 +74,7 @@
 		C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDatePickerView.m; sourceTree = "<group>"; };
 		C5ACE50C1F3D7E890069978B /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
 		C5ACE50D1F3D7E890069978B /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
-		C5ACE5101F3D81360069978B /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		C5ACE5111F3D81360069978B /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		C5ACE5201F3D90A90069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
-		C5EB52D32018D38100FECAD5 /* testData1.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData1.plist; sourceTree = "<group>"; };
-		C5EB52D52018D39900FECAD5 /* testData2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData2.plist; sourceTree = "<group>"; };
-		C5EB52D72018D5DF00FECAD5 /* testData3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testData3.plist; sourceTree = "<group>"; };
 		C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRPickerView.h"; sourceTree = "<group>"; };
 		C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,31 +90,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C5655B9C208474E600331751 /* Controller */ = {
+		45E81CF42399387700B8878A /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				C5ACE5101F3D81360069978B /* TestViewController.h */,
-				C5ACE5111F3D81360069978B /* TestViewController.m */,
+				45E81CF82399387700B8878A /* Controller */,
+				45E81CFB2399387700B8878A /* Model */,
+				45E81CFE2399387700B8878A /* View */,
+				45E81D012399387700B8878A /* 2019年9月县以上行政区划代码.json */,
+				45E81D022399387700B8878A /* 2019年5月县以上行政区划代码.json */,
+				45E81CF62399387700B8878A /* testData1.plist */,
+				45E81CF72399387700B8878A /* testData3.plist */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		45E81CF82399387700B8878A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				45E81CFA2399387700B8878A /* TestViewController.h */,
+				45E81CF92399387700B8878A /* TestViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		C5655B9D2084750F00331751 /* View */ = {
+		45E81CFB2399387700B8878A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C5655B9F2084759300331751 /* BRInfoCell.h */,
-				C5655BA02084759300331751 /* BRInfoCell.m */,
+				45E81CFC2399387700B8878A /* BRInfoModel.h */,
+				45E81CFD2399387700B8878A /* BRInfoModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		45E81CFE2399387700B8878A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				45E81CFF2399387700B8878A /* BRInfoCell.h */,
+				45E81D002399387700B8878A /* BRInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		C5655B9E2084751D00331751 /* Model */ = {
+		45E81D0D2399392700B8878A /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				C5655BA62084B3B000331751 /* BRInfoModel.h */,
-				C5655BA72084B3B000331751 /* BRInfoModel.m */,
+				45E81D0E2399392700B8878A /* BRMutableDatePickerView */,
+				45E81D1223993AFB00B8878A /* Test2ViewController.h */,
+				45E81D1323993AFB00B8878A /* Test2ViewController.m */,
 			);
-			path = Model;
+			path = Other;
+			sourceTree = "<group>";
+		};
+		45E81D0E2399392700B8878A /* BRMutableDatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				45E81D0F23993A0500B8878A /* BRMutableDatePickerView.h */,
+				45E81D1023993A0500B8878A /* BRMutableDatePickerView.m */,
+			);
+			path = BRMutableDatePickerView;
 			sourceTree = "<group>";
 		};
 		C5ACE4CD1F3D58BD0069978B = {
@@ -201,14 +238,8 @@
 		C5ACE50F1F3D80BA0069978B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C5655B9C208474E600331751 /* Controller */,
-				C5655B9D2084750F00331751 /* View */,
-				C5655B9E2084751D00331751 /* Model */,
-				C5EB52D32018D38100FECAD5 /* testData1.plist */,
-				C5EB52D52018D39900FECAD5 /* testData2.plist */,
-				C5EB52D72018D5DF00FECAD5 /* testData3.plist */,
-				453661D32384CF4E00684A78 /* 2019年5月县以上行政区划代码.json */,
-				453661D22384CF4E00684A78 /* 2019年9月县以上行政区划代码.json */,
+				45E81CF42399387700B8878A /* Demo */,
+				45E81D0D2399392700B8878A /* Other */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -290,15 +321,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45E81D042399387700B8878A /* testData1.plist in Resources */,
+				45E81D052399387700B8878A /* testData3.plist in Resources */,
+				45E81D0A2399387700B8878A /* 2019年5月县以上行政区划代码.json in Resources */,
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
-				C5EB52D82018D5DF00FECAD5 /* testData3.plist in Resources */,
-				453661D52384CF4E00684A78 /* 2019年5月县以上行政区划代码.json in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
-				C5EB52D42018D38100FECAD5 /* testData1.plist in Resources */,
-				C5EB52D62018D39900FECAD5 /* testData2.plist in Resources */,
 				45653925237032D90074BBBC /* BRPickerView.bundle in Resources */,
-				453661D42384CF4E00684A78 /* 2019年9月县以上行政区划代码.json in Resources */,
+				45E81D092399387700B8878A /* 2019年9月县以上行政区划代码.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,19 +340,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */,
+				45E81D1423993AFB00B8878A /* Test2ViewController.m in Sources */,
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
-				C5655BA82084B3B000331751 /* BRInfoModel.m in Sources */,
-				C5ACE5121F3D81360069978B /* TestViewController.m in Sources */,
 				C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */,
 				451D6C1123509890004E801F /* BRResultModel.m in Sources */,
-				C5655BA12084759300331751 /* BRInfoCell.m in Sources */,
+				45E81D062399387700B8878A /* TestViewController.m in Sources */,
 				459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
 				451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */,
+				45E81D1123993A0500B8878A /* BRMutableDatePickerView.m in Sources */,
 				C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */,
+				45E81D082399387700B8878A /* BRInfoCell.m in Sources */,
 				C5ACE5081F3D7D060069978B /* BRAddressModel.m in Sources */,
+				45E81D072399387700B8878A /* BRInfoModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

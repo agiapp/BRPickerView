@@ -10,6 +10,7 @@
 #import "BRPickerView.h"
 #import "BRInfoCell.h"
 #import "BRInfoModel.h"
+#import "Test2ViewController.h"
 
 @interface TestViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
@@ -34,7 +35,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"测试选择器的使用";
+    self.navigationItem.title = @"Demo";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"可变日期选择器" style:UIBarButtonItemStylePlain target:self action:@selector(clickGotoTest2VC)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickSaveBtn)];
     [self loadData];
     [self initUI];
@@ -54,6 +56,11 @@
 
 - (void)initUI {
     self.tableView.hidden = NO;
+}
+
+- (void)clickGotoTest2VC {
+    Test2ViewController *test2VC = [[Test2ViewController alloc]init];
+    [self.navigationController pushViewController:test2VC animated:YES];
 }
 
 - (void)clickSaveBtn {
