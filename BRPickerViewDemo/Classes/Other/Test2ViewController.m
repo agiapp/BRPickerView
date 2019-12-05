@@ -44,8 +44,8 @@
     NSLog(@"点击标题");
     
     BRMutableDatePickerView *datePickerView = [[BRMutableDatePickerView alloc]init];
-    datePickerView.title = @"选择年月日";
-    datePickerView.isAutoSelect = YES;
+    //datePickerView.title = @"选择年月日";
+    //datePickerView.isAutoSelect = YES;
     datePickerView.hiddenDateUnit = YES;
     datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
         NSLog(@"选择的时间：%@", selectValue);

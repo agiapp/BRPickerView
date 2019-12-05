@@ -46,6 +46,8 @@
 @property(nonatomic, assign) NSInteger monthIndex;
 @property(nonatomic, assign) NSInteger dayIndex;
 
+@property(nonatomic, copy) NSString *dateFormat;
+
 @end
 
 @implementation BRMutableDatePickerView
@@ -56,6 +58,7 @@
         self.isAutoSelect = NO;
         self.hiddenMonth = NO;
         self.hiddenDay = NO;
+        self.dateFormat = @"yyyy-MM-dd";
     }
     return self;
 }
@@ -69,7 +72,7 @@
     
     [self addSubview:self.alertView];
     [self.alertView addSubview:self.titleBarView];
-    //[self.titleBarView addSubview:self.titleLabel];
+    [self.titleBarView addSubview:self.titleLabel];
     [self.titleBarView addSubview:self.cancelBtn];
     [self.titleBarView addSubview:self.doneBtn];
 }
@@ -302,8 +305,28 @@
     // 点击确定按钮后，执行block回调
     [self dismiss];
     
-    if (!self.isAutoSelect && self.resultBlock) {
-        NSString *selectValue = [NSDate br_getDateString:self.selectDate format:@"yyyy-MM-dd"];
+    [self handlerSelectResultBlock:YES];
+}
+
+- (void)handlerSelectResultBlock:(BOOL)isExecute {
+    int year = [self.yearArr[self.yearIndex] intValue];
+    if (!self.hiddenMonth) {
+        int month = [self.monthArr[self.monthIndex] intValue];
+        if (!self.hiddenDay) {
+            int day = [self.dayArr[self.dayIndex] intValue];
+            self.selectDate = [NSDate br_setYear:year month:month day:day];
+            self.dateFormat = @"yyyy-MM-dd";
+        } else {
+            self.selectDate = [NSDate br_setYear:year month:month];
+            self.dateFormat = @"yyyy-MM";
+        }
+    } else {
+        self.selectDate = [NSDate br_setYear:year];
+        self.dateFormat = @"yyyy";
+    }
+    
+    if (self.resultBlock) {
+        NSString *selectValue = [NSDate br_getDateString:self.selectDate format:self.dateFormat];
         self.resultBlock(self.selectDate, selectValue);
     }
 }
@@ -476,50 +499,15 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) {
         self.yearIndex = row;
-        if (!self.hiddenMonth) {
-            if (!self.hiddenDay) {
-                [self reloadDateArrayWithUpdateMonth:YES updateDay:YES];
-                [self.pickerView reloadComponent:1];
-                [self.pickerView reloadComponent:2];
-            } else {
-                [self reloadDateArrayWithUpdateMonth:YES updateDay:NO];
-                [self.pickerView reloadComponent:1];
-            }
-        }
     } else if (component == 1) {
         self.monthIndex = row;
-        if (!self.hiddenDay) {
-            [self reloadDateArrayWithUpdateMonth:NO updateDay:YES];
-            [self.pickerView reloadComponent:2];
-        }
     } else if (component == 2) {
         self.dayIndex = row;
     }
     
-    NSString *format = @"yyyy-MM-dd";
-    int year = [self.yearArr[self.yearIndex] intValue];
-    if (!self.hiddenMonth) {
-        int month = [self.monthArr[self.monthIndex] intValue];
-        if (!self.hiddenDay) {
-            int day = [self.dayArr[self.dayIndex] intValue];
-            self.selectDate = [NSDate br_setYear:year month:month day:day];
-            format = @"yyyy-MM-dd";
-        } else {
-            self.selectDate = [NSDate br_setYear:year month:month];
-            format = @"yyyy-MM";
-        }
-    } else {
-        self.selectDate = [NSDate br_setYear:year];
-        format = @"yyyy";
-    }
-    
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
-        // 滚动完成后，执行block回调
-        if (self.resultBlock) {
-            NSString *selectValue = [NSDate br_getDateString:self.selectDate format:format];
-            self.resultBlock(self.selectDate, selectValue);
-        }
+        [self handlerSelectResultBlock:YES];
     }
 }
 

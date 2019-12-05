@@ -30,9 +30,9 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 @property (nonatomic, assign) BOOL hiddenDateUnit;
 
 /** 是否隐藏【月】，默认为 NO */
-@property(nonatomic, assign) BOOL hiddenMonth;
+@property (nonatomic, assign) BOOL hiddenMonth;
 /** 是否隐藏【日】，默认为 NO */
-@property(nonatomic, assign) BOOL hiddenDay;
+@property (nonatomic, assign) BOOL hiddenDay;
 
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;
