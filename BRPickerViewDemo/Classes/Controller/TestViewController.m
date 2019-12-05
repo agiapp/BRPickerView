@@ -305,7 +305,7 @@
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDE];
             datePickerView.title = @"请选择年月日";
             datePickerView.selectDate = self.birthdaySelectDate;
-            datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1 hour:1 minute:1 second:1];
+            datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
             datePickerView.isAutoSelect = YES;
             // datePickerView.addToNow = YES;
             datePickerView.showToday = YES;
@@ -440,7 +440,8 @@
     BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
     // 自定义主题样式（适配深色模式）
     if (@available(iOS 13.0, *)) {
-        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2];
+        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2f];
+        customStyle.shadowLineColor = [UIColor quaternaryLabelColor];
         customStyle.titleBarColor = [UIColor systemBackgroundColor];
         customStyle.cancelTextColor = [UIColor labelColor];
         customStyle.doneTextColor = [UIColor labelColor];

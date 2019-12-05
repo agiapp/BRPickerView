@@ -32,7 +32,7 @@ typedef void(^BRResultBlock)(void);
 
 
 /// 扩展一：添加选择器到指定容器视图上
-/// 应用场景：可将选择器（pickerView）添加到任何自定义视图上，也支持自定义更多的弹框样式
+/// 应用场景：可将选择器（pickerView，不包含标题栏）添加到任何自定义视图上，也支持自定义更多的弹框样式
 /// @param view 容器视图
 - (void)addPickerToView:(UIView *)view;
 
