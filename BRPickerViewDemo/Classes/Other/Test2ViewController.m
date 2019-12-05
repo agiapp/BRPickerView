@@ -12,7 +12,7 @@
 
 @interface Test2ViewController ()
 @property (nonatomic, strong) UILabel *titleLabel;
-
+@property (nonatomic, strong) NSDate *selectDate;
 @end
 
 @implementation Test2ViewController
@@ -46,10 +46,12 @@
     BRMutableDatePickerView *datePickerView = [[BRMutableDatePickerView alloc]init];
     //datePickerView.title = @"选择年月日";
     //datePickerView.isAutoSelect = YES;
+    datePickerView.selectDate = self.selectDate;
     datePickerView.hiddenDateUnit = YES;
     datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
         NSLog(@"选择的时间：%@", selectValue);
         self.titleLabel.text = selectValue;
+        self.selectDate = selectDate;
     };
     [datePickerView show];
 }
