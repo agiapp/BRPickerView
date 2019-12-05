@@ -13,6 +13,11 @@
 @interface Test2ViewController ()
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) NSDate *selectDate;
+/** 是否隐藏【月】，默认为 NO */
+@property (nonatomic, assign) BOOL hiddenMonth;
+/** 是否隐藏【日】，默认为 NO */
+@property (nonatomic, assign) BOOL hiddenDay;
+
 @end
 
 @implementation Test2ViewController
@@ -44,14 +49,16 @@
     NSLog(@"点击标题");
     
     BRMutableDatePickerView *datePickerView = [[BRMutableDatePickerView alloc]init];
-    //datePickerView.title = @"选择年月日";
-    //datePickerView.isAutoSelect = YES;
     datePickerView.selectDate = self.selectDate;
     datePickerView.hiddenDateUnit = YES;
-    datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
+    datePickerView.hiddenMonth = self.hiddenMonth;
+    datePickerView.hiddenDay = self.hiddenDay;
+    datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue, BOOL hiddenMonth, BOOL hiddenDay) {
         NSLog(@"选择的时间：%@", selectValue);
         self.titleLabel.text = selectValue;
         self.selectDate = selectDate;
+        self.hiddenMonth = hiddenMonth;
+        self.hiddenDay = hiddenDay;
     };
     [datePickerView show];
 }

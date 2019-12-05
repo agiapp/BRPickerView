@@ -142,6 +142,7 @@
         [monthBtn setTitle:@"[不限]" forState:UIControlStateNormal];
         [monthBtn addTarget:self action:@selector(clickMonthBtn:) forControlEvents:UIControlEventTouchUpInside];
         [_titleBarView addSubview:monthBtn];
+        monthBtn.selected = self.hiddenMonth;
         self.monthBtn = monthBtn;
         
         // 日
@@ -164,6 +165,7 @@
         [dayBtn setTitle:@"[不限]" forState:UIControlStateNormal];
         [dayBtn addTarget:self action:@selector(clickDayBtn:) forControlEvents:UIControlEventTouchUpInside];
         [_titleBarView addSubview:dayBtn];
+        dayBtn.selected = self.hiddenDay;
         self.dayBtn = dayBtn;
     }
     return _titleBarView;
@@ -192,6 +194,8 @@
 - (void)reloadData {
     [self handlerInitData];
     [self.pickerView reloadAllComponents];
+    // 默认滚动的行
+    [self scrollToSelectDate:self.selectDate animated:NO];
 }
 
 #pragma mark - 取消按钮
@@ -305,10 +309,16 @@
     // 点击确定按钮后，执行block回调
     [self dismiss];
     
-    [self handlerSelectResultBlock:YES];
+    // 更新 selectDate
+    [self handlerUpdateSelectDate];
+    
+    if (self.resultBlock) {
+        NSString *selectValue = [NSDate br_getDateString:self.selectDate format:self.dateFormat];
+        self.resultBlock(self.selectDate, selectValue, self.hiddenMonth, self.hiddenDay);
+    }
 }
 
-- (void)handlerSelectResultBlock:(BOOL)isExecute {
+- (void)handlerUpdateSelectDate {
     int year = [self.yearArr[self.yearIndex] intValue];
     if (!self.hiddenMonth) {
         int month = [self.monthArr[self.monthIndex] intValue];
@@ -323,11 +333,6 @@
     } else {
         self.selectDate = [NSDate br_setYear:year];
         self.dateFormat = @"yyyy";
-    }
-    
-    if (self.resultBlock) {
-        NSString *selectValue = [NSDate br_getDateString:self.selectDate format:self.dateFormat];
-        self.resultBlock(self.selectDate, selectValue);
     }
 }
 
@@ -361,13 +366,25 @@
     }
     
     self.yearArr = [self getYearArr];
-    self.monthArr = !self.hiddenMonth ? [self getMonthArr:self.selectDate.br_year] : nil;
-    self.dayArr = (!self.hiddenMonth && !self.hiddenDay) ? [self getDayArr:self.selectDate.br_year month:self.selectDate.br_month] : nil;
-    
     // 根据 默认选择的日期 计算出 对应的索引
     self.yearIndex = self.selectDate.br_year - self.minDate.br_year;
-    self.monthIndex = self.selectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
-    self.dayIndex = self.selectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
+    
+    if (!self.hiddenMonth) {
+        self.monthArr = [self getMonthArr:self.selectDate.br_year];
+        self.monthIndex = self.selectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
+        if (!self.hiddenDay) {
+            self.dayArr = [self getDayArr:self.selectDate.br_year month:self.selectDate.br_month];
+            self.dayIndex = self.selectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
+        } else {
+            self.dayArr = nil;
+            self.dayIndex = 0;
+        }
+    } else {
+        self.monthArr = nil;
+        self.dayArr = nil;
+        self.monthIndex = 0;
+        self.dayIndex = 0;
+    }
 }
 
 #pragma mark - 更新日期数据源数组
@@ -505,9 +522,15 @@
         self.dayIndex = row;
     }
     
+    // 更新 selectDate
+    [self handlerUpdateSelectDate];
+    
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
-        [self handlerSelectResultBlock:YES];
+        if (self.resultBlock) {
+            NSString *selectValue = [NSDate br_getDateString:self.selectDate format:self.dateFormat];
+            self.resultBlock(self.selectDate, selectValue, self.hiddenMonth, self.hiddenDay);
+        }
     }
 }
 

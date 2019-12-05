@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
+typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue, BOOL hiddenMonth, BOOL hiddenDay);
 
 @interface BRMutableDatePickerView : UIView
 
