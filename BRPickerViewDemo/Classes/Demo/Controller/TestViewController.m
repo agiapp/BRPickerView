@@ -100,6 +100,10 @@
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
         
+        // 当 containerView 使用自动布局时，需先立即刷新布局，计算出frame后；再添加选择器视图
+        //[containerView setNeedsLayout];
+        //[containerView layoutIfNeeded];
+        
         // 2.创建选择器
         BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeCity];
         addressPickerView.isAutoSelect = YES;
@@ -311,11 +315,12 @@
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDE];
             datePickerView.title = @"请选择年月日";
+            //datePickerView.selectValue = @"1948-10-01";
             datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
             datePickerView.isAutoSelect = YES;
-            // datePickerView.addToNow = YES;
-            datePickerView.showToday = YES;
+            //datePickerView.addToNow = YES;
+            //datePickerView.showToday = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
