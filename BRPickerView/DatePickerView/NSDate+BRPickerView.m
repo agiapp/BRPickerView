@@ -136,6 +136,9 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSDate时间 和 字符串时间 之间的转换：NSDate 转 NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
+    if (!date) {
+        return nil;
+    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 不设置会默认使用当前所在的时区
     // dateFormatter.timeZone = [NSTimeZone systemTimeZone];
@@ -148,6 +151,9 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSDate时间 和 字符串时间 之间的转换：NSString 转 NSDate
 + (NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format {
+    if (!dateString || dateString.length == 0) {
+        return nil;
+    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = format;

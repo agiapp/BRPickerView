@@ -335,6 +335,14 @@
     view.layer.mask = shape;
 }
 
+#pragma mark - setter 方法（支持动态设置标题）
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    if (_titleLabel) {
+        _titleLabel.text = title;
+    }
+}
+
 - (void)dealloc {
     NSLog(@"%@ dealloc", NSStringFromClass([self class]));
 }

@@ -12,15 +12,27 @@
 #import "BRInfoModel.h"
 #import "Test2ViewController.h"
 
+typedef NS_ENUM(NSUInteger, BRTimeType) {
+    BRTimeTypeBeginTime = 0,
+    BRTimeTypeEndTime
+};
 @interface TestViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+/// footerView
 @property (nonatomic, strong) UIView *footerView;
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UITextField *beginTimeTF;
+@property (nonatomic, strong) UITextField *endTimeTF;
+@property (nonatomic, strong) UIView *beginTimeLineView;
+@property (nonatomic, strong) UIView *endTimeLineView;
+@property (nonatomic, strong) BRDatePickerView *datePickerView;
+
 
 @property (nonatomic, copy) NSArray *titleArr;
 
 @property (nonatomic, strong) BRInfoModel *infoModel;
+
+@property (nonatomic, assign) BRTimeType timeType;
 
 @property (nonatomic, assign) NSInteger genderSelectIndex;
 @property (nonatomic, strong) NSDate *birthdaySelectDate;
@@ -40,6 +52,14 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickSaveBtn)];
     [self loadData];
     [self initUI];
+    
+    NSString *beginTime = nil;
+    // 设置开始时间默认选择的值及状态
+    if (beginTime && beginTime.length > 0) {
+        self.beginTimeTF.text = beginTime;
+        self.beginTimeTF.textColor = [UIColor blueColor];
+        self.beginTimeLineView.backgroundColor = [UIColor blueColor];
+    }
 }
 
 - (void)loadData {
@@ -80,47 +100,88 @@
         _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 300)];
         _footerView.backgroundColor = [UIColor clearColor];
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        // 地区显示label
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 30, _footerView.frame.size.width - 100, 30)];
-        titleLabel.backgroundColor = [UIColor clearColor];
-        titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        titleLabel.font = [UIFont systemFontOfSize:16.0f];
-        if (@available(iOS 13.0, *)) {
-            titleLabel.textColor = [UIColor labelColor];
-        } else {
-            titleLabel.textColor = [UIColor blackColor];
-        }
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        self.titleLabel = titleLabel;
-        [_footerView addSubview:titleLabel];
+        
+        // 开始时间label
+        UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 50, 120, 30) placeholder:@"开始时间"];
+        beginTimeTF.tag = 100;
+        beginTimeTF.textColor = [UIColor blackColor];
+        beginTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.beginTimeTF = beginTimeTF;
+        [_footerView addSubview:beginTimeTF];
+        
+        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 80, 120, 1.0f)];
+        beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        [_footerView addSubview:beginTimeLineView];
+        self.beginTimeLineView = beginTimeLineView;
+        
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 50, 30, 30)];
+        label.backgroundColor = [UIColor clearColor];
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        label.font = [UIFont systemFontOfSize:16.0f];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.text = @"至";
+        [_footerView addSubview:label];
+        
+        // 结束时间label
+        UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 50, 120, 30) placeholder:@"结束时间"];
+        endTimeTF.tag = 101;
+        endTimeTF.textColor = [UIColor blackColor];
+        endTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.endTimeTF = endTimeTF;
+        [_footerView addSubview:endTimeTF];
+        
+        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 80, 120, 1.0f)];
+        endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        [_footerView addSubview:endTimeLineView];
+        self.endTimeLineView = endTimeLineView;
         
         // 1.创建选择器容器视图
-        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 80, _footerView.frame.size.width - 60, 200)];
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 100, _footerView.frame.size.width - 60, 200)];
         containerView.backgroundColor = [UIColor redColor];
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
         
-        // 当 containerView 使用自动布局时，需先立即刷新布局，计算出frame后；再添加选择器视图
+        // 提示：当 containerView 使用自动布局时，需先立即刷新布局，计算出frame后；再添加选择器视图（否则无法正常显示选择器视图）
+        // 立即刷新布局
         //[containerView setNeedsLayout];
         //[containerView layoutIfNeeded];
         
         // 2.创建选择器
-        BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeCity];
-        addressPickerView.isAutoSelect = YES;
-        addressPickerView.selectIndexs = @[@10, @0];
-        addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
-            self.titleLabel.text = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
+        BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDE];
+        datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
+        datePickerView.minDate = [NSDate br_setYear:2010 month:10 day:1];
+        datePickerView.maxDate = [NSDate date];
+        datePickerView.isAutoSelect = YES;
+        datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
+            if (self.timeType == BRTimeTypeBeginTime) {
+                self.beginTimeTF.text = selectValue;
+            } else if (self.timeType == BRTimeTypeEndTime) {
+                self.endTimeTF.text = selectValue;
+            }
         };
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
         customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
-        addressPickerView.pickerStyle = customStyle;
+        datePickerView.pickerStyle = customStyle;
+        self.datePickerView = datePickerView;
         
         // 3.添加选择器到容器视图
-        [addressPickerView addPickerToView:containerView];
+        [datePickerView addPickerToView:containerView];
         
     }
     return _footerView;
+}
+
+- (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
+    UITextField *textField = [[UITextField alloc]initWithFrame:frame];
+    textField.backgroundColor = [UIColor whiteColor];
+    textField.textAlignment = NSTextAlignmentCenter;
+    textField.textColor = [UIColor blackColor];
+    textField.font = [UIFont systemFontOfSize:16.0f];
+    textField.placeholder = placeholder;
+    textField.delegate = self;
+    
+    return textField;
 }
 
 - (UITableView *)tableView {
@@ -313,7 +374,7 @@
         case 2:
         {
             // 出生年月日
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDE];
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
             datePickerView.title = @"请选择年月日";
             //datePickerView.selectValue = @"1948-10-01";
             datePickerView.selectDate = self.birthdaySelectDate;
@@ -438,6 +499,40 @@
             
             [stringPickerView show];
             
+        }
+            break;
+            
+        case 100:
+        {
+            NSLog(@"开始时间：%@", self.beginTimeTF.text);
+            self.timeType = BRTimeTypeBeginTime;
+            self.endTimeTF.textColor = [UIColor blackColor];
+            self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+            self.beginTimeTF.textColor = [UIColor blueColor];
+            self.beginTimeLineView.backgroundColor = [UIColor blueColor];
+            
+            if (self.beginTimeTF.text.length == 0) {
+                self.beginTimeTF.text = [NSDate br_getDateString:[NSDate date] format:@"yyyy-MM-dd"];
+            }
+            //self.datePickerView.selectValue = self.beginTimeTF.text;
+            self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd"];
+        }
+            break;
+            
+        case 101:
+        {
+            NSLog(@"结束时间:%@", self.endTimeTF.text);
+            self.timeType = BRTimeTypeEndTime;
+            self.beginTimeTF.textColor = [UIColor blackColor];
+            self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+            self.endTimeTF.textColor = [UIColor blueColor];
+            self.endTimeLineView.backgroundColor = [UIColor blueColor];
+            
+            if (self.endTimeTF.text.length == 0) {
+                self.endTimeTF.text = [NSDate br_getDateString:[NSDate date] format:@"yyyy-MM-dd"];
+            }
+            //self.datePickerView.selectValue = self.endTimeTF.text;
+            self.datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
         }
             break;
             
