@@ -54,10 +54,12 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /**
  //////////////////////////////////////////////////////////////////////////
  ///
- ///   【用法一】：推荐使用！！！
- ///    1. 初始化选择器（使用 initWithPickerMode: 方法）
- ///    2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
- ///    3. 显示选择器（使用 show 方法）
+ ///   【用法一】
+ ///    特点：灵活，扩展性强（推荐使用！）
+ ///    使用：
+ ///         1. 初始化选择器（使用 initWithPickerMode: 方法）
+ ///         2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
+ ///         3. 显示选择器（使用 show 方法）
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
@@ -98,75 +100,67 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 
 
 
-//======================================== 华丽的分割线（以下为旧版本用法） ========================================
+
+//================================================= 华丽的分割线 =================================================
+
+
+
 
 
 /**
  //////////////////////////////////////////////////////////////////////////
  ///
  ///   【用法二】：快捷使用，直接选择下面其中的一个方法进行使用
+ ///    特点：快捷，方便
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
 /**
  *  1.显示时间选择器
  *
- *  @param title            标题
- *  @param dateType         日期显示类型
- *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param mode             日期显示类型
+ *  @param selectValue      默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
  *  @param resultBlock      选择结果的回调
  *
  */
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                    resultBlock:(BRDateResultBlock)resultBlock;
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                   selectValue:(NSString *)selectValue
+                   resultBlock:(BRDateResultBlock)resultBlock;
 
 /**
- *  2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
+ *  2.显示时间选择器
  *
- *  @param title            标题
- *  @param dateType         日期显示类型
- *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）
- *  @param maxDate          最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
+ *  @param mode             日期显示类型
+ *  @param title            选择器标题
+ *  @param selectValue      默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param isAutoSelect     是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
  *  @param resultBlock      选择结果的回调
  *
  */
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                        minDate:(NSDate *)minDate
-                        maxDate:(NSDate *)maxDate
-                   isAutoSelect:(BOOL)isAutoSelect
-                     themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock BRPickerViewDeprecated("请使用【用法一】，支持更多的自定义样式");
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(NSString *)title
+                   selectValue:(NSString *)selectValue
+                  isAutoSelect:(BOOL)isAutoSelect
+                   resultBlock:(BRDateResultBlock)resultBlock;
 
 /**
- *  3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
+ *  3.显示时间选择器
  *
- *  @param title            标题
- *  @param dateType         日期显示类型
- *  @param defaultSelValue  默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
- *  @param minDate          最小时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 minDate）
- *  @param maxDate          最大时间，可为空（请使用 NSDate+BRPickerView 分类中和显示类型格式对应的方法创建 maxDate）
- *  @param isAutoSelect     是否自动选择，即选择完(滚动完)执行结果回调，传选择的结果值
- *  @param themeColor       自定义主题颜色
+ *  @param mode             日期显示类型
+ *  @param title            选择器标题
+ *  @param selectValue      默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param minDate          最小时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
+ *  @param maxDate          最大时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
+ *  @param isAutoSelect     是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
  *  @param resultBlock      选择结果的回调
- *  @param cancelBlock      取消选择的回调
  *
  */
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                        minDate:(NSDate *)minDate
-                        maxDate:(NSDate *)maxDate
-                   isAutoSelect:(BOOL)isAutoSelect
-                     themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRCancelBlock)cancelBlock BRPickerViewDeprecated("请使用【用法一】，支持更多的自定义样式");
-
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(NSString *)title
+                   selectValue:(NSString *)selectValue
+                       minDate:(NSDate *)minDate
+                       maxDate:(NSDate *)maxDate
+                  isAutoSelect:(BOOL)isAutoSelect
+                   resultBlock:(BRDateResultBlock)resultBlock;
 
 @end

@@ -57,37 +57,37 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @implementation BRDatePickerView
 
 #pragma mark - 1.显示时间选择器
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                    resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:nil maxDate:nil isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-    [datePickerView show];
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                   selectValue:(NSString *)selectValue
+                   resultBlock:(BRDateResultBlock)resultBlock {
+    [self showDatePickerWithMode:mode title:nil selectValue:selectValue minDate:nil maxDate:nil isAutoSelect:NO resultBlock:resultBlock];
 }
 
-#pragma mark - 2.显示时间选择器（支持 设置自动选择 和 自定义主题颜色）
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                        minDate:(NSDate *)minDate
-                        maxDate:(NSDate *)maxDate
-                   isAutoSelect:(BOOL)isAutoSelect
-                     themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock {
-    [self showDatePickerWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+#pragma mark - 2.显示时间选择器
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(NSString *)title
+                   selectValue:(NSString *)selectValue
+                  isAutoSelect:(BOOL)isAutoSelect
+                   resultBlock:(BRDateResultBlock)resultBlock {
+    [self showDatePickerWithMode:mode title:title selectValue:selectValue minDate:nil maxDate:nil isAutoSelect:isAutoSelect resultBlock:resultBlock];
 }
 
-#pragma mark - 3.显示时间选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
-+ (void)showDatePickerWithTitle:(NSString *)title
-                       dateType:(BRDatePickerMode)dateType
-                defaultSelValue:(NSString *)defaultSelValue
-                        minDate:(NSDate *)minDate
-                        maxDate:(NSDate *)maxDate
-                   isAutoSelect:(BOOL)isAutoSelect
-                     themeColor:(UIColor *)themeColor
-                    resultBlock:(BRDateResultBlock)resultBlock
-                    cancelBlock:(BRCancelBlock)cancelBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithTitle:title dateType:dateType defaultSelValue:defaultSelValue minDate:minDate maxDate:maxDate isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
+#pragma mark - 3.显示时间选择器
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(NSString *)title
+                   selectValue:(NSString *)selectValue
+                       minDate:(NSDate *)minDate
+                       maxDate:(NSDate *)maxDate
+                  isAutoSelect:(BOOL)isAutoSelect
+                   resultBlock:(BRDateResultBlock)resultBlock {
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:mode];
+    datePickerView.title = title;
+    datePickerView.selectValue = selectValue;
+    datePickerView.minDate = minDate;
+    datePickerView.maxDate = maxDate;
+    datePickerView.isAutoSelect = isAutoSelect;
+    datePickerView.resultBlock = resultBlock;
+    
     [datePickerView show];
 }
 
@@ -98,38 +98,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.isAutoSelect = NO;
         
         [self setupSelectDateFormatter:pickerMode];
-    }
-    return self;
-}
-
-- (instancetype)initWithTitle:(NSString *)title
-                     dateType:(BRDatePickerMode)dateType
-              defaultSelValue:(NSString *)defaultSelValue
-                      minDate:(NSDate *)minDate
-                      maxDate:(NSDate *)maxDate
-                 isAutoSelect:(BOOL)isAutoSelect
-                   themeColor:(UIColor *)themeColor
-                  resultBlock:(BRDateResultBlock)resultBlock
-                  cancelBlock:(BRCancelBlock)cancelBlock {
-    if (self = [super init]) {
-        self.title = title;
-        self.showType = dateType;
-        self.mSelectValue = defaultSelValue;
-        
-        self.minDate = minDate;
-        self.maxDate = maxDate;
-        
-        self.isAutoSelect = isAutoSelect;
-        
-        // 兼容旧版本，快速设置主题样式
-        if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-            self.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:themeColor];
-        }
-        
-        self.resultBlock = resultBlock;
-        self.cancelBlock = cancelBlock;
-        
-        [self setupSelectDateFormatter:dateType];
     }
     return self;
 }
@@ -627,7 +595,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // textColor 隐藏属性，使用KVC赋值
         [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
         
-        /*
+    /*
          // 通过 NSInvocation 来改变默认选中字体的状态
          SEL selector= NSSelectorFromString(@"setHighlightsToday:");
          // 创建NSInvocation
@@ -641,15 +609,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
          
          // 设置分割线颜色
          for (UIView *view in _datePicker.subviews) {
-         if ([view isKindOfClass:[UIView class]]) {
-         for (UIView *subView in view.subviews) {
-         if (subView.frame.size.height < 1) {
-         subView.backgroundColor = self.pickerStyle.separatorColor;
+             if ([view isKindOfClass:[UIView class]]) {
+                 for (UIView *subView in view.subviews) {
+                     if (subView.frame.size.height < 1) {
+                         subView.backgroundColor = self.pickerStyle.separatorColor;
+                     }
+                 }
+             }
          }
-         }
-         }
-         }
-         */
+    */
         
         // 设置时间范围
         if (self.minDate) {

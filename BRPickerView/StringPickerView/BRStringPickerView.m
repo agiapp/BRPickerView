@@ -17,52 +17,62 @@
 @property (nonatomic, strong) UIPickerView *pickerView;
 /** 字符串选择器类型 */
 @property (nonatomic, assign) BRStringPickerMode showType;
-/** 选择结果的回调 */
-@property (nonatomic, copy) BRStringResultBlock resultBlock;
 /** 单列选择的值 */
-@property (nonatomic, copy) NSString *currentSelectValue;
+@property (nonatomic, copy) NSString *mSelectValue;
 /** 多列选择的值 */
-@property (nonatomic, copy) NSArray <NSString *>* currentSelectValues;
+@property (nonatomic, copy) NSArray <NSString *>* mSelectValues;
 
 @end
 
 @implementation BRStringPickerView
 
-#pragma mark - 1.显示自定义字符串选择器
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                      resultBlock:(BRStringResultBlock)resultBlock {
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
-    if (strPickerView->_isDataSourceValid) {
-        [strPickerView show];
-    }
+#pragma mark - 1.显示【单列】字符串选择器
++ (void)showPickerWithTitle:(NSString *)title
+              dataSourceArr:(NSArray *)dataSourceArr
+                selectIndex:(NSInteger)selectIndex
+                resultBlock:(BRStringResultModelBlock)resultBlock {
+    [self showPickerWithTitle:title dataSourceArr:dataSourceArr selectIndex:selectIndex isAutoSelect:NO resultBlock:resultBlock];
 }
 
-#pragma mark - 2.显示自定义字符串选择器（支持 设置自动选择 和 自定义主题颜色）
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                       themeColor:(UIColor *)themeColor
-                      resultBlock:(BRStringResultBlock)resultBlock {
-    [self showStringPickerWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+
+#pragma mark - 2.显示【单列】字符串选择器
++ (void)showPickerWithTitle:(NSString *)title
+              dataSourceArr:(NSArray *)dataSourceArr
+                selectIndex:(NSInteger)selectIndex
+               isAutoSelect:(BOOL)isAutoSelect
+                resultBlock:(BRStringResultModelBlock)resultBlock {
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
+    strPickerView.title = title;
+    strPickerView.dataSourceArr = dataSourceArr;
+    strPickerView.selectIndex = selectIndex;
+    strPickerView.isAutoSelect = isAutoSelect;
+    strPickerView.resultModelBlock = resultBlock;
+    
+    [strPickerView show];
 }
 
-#pragma mark - 3.显示自定义字符串选择器（支持 设置自动选择、自定义主题颜色、取消选择的回调）
-+ (void)showStringPickerWithTitle:(NSString *)title
-                       dataSource:(id)dataSource
-                  defaultSelValue:(id)defaultSelValue
-                     isAutoSelect:(BOOL)isAutoSelect
-                       themeColor:(UIColor *)themeColor
-                      resultBlock:(BRStringResultBlock)resultBlock
-                      cancelBlock:(BRCancelBlock)cancelBlock {
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithTitle:title dataSource:dataSource defaultSelValue:defaultSelValue isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
-    if (strPickerView->_isDataSourceValid) {
-        [strPickerView show];
-    }
+#pragma mark - 3.显示【多列】字符串选择器
++ (void)showMultiPickerWithTitle:(NSString *)title
+                   dataSourceArr:(NSArray *)dataSourceArr
+                    selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                     resultBlock:(BRStringResultModelArrayBlock)resultBlock {
+    [self showMultiPickerWithTitle:title dataSourceArr:dataSourceArr selectIndexs:selectIndexs isAutoSelect:NO resultBlock:resultBlock];
+}
+
+#pragma mark - 4.显示【多列】字符串选择器
++ (void)showMultiPickerWithTitle:(NSString *)title
+                   dataSourceArr:(NSArray *)dataSourceArr
+                    selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                    isAutoSelect:(BOOL)isAutoSelect
+                     resultBlock:(BRStringResultModelArrayBlock)resultBlock {
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
+    strPickerView.title = title;
+    strPickerView.dataSourceArr = dataSourceArr;
+    strPickerView.selectIndexs = selectIndexs;
+    strPickerView.isAutoSelect = isAutoSelect;
+    strPickerView.resultModelArrayBlock = resultBlock;
+    
+    [strPickerView show];
 }
 
 #pragma mark - 初始化自定义字符串选择器
@@ -75,60 +85,6 @@
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title
-                   dataSource:(id)dataSource
-              defaultSelValue:(id)defaultSelValue
-                 isAutoSelect:(BOOL)isAutoSelect
-                   themeColor:(UIColor *)themeColor
-                  resultBlock:(BRStringResultBlock)resultBlock
-                  cancelBlock:(BRCancelBlock)cancelBlock {
-    if (self = [super init]) {
-        self.title = title;
-        self.dataSourceArr = [self getDataSourceArr:dataSource];
-        if ([[self.dataSourceArr firstObject] isKindOfClass:[NSString class]]) {
-            self.showType = BRStringPickerComponentSingle;
-            self.currentSelectValue = defaultSelValue;
-        } else if ([[self.dataSourceArr firstObject] isKindOfClass:[NSArray class]]) {
-            self.showType = BRStringPickerComponentMulti;
-            self.currentSelectValues = defaultSelValue;
-        }
-        
-        self.isAutoSelect = isAutoSelect;
-        
-        // 兼容旧版本，快速设置主题样式
-        if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-            self.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:themeColor];
-        }
-        
-        self.resultBlock = resultBlock;
-        self.cancelBlock = cancelBlock;
-        _isDataSourceValid = YES;
-    }
-    return self;
-}
-
-- (NSArray *)getDataSourceArr:(id)dataSource {
-    // 1.先判断传入的数据源是否合法
-    if (!dataSource) {
-        _isDataSourceValid = NO;
-    }
-    NSArray *dataArr = nil;
-    if ([dataSource isKindOfClass:[NSArray class]] && [dataSource count] > 0) {
-        dataArr = [NSArray arrayWithArray:dataSource];
-    } else if ([dataSource isKindOfClass:[NSString class]] && [dataSource length] > 0) {
-        NSString *plistName = dataSource;
-        NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
-        dataArr = [[NSArray alloc] initWithContentsOfFile:path];
-        if (!dataArr || dataArr.count == 0) {
-            _isDataSourceValid = NO;
-        }
-    } else {
-        _isDataSourceValid = NO;
-    }
-    
-    return dataArr;
-}
-
 #pragma mark - setter 方法
 - (void)setPlistName:(NSString *)plistName {
     NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
@@ -138,11 +94,11 @@
 }
 
 - (void)setSelectValue:(NSString *)selectValue {
-    self.currentSelectValue = selectValue;
+    self.mSelectValue = selectValue;
 }
 
-- (void)setSelectValueArr:(NSArray<NSString *> *)selectValueArr {
-    self.currentSelectValues = selectValueArr;
+- (void)setSelectValues:(NSArray<NSString *> *)selectValues {
+    self.mSelectValues = selectValues;
 }
 
 #pragma mark - 设置默认选择的值
@@ -155,8 +111,8 @@
         if (self.selectIndex > 0) {
             self.selectIndex = (self.selectIndex < self.dataSourceArr.count ? self.selectIndex : 0);
         } else {
-            if (self.currentSelectValue && [self.dataSourceArr containsObject:self.currentSelectValue]) {
-                self.selectIndex = [self.dataSourceArr indexOfObject:self.currentSelectValue];
+            if (self.mSelectValue && [self.dataSourceArr containsObject:self.mSelectValue]) {
+                self.selectIndex = [self.dataSourceArr indexOfObject:self.mSelectValue];
             } else {
                 self.selectIndex = 0;
             }
@@ -173,8 +129,8 @@
                     row = ((index > 0 && index < [self.dataSourceArr[i] count]) ? index : 0);
                 }
             } else {
-                if (self.currentSelectValues.count > 0 && i < self.currentSelectValues.count) {
-                    NSString *value = self.currentSelectValues[i];
+                if (self.mSelectValues.count > 0 && i < self.mSelectValues.count) {
+                    NSString *value = self.mSelectValues[i];
                     if ([self.dataSourceArr[i] containsObject:value]) {
                         row = [self.dataSourceArr[i] indexOfObject:value];
                     }
@@ -299,24 +255,16 @@
 
 #pragma mark - 处理单列选择结果的回调
 - (void)handlerResultModelBlock {
-    // 1.用法一 的回调
     if (self.resultModelBlock) {
         BRResultModel *resultModel = [[BRResultModel alloc]init];
         resultModel.index = self.selectIndex;
         resultModel.name = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
         self.resultModelBlock(resultModel);
     }
-    
-    // 2.用法二 的回调（兼容旧版本）
-    if(self.resultBlock) {
-        NSString *selectValue = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
-        self.resultBlock(selectValue);
-    }
 }
 
 #pragma mark - 处理多列选择结果的回调
 - (void)handlerResultModelArrayBlock {
-    // 1.用法一 的回调
     if (self.resultModelArrayBlock) {
         NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
@@ -329,19 +277,6 @@
         }
         self.resultModelArrayBlock([resultModelArr copy]);
     }
-    
-    // 2.用法二 的回调（兼容旧版本）
-    if(self.resultBlock) {
-        NSMutableArray *mSelectValueArr = [[NSMutableArray alloc]init];
-        for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
-            NSInteger index = [self.selectIndexs[i] integerValue];
-            NSArray *dataArr = self.dataSourceArr[i];
-            NSString *selectValue = index < dataArr.count ? dataArr[index] : nil;
-            [mSelectValueArr addObject:selectValue];
-        }
-        self.resultBlock([mSelectValueArr copy]);
-    }
-    
 }
 
 #pragma mark - 重写父类方法
@@ -368,7 +303,7 @@
             }
         }
     };
-
+    
     [super addPickerToView:view];
 }
 
@@ -401,11 +336,11 @@
     return _selectIndexs;
 }
 
-- (NSArray<NSString *> *)currentSelectValues {
-    if (!_currentSelectValues) {
-        _currentSelectValues = [NSArray array];
+- (NSArray<NSString *> *)mSelectValues {
+    if (!_mSelectValues) {
+        _mSelectValues = [NSArray array];
     }
-    return _currentSelectValues;
+    return _mSelectValues;
 }
 
 @end

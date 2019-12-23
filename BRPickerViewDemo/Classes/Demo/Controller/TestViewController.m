@@ -388,6 +388,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             datePickerView.isAutoSelect = YES;
             //datePickerView.addToNow = YES;
             //datePickerView.showToday = YES;
+            //datePickerView.showWeek = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -438,7 +439,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             // 地区
             BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
             addressPickerView.title = @"请选择地区";
-            //addressPickerView.defaultSelectedArr = [self.infoModel.addressStr componentsSeparatedByString:@" "];
+            //addressPickerView.selectValues = [self.infoModel.addressStr componentsSeparatedByString:@" "];
             addressPickerView.selectIndexs = self.addressSelectIndexs;
             addressPickerView.isAutoSelect = YES;
             addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
@@ -486,7 +487,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
             stringPickerView.selectIndexs = self.otherSelectIndexs;
-            //stringPickerView.selectValueArr = [self.infoModel.otherStr componentsSeparatedByString:@"，"];
+            //stringPickerView.selectValues = [self.infoModel.otherStr componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 self.otherSelectIndexs = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];

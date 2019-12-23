@@ -37,53 +37,40 @@
 // 记录区选中的位置
 @property(nonatomic, assign) NSInteger areaIndex;
 
-@property (nonatomic, copy) NSArray <NSString *>* currentSelectValues;
+@property (nonatomic, copy) NSArray <NSString *>* mSelectValues;
 
 @end
 
 @implementation BRAddressPickerView
 
 #pragma mark - 1.显示地址选择器
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
-                                 resultBlock:(BRAddressResultBlock)resultBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:NO themeColor:nil resultBlock:resultBlock cancelBlock:nil];
-    NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
-    if (addressPickerView->_isDataSourceValid) {
-        [addressPickerView show];
-    }
++ (void)showAddressPickerWithSelectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                              resultBlock:(BRAddressResultBlock)resultBlock {
+    [self showAddressPickerWithMode:BRAddressPickerModeArea dataSource:nil selectIndexs:selectIndexs isAutoSelect:NO resultBlock:resultBlock];
 }
 
-#pragma mark - 2.显示地址选择器（支持 设置自动选择 和 自定义主题颜色）
-+ (void)showAddressPickerWithDefaultSelected:(NSArray *)defaultSelectedArr
-                                isAutoSelect:(BOOL)isAutoSelect
-                                  themeColor:(UIColor *)themeColor
-                                 resultBlock:(BRAddressResultBlock)resultBlock {
-    [self showAddressPickerWithShowType:BRAddressPickerModeArea dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:nil];
+#pragma mark - 2.显示地址选择器
++ (void)showAddressPickerWithMode:(BRAddressPickerMode)mode
+                     selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                     isAutoSelect:(BOOL)isAutoSelect
+                      resultBlock:(BRAddressResultBlock)resultBlock {
+    [self showAddressPickerWithMode:mode dataSource:nil selectIndexs:selectIndexs isAutoSelect:isAutoSelect resultBlock:resultBlock];
 }
 
-#pragma mark - 3.显示地址选择器（支持 设置选择器类型、设置自动选择、自定义主题颜色、取消选择的回调）
-+ (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
-                      defaultSelected:(NSArray *)defaultSelectedArr
-                         isAutoSelect:(BOOL)isAutoSelect
-                           themeColor:(UIColor *)themeColor
-                          resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRCancelBlock)cancelBlock {
-    [self showAddressPickerWithShowType:showType dataSource:nil defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-}
 
-#pragma mark - 4.显示地址选择器（支持 设置选择器类型、传入地区数据源、设置自动选择、自定义主题颜色、取消选择的回调）
-+ (void)showAddressPickerWithShowType:(BRAddressPickerMode)showType
-                           dataSource:(NSArray *)dataSource
-                      defaultSelected:(NSArray *)defaultSelectedArr
-                         isAutoSelect:(BOOL)isAutoSelect
-                           themeColor:(UIColor *)themeColor
-                          resultBlock:(BRAddressResultBlock)resultBlock
-                          cancelBlock:(BRCancelBlock)cancelBlock {
-    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithShowType:showType dataSource:dataSource defaultSelected:defaultSelectedArr isAutoSelect:isAutoSelect themeColor:themeColor resultBlock:resultBlock cancelBlock:cancelBlock];
-    NSAssert(addressPickerView->_isDataSourceValid, @"数据源不合法！参数异常，请检查地址选择器的数据源是否有误");
-    if (addressPickerView->_isDataSourceValid) {
-        [addressPickerView show];
-    }
+#pragma mark - 3.显示地址选择器
++ (void)showAddressPickerWithMode:(BRAddressPickerMode)mode
+                       dataSource:(NSArray *)dataSource
+                     selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                     isAutoSelect:(BOOL)isAutoSelect
+                      resultBlock:(BRAddressResultBlock)resultBlock {
+    BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithPickerMode:mode];
+    addressPickerView.dataSourceArr = dataSource;
+    addressPickerView.selectIndexs = selectIndexs;
+    addressPickerView.isAutoSelect = isAutoSelect;
+    addressPickerView.resultBlock = resultBlock;
+    
+    [addressPickerView show];
 }
 
 #pragma mark - 初始化地址选择器
@@ -92,32 +79,6 @@
         self.showType = pickerMode;
         self.isAutoSelect = NO;
         _isDataSourceValid = YES;
-    }
-    return self;
-}
-
-- (instancetype)initWithShowType:(BRAddressPickerMode)showType
-                      dataSource:(NSArray *)dataSource
-                 defaultSelected:(NSArray *)defaultSelectedArr
-                    isAutoSelect:(BOOL)isAutoSelect
-                      themeColor:(UIColor *)themeColor
-                     resultBlock:(BRAddressResultBlock)resultBlock
-                     cancelBlock:(BRCancelBlock)cancelBlock {
-    if (self = [super init]) {
-        self.showType = showType;
-        self.dataSourceArr = dataSource;
-        self.currentSelectValues = defaultSelectedArr;
-        _isDataSourceValid = YES;
-        
-        self.isAutoSelect = isAutoSelect;
-        
-        // 兼容旧版本，快速设置主题样式
-        if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
-            self.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:themeColor];
-        }
-        
-        self.resultBlock = resultBlock;
-        self.cancelBlock = cancelBlock;
     }
     return self;
 }
@@ -190,10 +151,10 @@
     __block NSString *selectCityName = nil;
     __block NSString *selectAreaName = nil;
     
-    if (self.currentSelectValues.count > 0) {
-        selectProvinceName = self.currentSelectValues.count > 0 ? self.currentSelectValues[0] : nil;
-        selectCityName = self.currentSelectValues.count > 1 ? self.currentSelectValues[1] : nil;
-        selectAreaName = self.currentSelectValues.count > 2 ? self.currentSelectValues[2] : nil;
+    if (self.mSelectValues.count > 0) {
+        selectProvinceName = self.mSelectValues.count > 0 ? self.mSelectValues[0] : nil;
+        selectCityName = self.mSelectValues.count > 1 ? self.mSelectValues[1] : nil;
+        selectAreaName = self.mSelectValues.count > 2 ? self.mSelectValues[2] : nil;
     }
     
     if (self.showType == BRAddressPickerModeProvince || self.showType == BRAddressPickerModeCity || self.showType == BRAddressPickerModeArea) {
@@ -506,8 +467,8 @@
 }
 
 #pragma mark - setter方法
-- (void)setDefaultSelectedArr:(NSArray<NSString *> *)defaultSelectedArr {
-    self.currentSelectValues = defaultSelectedArr;
+- (void)setSelectValues:(NSArray<NSString *> *)selectValues {
+    self.mSelectValues = selectValues;
 }
 
 #pragma mark - getter方法
@@ -564,11 +525,11 @@
     return _dataSourceArr;
 }
 
-- (NSArray<NSString *> *)currentSelectValues {
-    if (!_currentSelectValues) {
-        _currentSelectValues = [NSArray array];
+- (NSArray<NSString *> *)mSelectValues {
+    if (!_mSelectValues) {
+        _mSelectValues = [NSArray array];
     }
-    return _currentSelectValues;
+    return _mSelectValues;
 }
 
 - (NSArray<NSNumber *> *)selectIndexs {
