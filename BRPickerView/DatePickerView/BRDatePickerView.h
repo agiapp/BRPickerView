@@ -42,7 +42,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm:ss】时分秒 */
     BRDatePickerModeHMS,
     /** 【HH:mm】时分 */
-    BRDatePickerModeHM
+    BRDatePickerModeHM,
+    /** 【mm:ss】分秒 */
+    BRDatePickerModeMS
 };
 
 typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);

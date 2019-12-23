@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 /** HH:mm */
 + (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute;
+/** mm:ss */
++ (nullable NSDate *)br_setMinute:(NSInteger)minute second:(NSInteger)second;
 
 
 /** 日期和字符串之间的转换：NSDate --> NSString */

@@ -101,46 +101,47 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 
 - (UIView *)footerView {
     if (!_footerView) {
-        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 300)];
+        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 320)];
         _footerView.backgroundColor = [UIColor clearColor];
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         // 开始时间label
-        UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 50, 120, 30) placeholder:@"开始时间"];
+        UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 50, 120, 36) placeholder:@"开始时间"];
         beginTimeTF.tag = 100;
         beginTimeTF.textColor = [UIColor blackColor];
         beginTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.beginTimeTF = beginTimeTF;
         [_footerView addSubview:beginTimeTF];
         
-        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 80, 120, 1.0f)];
+        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 86, 120, 0.8f)];
         beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
         [_footerView addSubview:beginTimeLineView];
         self.beginTimeLineView = beginTimeLineView;
         
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 50, 30, 30)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 50, 30, 36)];
         label.backgroundColor = [UIColor clearColor];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         label.font = [UIFont systemFontOfSize:16.0f];
         label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor grayColor];
         label.text = @"至";
         [_footerView addSubview:label];
         
         // 结束时间label
-        UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 50, 120, 30) placeholder:@"结束时间"];
+        UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 50, 120, 36) placeholder:@"结束时间"];
         endTimeTF.tag = 101;
         endTimeTF.textColor = [UIColor blackColor];
         endTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.endTimeTF = endTimeTF;
         [_footerView addSubview:endTimeTF];
         
-        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 80, 120, 1.0f)];
+        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 86, 120, 0.8f)];
         endTimeLineView.backgroundColor = [UIColor lightGrayColor];
         [_footerView addSubview:endTimeLineView];
         self.endTimeLineView = endTimeLineView;
         
         // 1.创建选择器容器视图
-        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 100, _footerView.frame.size.width - 60, 200)];
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 120, _footerView.frame.size.width - 60, 200)];
         containerView.backgroundColor = [UIColor redColor];
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
@@ -417,8 +418,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHMS];
             datePickerView.title = @"出生时刻";
             datePickerView.selectDate = self.birthtimeSelectDate;
-            datePickerView.minDate = [NSDate br_setHour:10 minute:10 second:0];
-            datePickerView.maxDate = [NSDate br_setHour:20 minute:35 second:0];
             datePickerView.isAutoSelect = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthtimeSelectDate = selectDate;

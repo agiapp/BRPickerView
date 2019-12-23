@@ -134,6 +134,10 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return [self br_setYear:0 month:0 day:0 hour:hour minute:minute second:0];
 }
 
++ (NSDate *)br_setMinute:(NSInteger)minute second:(NSInteger)second {
+    return [self br_setYear:0 month:0 day:0 hour:0 minute:minute second:second];
+}
+
 #pragma mark - NSDate时间 和 字符串时间 之间的转换：NSDate 转 NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
     if (!date) {
