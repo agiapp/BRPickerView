@@ -151,10 +151,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         //[containerView layoutIfNeeded];
         
         // 2.创建选择器
-        BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMDE];
+        BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
         datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
         datePickerView.minDate = [NSDate br_setYear:2010 month:10 day:1];
         datePickerView.maxDate = [NSDate date];
+        datePickerView.showWeek = YES;
         datePickerView.isAutoSelect = YES;
         datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
             if (self.timeType == BRTimeTypeBeginTime) {

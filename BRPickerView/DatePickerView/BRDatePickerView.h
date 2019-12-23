@@ -31,8 +31,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeYMDH,
     /** 【MM-dd HH:mm】月日时分 */
     BRDatePickerModeMDHM,
-    /** 【yyyy-MM-ddEEE】年月日星期 */
-    BRDatePickerModeYMDE,
     /** 【yyyy-MM-dd】年月日 */
     BRDatePickerModeYMD,
     /** 【yyyy-MM】年月 */
@@ -73,13 +71,16 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
 @property (nonatomic, assign) BOOL hiddenDateUnit;
 
-/** 是否显示“今天”，默认为 NO  */
+/** 是否在【日】后面显示【星期】，默认为 NO  */
+@property (nonatomic, assign, getter=isShowWeek) BOOL showWeek;
+
+/** 是否显示【今天】，默认为 NO  */
 @property (nonatomic, assign, getter=isShowToday) BOOL showToday;
 
-/** 是否添加“至今”，默认为 NO */
+/** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
-/** 选择结果的回调（提示：新增了 selectDate 参数） */
+/** 选择结果的回调 */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;
 
 /// 初始化时间选择器
