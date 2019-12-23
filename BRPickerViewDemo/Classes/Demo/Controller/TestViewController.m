@@ -386,9 +386,9 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
             datePickerView.isAutoSelect = YES;
-            //datePickerView.addToNow = YES;
+            datePickerView.addToNow = YES;
             //datePickerView.showToday = YES;
-            //datePickerView.showWeek = YES;
+            datePickerView.showWeek = YES;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;

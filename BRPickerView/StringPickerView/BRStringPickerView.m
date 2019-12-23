@@ -10,13 +10,10 @@
 #import "BRStringPickerView.h"
 
 @interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
-{
-    BOOL _isDataSourceValid; // 数据源是否合法
-}
 /** 字符串选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
 /** 字符串选择器类型 */
-@property (nonatomic, assign) BRStringPickerMode showType;
+@property (nonatomic, assign) BRStringPickerMode pickerMode;
 /** 单列选择的值 */
 @property (nonatomic, copy) NSString *mSelectValue;
 /** 多列选择的值 */
@@ -78,9 +75,8 @@
 #pragma mark - 初始化自定义字符串选择器
 - (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode {
     if (self = [super init]) {
-        self.showType = pickerMode;
+        self.pickerMode = pickerMode;
         self.isAutoSelect = NO;
-        _isDataSourceValid = YES;
     }
     return self;
 }
@@ -107,7 +103,7 @@
         return;
     }
     // 给选择器设置默认值
-    if (self.showType == BRStringPickerComponentSingle) {
+    if (self.pickerMode == BRStringPickerComponentSingle) {
         if (self.selectIndex > 0) {
             self.selectIndex = (self.selectIndex < self.dataSourceArr.count ? self.selectIndex : 0);
         } else {
@@ -119,7 +115,7 @@
         }
         [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
         
-    } else if (self.showType == BRStringPickerComponentMulti) {
+    } else if (self.pickerMode == BRStringPickerComponentMulti) {
         NSMutableArray *mSelectIndexs = [[NSMutableArray alloc]init];
         for (NSInteger i = 0; i < self.dataSourceArr.count; i++) {
             NSInteger row = 0;
@@ -159,7 +155,7 @@
 
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    switch (self.showType) {
+    switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
             return 1;
             break;
@@ -173,7 +169,7 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    switch (self.showType) {
+    switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
             return self.dataSourceArr.count;
             break;
@@ -188,7 +184,7 @@
 
 #pragma mark - UIPickerViewDelegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    switch (self.showType) {
+    switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
         {
             self.selectIndex = row;
@@ -237,10 +233,10 @@
     label.adjustsFontSizeToFitWidth = YES;
     // 自适应最小字体缩放比例
     label.minimumScaleFactor = 0.5f;
-    if (self.showType == BRStringPickerComponentSingle) {
+    if (self.pickerMode == BRStringPickerComponentSingle) {
         label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, self.pickerStyle.rowHeight);
         label.text = self.dataSourceArr[row];
-    } else if (self.showType == BRStringPickerComponentMulti) {
+    } else if (self.pickerMode == BRStringPickerComponentMulti) {
         label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, self.pickerStyle.rowHeight);
         label.text = self.dataSourceArr[component][row];
     }
@@ -292,11 +288,11 @@
         [self removePickerFromView:view];
         
         if (!self.isAutoSelect) {
-            if (self.showType == BRStringPickerComponentSingle) {
+            if (self.pickerMode == BRStringPickerComponentSingle) {
                 
                 [self handlerResultModelBlock];
                 
-            } else if (self.showType == BRStringPickerComponentMulti) {
+            } else if (self.pickerMode == BRStringPickerComponentMulti) {
                 
                 [self handlerResultModelArrayBlock];
                 

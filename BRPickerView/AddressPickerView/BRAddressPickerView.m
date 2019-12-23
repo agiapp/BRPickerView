@@ -23,7 +23,7 @@
 // 区模型数组
 @property(nonatomic, copy) NSArray *areaModelArr;
 // 显示类型
-@property (nonatomic, assign) BRAddressPickerMode showType;
+@property (nonatomic, assign) BRAddressPickerMode pickerMode;
 // 选中的省
 @property(nonatomic, strong) BRProvinceModel *selectProvinceModel;
 // 选中的市
@@ -76,7 +76,7 @@
 #pragma mark - 初始化地址选择器
 - (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode {
     if (self = [super init]) {
-        self.showType = pickerMode;
+        self.pickerMode = pickerMode;
         self.isAutoSelect = NO;
         _isDataSourceValid = YES;
     }
@@ -91,8 +91,7 @@
         if ([element isKindOfClass:[BRProvinceModel class]]) {
             self.provinceModelArr = self.dataSourceArr;
         } else {
-            // 传的是JSON数组，就解析数据源
-            [self parseDataSource];
+            self.provinceModelArr = [self getProvinceModelArr:self.dataSourceArr];
         }
     } else {
         // 如果外部没有传入地区数据源，就使用本地的数据源
@@ -103,23 +102,21 @@
             return;
         }
         self.dataSourceArr = dataSource;
-        
-        // 解析数据源
-        [self parseDataSource];
+        self.provinceModelArr = [self getProvinceModelArr:self.dataSourceArr];
     }
     
     // 设置默认值
     [self handlerDefaultSelectValue];
 }
 
-#pragma mark - 解析数据源
-- (void)parseDataSource {
+#pragma mark - 获取模型数组
+- (NSArray <BRProvinceModel *>*)getProvinceModelArr:(NSArray *)dataSourceArr {
     NSMutableArray *tempArr1 = [NSMutableArray array];
-    for (NSDictionary *proviceDic in self.dataSourceArr) {
+    for (NSDictionary *proviceDic in dataSourceArr) {
         BRProvinceModel *proviceModel = [[BRProvinceModel alloc]init];
         proviceModel.code = [proviceDic objectForKey:@"code"];
         proviceModel.name = [proviceDic objectForKey:@"name"];
-        proviceModel.index = [self.dataSourceArr indexOfObject:proviceDic];
+        proviceModel.index = [dataSourceArr indexOfObject:proviceDic];
         NSArray *cityList = [proviceDic.allKeys containsObject:@"cityList"] ? [proviceDic objectForKey:@"cityList"] : [proviceDic objectForKey:@"citylist"];
         NSMutableArray *tempArr2 = [NSMutableArray array];
         for (NSDictionary *cityDic in cityList) {
@@ -142,7 +139,7 @@
         proviceModel.citylist = [tempArr2 copy];
         [tempArr1 addObject:proviceModel];
     }
-    self.provinceModelArr = [tempArr1 copy];
+    return [tempArr1 copy];
 }
 
 #pragma mark - 设置默认选择的值
@@ -157,7 +154,7 @@
         selectAreaName = self.mSelectValues.count > 2 ? self.mSelectValues[2] : nil;
     }
     
-    if (self.showType == BRAddressPickerModeProvince || self.showType == BRAddressPickerModeCity || self.showType == BRAddressPickerModeArea) {
+    if (self.pickerMode == BRAddressPickerModeProvince || self.pickerMode == BRAddressPickerModeCity || self.pickerMode == BRAddressPickerModeArea) {
         if (self.selectIndexs.count > 0) {
             NSInteger provinceIndex = [self.selectIndexs[0] integerValue];
             self.provinceIndex = (provinceIndex > 0 && provinceIndex < self.provinceModelArr.count) ? provinceIndex : 0;
@@ -179,7 +176,7 @@
         }
     }
     
-    if (self.showType == BRAddressPickerModeCity || self.showType == BRAddressPickerModeArea) {
+    if (self.pickerMode == BRAddressPickerModeCity || self.pickerMode == BRAddressPickerModeArea) {
         self.cityModelArr = [self getCityModelArray:self.provinceIndex];
         if (self.selectIndexs.count > 0) {
             NSInteger cityIndex = self.selectIndexs.count > 1 ? [self.selectIndexs[1] integerValue] : 0;
@@ -202,7 +199,7 @@
         }
     }
     
-    if (self.showType == BRAddressPickerModeArea) {
+    if (self.pickerMode == BRAddressPickerModeArea) {
         self.areaModelArr = [self getAreaModelArray:self.provinceIndex cityIndex:self.cityIndex];
         if (self.selectIndexs.count > 0) {
             NSInteger areaIndex = self.selectIndexs.count > 2 ? [self.selectIndexs[2] integerValue] : 0;
@@ -229,12 +226,12 @@
     [self.pickerView reloadAllComponents];
     
     // 滚动到指定行
-    if (self.showType == BRAddressPickerModeProvince) {
+    if (self.pickerMode == BRAddressPickerModeProvince) {
         [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
-    } else if (self.showType == BRAddressPickerModeCity) {
+    } else if (self.pickerMode == BRAddressPickerModeCity) {
         [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
         [self.pickerView selectRow:self.cityIndex inComponent:1 animated:YES];
-    } else if (self.showType == BRAddressPickerModeArea) {
+    } else if (self.pickerMode == BRAddressPickerModeArea) {
         [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
         [self.pickerView selectRow:self.cityIndex inComponent:1 animated:YES];
         [self.pickerView selectRow:self.areaIndex inComponent:2 animated:YES];
@@ -277,7 +274,7 @@
 #pragma mark - UIPickerViewDataSource
 // 1.指定pickerview有几个表盘(几列)
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    switch (self.showType) {
+    switch (self.pickerMode) {
         case BRAddressPickerModeProvince:
             return 1;
             break;
@@ -353,7 +350,7 @@
     if (component == 0) { // 选择省
         // 保存选择的省份的索引
         self.provinceIndex = row;
-        switch (self.showType) {
+        switch (self.pickerMode) {
             case BRAddressPickerModeProvince:
             {
                 self.selectProvinceModel = self.provinceModelArr.count > self.provinceIndex ? self.provinceModelArr[self.provinceIndex] : nil;
@@ -391,7 +388,7 @@
     if (component == 1) { // 选择市
         // 保存选择的城市的索引
         self.cityIndex = row;
-        switch (self.showType) {
+        switch (self.pickerMode) {
             case BRAddressPickerModeCity:
             {
                 self.selectCityModel = self.cityModelArr.count > self.cityIndex ? self.cityModelArr[self.cityIndex] : nil;
@@ -414,7 +411,7 @@
     if (component == 2) { // 选择区
         // 保存选择的地区的索引
         self.areaIndex = row;
-        if (self.showType == BRAddressPickerModeArea) {
+        if (self.pickerMode == BRAddressPickerModeArea) {
             self.selectAreaModel = self.areaModelArr.count > self.areaIndex ? self.areaModelArr[self.areaIndex] : nil;
         }
     }
