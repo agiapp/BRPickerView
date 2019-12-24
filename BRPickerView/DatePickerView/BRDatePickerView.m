@@ -825,7 +825,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 // 4. 时间选择器2 每次滚动后的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    BOOL isSelectNow = NO;
+    NSString *lastSelectValue = self.mSelectValue;
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         if (component == 0) {
             self.yearIndex = row;
@@ -872,8 +872,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute second:second];
             self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeYMDHM) {
@@ -913,8 +913,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute];
             self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d", year, month, day, hour, minute];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeYMDH) {
@@ -946,8 +946,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setYear:year month:month day:day hour:hour];
             self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d", year, month, day, hour];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeMDHM) {
@@ -979,8 +979,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setMonth:month day:day hour:hour minute:minute];
             self.mSelectValue = [NSString stringWithFormat:@"%02d-%02d %02d:%02d", month, day, hour, minute];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeYMD) {
@@ -1005,8 +1005,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setYear:year month:month day:day];
             self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d", year, month, day];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeYM) {
@@ -1025,8 +1025,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setYear:year month:month];
             self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d", year, month];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeY) {
@@ -1040,8 +1040,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setYear:year];
             self.mSelectValue = [NSString stringWithFormat:@"%04d", year];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeMD) {
@@ -1060,8 +1060,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setMonth:month day:day];
             self.mSelectValue = [NSString stringWithFormat:@"%02d-%02d", month, day];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeHMS) {
@@ -1086,8 +1086,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setHour:hour minute:minute second:second];
             self.mSelectValue = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, minute, second];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
         
     } else if (self.pickerMode == BRDatePickerModeHM) {
@@ -1106,8 +1106,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setHour:hour minute:minute];
             self.mSelectValue = [NSString stringWithFormat:@"%02d:%02d", hour, minute];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
     } else if (self.pickerMode == BRDatePickerModeMS) {
         if (component == 0) {
@@ -1125,17 +1125,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate br_setMinute:minute second:second];
             self.mSelectValue = [NSString stringWithFormat:@"%02d:%02d", minute, second];
         } else {
-            isSelectNow = YES;
             self.mSelectDate = [NSDate date];
+            self.mSelectValue = [self getNowString];
         }
     }
     
     // 由 至今 滚动到 其它时间时，回滚到上次选择的位置
-    if ([self.mSelectValue isEqualToString:[self getNowString]] && !isSelectNow) {
+    if ([lastSelectValue isEqualToString:[self getNowString]] && ![self.mSelectValue isEqualToString:[self getNowString]]) {
         [self scrollToSelectDate:self.mSelectDate animated:NO];
-    }
-    if (isSelectNow) {
-        self.mSelectValue = [self getNowString];
     }
     
     // 设置是否开启自动回调

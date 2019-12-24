@@ -31,7 +31,6 @@
     [self showPickerWithTitle:title dataSourceArr:dataSourceArr selectIndex:selectIndex isAutoSelect:NO resultBlock:resultBlock];
 }
 
-
 #pragma mark - 2.显示【单列】字符串选择器
 + (void)showPickerWithTitle:(NSString *)title
               dataSourceArr:(NSArray *)dataSourceArr
