@@ -45,8 +45,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, strong) NSDate *mSelectDate;
 @property (nonatomic, copy) NSString *mSelectValue;
 
-/** 显示类型 */
-@property (nonatomic, assign) BRDatePickerMode pickerMode;
 /** 时间选择器的类型 */
 @property (nonatomic, assign) BRDatePickerStyle style;
 /** 选择的日期的格式 */
@@ -95,9 +93,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode {
     if (self = [super init]) {
         self.pickerMode = pickerMode;
-        self.isAutoSelect = NO;
-        
-        [self setupSelectDateFormatter:pickerMode];
     }
     return self;
 }
@@ -144,14 +139,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     
     // 3.默认选中的日期
-    [self handlerValidSelectDate];
+    [self handlerDefaultSelectDate];
     
     if (self.style == BRDatePickerStyleCustom) {
         [self initDateArray];
     }
 }
 
-- (void)handlerValidSelectDate {
+- (void)handlerDefaultSelectDate {
     if (!self.selectDate) {
         if (self.selectValue && self.selectValue.length > 0) {
             NSDate *defaultSelDate = [NSDate br_getDate:self.selectValue format:self.selectDateFormatter];
@@ -1327,6 +1322,22 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - setter 方法
+- (void)setPickerMode:(BRDatePickerMode)pickerMode {
+    _pickerMode = pickerMode;
+    [self setupSelectDateFormatter:pickerMode];
+    // 非空，表示二次设置
+    if (_datePicker || _pickerView) {
+        [self handlerPickerData];
+        [self.pickerView reloadAllComponents];
+        // 默认滚动的行
+        if (self.style == BRDatePickerStyleSystem) {
+            [self.datePicker setDate:self.mSelectDate animated:NO];
+        } else if (self.style == BRDatePickerStyleCustom) {
+            [self scrollToSelectDate:self.mSelectDate animated:NO];
+        }
+    }
+}
+
 - (void)setAddToNow:(BOOL)addToNow {
     _addToNow = addToNow;
     if (addToNow) {
@@ -1347,7 +1358,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     _mSelectDate = selectDate;
     if (_datePicker || _pickerView) {
         // 处理选择的日期
-        [self handlerValidSelectDate];
+        [self handlerDefaultSelectDate];
         if (self.style == BRDatePickerStyleCustom) {
             [self initDateArray];
         }
@@ -1366,7 +1377,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     _mSelectValue = selectValue;
     if (_datePicker || _pickerView) {
         // 处理选择的日期
-        [self handlerValidSelectDate];
+        [self handlerDefaultSelectDate];
         if (self.style == BRDatePickerStyleCustom) {
             [self initDateArray];
         }

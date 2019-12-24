@@ -61,7 +61,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         self.beginTimeTF.textColor = [UIColor blueColor];
         self.beginTimeLineView.backgroundColor = [UIColor blueColor];
         // 设置选择器滚动到指定的日期
-        //self.datePickerView.selectValue = self.beginTimeTF.text;
         self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd"];
     }
 }
@@ -101,24 +100,40 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 
 - (UIView *)footerView {
     if (!_footerView) {
-        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 320)];
+        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 400)];
         _footerView.backgroundColor = [UIColor clearColor];
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        // 开始时间label
-        UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 50, 120, 36) placeholder:@"开始时间"];
+        // 1.切换日期选择器的显示模式
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日", @"年月", @"年"]];
+        segmentedControl.frame = CGRectMake((SCREEN_WIDTH - 200) / 2, 50, 200, 36);
+        // 设置圆角和边框
+        segmentedControl.layer.cornerRadius = 3.0f;
+        segmentedControl.layer.masksToBounds = YES;
+        segmentedControl.layer.borderWidth = 0.5f;
+        segmentedControl.layer.borderColor = [UIColor blueColor].CGColor;
+        // 设置标题颜色
+        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor grayColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateNormal];
+        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateSelected];
+        segmentedControl.selectedSegmentIndex = 0;
+        [segmentedControl addTarget:self action:@selector(pickerModeSegmentedControlAction:) forControlEvents:UIControlEventValueChanged];
+        [_footerView addSubview:segmentedControl];
+        
+        
+        // 2.开始时间label
+        UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 110, 120, 36) placeholder:@"开始时间"];
         beginTimeTF.tag = 100;
         beginTimeTF.textColor = [UIColor blackColor];
         beginTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.beginTimeTF = beginTimeTF;
         [_footerView addSubview:beginTimeTF];
         
-        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 86, 120, 0.8f)];
+        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 146, 120, 0.8f)];
         beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
         [_footerView addSubview:beginTimeLineView];
         self.beginTimeLineView = beginTimeLineView;
         
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 50, 30, 36)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 110, 30, 36)];
         label.backgroundColor = [UIColor clearColor];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         label.font = [UIFont systemFontOfSize:16.0f];
@@ -128,20 +143,21 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         [_footerView addSubview:label];
         
         // 结束时间label
-        UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 50, 120, 36) placeholder:@"结束时间"];
+        UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 110, 120, 36) placeholder:@"结束时间"];
         endTimeTF.tag = 101;
         endTimeTF.textColor = [UIColor blackColor];
         endTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.endTimeTF = endTimeTF;
         [_footerView addSubview:endTimeTF];
         
-        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 86, 120, 0.8f)];
+        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 146, 120, 0.8f)];
         endTimeLineView.backgroundColor = [UIColor lightGrayColor];
         [_footerView addSubview:endTimeLineView];
         self.endTimeLineView = endTimeLineView;
         
-        // 1.创建选择器容器视图
-        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 120, _footerView.frame.size.width - 60, 200)];
+        
+        // 3.创建选择器容器视图
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 170, _footerView.frame.size.width - 60, 200)];
         containerView.backgroundColor = [UIColor redColor];
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
@@ -151,8 +167,9 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         //[containerView setNeedsLayout];
         //[containerView layoutIfNeeded];
         
-        // 2.创建选择器
-        BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
+        // 4.创建日期选择器
+        BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
+        datePickerView.pickerMode = BRDatePickerModeYMD;
         datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
         datePickerView.minDate = [NSDate br_setYear:2010 month:10 day:1];
         datePickerView.maxDate = [NSDate date];
@@ -171,11 +188,38 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         datePickerView.pickerStyle = customStyle;
         self.datePickerView = datePickerView;
         
-        // 3.添加选择器到容器视图
+        // 添加选择器到容器视图
         [datePickerView addPickerToView:containerView];
         
     }
     return _footerView;
+}
+
+#pragma mark - 切换日期显示模式
+- (void)pickerModeSegmentedControlAction:(UISegmentedControl *)sender {
+    NSInteger selecIndex = sender.selectedSegmentIndex;
+    if (selecIndex == 0) {
+        NSLog(@"年月日");
+        self.datePickerView.pickerMode = BRDatePickerModeYMD;
+        self.beginTimeTF.text = nil;
+        self.endTimeTF.text = nil;
+        self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+    } else if (selecIndex == 1) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYM;
+        self.beginTimeTF.text = nil;
+        self.endTimeTF.text = nil;
+        self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+    } else if (selecIndex == 2) {
+        NSLog(@"年");
+        self.datePickerView.pickerMode = BRDatePickerModeY;
+        self.beginTimeTF.text = nil;
+        self.endTimeTF.text = nil;
+        self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+    }
 }
 
 - (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
@@ -516,12 +560,18 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             self.beginTimeTF.textColor = [UIColor blueColor];
             self.beginTimeLineView.backgroundColor = [UIColor blueColor];
             
+            NSString *format = @"yyyy-MM-dd";
+            if (self.datePickerView.pickerMode == BRDatePickerModeYM) {
+                format = @"yyyy-MM";
+            } else if (self.datePickerView.pickerMode == BRDatePickerModeY) {
+                format = @"yyyy";
+            }
             if (self.beginTimeTF.text.length == 0) {
-                self.beginTimeTF.text = [NSDate br_getDateString:[NSDate date] format:@"yyyy-MM-dd"];
+                self.beginTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];
             }
             // 设置选择器滚动到指定的日期
             //self.datePickerView.selectValue = self.beginTimeTF.text;
-            self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd"];
+            self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:format];
         }
             break;
             
@@ -534,12 +584,18 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             self.endTimeTF.textColor = [UIColor blueColor];
             self.endTimeLineView.backgroundColor = [UIColor blueColor];
             
+            NSString *format = @"yyyy-MM-dd";
+            if (self.datePickerView.pickerMode == BRDatePickerModeYM) {
+                format = @"yyyy-MM";
+            } else if (self.datePickerView.pickerMode == BRDatePickerModeY) {
+                format = @"yyyy";
+            }
             if (self.endTimeTF.text.length == 0) {
-                self.endTimeTF.text = [NSDate br_getDateString:[NSDate date] format:@"yyyy-MM-dd"];
+                self.endTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];
             }
             // 设置选择器滚动到指定的日期
             //self.datePickerView.selectValue = self.endTimeTF.text;
-            self.datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
+            self.datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:format];
         }
             break;
             

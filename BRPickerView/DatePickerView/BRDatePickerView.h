@@ -87,8 +87,11 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 选择结果的回调 */
 @property (nonatomic, copy) BRDateResultBlock resultBlock;
 
+/** 日期选择器显示类型 */
+@property (nonatomic, assign) BRDatePickerMode pickerMode;
+
 /// 初始化时间选择器
-/// @param pickerMode  日期选择器类型
+/// @param pickerMode  日期选择器显示类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;
 
 /// 弹出选择器视图
