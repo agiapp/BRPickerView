@@ -10,6 +10,9 @@
 #import "BRStringPickerView.h"
 
 @interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
+{
+    BOOL _isDataSourceValid; // 数据源是否合法
+}
 /** 字符串选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
 /** 单列选择的值 */
@@ -43,8 +46,12 @@
     strPickerView.selectIndex = selectIndex;
     strPickerView.isAutoSelect = isAutoSelect;
     strPickerView.resultModelBlock = resultBlock;
-    // 显示
-    [strPickerView show];
+    
+    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
+    if (strPickerView->_isDataSourceValid) {
+        // 显示
+        [strPickerView show];
+    }
 }
 
 #pragma mark - 3.显示【多列】字符串选择器
@@ -69,8 +76,12 @@
     strPickerView.selectIndexs = selectIndexs;
     strPickerView.isAutoSelect = isAutoSelect;
     strPickerView.resultModelArrayBlock = resultBlock;
-    // 显示
-    [strPickerView show];
+    
+    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
+    if (strPickerView->_isDataSourceValid) {
+        // 显示
+        [strPickerView show];
+    }
 }
 
 #pragma mark - 初始化自定义字符串选择器
@@ -83,9 +94,26 @@
 
 #pragma mark - 设置默认选择的值
 - (void)handlerDefaultSelectValue {
+    _isDataSourceValid = YES;
     if (self.dataSourceArr.count == 0) {
+        _isDataSourceValid = NO;
         return;
     }
+    
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        id element = [self.dataSourceArr firstObject];
+        if ([element isKindOfClass:[NSArray class]]) {
+            _isDataSourceValid = NO;
+            return;
+        }
+    } else if (self.pickerMode == BRStringPickerComponentMulti) {
+        id element = [self.dataSourceArr firstObject];
+        if ([element isKindOfClass:[NSString class]]) {
+            _isDataSourceValid = NO;
+            return;
+        }
+    }
+    
     // 给选择器设置默认值
     if (self.pickerMode == BRStringPickerComponentSingle) {
         if (self.selectIndex > 0) {
@@ -262,8 +290,13 @@
 #pragma mark - 重写父类方法
 - (void)addPickerToView:(UIView *)view {
     [self handlerDefaultSelectValue];
-    // 添加字符串选择器
-    [self setPickerView:self.pickerView toView:view];
+    
+    NSAssert(_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
+    
+    if (_isDataSourceValid) {
+        // 添加字符串选择器
+        [self setPickerView:self.pickerView toView:view];
+    }
     
     @weakify(self)
     self.doneBlock = ^{
