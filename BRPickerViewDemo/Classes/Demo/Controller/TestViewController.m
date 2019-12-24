@@ -405,7 +405,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         case 1:
         {
             // 性别
-            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentSingle;
             stringPickerView.title = @"请选择性别";
             stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
             stringPickerView.selectIndex = self.genderSelectIndex ;
@@ -421,7 +422,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         case 2:
         {
             // 出生年月日
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
+            datePickerView.pickerMode = BRDatePickerModeYMD;
             datePickerView.title = @"请选择年月日";
             //datePickerView.selectValue = @"1948-10-01";
             datePickerView.selectDate = self.birthdaySelectDate;
@@ -457,7 +459,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         case 3:
         {
             // 出生时刻
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeHMS];
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
+            datePickerView.pickerMode = BRDatePickerModeHMS;
             datePickerView.title = @"出生时刻";
             datePickerView.selectDate = self.birthtimeSelectDate;
             datePickerView.isAutoSelect = YES;
@@ -478,7 +481,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         case 5:
         {
             // 地区
-            BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
+            BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]init];
+            addressPickerView.pickerMode = BRAddressPickerModeArea;
             addressPickerView.title = @"请选择地区";
             //addressPickerView.selectValues = [self.infoModel.addressStr componentsSeparatedByString:@" "];
             addressPickerView.selectIndexs = self.addressSelectIndexs;
@@ -499,7 +503,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         case 6:
         {
             // 学历
-            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentSingle;
             stringPickerView.title = @"请选择学历";
             stringPickerView.plistName = @"testData1.plist";
             stringPickerView.selectIndex = self.educationSelectIndex;
@@ -524,7 +529,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         case 7:
         {
             /// 其它
-            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentMulti;
             stringPickerView.title = @"自定义多列字符串";
             stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
             stringPickerView.selectIndexs = self.otherSelectIndexs;

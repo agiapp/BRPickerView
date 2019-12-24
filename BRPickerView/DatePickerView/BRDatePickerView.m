@@ -78,14 +78,16 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                        maxDate:(NSDate *)maxDate
                   isAutoSelect:(BOOL)isAutoSelect
                    resultBlock:(BRDateResultBlock)resultBlock {
-    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:mode];
+    // 创建日期选择器
+    BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
+    datePickerView.pickerMode = mode;
     datePickerView.title = title;
     datePickerView.selectValue = selectValue;
     datePickerView.minDate = minDate;
     datePickerView.maxDate = maxDate;
     datePickerView.isAutoSelect = isAutoSelect;
     datePickerView.resultBlock = resultBlock;
-    
+    // 显示
     [datePickerView show];
 }
 
@@ -97,7 +99,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return self;
 }
 
+#pragma mark - 处理选择器数据
 - (void)handlerPickerData {
+    
+    [self setupSelectDateFormatter:self.pickerMode];
+    
     // 1.最小日期限制
     if (!self.minDate) {
         if (self.pickerMode == BRDatePickerModeMDHM) {
@@ -187,13 +193,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 - (void)setupSelectDateFormatter:(BRDatePickerMode)model {
     switch (model) {
-        case BRDatePickerModeTime:
-        {
-            self.selectDateFormatter = @"HH:mm";
-            self.style = BRDatePickerStyleSystem;
-            _datePickerMode = UIDatePickerModeTime;
-        }
-            break;
         case BRDatePickerModeDate:
         {
             self.selectDateFormatter = @"yyyy-MM-dd";
@@ -206,6 +205,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.selectDateFormatter = @"yyyy-MM-dd HH:mm";
             self.style = BRDatePickerStyleSystem;
             _datePickerMode = UIDatePickerModeDateAndTime;
+        }
+            break;
+        case BRDatePickerModeTime:
+        {
+            self.selectDateFormatter = @"HH:mm";
+            self.style = BRDatePickerStyleSystem;
+            _datePickerMode = UIDatePickerModeTime;
         }
             break;
         case BRDatePickerModeCountDownTimer:
@@ -1324,7 +1330,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - setter 方法
 - (void)setPickerMode:(BRDatePickerMode)pickerMode {
     _pickerMode = pickerMode;
-    [self setupSelectDateFormatter:pickerMode];
     // 非空，表示二次设置
     if (_datePicker || _pickerView) {
         [self handlerPickerData];

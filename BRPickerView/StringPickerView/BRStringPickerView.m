@@ -12,8 +12,6 @@
 @interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
 /** 字符串选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
-/** 字符串选择器类型 */
-@property (nonatomic, assign) BRStringPickerMode pickerMode;
 /** 单列选择的值 */
 @property (nonatomic, copy) NSString *mSelectValue;
 /** 多列选择的值 */
@@ -37,13 +35,15 @@
                 selectIndex:(NSInteger)selectIndex
                isAutoSelect:(BOOL)isAutoSelect
                 resultBlock:(BRStringResultModelBlock)resultBlock {
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
+    // 创建字符串选择器
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]init];
+    strPickerView.pickerMode = BRStringPickerComponentSingle;
     strPickerView.title = title;
     strPickerView.dataSourceArr = dataSourceArr;
     strPickerView.selectIndex = selectIndex;
     strPickerView.isAutoSelect = isAutoSelect;
     strPickerView.resultModelBlock = resultBlock;
-    
+    // 显示
     [strPickerView show];
 }
 
@@ -61,13 +61,15 @@
                     selectIndexs:(NSArray <NSNumber *>*)selectIndexs
                     isAutoSelect:(BOOL)isAutoSelect
                      resultBlock:(BRStringResultModelArrayBlock)resultBlock {
-    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
+    // 创建字符串选择器
+    BRStringPickerView *strPickerView = [[BRStringPickerView alloc]init];
+    strPickerView.pickerMode = BRStringPickerComponentMulti;
     strPickerView.title = title;
     strPickerView.dataSourceArr = dataSourceArr;
     strPickerView.selectIndexs = selectIndexs;
     strPickerView.isAutoSelect = isAutoSelect;
     strPickerView.resultModelArrayBlock = resultBlock;
-    
+    // 显示
     [strPickerView show];
 }
 
@@ -75,25 +77,8 @@
 - (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode {
     if (self = [super init]) {
         self.pickerMode = pickerMode;
-        self.isAutoSelect = NO;
     }
     return self;
-}
-
-#pragma mark - setter 方法
-- (void)setPlistName:(NSString *)plistName {
-    NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
-    if (path && path.length > 0) {
-        self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
-    }
-}
-
-- (void)setSelectValue:(NSString *)selectValue {
-    self.mSelectValue = selectValue;
-}
-
-- (void)setSelectValues:(NSArray<NSString *> *)selectValues {
-    self.mSelectValues = selectValues;
 }
 
 #pragma mark - 设置默认选择的值
@@ -317,6 +302,30 @@
     [self removePickerFromView:nil];
 }
 
+#pragma mark - setter 方法
+- (void)setPickerMode:(BRStringPickerMode)pickerMode {
+    _pickerMode = pickerMode;
+    if (_pickerView) {
+        [self handlerDefaultSelectValue];
+    }
+}
+
+- (void)setPlistName:(NSString *)plistName {
+    NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:nil];
+    if (path && path.length > 0) {
+        self.dataSourceArr = [[NSArray alloc] initWithContentsOfFile:path];
+    }
+}
+
+- (void)setSelectValue:(NSString *)selectValue {
+    self.mSelectValue = selectValue;
+}
+
+- (void)setSelectValues:(NSArray<NSString *> *)selectValues {
+    self.mSelectValues = selectValues;
+}
+
+#pragma mark - getter 方法
 - (NSArray *)dataSourceArr {
     if (!_dataSourceArr) {
         _dataSourceArr = [NSArray array];

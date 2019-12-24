@@ -13,12 +13,12 @@
 /// 日期选择器格式
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     // ----- 以下4种是系统自带的样式 -----
-    /** 【HH:mm】UIDatePickerModeTime */
-    BRDatePickerModeTime = 1,
-    /** 【yyyy-MM-dd】UIDatePickerModeDate */
+    /** 【yyyy-MM-dd】UIDatePickerModeDate（默认） */
     BRDatePickerModeDate,
     /** 【yyyy-MM-dd HH:mm】 UIDatePickerModeDateAndTime */
     BRDatePickerModeDateAndTime,
+    /** 【HH:mm】UIDatePickerModeTime */
+    BRDatePickerModeTime,
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     

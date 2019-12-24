@@ -13,7 +13,7 @@
 /// 字符串选择器类型
 typedef NS_ENUM(NSInteger, BRStringPickerMode) {
     /** 单列字符串选择 */
-    BRStringPickerComponentSingle = 1,
+    BRStringPickerComponentSingle,
     /** 多列字符串选择（两列及两列以上） */
     BRStringPickerComponentMulti
 };
@@ -59,8 +59,11 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
 /** 多列选择结果的回调 */
 @property (nonatomic, copy) BRStringResultModelArrayBlock resultModelArrayBlock;
 
+/** 字符串选择器显示类型 */
+@property (nonatomic, assign) BRStringPickerMode pickerMode;
+
 /// 初始化字符串选择器
-/// @param pickerMode 字符串选择器类型
+/// @param pickerMode 字符串选择器显示类型
 - (instancetype)initWithPickerMode:(BRStringPickerMode)pickerMode;
 
 /// 弹出选择器视图

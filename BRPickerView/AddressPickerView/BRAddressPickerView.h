@@ -13,7 +13,7 @@
 /// 地址选择器类型
 typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
     /** 显示【省市区】（默认） */
-    BRAddressPickerModeArea = 1,
+    BRAddressPickerModeArea,
     /** 显示【省市】 */
     BRAddressPickerModeCity,
     /** 显示【省】 */
@@ -46,8 +46,11 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
  */
 @property (nonatomic, copy) NSArray *dataSourceArr;
 
+/** 地址选择器显示类型 */
+@property (nonatomic, assign) BRAddressPickerMode pickerMode;
+
 /// 初始化地址选择器
-/// @param pickerMode 地址选择器类型
+/// @param pickerMode 地址选择器显示类型
 - (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode;
 
 /// 弹出选择器视图

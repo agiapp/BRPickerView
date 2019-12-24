@@ -11,9 +11,6 @@
 #import "NSBundle+BRPickerView.h"
 
 @interface BRAddressPickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
-{
-    BOOL _isDataSourceValid;    // 数据源是否合法
-}
 // 地址选择器
 @property (nonatomic, strong) UIPickerView *pickerView;
 // 省模型数组
@@ -22,8 +19,6 @@
 @property(nonatomic, copy) NSArray *cityModelArr;
 // 区模型数组
 @property(nonatomic, copy) NSArray *areaModelArr;
-// 显示类型
-@property (nonatomic, assign) BRAddressPickerMode pickerMode;
 // 选中的省
 @property(nonatomic, strong) BRProvinceModel *selectProvinceModel;
 // 选中的市
@@ -64,12 +59,13 @@
                      selectIndexs:(NSArray <NSNumber *>*)selectIndexs
                      isAutoSelect:(BOOL)isAutoSelect
                       resultBlock:(BRAddressResultBlock)resultBlock {
+    // 创建地址选择器
     BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc] initWithPickerMode:mode];
     addressPickerView.dataSourceArr = dataSource;
     addressPickerView.selectIndexs = selectIndexs;
     addressPickerView.isAutoSelect = isAutoSelect;
     addressPickerView.resultBlock = resultBlock;
-    
+    // 显示
     [addressPickerView show];
 }
 
@@ -77,14 +73,12 @@
 - (instancetype)initWithPickerMode:(BRAddressPickerMode)pickerMode {
     if (self = [super init]) {
         self.pickerMode = pickerMode;
-        self.isAutoSelect = NO;
-        _isDataSourceValid = YES;
     }
     return self;
 }
 
-#pragma mark - 获取地址数据
-- (void)loadData {
+#pragma mark - 处理选择器数据
+- (void)handlerPickerData {
     if (self.dataSourceArr && self.dataSourceArr.count > 0) {
         id element = [self.dataSourceArr firstObject];
         // 如果传的值是解析好的模型数组
@@ -98,7 +92,6 @@
         NSArray *dataSource = [NSBundle br_addressJsonArray];
         
         if (!dataSource || dataSource.count == 0) {
-            _isDataSourceValid = NO;
             return;
         }
         self.dataSourceArr = dataSource;
@@ -433,7 +426,7 @@
 - (void)addPickerToView:(UIView *)view {
     // 添加地址选择器
     [self setPickerView:self.pickerView toView:view];
-    [self loadData];
+    [self handlerPickerData];
     
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
@@ -464,6 +457,13 @@
 }
 
 #pragma mark - setter方法
+- (void)setPickerMode:(BRAddressPickerMode)pickerMode {
+    _pickerMode = pickerMode;
+    if (_pickerView) {
+        [self handlerDefaultSelectValue];
+    }
+}
+
 - (void)setSelectValues:(NSArray<NSString *> *)selectValues {
     self.mSelectValues = selectValues;
 }
