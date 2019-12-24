@@ -29,10 +29,6 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  ///
  ///   【用法一】
  ///    特点：灵活，扩展性强（推荐使用！）
- ///    使用：
- ///         1. 初始化选择器（使用 initWithPickerMode: 方法）
- ///         2. 设置相关属性；一些公共的属性或方法参见基类文件 BRBaseView.h
- ///         3. 显示选择器（使用 show 方法）
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
