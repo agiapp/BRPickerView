@@ -105,8 +105,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         // 1.切换日期选择器的显示模式
-        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日", @"年月", @"年"]];
-        segmentedControl.frame = CGRectMake((SCREEN_WIDTH - 200) / 2, 50, 200, 36);
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日", @"年月", @"年月日时", @"月日时分"]];
+        segmentedControl.frame = CGRectMake(50, 50, SCREEN_WIDTH - 100, 36);
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
         segmentedControl.layer.masksToBounds = YES;
@@ -201,25 +201,22 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     if (selecIndex == 0) {
         NSLog(@"年月日");
         self.datePickerView.pickerMode = BRDatePickerModeYMD;
-        self.beginTimeTF.text = nil;
-        self.endTimeTF.text = nil;
-        self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
-        self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
     } else if (selecIndex == 1) {
         NSLog(@"年月");
         self.datePickerView.pickerMode = BRDatePickerModeYM;
-        self.beginTimeTF.text = nil;
-        self.endTimeTF.text = nil;
-        self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
-        self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
     } else if (selecIndex == 2) {
-        NSLog(@"年");
-        self.datePickerView.pickerMode = BRDatePickerModeY;
-        self.beginTimeTF.text = nil;
-        self.endTimeTF.text = nil;
-        self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
-        self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        NSLog(@"年月日时");
+        self.datePickerView.pickerMode = BRDatePickerModeYMDH;
+    } else if (selecIndex == 3) {
+        NSLog(@"月日时分");
+        self.datePickerView.pickerMode = BRDatePickerModeMDHM;
     }
+    
+    self.datePickerView.selectDate = nil;
+    self.beginTimeTF.text = nil;
+    self.endTimeTF.text = nil;
+    self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+    self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
 }
 
 - (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
@@ -563,9 +560,12 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             NSString *format = @"yyyy-MM-dd";
             if (self.datePickerView.pickerMode == BRDatePickerModeYM) {
                 format = @"yyyy-MM";
-            } else if (self.datePickerView.pickerMode == BRDatePickerModeY) {
-                format = @"yyyy";
+            } else if (self.datePickerView.pickerMode == BRDatePickerModeYMDH) {
+                format = @"yyyy-MM-dd HH";
+            } else if (self.datePickerView.pickerMode == BRDatePickerModeMDHM) {
+                format = @"MM-dd HH:mm";
             }
+            
             if (self.beginTimeTF.text.length == 0) {
                 self.beginTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];
             }
@@ -587,8 +587,10 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             NSString *format = @"yyyy-MM-dd";
             if (self.datePickerView.pickerMode == BRDatePickerModeYM) {
                 format = @"yyyy-MM";
-            } else if (self.datePickerView.pickerMode == BRDatePickerModeY) {
-                format = @"yyyy";
+            } else if (self.datePickerView.pickerMode == BRDatePickerModeYMDH) {
+                format = @"yyyy-MM-dd HH";
+            } else if (self.datePickerView.pickerMode == BRDatePickerModeMDHM) {
+                format = @"MM-dd HH:mm";
             }
             if (self.endTimeTF.text.length == 0) {
                 self.endTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];

@@ -76,9 +76,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
 
 
 
-
 //================================================= 华丽的分割线 =================================================
-
 
 
 
