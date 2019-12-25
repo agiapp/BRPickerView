@@ -304,16 +304,10 @@
         // 点击确定按钮后，执行block回调
         [self removePickerFromView:view];
         
-        if (!self.isAutoSelect) {
-            if (self.pickerMode == BRStringPickerComponentSingle) {
-                
-                [self handlerResultModelBlock];
-                
-            } else if (self.pickerMode == BRStringPickerComponentMulti) {
-                
-                [self handlerResultModelArrayBlock];
-                
-            }
+        if (self.pickerMode == BRStringPickerComponentSingle) {
+            [self handlerResultModelBlock];
+        } else if (self.pickerMode == BRStringPickerComponentMulti) {
+            [self handlerResultModelArrayBlock];
         }
     };
     

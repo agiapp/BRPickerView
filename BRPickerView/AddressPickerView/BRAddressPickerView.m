@@ -433,7 +433,7 @@
         // 点击确定按钮后，执行block回调
         [weakSelf removePickerFromView:view];
         
-        if (!weakSelf.isAutoSelect && weakSelf.resultBlock) {
+        if (weakSelf.resultBlock) {
             weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
         }
     };

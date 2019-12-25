@@ -37,7 +37,7 @@
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.font = [UIFont systemFontOfSize:16.0f];
         _titleLabel.textColor = [UIColor darkGrayColor];
-        _titleLabel.text = @"--- 请选择 ---";
+        _titleLabel.text = @"--- 请选择日期 ---";
         _titleLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapTitleLabel)];
         [_titleLabel addGestureRecognizer:myTap];

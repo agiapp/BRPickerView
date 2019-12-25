@@ -153,9 +153,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 - (void)handlerDefaultSelectDate {
+    // selectDate 优先级高于 selectValue（推荐使用 selectDate 设置默认选中的时间）
     if (!self.selectDate) {
         if (self.selectValue && self.selectValue.length > 0) {
-            NSDate *defaultSelDate = [NSDate br_getDate:self.selectValue format:self.selectDateFormatter];
+            NSDate *defaultSelDate = [self.selectValue isEqualToString:[self getNowString]] ? [NSDate date] : [NSDate br_getDate:self.selectValue format:self.selectDateFormatter];
             if (!defaultSelDate) {
                 BRErrorLog(@"参数异常！字符串 selectValue 的正确格式是：%@", self.selectDateFormatter);
                 NSAssert(defaultSelDate, @"参数异常！请检查字符串 selectValue 的格式");
@@ -188,6 +189,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (selectMoreThanMax) {
         BRErrorLog(@"默认选择的日期不能大于最大日期！");
         self.mSelectDate = self.maxDate;
+    }
+    if (!self.selectValue || ![self.selectValue isEqualToString:[self getNowString]]) {
+        self.mSelectValue = [NSDate br_getDateString:self.mSelectDate format:self.selectDateFormatter];
     }
 }
 
@@ -296,20 +300,75 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 设置默认日期数据源
 - (void)initDateArray {
-    self.yearArr = [self getYearArr];
-    self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
-    self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
-    self.hourArr = [self getHourArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day];
-    self.minuteArr = [self getMinuteArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour];
-    self.secondArr = [self getSecondArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour minute:self.mSelectDate.br_minute];
-    
-    // 根据 默认选择的日期 计算出 对应的索引
-    self.yearIndex = self.mSelectDate.br_year - self.minDate.br_year;
-    self.monthIndex = self.mSelectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
-    self.dayIndex = self.mSelectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
-    self.hourIndex = self.mSelectDate.br_hour - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0) ? self.minDate.br_hour : 0);
-    self.minuteIndex = self.mSelectDate.br_minute - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0 && self.hourIndex == 0) ? self.minDate.br_minute : 0);
-    self.secondIndex = self.mSelectDate.br_second - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0 && self.hourIndex == 0 && self.minuteIndex == 0) ? self.minDate.br_second : 0);
+    if (self.selectValue && [self.selectValue isEqualToString:[self getNowString]]) {
+        switch (self.pickerMode) {
+            case BRDatePickerModeYMDHMS:
+            case BRDatePickerModeYMDHM:
+            case BRDatePickerModeYMDH:
+            case BRDatePickerModeYMD:
+            case BRDatePickerModeYM:
+            case BRDatePickerModeY:
+            {
+                self.yearArr = [self getYearArr];
+                self.monthArr = nil;
+                self.dayArr = nil;
+                self.hourArr = nil;
+                self.minuteArr = nil;
+                self.secondArr = nil;
+            }
+                break;
+            case BRDatePickerModeMDHM:
+            case BRDatePickerModeMD:
+            {
+                self.yearArr = [self getYearArr];
+                self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
+                self.dayArr = nil;
+                self.hourArr = nil;
+                self.minuteArr = nil;
+                self.secondArr = nil;
+            }
+                break;
+            case BRDatePickerModeHMS:
+            case BRDatePickerModeHM:
+            {
+                self.yearArr = [self getYearArr];
+                self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
+                self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
+                self.hourArr = [self getHourArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day];
+                self.minuteArr = nil;
+                self.secondArr = nil;
+            }
+                break;
+            case BRDatePickerModeMS:
+            {
+                self.yearArr = [self getYearArr];
+                self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
+                self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
+                self.hourArr = [self getHourArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day];
+                self.minuteArr = [self getMinuteArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour];
+                self.secondArr = nil;
+            }
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        self.yearArr = [self getYearArr];
+        self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
+        self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
+        self.hourArr = [self getHourArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day];
+        self.minuteArr = [self getMinuteArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour];
+        self.secondArr = [self getSecondArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour minute:self.mSelectDate.br_minute];
+        
+        // 根据 默认选择的日期 计算出 对应的索引
+        self.yearIndex = self.mSelectDate.br_year - self.minDate.br_year;
+        self.monthIndex = self.mSelectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
+        self.dayIndex = self.mSelectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
+        self.hourIndex = self.mSelectDate.br_hour - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0) ? self.minDate.br_hour : 0);
+        self.minuteIndex = self.mSelectDate.br_minute - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0 && self.hourIndex == 0) ? self.minDate.br_minute : 0);
+        self.secondIndex = self.mSelectDate.br_second - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0 && self.hourIndex == 0 && self.minuteIndex == 0) ? self.minDate.br_second : 0);
+    }
 }
 
 #pragma mark - 更新日期数据源数组
@@ -360,7 +419,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.hourArr = [self getHourArr:[yearString integerValue] month:[monthString integerValue] day:day];
     }
     
-    // 4.更新 hourArr
+    // 4.更新 minuteArr
     if (self.hourArr.count == 0) {
         return;
     }
@@ -380,9 +439,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.minuteArr.count == 0) {
         return;
     }
-    NSInteger minute = [self.minuteArr[self.minuteIndex] integerValue];
+    NSString *minuteString = self.minuteArr[self.minuteIndex];
+    // 如果 minuteString = 至今
+    if (self.isAddToNow && [minuteString isEqualToString:[self getNowString]]) {
+        self.secondArr = nil;
+        return;
+    }
     if (updateSecond) {
-        self.secondArr = [self getSecondArr:[yearString integerValue] month:[monthString integerValue] day:day hour:[hourString integerValue] minute:minute];
+        self.secondArr = [self getSecondArr:[yearString integerValue] month:[monthString integerValue] day:day hour:[hourString integerValue] minute:[minuteString integerValue]];
     }
 }
 
@@ -581,6 +645,46 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     for (NSInteger i = 0; i < indexArr.count; i++) {
         [self.pickerView selectRow:[indexArr[i] integerValue] inComponent:i animated:animated];
+    }
+}
+
+#pragma mark - 滚动到【至今】的位置
+- (void)scrollToNowDate:(BOOL)animated {
+    switch (self.pickerMode) {
+        case BRDatePickerModeYMDHMS:
+        case BRDatePickerModeYMDHM:
+        case BRDatePickerModeYMDH:
+        case BRDatePickerModeYMD:
+        case BRDatePickerModeYM:
+        case BRDatePickerModeY:
+        {
+            NSInteger yearIndex = self.yearArr.count > 0 ? self.yearArr.count - 1 : 0;
+            [self.pickerView selectRow:yearIndex inComponent:0 animated:animated];
+        }
+            break;
+        case BRDatePickerModeMDHM:
+        case BRDatePickerModeMD:
+        {
+            NSInteger monthIndex = self.monthArr.count > 0 ? self.monthArr.count - 1 : 0;
+            [self.pickerView selectRow:monthIndex inComponent:0 animated:animated];
+        }
+            break;
+        case BRDatePickerModeHMS:
+        case BRDatePickerModeHM:
+        {
+            NSInteger hourIndex = self.hourArr.count > 0 ? self.hourArr.count - 1 : 0;
+            [self.pickerView selectRow:hourIndex inComponent:0 animated:animated];
+        }
+            break;
+        case BRDatePickerModeMS:
+        {
+            NSInteger minuteIndex = self.minuteArr.count > 0 ? self.minuteArr.count - 1 : 0;
+            [self.pickerView selectRow:minuteIndex inComponent:0 animated:animated];
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -1190,7 +1294,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.style == BRDatePickerStyleSystem) {
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {
-        [self scrollToSelectDate:self.mSelectDate animated:NO];
+        if (self.selectValue && [self.selectValue isEqualToString:[self getNowString]]) {
+            [self scrollToNowDate:NO];
+        } else {
+            [self scrollToSelectDate:self.mSelectDate animated:NO];
+        }
     }
     
     __weak typeof(self) weakSelf = self;
@@ -1198,8 +1306,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 点击确定按钮后，执行block回调
         [weakSelf removePickerFromView:view];
         
-        if (!weakSelf.isAutoSelect && weakSelf.resultBlock) {
-            weakSelf.mSelectValue = weakSelf.mSelectValue ? weakSelf.mSelectValue : [NSDate br_getDateString:weakSelf.mSelectDate format:weakSelf.selectDateFormatter];
+        if (weakSelf.resultBlock) {
             weakSelf.resultBlock(weakSelf.mSelectDate, weakSelf.mSelectValue);
         }
     };

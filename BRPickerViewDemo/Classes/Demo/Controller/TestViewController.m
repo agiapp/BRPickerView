@@ -292,7 +292,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
             datePickerView.pickerMode = BRDatePickerModeYMD;
             datePickerView.title = @"请选择年月日";
-            //datePickerView.selectValue = @"1948-10-01";
+            //datePickerView.selectValue = self.infoModel.birthdayStr;
             datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
             datePickerView.isAutoSelect = YES;
@@ -303,6 +303,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
+                
+                NSLog(@"selectValue=%@", selectValue);
+                NSLog(@"selectDate=%@", selectDate);
+                NSLog(@"---------------------------------");
+
             };
             
             // 自定义弹框样式

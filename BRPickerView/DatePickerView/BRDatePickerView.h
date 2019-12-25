@@ -59,9 +59,9 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
-/** 设置默认选中的时间（不设置或为nil时，默认就选中当前时间）*/
+/** 设置选中的时间（selectDate 优先级高于 selectValue，推荐使用 selectDate）*/
 @property (nonatomic, strong) NSDate *selectDate;
-@property (nonatomic, copy) NSString *selectValue;  // 推荐使用 selectDate
+@property (nonatomic, copy) NSString *selectValue;
 
 /** 最小时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nonatomic, strong) NSDate *minDate;
@@ -116,7 +116,7 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *  1.显示时间选择器
  *
  *  @param mode             日期显示类型
- *  @param selectValue      默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param selectValue      默认选中的时间（默认选中当前时间）
  *  @param resultBlock      选择结果的回调
  *
  */
@@ -129,7 +129,7 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *
  *  @param mode             日期显示类型
  *  @param title            选择器标题
- *  @param selectValue      默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param selectValue      默认选中的时间（默认选中当前时间）
  *  @param isAutoSelect     是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
  *  @param resultBlock      选择结果的回调
  *
@@ -145,7 +145,7 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *
  *  @param mode             日期显示类型
  *  @param title            选择器标题
- *  @param selectValue      默认选中的时间（值为空/值格式错误时，默认就选中现在的时间）
+ *  @param selectValue      默认选中的时间（默认选中当前时间）
  *  @param minDate          最小时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
  *  @param maxDate          最大时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
  *  @param isAutoSelect     是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
