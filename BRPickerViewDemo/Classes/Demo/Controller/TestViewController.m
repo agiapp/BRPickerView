@@ -10,6 +10,7 @@
 #import "BRPickerView.h"
 #import "BRInfoCell.h"
 #import "BRInfoModel.h"
+#import "UIImage+Color.h"
 #import "Test2ViewController.h"
 
 typedef NS_ENUM(NSUInteger, BRTimeType) {
@@ -292,8 +293,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
             datePickerView.pickerMode = BRDatePickerModeYMD;
             datePickerView.title = @"请选择年月日";
-            //datePickerView.selectValue = self.infoModel.birthdayStr;
-            datePickerView.selectDate = self.birthdaySelectDate;
+            datePickerView.selectValue = self.infoModel.birthdayStr;
+            //datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
             datePickerView.isAutoSelect = YES;
             datePickerView.addToNow = YES;
@@ -515,9 +516,12 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         segmentedControl.layer.masksToBounds = YES;
         segmentedControl.layer.borderWidth = 0.5f;
         segmentedControl.layer.borderColor = [UIColor blueColor].CGColor;
+        // 设置背景图片颜色
+        [segmentedControl setBackgroundImage:[UIImage br_imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [segmentedControl setBackgroundImage:[UIImage br_imageWithColor:[UIColor blueColor]] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
         // 设置标题颜色
-        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor grayColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateNormal];
-        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateSelected];
+        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateNormal];
+        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateSelected];
         segmentedControl.selectedSegmentIndex = 0;
         [segmentedControl addTarget:self action:@selector(pickerModeSegmentedControlAction:) forControlEvents:UIControlEventValueChanged];
         [_footerView addSubview:segmentedControl];
