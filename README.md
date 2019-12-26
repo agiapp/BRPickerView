@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.4.5` 。
+- 当前最新版本为： `2.4.6` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -48,12 +48,12 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 /// 日期选择器类型
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     // ----- 以下4种是系统自带的样式 -----
-    /** 【HH:mm】UIDatePickerModeTime */
-    BRDatePickerModeTime = 1,
-    /** 【yyyy-MM-dd】UIDatePickerModeDate */
+    /** 【yyyy-MM-dd】UIDatePickerModeDate（默认） */
     BRDatePickerModeDate,
     /** 【yyyy-MM-dd HH:mm】 UIDatePickerModeDateAndTime */
     BRDatePickerModeDateAndTime,
+    /** 【HH:mm】UIDatePickerModeTime */
+    BRDatePickerModeTime,
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
@@ -66,8 +66,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeYMDH,
     /** 【MM-dd HH:mm】月日时分 */
     BRDatePickerModeMDHM,
-    /** 【yyyy-MM-ddEEE】年月日星期 */
-    BRDatePickerModeYMDE,
     /** 【yyyy-MM-dd】年月日 */
     BRDatePickerModeYMD,
     /** 【yyyy-MM】年月 */
@@ -79,7 +77,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm:ss】时分秒 */
     BRDatePickerModeHMS,
     /** 【HH:mm】时分 */
-    BRDatePickerModeHM
+    BRDatePickerModeHM,
+    /** 【mm:ss】分秒 */
+    BRDatePickerModeMS
 };
 ```
 
@@ -87,16 +87,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 
 ```objective-c
 // 1.创建日期选择器
-BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
+BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
 // 2.设置属性
+datePickerView.pickerMode = BRDatePickerModeYMD;
 datePickerView.title = @"选择年月日";
 // datePickerView.selectValue = @"2019-10-30";
 datePickerView.selectDate = [NSDate br_setYear:2019 month:10 day:30];
 datePickerView.minDate = [NSDate br_setYear:1949 month:3 day:12];
 datePickerView.maxDate = [NSDate date];
 datePickerView.isAutoSelect = YES;
-// datePickerView.addToNow = YES;  // 是否添加“至今”
-// datePickerView.showToday = YES; // 是否显示“今天”
 datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
     NSLog(@"选择的值：%@", selectValue);
 };
@@ -111,18 +110,18 @@ datePickerView.pickerStyle = customStyle;
 [datePickerView show];
 ```
 
-- 时间选择器显示类型的效果图：
+**时间选择器显示类型的效果图：**
 
-> 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
+- 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
 
 | ![样式1：BRDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type1.png?raw=true) | ![样式2：BRDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type2.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|                 样式1：BRDatePickerModeTime                  |                 样式2：BRDatePickerModeDate                  |
+|                 样式1：BRDatePickerModeDate                  |              样式2：BRDatePickerModeDateAndTime              |
 |                                                              |                                                              |
 | ![样式3：BRDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type3.png?raw=true) | ![样式4：BRDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type4.png?raw=true) |
-|              样式3：BRDatePickerModeDateAndTime              |            样式4：BRDatePickerModeCountDownTimer             |
+|                 样式3：BRDatePickerModeTime                  |            样式4：BRDatePickerModeCountDownTimer             |
 
-> 以下11种样式是使用 UIPickerView 类 进行封装的。
+- 以下11种样式是使用 UIPickerView 类 进行封装的。
 
 | ![样式5：BRDatePickerModeYMDHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type5.png?raw=true) | ![样式6：BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type6.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -132,16 +131,25 @@ datePickerView.pickerStyle = customStyle;
 |                 样式7：BRDatePickerModeYMDH                  |                 样式8：BRDatePickerModeMDHM                  |
 |                                                              |                                                              |
 | ![样式9：BRDatePickerModeYMDE](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type9.png?raw=true) | ![样式10：BRDatePickerModeYMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type10.png?raw=true) |
-|                 样式9：BRDatePickerModeYMDE                  |                 样式10：BRDatePickerModeYMD                  |
+|                  样式9：BRDatePickerModeYMD                  |                  样式10：BRDatePickerModeYM                  |
 |                                                              |                                                              |
 | ![样式11：BRDatePickerModeYM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type11.png?raw=true) | ![样式12：BRDatePickerModeY](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type12.png?raw=true) |
-|                  样式11：BRDatePickerModeYM                  |                  样式12：BRDatePickerModeY                   |
+|                  样式11：BRDatePickerModeY                   |                  样式12：BRDatePickerModeMD                  |
 |                                                              |                                                              |
 | ![样式13：BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
-|                  样式13：BRDatePickerModeMD                  |                 样式14：BRDatePickerModeHMS                  |
+|                 样式13：BRDatePickerModeHMS                  |                  样式14：BRDatePickerModeHM                  |
 |                                                              |                                                              |
 | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type15.png?raw=true) |                                                              |
-|                  样式15：BRDatePickerModeHM                  |                                                              |
+|                  样式15：BRDatePickerModeMS                  |                                                              |
+
+- 其它样式
+
+| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week1.png?raw=true) | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week2.png?raw=true) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 设置显示星期：datePickerView.showWeek = YES;                 | 设置显示星期：datePickerView.showWeek = YES;                 |
+|                                                              |                                                              |
+| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
+| 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 
 #### 2. 地址选择器：`BRAddressPickerView`
 
@@ -151,8 +159,8 @@ datePickerView.pickerStyle = customStyle;
 
 ```objective-c
 /// 地址选择器
-BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]initWithPickerMode:BRAddressPickerModeArea];
-
+BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]init];
+addressPickerView.pickerMode = BRAddressPickerModeArea;
 addressPickerView.title = @"请选择地区";
 //addressPickerView.defaultSelectedArr = @[@"浙江省", @"杭州市", @"西湖区"];
 addressPickerView.selectIndexs = @[@10, @0, @4];
@@ -160,10 +168,32 @@ addressPickerView.isAutoSelect = YES;
 addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
 };
-// 自定义主题样式（适配深色模式）
+// 自定义弹框样式（适配深色模式）
 addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
 
 [addressPickerView show];
+```
+
+```objective-c
+#pragma mark - 自定义适配深色模式样式
+- (BRPickerStyle *)pickerStyleWithDarkModel {
+    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+    if (@available(iOS 13.0, *)) {
+        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2f];
+        customStyle.shadowLineColor = [UIColor quaternaryLabelColor];
+        customStyle.titleBarColor = [UIColor systemBackgroundColor];
+        customStyle.cancelTextColor = [UIColor labelColor];
+        customStyle.doneTextColor = [UIColor labelColor];
+        customStyle.titleTextColor = [UIColor placeholderTextColor];
+        customStyle.titleLineColor = [UIColor quaternaryLabelColor];
+        
+        customStyle.pickerColor = [UIColor systemBackgroundColor];
+        customStyle.pickerTextColor = [UIColor labelColor];
+        customStyle.separatorColor = [UIColor separatorColor];
+    }
+    
+    return customStyle;
+}
 ```
 
 - 地址选择器的3种显示类型（showType 的3个枚举值）：
@@ -182,8 +212,8 @@ addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
 
 ```objective-c
 /// 单列字符串选择器
-BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentSingle];
-
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+stringPickerView.pickerMode = BRStringPickerComponentSingle;
 stringPickerView.title = @"请选择性别";
 stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
 stringPickerView.selectIndex = 1;
@@ -195,8 +225,8 @@ stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
 
 
 /// 多列字符串选择器
-BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]initWithPickerMode:BRStringPickerComponentMulti];
-
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+stringPickerView.pickerMode = BRStringPickerComponentMulti;
 stringPickerView.title = @"自定义多列字符串";
 stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
 stringPickerView.selectIndexs = @[@2, @3];
@@ -221,6 +251,12 @@ addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColo
 |             3列字符串选择器（自定义主题色样式）              |             4列字符串选择器（自定义主题色样式）              |
 
 # 更新记录
+
+#### 2019-12-26（V2.4.6）
+
+- 添加支持动态更新属性 `title` 、 `selectDate`、`pickerMode` 的值
+- 日期选择器添加 `showWeek` 属性，及新增 `BRDatePickerModeMS` 日期类型
+- 优化选择器【用法二】的使用，新增选择器滚动选择时回调的属性
 
 #### 2019-11-28（V2.4.5）
 
