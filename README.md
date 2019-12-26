@@ -159,7 +159,6 @@ datePickerView.pickerStyle = customStyle;
 - (BRPickerStyle *)pickerStyleWithDarkModel {
     BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
     if (@available(iOS 13.0, *)) {
-        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2f];
         customStyle.shadowLineColor = [UIColor quaternaryLabelColor];
         customStyle.titleBarColor = [UIColor systemBackgroundColor];
         customStyle.cancelTextColor = [UIColor labelColor];
@@ -202,6 +201,7 @@ addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, 
 | ![省份](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeCity.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |              样式1：BRAddressPickerModeProvince              |                样式2：BRAddressPickerModeCity                |
+|                                                              |                                                              |
 | ![地区](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeArea.png?raw=true) |                                                              |
 |                样式3：BRAddressPickerModeArea                |                                                              |
 
