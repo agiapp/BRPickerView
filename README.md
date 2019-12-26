@@ -152,7 +152,7 @@ datePickerView.pickerStyle = customStyle;
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 |                                                              |                                                              |
 | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_dark.png?raw=true) |                                                              |
-| 深色模式：datePickerView.pickerStyle = [self pickerStyleWithDarkModel]; |                                                              |
+| 适配深色模式样式：datePickerView.pickerStyle = [self pickerStyleWithDarkModel]; |                                                              |
 
 ```objective-c
 #pragma mark - 适配深色模式的自定义样式
@@ -193,8 +193,6 @@ addressPickerView.isAutoSelect = YES;
 addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
 };
-// 自定义弹框样式（适配深色模式）
-addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
 
 [addressPickerView show];
 ```
@@ -237,7 +235,7 @@ stringPickerView.isAutoSelect = YES;
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].name, resultModelArr[1].name]);
 };
-// 自定义主题样式
+// 快捷设置主题样式
 addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
 
 [stringPickerView show];
