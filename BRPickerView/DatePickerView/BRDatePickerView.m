@@ -56,9 +56,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 1.显示时间选择器
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(NSString *)title
                    selectValue:(NSString *)selectValue
                    resultBlock:(BRDateResultBlock)resultBlock {
-    [self showDatePickerWithMode:mode title:nil selectValue:selectValue minDate:nil maxDate:nil isAutoSelect:NO resultBlock:resultBlock];
+    [self showDatePickerWithMode:mode title:title selectValue:selectValue minDate:nil maxDate:nil isAutoSelect:NO resultBlock:resultBlock];
 }
 
 #pragma mark - 2.显示时间选择器

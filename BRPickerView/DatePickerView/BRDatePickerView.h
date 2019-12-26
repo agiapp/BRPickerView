@@ -119,11 +119,13 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *  1.显示时间选择器
  *
  *  @param mode             日期显示类型
+ *  @param title            选择器标题
  *  @param selectValue      默认选中的时间（默认选中当前时间）
  *  @param resultBlock      选择结果的回调
  *
  */
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(NSString *)title
                    selectValue:(NSString *)selectValue
                    resultBlock:(BRDateResultBlock)resultBlock;
 
