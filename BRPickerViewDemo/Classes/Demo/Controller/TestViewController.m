@@ -13,6 +13,8 @@
 #import "UIImage+Color.h"
 #import "Test2ViewController.h"
 
+#define kThemeColor BR_RGB_HEX(0x2e70c2, 1.0f)
+
 typedef NS_ENUM(NSUInteger, BRTimeType) {
     BRTimeTypeBeginTime = 0,
     BRTimeTypeEndTime
@@ -53,14 +55,13 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickSaveBtn)];
     [self loadData];
     [self initUI];
-    
     // 设置开始时间默认选择的值及状态
     //NSString *beginTime = @"2018-10-01";
     NSString *beginTime = nil;
     if (beginTime && beginTime.length > 0) {
         self.beginTimeTF.text = beginTime;
-        self.beginTimeTF.textColor = [UIColor blueColor];
-        self.beginTimeLineView.backgroundColor = [UIColor blueColor];
+        self.beginTimeTF.textColor = kThemeColor;
+        self.beginTimeLineView.backgroundColor = kThemeColor;
         // 设置选择器滚动到指定的日期
         self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd"];
     }
@@ -431,8 +432,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             self.timeType = BRTimeTypeBeginTime;
             self.endTimeTF.textColor = [UIColor blackColor];
             self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
-            self.beginTimeTF.textColor = [UIColor blueColor];
-            self.beginTimeLineView.backgroundColor = [UIColor blueColor];
+            self.beginTimeTF.textColor = kThemeColor;
+            self.beginTimeLineView.backgroundColor = kThemeColor;
             
             NSString *format = @"yyyy-MM-dd";
             if (self.datePickerView.pickerMode == BRDatePickerModeYM) {
@@ -458,8 +459,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             self.timeType = BRTimeTypeEndTime;
             self.beginTimeTF.textColor = [UIColor blackColor];
             self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
-            self.endTimeTF.textColor = [UIColor blueColor];
-            self.endTimeLineView.backgroundColor = [UIColor blueColor];
+            self.endTimeTF.textColor = kThemeColor;
+            self.endTimeLineView.backgroundColor = kThemeColor;
             
             NSString *format = @"yyyy-MM-dd";
             if (self.datePickerView.pickerMode == BRDatePickerModeYM) {
@@ -516,13 +517,13 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
         segmentedControl.layer.masksToBounds = YES;
-        segmentedControl.layer.borderWidth = 0.5f;
-        segmentedControl.layer.borderColor = [UIColor blueColor].CGColor;
+        segmentedControl.layer.borderWidth = 0.8f;
+        segmentedControl.layer.borderColor = kThemeColor.CGColor;
         // 设置背景图片颜色
         [segmentedControl setBackgroundImage:[UIImage br_imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        [segmentedControl setBackgroundImage:[UIImage br_imageWithColor:[UIColor blueColor]] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+        [segmentedControl setBackgroundImage:[UIImage br_imageWithColor:kThemeColor] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
         // 设置标题颜色
-        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateNormal];
+        [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:kThemeColor, NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateNormal];
         [segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]} forState:UIControlStateSelected];
         segmentedControl.selectedSegmentIndex = 0;
         [segmentedControl addTarget:self action:@selector(pickerModeSegmentedControlAction:) forControlEvents:UIControlEventValueChanged];
