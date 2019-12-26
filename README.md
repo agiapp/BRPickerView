@@ -110,7 +110,7 @@ datePickerView.pickerStyle = customStyle;
 [datePickerView show];
 ```
 
-**时间选择器显示类型的效果图：**
+**时间选择器显示类型的效果图（默认样式）：**
 
 - 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
 
@@ -150,32 +150,12 @@ datePickerView.pickerStyle = customStyle;
 |                                                              |                                                              |
 | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
-
-#### 2. 地址选择器：`BRAddressPickerView`
-
-​	查看 BRAddressPickerView.h 头文件，里面提供了两种使用方式，参见源码。
-
-- 使用示例（参考Demo）：
+|                                                              |                                                              |
+| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_dark.png?raw=true) |                                                              |
+| 深色模式：datePickerView.pickerStyle = [self pickerStyleWithDarkModel]; |                                                              |
 
 ```objective-c
-/// 地址选择器
-BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]init];
-addressPickerView.pickerMode = BRAddressPickerModeArea;
-addressPickerView.title = @"请选择地区";
-//addressPickerView.defaultSelectedArr = @[@"浙江省", @"杭州市", @"西湖区"];
-addressPickerView.selectIndexs = @[@10, @0, @4];
-addressPickerView.isAutoSelect = YES;
-addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
-    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
-};
-// 自定义弹框样式（适配深色模式）
-addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
-
-[addressPickerView show];
-```
-
-```objective-c
-#pragma mark - 自定义适配深色模式样式
+#pragma mark - 适配深色模式的自定义样式
 - (BRPickerStyle *)pickerStyleWithDarkModel {
     BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
     if (@available(iOS 13.0, *)) {
@@ -194,6 +174,29 @@ addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
     
     return customStyle;
 }
+```
+
+#### 2. 地址选择器：`BRAddressPickerView`
+
+​	查看 BRAddressPickerView.h 头文件，里面提供了两种使用方式，参见源码。
+
+- 使用示例（参考Demo）：
+
+```objective-c
+/// 地址选择器
+BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]init];
+addressPickerView.pickerMode = BRAddressPickerModeArea;
+addressPickerView.title = @"请选择地区";
+//addressPickerView.selectValues = @[@"浙江省", @"杭州市", @"西湖区"];
+addressPickerView.selectIndexs = @[@10, @0, @4];
+addressPickerView.isAutoSelect = YES;
+addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
+};
+// 自定义弹框样式（适配深色模式）
+addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
+
+[addressPickerView show];
 ```
 
 - 地址选择器的3种显示类型（showType 的3个枚举值）：
