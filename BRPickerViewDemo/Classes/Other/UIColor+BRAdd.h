@@ -1,5 +1,5 @@
 //
-//  UIImage+Color.h
+//  UIColor+BRAdd.h
 //  BRPickerViewDemo
 //
 //  Created by 任波 on 2019/12/26.
@@ -10,9 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIImage (Color)
-/** 用颜色返回一张图片 */
-+ (nullable UIImage *)br_imageWithColor:(UIColor *)color;
+@interface UIColor (BRAdd)
+
+/** 背景颜色 */
++ (UIColor *)br_systemBackgroundColor;
+
+/** label文本颜色 */
++ (UIColor *)br_labelColor;
 
 @end
 

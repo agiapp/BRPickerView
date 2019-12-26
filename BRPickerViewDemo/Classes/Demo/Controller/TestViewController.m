@@ -11,6 +11,7 @@
 #import "BRInfoCell.h"
 #import "BRInfoModel.h"
 #import "UIImage+Color.h"
+#import "UIColor+BRAdd.h"
 #import "Test2ViewController.h"
 
 #define kThemeColor BR_RGB_HEX(0x2e70c2, 1.0f)
@@ -430,7 +431,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         {
             NSLog(@"开始时间：%@", self.beginTimeTF.text);
             self.timeType = BRTimeTypeBeginTime;
-            self.endTimeTF.textColor = [UIColor blackColor];
+            self.endTimeTF.textColor = [UIColor br_labelColor];
             self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
             self.beginTimeTF.textColor = kThemeColor;
             self.beginTimeLineView.backgroundColor = kThemeColor;
@@ -457,7 +458,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         {
             NSLog(@"结束时间:%@", self.endTimeTF.text);
             self.timeType = BRTimeTypeEndTime;
-            self.beginTimeTF.textColor = [UIColor blackColor];
+            self.beginTimeTF.textColor = [UIColor br_labelColor];
             self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
             self.endTimeTF.textColor = kThemeColor;
             self.endTimeLineView.backgroundColor = kThemeColor;
@@ -488,7 +489,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 - (BRPickerStyle *)pickerStyleWithDarkModel {
     BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
     if (@available(iOS 13.0, *)) {
-        customStyle.maskColor = [[UIColor labelColor] colorWithAlphaComponent:0.2f];
         customStyle.shadowLineColor = [UIColor quaternaryLabelColor];
         customStyle.titleBarColor = [UIColor systemBackgroundColor];
         customStyle.cancelTextColor = [UIColor labelColor];
@@ -514,6 +514,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         // 1.切换日期选择器的显示模式
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日", @"年月", @"年月日时", @"月日时分"]];
         segmentedControl.frame = CGRectMake(20, 50, SCREEN_WIDTH - 40, 36);
+        segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
         segmentedControl.layer.masksToBounds = YES;
@@ -532,20 +533,21 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 2.开始时间label
         UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 110, 120, 36) placeholder:@"开始时间"];
+        beginTimeTF.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         beginTimeTF.tag = 100;
-        beginTimeTF.textColor = [UIColor blackColor];
-        beginTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        beginTimeTF.textColor = [UIColor br_labelColor];
         self.beginTimeTF = beginTimeTF;
         [_footerView addSubview:beginTimeTF];
         
         UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 146, 120, 0.8f)];
         beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        beginTimeLineView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:beginTimeLineView];
         self.beginTimeLineView = beginTimeLineView;
         
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 110, 30, 36)];
         label.backgroundColor = [UIColor clearColor];
-        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        label.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         label.font = [UIFont systemFontOfSize:16.0f];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor grayColor];
@@ -554,14 +556,15 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 结束时间label
         UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 110, 120, 36) placeholder:@"结束时间"];
+        endTimeTF.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         endTimeTF.tag = 101;
-        endTimeTF.textColor = [UIColor blackColor];
-        endTimeTF.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        endTimeTF.textColor = [UIColor br_labelColor];
         self.endTimeTF = endTimeTF;
         [_footerView addSubview:endTimeTF];
         
         UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 146, 120, 0.8f)];
         endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+        endTimeLineView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:endTimeLineView];
         self.endTimeLineView = endTimeLineView;
         
@@ -631,9 +634,9 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 
 - (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
     UITextField *textField = [[UITextField alloc]initWithFrame:frame];
-    textField.backgroundColor = [UIColor whiteColor];
+    textField.backgroundColor = [UIColor br_systemBackgroundColor];
     textField.textAlignment = NSTextAlignmentCenter;
-    textField.textColor = [UIColor blackColor];
+    textField.textColor = [UIColor br_labelColor];
     textField.font = [UIFont systemFontOfSize:16.0f];
     textField.placeholder = placeholder;
     textField.delegate = self;

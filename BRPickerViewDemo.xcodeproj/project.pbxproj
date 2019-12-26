@@ -12,6 +12,7 @@
 		45653925237032D90074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45653924237032D90074BBBC /* BRPickerView.bundle */; };
 		4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7D723B377D800CD59D4 /* TestViewController.m */; };
 		4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DA23B4425700CD59D4 /* UIImage+Color.m */; };
+		4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		45E81D042399387700B8878A /* testData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* testData.plist */; };
 		45E81D072399387700B8878A /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81CFD2399387700B8878A /* BRInfoModel.m */; };
@@ -42,6 +43,8 @@
 		4566F7D723B377D800CD59D4 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		4566F7D923B4425600CD59D4 /* UIImage+Color.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		4566F7DA23B4425700CD59D4 /* UIImage+Color.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		4566F7DC23B4BCE100CD59D4 /* UIColor+BRAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+BRAdd.h"; sourceTree = "<group>"; };
+		4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BRAdd.m"; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				45E81D1323993AFB00B8878A /* Test2ViewController.m */,
 				4566F7D923B4425600CD59D4 /* UIImage+Color.h */,
 				4566F7DA23B4425700CD59D4 /* UIImage+Color.m */,
+				4566F7DC23B4BCE100CD59D4 /* UIColor+BRAdd.h */,
+				4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -341,6 +346,7 @@
 				C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */,
 				4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
+				4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */,
 				4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
 				C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */,

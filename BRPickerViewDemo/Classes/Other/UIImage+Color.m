@@ -2,7 +2,7 @@
 //  UIImage+Color.m
 //  BRPickerViewDemo
 //
-//  Created by 筑龙股份 on 2019/12/26.
+//  Created by 任波 on 2019/12/26.
 //  Copyright © 2019 91renb. All rights reserved.
 //
 
