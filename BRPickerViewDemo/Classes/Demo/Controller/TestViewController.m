@@ -316,8 +316,10 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             customStyle.topCornerRadius = 16.0f;
             customStyle.hiddenTitleBottomBorder = YES;
             customStyle.hiddenCancelBtn = YES;
+            customStyle.titleBarHeight = 50.0f;
+            customStyle.titleLabelFrame = CGRectMake(20, 0, 100, 50);
             customStyle.doneBtnImage = [UIImage imageNamed:@"icon_close"];
-            customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 0, 44, 44);
+            customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 0, 44, 50);
             customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
             datePickerView.pickerStyle = customStyle;
             
