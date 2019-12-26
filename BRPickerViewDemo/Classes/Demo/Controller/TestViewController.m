@@ -513,7 +513,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 1.切换日期选择器的显示模式
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日", @"年月", @"年月日时", @"月日时分"]];
-        segmentedControl.frame = CGRectMake(50, 50, SCREEN_WIDTH - 100, 36);
+        segmentedControl.frame = CGRectMake(20, 50, SCREEN_WIDTH - 40, 36);
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
         segmentedControl.layer.masksToBounds = YES;
