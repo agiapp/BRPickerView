@@ -32,6 +32,9 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
+/** 字符串选择器显示类型 */
+@property (nonatomic, assign) BRStringPickerMode pickerMode;
+
 /**
  *  1.设置数据源
  *    单列：@[@"男", @"女", @"其他"]
@@ -46,21 +49,23 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  */
 @property (nonatomic, copy) NSString *plistName;
 
-/** 单列设置默认选中的位置 */
+/** 设置默认选中的位置【单列】 */
 @property (nonatomic, assign) NSInteger selectIndex;
 @property (nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("推荐使用 selectIndex");
 
-/** 多列设置默认选中的位置 */
+/** 设置默认选中的位置【多列】 */
 @property (nonatomic, copy) NSArray <NSNumber *>* selectIndexs;
 @property (nonatomic, copy) NSArray <NSString *>* selectValues BRPickerViewDeprecated("推荐使用 selectIndexs");
 
-/** 单列选择结果的回调 */
+/** 选择结果的回调【单列】 */
 @property (nonatomic, copy) BRStringResultModelBlock resultModelBlock;
-/** 多列选择结果的回调 */
+/** 选择结果的回调【多列】 */
 @property (nonatomic, copy) BRStringResultModelArrayBlock resultModelArrayBlock;
 
-/** 字符串选择器显示类型 */
-@property (nonatomic, assign) BRStringPickerMode pickerMode;
+/** 滚动选择时触发的回调【单列】 */
+@property (nonatomic, copy) BRStringResultModelBlock changeModelBlock;
+/** 滚动选择时触发的回调【多列】 */
+@property (nonatomic, copy) BRStringResultModelArrayBlock changeModelArrayBlock;
 
 /// 初始化字符串选择器
 /// @param pickerMode 字符串选择器显示类型

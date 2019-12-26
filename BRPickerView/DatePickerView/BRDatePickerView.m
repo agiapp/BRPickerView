@@ -1240,7 +1240,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [self scrollToSelectDate:self.mSelectDate animated:NO];
     }
     
-    // 设置是否开启自动回调
+    // 滚动选择时执行 changeBlock 回调
+    if (self.changeBlock) {
+        self.changeBlock(self.mSelectDate, self.mSelectValue);
+    }
+    
+    // 设置自动选择时，滚动选择时就执行 resultBlock
     if (self.isAutoSelect) {
         // 滚动完成后，执行block回调
         if (self.resultBlock) {
@@ -1271,7 +1276,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     
     self.mSelectValue = [NSDate br_getDateString:self.mSelectDate format:self.selectDateFormatter];
     
-    // 设置是否开启自动回调
+    // 滚动选择时执行 changeBlock 回调
+    if (self.changeBlock) {
+        self.changeBlock(self.mSelectDate, self.mSelectValue);
+    }
+    
+    // 设置自动选择时，滚动选择时就执行 resultBlock
     if (self.isAutoSelect) {
         // 滚动完成后，执行block回调
         if (self.resultBlock) {

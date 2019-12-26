@@ -200,9 +200,17 @@
         case BRStringPickerComponentSingle:
         {
             self.selectIndex = row;
-            // 设置是否自动回调
+            
+            // 滚动选择时执行 changeModelBlock
+            if (self.changeModelBlock) {
+                self.changeModelBlock([self getResultModel]);
+            }
+            
+            // 设置自动选择时，滚动选择时就执行 resultModelBlock
             if (self.isAutoSelect) {
-                [self handlerResultModelBlock];
+                if (self.resultModelBlock) {
+                    self.resultModelBlock([self getResultModel]);
+                }
             }
         }
             break;
@@ -214,9 +222,16 @@
                 self.selectIndexs = [mutableArr copy];
             }
             
-            // 设置是否自动回调
+            // 滚动选择时执行 changeModelArrayBlock
+            if (self.changeModelArrayBlock) {
+                self.changeModelArrayBlock([self getResultModelArr]);
+            }
+            
+            // 设置自动选择时，滚动选择时就执行 resultModelArrayBlock
             if (self.isAutoSelect) {
-                [self handlerResultModelArrayBlock];
+                if (self.resultModelArrayBlock) {
+                    self.resultModelArrayBlock([self getResultModelArr]);
+                }
             }
         }
             break;
@@ -224,6 +239,28 @@
         default:
             break;
     }
+}
+
+#pragma mark - 获取【单列】选择器选择的值
+- (BRResultModel *)getResultModel {
+    BRResultModel *resultModel = [[BRResultModel alloc]init];
+    resultModel.index = self.selectIndex;
+    resultModel.name = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
+    return resultModel;
+}
+
+#pragma mark - 获取【多列】选择器选择的值
+- (NSArray *)getResultModelArr {
+    NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
+    for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
+        NSInteger index = [self.selectIndexs[i] integerValue];
+        NSArray *dataArr = self.dataSourceArr[i];
+        BRResultModel *resultModel = [[BRResultModel alloc]init];
+        resultModel.index = index;
+        resultModel.name = index < dataArr.count ? dataArr[index] : nil;
+        [resultModelArr addObject:resultModel];
+    }
+    return [resultModelArr copy];
 }
 
 // 自定义 pickerView 的 label
@@ -261,32 +298,6 @@
     return self.pickerStyle.rowHeight;
 }
 
-#pragma mark - 处理单列选择结果的回调
-- (void)handlerResultModelBlock {
-    if (self.resultModelBlock) {
-        BRResultModel *resultModel = [[BRResultModel alloc]init];
-        resultModel.index = self.selectIndex;
-        resultModel.name = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
-        self.resultModelBlock(resultModel);
-    }
-}
-
-#pragma mark - 处理多列选择结果的回调
-- (void)handlerResultModelArrayBlock {
-    if (self.resultModelArrayBlock) {
-        NSMutableArray *resultModelArr = [[NSMutableArray alloc]init];
-        for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
-            NSInteger index = [self.selectIndexs[i] integerValue];
-            NSArray *dataArr = self.dataSourceArr[i];
-            BRResultModel *resultModel = [[BRResultModel alloc]init];
-            resultModel.index = index;
-            resultModel.name = index < dataArr.count ? dataArr[index] : nil;
-            [resultModelArr addObject:resultModel];
-        }
-        self.resultModelArrayBlock([resultModelArr copy]);
-    }
-}
-
 #pragma mark - 重写父类方法
 - (void)addPickerToView:(UIView *)view {
     [self handlerDefaultSelectValue];
@@ -305,9 +316,13 @@
         [self removePickerFromView:view];
         
         if (self.pickerMode == BRStringPickerComponentSingle) {
-            [self handlerResultModelBlock];
+            if (self.resultModelBlock) {
+                self.resultModelBlock([self getResultModel]);
+            }
         } else if (self.pickerMode == BRStringPickerComponentMulti) {
-            [self handlerResultModelArrayBlock];
+            if (self.resultModelArrayBlock) {
+                self.resultModelArrayBlock([self getResultModelArr]);
+            }
         }
     };
     

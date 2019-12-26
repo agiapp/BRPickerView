@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @interface BRPickerStyle : NSObject
 
 
-///////////////////////////// 背景遮罩视图（maskView） /////////////////////////////
+////////////////////////////// 蒙层视图（maskView） //////////////////////////////
 
 /** 设置背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;

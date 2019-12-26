@@ -409,7 +409,12 @@
         }
     }
     
-    // 自动获取数据，滚动完就执行回调
+    // 滚动选择时执行 changeBlock
+    if (self.changeBlock) {
+        self.changeBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);
+    }
+    
+    // 设置自动选择时，滚动选择时就执行 resultBlock
     if (self.isAutoSelect) {
         if (self.resultBlock) {
             self.resultBlock(self.selectProvinceModel, self.selectCityModel, self.selectAreaModel);

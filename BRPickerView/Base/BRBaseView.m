@@ -10,7 +10,7 @@
 #import "BRBaseView.h"
 
 @interface BRBaseView ()
-// 遮罩背景视图
+// 蒙层视图
 @property (nonatomic, strong) UIView *maskView;
 // 弹出背景视图
 @property (nonatomic, strong) UIView *alertView;
@@ -105,7 +105,7 @@
     }
 }
 
-#pragma mark - 背景遮罩视图
+#pragma mark - 蒙层视图
 - (UIView *)maskView {
     if (!_maskView) {
         _maskView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
@@ -227,7 +227,7 @@
     return _titleLabel;
 }
 
-#pragma mark - 点击背景遮罩图层事件
+#pragma mark - 点击蒙层视图事件
 - (void)didTapMaskView:(UITapGestureRecognizer *)sender {
     [self removePickerFromView:nil];
     if (self.cancelBlock) {
