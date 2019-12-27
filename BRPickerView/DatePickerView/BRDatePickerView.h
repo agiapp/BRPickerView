@@ -104,10 +104,10 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
-/** 分间隔 默认为1 */
+/** 设置分的时间间隔，默认为1 */
 @property (nonatomic, assign) NSInteger minuteInterval;
 
-/** 秒间隔 默认为1 */
+/** 设置秒的时间间隔，默认为1 */
 @property (nonatomic, assign) NSInteger secondInterval;
 
 /// 初始化时间选择器
