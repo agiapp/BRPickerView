@@ -47,6 +47,18 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeMS
 };
 
+/// 日期单位显示的位置
+typedef NS_ENUM(NSInteger, BRShowUnitType) {
+    /** 显示选择器全部行的单位 */
+    BRShowUnitTypeAll,
+    /** 只显示选择器中间行的单位 */
+    BRShowUnitTypeCenter,
+    /** 单位显示在选择器的顶部 */
+    BRShowUnitTypeTop,
+    /** 隐藏单位 */
+    BRShowUnitTypeNone
+};
+
 typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 
 @interface BRDatePickerView : BRBaseView
@@ -71,8 +83,17 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 最大时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nonatomic, strong) NSDate *maxDate;
 
-/** 隐藏日期单位，默认为NO（值为YES时，配合 addSubViewToPicker: 方法，可以自定义单位的显示样式）*/
-@property (nonatomic, assign) BOOL hiddenDateUnit;
+/** 选择结果的回调 */
+@property (nonatomic, copy) BRDateResultBlock resultBlock;
+
+/** 滚动选择时触发的回调 */
+@property (nonatomic, copy) BRDateResultBlock changeBlock;
+
+/** 日期单位显示类型 */
+@property (nonatomic, assign) BRShowUnitType showUnitType;
+
+/** 隐藏日期单位，默认为NO */
+@property (nonatomic, assign) BOOL hiddenDateUnit BRPickerViewDeprecated("推荐使用 showUnitType");
 
 /** 是否显示【星期】，默认为 NO  */
 @property (nonatomic, assign, getter=isShowWeek) BOOL showWeek;
@@ -83,11 +104,11 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
-/** 选择结果的回调 */
-@property (nonatomic, copy) BRDateResultBlock resultBlock;
+/** 分间隔 默认为1 */
+@property (nonatomic, assign) NSInteger minuteInterval;
 
-/** 滚动选择时触发的回调 */
-@property (nonatomic, copy) BRDateResultBlock changeBlock;
+/** 秒间隔 默认为1 */
+@property (nonatomic, assign) NSInteger secondInterval;
 
 /// 初始化时间选择器
 /// @param pickerMode  日期选择器显示类型

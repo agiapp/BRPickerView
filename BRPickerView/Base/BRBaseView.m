@@ -258,7 +258,7 @@
         [view addSubview:self];
     } else {
         [self initUI];
-        self.alpha = 0;
+    
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         [keyWindow addSubview:self];
         // 动画前初始位置
@@ -267,10 +267,12 @@
         self.alertView.frame = rect;
         // 弹出动画
         if (!self.pickerStyle.hiddenMaskView) {
-            self.maskView.alpha = 1;
+            self.maskView.alpha = 0;
         }
         [UIView animateWithDuration:0.3 animations:^{
-            self.alpha = 1;
+            if (!self.pickerStyle.hiddenMaskView) {
+                self.maskView.alpha = 1;
+            }
             CGRect rect = self.alertView.frame;
             rect.origin.y -= self.pickerStyle.pickerHeight + self.pickerStyle.titleBarHeight + BR_BOTTOM_MARGIN;
             self.alertView.frame = rect;

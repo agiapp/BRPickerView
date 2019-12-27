@@ -69,7 +69,51 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return components.weekday;
 }
 
-///// 提示：除了使用 NSDateComponents 获取年月日等信息，还可以通过格式化日期获取日期的详细的信息 //////
+#pragma mark - 获取指定日期的星期
+- (NSString *)br_weekdayString {
+    switch (self.br_weekday - 1) {
+        case 0:
+        {
+            return @"周日";
+        }
+            break;
+        case 1:
+        {
+            return @"周一";
+        }
+            break;
+        case 2:
+        {
+            return @"周二";
+        }
+            break;
+        case 3:
+        {
+            return @"周三";
+        }
+            break;
+        case 4:
+        {
+            return @"周四";
+        }
+            break;
+        case 5:
+        {
+            return @"周五";
+        }
+            break;
+        case 6:
+        {
+            return @"周六";
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return @"";
+}
 
 #pragma mark - 创建date
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
