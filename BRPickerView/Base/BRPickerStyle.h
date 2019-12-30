@@ -166,7 +166,24 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property(nonatomic, copy) NSString *language;
 
 
-/// 快捷设置自定义样式 - 取消/确定按钮圆角样式
+/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeCenter时，生效）///////
+
+/** 设置日期选择器单位文本的颜色（textColor）*/
+@property (nonatomic, strong) UIColor *dateUnitTextColor;
+
+/** 设置日期选择器单位文本的字体（font）*/
+@property (nonatomic, strong) UIFont *dateUnitTextFont;
+
+/** 设置日期选择器单位 label 的水平方向偏移量（offsetX）*/
+@property (nonatomic, assign) CGFloat dateUnitOffsetX;
+
+/** 设置日期选择器单位 label 的竖直方向偏移量（offsetY）*/
+@property (nonatomic, assign) CGFloat dateUnitOffsetY;
+
+
+///////////////////////////// 几套常用的模板样式 //////////////////////////////
+
+/// 快捷设置自定义样式1 - 取消/确定按钮圆角样式
 /// @param themeColor 主题颜色
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor;
 

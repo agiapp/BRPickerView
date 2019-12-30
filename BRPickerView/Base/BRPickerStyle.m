@@ -211,6 +211,20 @@
     return _language;
 }
 
+- (UIColor *)dateUnitTextColor {
+    if (!_dateUnitTextColor) {
+        _dateUnitTextColor = kDefaultTextColor;
+    }
+    return _dateUnitTextColor;
+}
+
+- (UIFont *)dateUnitTextFont {
+    if (!_dateUnitTextFont) {
+        _dateUnitTextFont = [UIFont systemFontOfSize:18.0f];
+    }
+    return _dateUnitTextFont;
+}
+
 #pragma mark - 快捷设置自定义样式 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];

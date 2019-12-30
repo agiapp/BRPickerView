@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, assign) BRDatePickerStyle style;
 /** 选择的日期的格式 */
 @property (nonatomic, copy) NSString *selectDateFormatter;
+/** 单位数组 */
+@property (nonatomic, copy) NSArray *unitArr;
 
 @end
 
@@ -231,66 +233,77 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         {
             self.selectDateFormatter = @"yyyy-MM-dd HH:mm:ss";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getYearUnit], [self getMonthUnit], [self getDayUnit], [self getHourUnit], [self getMinuteUnit], [self getSecondUnit]];
         }
             break;
         case BRDatePickerModeYMDHM:
         {
             self.selectDateFormatter = @"yyyy-MM-dd HH:mm";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getYearUnit], [self getMonthUnit], [self getDayUnit], [self getHourUnit], [self getMinuteUnit]];
         }
             break;
         case BRDatePickerModeYMDH:
         {
             self.selectDateFormatter = @"yyyy-MM-dd HH";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getYearUnit], [self getMonthUnit], [self getDayUnit], [self getHourUnit]];
         }
             break;
         case BRDatePickerModeMDHM:
         {
             self.selectDateFormatter = @"MM-dd HH:mm";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getMonthUnit], [self getDayUnit], [self getHourUnit], [self getMinuteUnit]];
         }
             break;
         case BRDatePickerModeYMD:
         {
             self.selectDateFormatter = @"yyyy-MM-dd";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getYearUnit], [self getMonthUnit], [self getDayUnit]];
         }
             break;
         case BRDatePickerModeYM:
         {
             self.selectDateFormatter = @"yyyy-MM";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getYearUnit], [self getMonthUnit]];
         }
             break;
         case BRDatePickerModeY:
         {
             self.selectDateFormatter = @"yyyy";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getYearUnit]];
         }
             break;
         case BRDatePickerModeMD:
         {
             self.selectDateFormatter = @"MM-dd";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getMonthUnit], [self getDayUnit]];
         }
             break;
         case BRDatePickerModeHMS:
         {
             self.selectDateFormatter = @"HH:mm:ss";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getHourUnit], [self getMinuteUnit], [self getSecondUnit]];
         }
             break;
         case BRDatePickerModeHM:
         {
             self.selectDateFormatter = @"HH:mm";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getHourUnit], [self getMinuteUnit]];
         }
             break;
         case BRDatePickerModeMS:
         {
             self.selectDateFormatter = @"mm:ss";
             self.style = BRDatePickerStyleCustom;
+            self.unitArr = @[[self getMinuteUnit], [self getSecondUnit]];
         }
             break;
             
@@ -1325,6 +1338,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [self setPickerView:self.datePicker toView:view];
     } else if (self.style == BRDatePickerStyleCustom) {
         [self setPickerView:self.pickerView toView:view];
+        if (self.showUnitType == BRShowUnitTypeCenter) {
+            // 添加时间单位到选择器中间行
+            [self addUnitLabelToPickerView];
+        }
     }
     
     // 默认滚动的行
@@ -1349,6 +1366,57 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     };
     
     [super addPickerToView:view];
+}
+
+#pragma mark - 添加时间单位到选择器中间行
+- (void)addUnitLabelToPickerView {
+    for (NSInteger i = 0; i < self.pickerView.numberOfComponents; i++) {
+        // label宽度
+        CGFloat labelWidth = self.pickerView.bounds.size.width / self.pickerView.numberOfComponents;
+        // 根据占位文本长度去计算宽度
+        NSString *tempText = @"00";
+        if (i == 0) {
+            switch (self.pickerMode) {
+                case BRDatePickerModeYMDHMS:
+                case BRDatePickerModeYMDHM:
+                case BRDatePickerModeYMDH:
+                case BRDatePickerModeYMD:
+                case BRDatePickerModeYM:
+                case BRDatePickerModeY:
+                {
+                    tempText = @"0000";
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        // 文本宽度
+        CGFloat labelTextWidth = [tempText boundingRectWithSize:CGSizeMake(MAXFLOAT, self.pickerStyle.rowHeight)
+                                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                     attributes:@{NSFontAttributeName: self.pickerStyle.pickerTextFont}
+                                                        context:nil].size.width;
+        // 单位label
+        CGFloat originX = i * labelWidth + labelWidth / 2.0 + labelTextWidth / 2.0 + self.pickerStyle.dateUnitOffsetX;
+        CGFloat originY = (self.pickerStyle.pickerHeight - self.pickerStyle.rowHeight) / 2 + self.pickerStyle.dateUnitOffsetY;
+        UILabel *unitLabel = [[UILabel alloc]initWithFrame:CGRectMake(originX, originY, self.pickerStyle.rowHeight, self.pickerStyle.rowHeight)];
+        unitLabel.backgroundColor = [UIColor clearColor];
+        unitLabel.textAlignment = NSTextAlignmentCenter;
+        unitLabel.font = self.pickerStyle.dateUnitTextFont;
+        unitLabel.textColor = self.pickerStyle.dateUnitTextColor;
+        // 字体自适应属性
+        unitLabel.adjustsFontSizeToFitWidth = YES;
+        // 自适应最小字体缩放比例
+        unitLabel.minimumScaleFactor = 0.5f;
+        unitLabel.text = (self.unitArr.count > 0 && i < self.unitArr.count) ? self.unitArr[i] : nil;
+        
+        if (self.style == BRDatePickerStyleSystem) {
+            [self.datePicker addSubview:unitLabel];
+        } else if (self.style == BRDatePickerStyleCustom) {
+            [self.pickerView addSubview:unitLabel];
+        }
+    }
 }
 
 #pragma mark - 重写父类方法
@@ -1379,7 +1447,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if ([yearString isEqualToString:[self getNowString]]) {
         return yearString;
     }
-    NSString *yearUnit = self.showUnitType == BRShowUnitTypeAll ? [NSBundle br_localizedStringForKey:@"年" language:self.pickerStyle.language] : @"";
+    NSString *yearUnit = self.showUnitType == BRShowUnitTypeAll ? [self getYearUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", yearString, yearUnit];
 }
 
@@ -1388,7 +1456,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if ([monthString isEqualToString:[self getNowString]]) {
         return monthString;
     }
-    NSString *monthUnit = self.showUnitType == BRShowUnitTypeAll ? [NSBundle br_localizedStringForKey:@"月" language:self.pickerStyle.language] : @"";
+    NSString *monthUnit = self.showUnitType == BRShowUnitTypeAll ? [self getMonthUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", monthString, monthUnit];
 }
 
@@ -1397,7 +1465,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.isShowToday && self.mSelectDate.br_year == [NSDate date].br_year && self.mSelectDate.br_month == [NSDate date].br_month && [dayString integerValue] == [NSDate date].br_day) {
         return [NSBundle br_localizedStringForKey:@"今天" language:self.pickerStyle.language];
     }
-    NSString *dayUnit = self.showUnitType == BRShowUnitTypeAll ? [NSBundle br_localizedStringForKey:@"日" language:self.pickerStyle.language] : @"";
+    NSString *dayUnit = self.showUnitType == BRShowUnitTypeAll ? [self getDayUnit] : @"";
     dayString = [NSString stringWithFormat:@"%@%@", dayString, dayUnit];
     if (self.isShowWeek) {
         dayString = [NSString stringWithFormat:@"%@%@", dayString, [self getWeekday:row]];
@@ -1410,17 +1478,17 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if ([hourString isEqualToString:[self getNowString]]) {
         return hourString;
     }
-    NSString *hourUnit = self.showUnitType == BRShowUnitTypeAll ? [NSBundle br_localizedStringForKey:@"时" language:self.pickerStyle.language] : @"";
+    NSString *hourUnit = self.showUnitType == BRShowUnitTypeAll ? [self getHourUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", hourString, hourUnit];
 }
 
 - (NSString *)getMinuteText:(NSInteger)row {
-    NSString *minuteUnit = self.showUnitType == BRShowUnitTypeAll ? [NSBundle br_localizedStringForKey:@"分" language:self.pickerStyle.language] : @"";
+    NSString *minuteUnit = self.showUnitType == BRShowUnitTypeAll ? [self getMinuteUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", self.minuteArr[row], minuteUnit];
 }
 
 - (NSString *)getSecondText:(NSInteger)row {
-    NSString *secondUnit = self.showUnitType == BRShowUnitTypeAll ? [NSBundle br_localizedStringForKey:@"秒" language:self.pickerStyle.language] : @"";
+    NSString *secondUnit = self.showUnitType == BRShowUnitTypeAll ? [self getSecondUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", self.secondArr[row], secondUnit];
 }
 
@@ -1428,6 +1496,30 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     NSInteger day = [self.dayArr[dayRow] integerValue];
     NSDate *date = [NSDate br_setYear:self.mSelectDate.br_year month:self.mSelectDate.br_month day:day];
     return [NSBundle br_localizedStringForKey:[date br_weekdayString] language:self.pickerStyle.language];
+}
+
+- (NSString *)getYearUnit {
+    return [NSBundle br_localizedStringForKey:@"年" language:self.pickerStyle.language];
+}
+
+- (NSString *)getMonthUnit {
+    return [NSBundle br_localizedStringForKey:@"月" language:self.pickerStyle.language];
+}
+
+- (NSString *)getDayUnit {
+    return [NSBundle br_localizedStringForKey:@"日" language:self.pickerStyle.language];
+}
+
+- (NSString *)getHourUnit {
+    return [NSBundle br_localizedStringForKey:@"时" language:self.pickerStyle.language];
+}
+
+- (NSString *)getMinuteUnit {
+    return [NSBundle br_localizedStringForKey:@"分" language:self.pickerStyle.language];
+}
+
+- (NSString *)getSecondUnit {
+    return [NSBundle br_localizedStringForKey:@"秒" language:self.pickerStyle.language];
 }
 
 #pragma mark - setter 方法
@@ -1602,6 +1694,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         return 1;
     }
     return _secondInterval;
+}
+
+- (NSArray *)unitArr {
+    if (!_unitArr) {
+        _unitArr = [NSArray array];
+    }
+    return _unitArr;
 }
 
 @end

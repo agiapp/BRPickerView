@@ -53,8 +53,6 @@ typedef NS_ENUM(NSInteger, BRShowUnitType) {
     BRShowUnitTypeAll,
     /** 只显示选择器中间行的单位 */
     BRShowUnitTypeCenter,
-    /** 单位显示在选择器的顶部 */
-    BRShowUnitTypeTop,
     /** 隐藏单位 */
     BRShowUnitTypeNone
 };
