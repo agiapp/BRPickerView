@@ -196,8 +196,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-- (void)setupSelectDateFormatter:(BRDatePickerMode)model {
-    switch (model) {
+- (void)setupSelectDateFormatter:(BRDatePickerMode)mode {
+    switch (mode) {
         case BRDatePickerModeDate:
         {
             self.selectDateFormatter = @"yyyy-MM-dd";
@@ -361,14 +361,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.hourArr = [self getHourArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day];
         self.minuteArr = [self getMinuteArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour];
         self.secondArr = [self getSecondArr:self.mSelectDate.br_year month:self.mSelectDate.br_month day:self.mSelectDate.br_day hour:self.mSelectDate.br_hour minute:self.mSelectDate.br_minute];
-        
-//        // 根据 默认选择的日期 计算出 对应的索引
-//        self.yearIndex = self.mSelectDate.br_year - self.minDate.br_year;
-//        self.monthIndex = self.mSelectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
-//        self.dayIndex = self.mSelectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
-//        self.hourIndex = self.mSelectDate.br_hour - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0) ? self.minDate.br_hour : 0);
-//        self.minuteIndex = self.mSelectDate.br_minute - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0 && self.hourIndex == 0) ? self.minDate.br_minute : 0);
-//        self.secondIndex = self.mSelectDate.br_second - ((self.yearIndex == 0 && self.monthIndex == 0 && self.dayIndex == 0 && self.hourIndex == 0 && self.minuteIndex == 0) ? self.minDate.br_second : 0);
     }
 }
 

@@ -93,7 +93,7 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 @property (nonatomic, assign) BRShowUnitType showUnitType;
 
 /** 隐藏日期单位，默认为NO */
-@property (nonatomic, assign) BOOL hiddenDateUnit BRPickerViewDeprecated("推荐使用 showUnitType");
+@property (nonatomic, assign) BOOL hiddenDateUnit BRPickerViewDeprecated("请使用 showUnitType");
 
 /** 是否显示【星期】，默认为 NO  */
 @property (nonatomic, assign, getter=isShowWeek) BOOL showWeek;
