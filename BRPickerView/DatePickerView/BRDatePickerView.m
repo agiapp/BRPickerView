@@ -848,7 +848,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 自适应最小字体缩放比例
         label.minimumScaleFactor = 0.5f;
     }
-    
     // 给选择器上的label赋值
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         if (component == 0) {

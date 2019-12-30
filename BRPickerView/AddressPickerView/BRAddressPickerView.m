@@ -312,18 +312,18 @@
         }
     }
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, (self.pickerView.frame.size.width) / pickerView.numberOfComponents, self.pickerStyle.rowHeight)];
-    bgView.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, (self.pickerView.frame.size.width) / pickerView.numberOfComponents - 10, self.pickerStyle.rowHeight)];
-    [bgView addSubview:label];
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = self.pickerStyle.pickerTextColor;
-    label.font = self.pickerStyle.pickerTextFont;
-    // 字体自适应属性
-    label.adjustsFontSizeToFitWidth = YES;
-    // 自适应最小字体缩放比例
-    label.minimumScaleFactor = 0.5f;
+    UILabel *label = (UILabel *)view;
+    if (!label) {
+        label = [[UILabel alloc]init];
+        label.backgroundColor = [UIColor clearColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = self.pickerStyle.pickerTextFont;
+        label.textColor = self.pickerStyle.pickerTextColor;
+        // 字体自适应属性
+        label.adjustsFontSizeToFitWidth = YES;
+        // 自适应最小字体缩放比例
+        label.minimumScaleFactor = 0.5f;
+    }
     if (component == 0) {
         BRProvinceModel *model = self.provinceModelArr[row];
         label.text = model.name;
@@ -335,7 +335,7 @@
         label.text = model.name;
     }
     
-    return bgView;
+    return label;
 }
 
 // 4.选中时回调的委托方法，在此方法中实现省份和城市间的联动

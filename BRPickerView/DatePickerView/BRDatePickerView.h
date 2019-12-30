@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 
 /// 日期单位显示的位置
 typedef NS_ENUM(NSInteger, BRShowUnitType) {
-    /** 显示选择器全部行的单位 */
+    /** 显示选择器全部行的单位（默认） */
     BRShowUnitTypeAll,
     /** 只显示选择器中间行的单位 */
     BRShowUnitTypeCenter,
