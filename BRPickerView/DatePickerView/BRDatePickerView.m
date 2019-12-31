@@ -1338,12 +1338,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [self setPickerView:self.datePicker toView:view];
     } else if (self.style == BRDatePickerStyleCustom) {
         [self setPickerView:self.pickerView toView:view];
-        if (self.showUnitType == BRShowUnitTypeCenter) {
-            // 添加时间单位到选择器中间行
-            [self addUnitLabelToPickerView];
+        
+        if (self.showUnitType == BRShowUnitTypeSingleRow) {
+            // 添加时间单位到选择器
+            [self addUnitLabelToPickerView:view];
         }
     }
-    
+        
     // 默认滚动的行
     if (self.style == BRDatePickerStyleSystem) {
         [self.datePicker setDate:self.mSelectDate animated:NO];
@@ -1368,8 +1369,22 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [super addPickerToView:view];
 }
 
-#pragma mark - 添加时间单位到选择器中间行
-- (void)addUnitLabelToPickerView {
+- (void)setPickerView:(UIView *)pickerView toView:(UIView *)view {
+    if (view) {
+        // 立即刷新容器视图 view 的布局（防止 view 使用自动布局时，选择器视图无法正常显示）
+        [view setNeedsLayout];
+        [view layoutIfNeeded];
+        
+        self.frame = view.bounds;
+        pickerView.frame = view.bounds;
+        [self addSubview:pickerView];
+    } else {
+        [self.alertView addSubview:pickerView];
+    }
+}
+
+#pragma mark - 添加时间单位到选择器
+- (void)addUnitLabelToPickerView:(UIView *)view {
     for (NSInteger i = 0; i < self.pickerView.numberOfComponents; i++) {
         // label宽度
         CGFloat labelWidth = self.pickerView.bounds.size.width / self.pickerView.numberOfComponents;
@@ -1398,9 +1413,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                                                      attributes:@{NSFontAttributeName: self.pickerStyle.pickerTextFont}
                                                         context:nil].size.width;
         // 单位label
-        CGFloat originX = i * labelWidth + labelWidth / 2.0 + labelTextWidth / 2.0 + self.pickerStyle.dateUnitOffsetX;
-        CGFloat originY = (self.pickerStyle.pickerHeight - self.pickerStyle.rowHeight) / 2 + self.pickerStyle.dateUnitOffsetY;
-        UILabel *unitLabel = [[UILabel alloc]initWithFrame:CGRectMake(originX, originY, self.pickerStyle.rowHeight, self.pickerStyle.rowHeight)];
+        UILabel *unitLabel = [[UILabel alloc]init];
+        unitLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         unitLabel.backgroundColor = [UIColor clearColor];
         unitLabel.textAlignment = NSTextAlignmentCenter;
         unitLabel.font = self.pickerStyle.dateUnitTextFont;
@@ -1411,11 +1425,22 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         unitLabel.minimumScaleFactor = 0.5f;
         unitLabel.text = (self.unitArr.count > 0 && i < self.unitArr.count) ? self.unitArr[i] : nil;
         
-        if (self.style == BRDatePickerStyleSystem) {
-            [self.datePicker addSubview:unitLabel];
-        } else if (self.style == BRDatePickerStyleCustom) {
-            [self.pickerView addSubview:unitLabel];
+        CGFloat originX = i * labelWidth + labelWidth / 2.0 + labelTextWidth / 2.0 + self.pickerStyle.dateUnitOffsetX;
+        if (self.pickerStyle.horizontalCenter) {
+            originX = i * labelWidth + labelWidth / 2.0 - self.pickerStyle.rowHeight / 2.0;
         }
+        CGFloat originY = (self.pickerStyle.pickerHeight - self.pickerStyle.rowHeight) / 2 + self.pickerStyle.dateUnitOffsetY;
+        if (view) {
+            if (self.style == BRDatePickerStyleSystem) {
+                [self.datePicker addSubview:unitLabel];
+            } else if (self.style == BRDatePickerStyleCustom) {
+                [self.pickerView addSubview:unitLabel];
+            }
+        } else {
+            originY = self.pickerStyle.titleBarHeight + originY;
+            [self.alertView addSubview:unitLabel];
+        }
+        unitLabel.frame = CGRectMake(originX, originY, self.pickerStyle.rowHeight, self.pickerStyle.rowHeight);
     }
 }
 

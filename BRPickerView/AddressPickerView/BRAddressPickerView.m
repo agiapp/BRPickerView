@@ -430,7 +430,18 @@
 #pragma mark - 重写父类方法
 - (void)addPickerToView:(UIView *)view {
     // 添加地址选择器
-    [self setPickerView:self.pickerView toView:view];
+    if (view) {
+        // 立即刷新容器视图 view 的布局（防止 view 使用自动布局时，选择器视图无法正常显示）
+        [view setNeedsLayout];
+        [view layoutIfNeeded];
+        
+        self.frame = view.bounds;
+        self.pickerView.frame = view.bounds;
+        [self addSubview:self.pickerView];
+    } else {
+        [self.alertView addSubview:self.pickerView];
+    }
+    
     [self handlerPickerData];
     
     __weak typeof(self) weakSelf = self;

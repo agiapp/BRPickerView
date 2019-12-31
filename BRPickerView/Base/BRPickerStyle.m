@@ -11,7 +11,13 @@
 #import "NSBundle+BRPickerView.h"
 
 // 标题颜色
-#define kDefaultTextColor BR_RGB_HEX(0x333333, 1.0)
+#ifndef kDefaultTextColor
+#define kDefaultTextColor BR_RGB_HEX(0x333333, 1.0f)
+#endif
+#ifndef kBorderColor
+// 边框颜色
+#define kBorderColor BR_RGB_HEX(0xdadada, 1.0f)
+#endif
 
 @implementation BRPickerStyle
 
@@ -33,7 +39,7 @@
 
 - (UIColor *)shadowLineColor {
     if (!_shadowLineColor) {
-        _shadowLineColor = BR_RGB_HEX(0xcccccc, 1.0f);
+        _shadowLineColor = kBorderColor;
     }
     return _shadowLineColor;
 }
@@ -58,7 +64,7 @@
 
 - (UIColor *)titleLineColor {
     if (!_titleLineColor) {
-        _titleLineColor = BR_RGB_HEX(0xf1f1f1, 1.0f);
+        _titleLineColor = kBorderColor;
     }
     return _titleLineColor;
 }
@@ -191,7 +197,7 @@
 
 - (CGFloat)pickerHeight {
     if (_pickerHeight < 40) {
-        _pickerHeight = 216.0f;
+        _pickerHeight = 216.0f * kScaleFit;
     }
     return _pickerHeight;
 }
@@ -225,7 +231,7 @@
     return _dateUnitTextFont;
 }
 
-#pragma mark - 快捷设置自定义样式 - 取消/确定按钮圆角样式
+#pragma mark - 模板样式1 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];
     if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
@@ -235,6 +241,46 @@
         customStyle.doneTextColor = [UIColor whiteColor];
         customStyle.doneBorderStyle = BRBorderStyleFill;
     }
+    return customStyle;
+}
+
+#pragma mark - 模板样式2 - 顶部圆角样式 + 完成按钮
++ (instancetype)pickerStyleWithDoneTextColor:(UIColor *)doneTextColor {
+    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+    customStyle.topCornerRadius = 16.0f;
+    customStyle.titleBarColor = [UIColor whiteColor];
+    customStyle.hiddenCancelBtn = YES;
+    customStyle.hiddenTitleLine = YES;
+    customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
+    customStyle.doneTextColor = doneTextColor;
+    customStyle.doneTextFont = [UIFont boldSystemFontOfSize:16.0f];
+    customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 60, 4, 60, 40);
+    customStyle.doneBtnTitle = [NSBundle br_localizedStringForKey:@"完成" language:customStyle.language];
+
+    return customStyle;
+}
+
+#pragma mark - 模板样式3 - 顶部圆角样式 + 图标按钮
++ (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage {
+    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+    customStyle.topCornerRadius = 16.0f;
+    customStyle.titleBarColor = [UIColor whiteColor];
+    customStyle.hiddenTitleLine = YES;
+    customStyle.hiddenCancelBtn = YES;
+    customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
+    customStyle.doneBtnImage = doneBtnImage;
+    customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 4, 40, 40);
+    
+    return customStyle;
+}
+
+#pragma mark - 模板样式4 - 日期选择器单位顶部显示
++ (instancetype)pickerStyleWithDateUnitOnTop {
+    BRPickerStyle *customStyle = [[self alloc]init];
+    customStyle.titleBarHeight += customStyle.rowHeight + 10;
+    customStyle.horizontalCenter = YES;
+    customStyle.dateUnitOffsetY = -(customStyle.pickerHeight / 2 + customStyle.rowHeight / 2);
+    
     return customStyle;
 }
 

@@ -49,11 +49,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 
 /// 日期单位显示的位置
 typedef NS_ENUM(NSInteger, BRShowUnitType) {
-    /** 显示选择器全部行的单位（默认） */
+    /** 日期单位显示全部行（默认） */
     BRShowUnitTypeAll,
-    /** 只显示选择器中间行的单位 */
-    BRShowUnitTypeCenter,
-    /** 隐藏单位 */
+    /** 日期单位只显示一行，默认在选择器的中间行 */
+    BRShowUnitTypeSingleRow,
+    /** 日期单位不显示 */
     BRShowUnitTypeNone
 };
 

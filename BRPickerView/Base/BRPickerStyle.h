@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @interface BRPickerStyle : NSObject
 
 
-////////////////////////////// 蒙层视图（maskView） //////////////////////////////
+/////////////////////////////// 蒙层视图（maskView）///////////////////////////////
 
 /** 设置背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *maskColor;
@@ -33,12 +33,12 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenMaskView;
 
 
-////////////////////////////// 弹框视图（alertView） //////////////////////////////
+////////////////////////////// 弹框视图（alertView）///////////////////////////////
 
 /** 设置 alertView 弹框视图的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *alertViewColor;
 
-/** 设置 alertView 弹框视图顶部左边和右边的圆角  */
+/** 设置 alertView 弹框视图左上和右上的圆角半径  */
 @property (nonatomic, assign) NSInteger topCornerRadius;
 
 /** 设置 alertView 弹框视图顶部边框线颜色  */
@@ -56,17 +56,17 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 titleBarView 标题栏的高度（height）*/
 @property (nonatomic, assign) CGFloat titleBarHeight;
 
-/** 设置 titleBarView 标题栏底部边框的背景颜色（border-bottom backgroundColor）*/
+/** 设置 titleBarView 标题栏底部分割线颜色 */
 @property (nonatomic, strong) UIColor *titleLineColor;
 
-/** 隐藏 titleBarView 标题栏底部边框（border-bottom），默认为 NO  */
-@property (nonatomic, assign) BOOL hiddenTitleBottomBorder;
+/** 隐藏 titleBarView 标题栏底部分割线，默认为 NO  */
+@property (nonatomic, assign) BOOL hiddenTitleLine;
 
 /** 隐藏 titleBarView，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenTitleBarView;
 
 
-////////////////////////// 标题栏中间label（titleLabel） //////////////////////////
+////////////////////////// 标题栏中间label（titleLabel）///////////////////////////
 
 /** 设置 titleLabel 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *titleLabelColor;
@@ -84,7 +84,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenTitleLabel;
 
 
-/////////////////////////////// 取消按钮（cancelBtn） //////////////////////////////
+/////////////////////////////// 取消按钮（cancelBtn）//////////////////////////////
 
 /** 设置 cancelBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *cancelColor;
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenCancelBtn;
 
 
-/////////////////////////////// 确定按钮（doneBtn） ///////////////////////////////
+/////////////////////////////// 确定按钮（doneBtn）////////////////////////////////
 
 /** 设置 doneBtn 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *doneColor;
@@ -138,7 +138,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property (nonatomic, assign) BOOL hiddenDoneBtn;
 
 
-//////////////////////////// 选择器（pickerView） ////////////////////////////
+/////////////////////////////// 选择器（pickerView）///////////////////////////////
 
 /** 设置 picker 的背景颜色（backgroundColor）*/
 @property (nonatomic, strong) UIColor *pickerColor;
@@ -166,7 +166,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property(nonatomic, copy) NSString *language;
 
 
-/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeCenter时，生效）///////
+/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeSingleRow 时，生效）////////
 
 /** 设置日期选择器单位文本的颜色（textColor）*/
 @property (nonatomic, strong) UIColor *dateUnitTextColor;
@@ -180,12 +180,26 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置日期选择器单位 label 的竖直方向偏移量（offsetY）*/
 @property (nonatomic, assign) CGFloat dateUnitOffsetY;
 
+/** 设置日期选择器单位是否与 选择器的列 水平居中对齐 */
+@property (nonatomic, assign) BOOL horizontalCenter;
 
-///////////////////////////// 几套常用的模板样式 //////////////////////////////
 
-/// 快捷设置自定义样式1 - 取消/确定按钮圆角样式
+//////////////////////////////// 常用的几种模板样式 ////////////////////////////////
+
+/// 模板样式1 - 取消/确定按钮圆角样式
 /// @param themeColor 主题颜色
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor;
+
+/// 模板样式2 - 顶部圆角样式 + 完成按钮
+/// @param doneTextColor 完成按钮标题的颜色
++ (instancetype)pickerStyleWithDoneTextColor:(UIColor *)doneTextColor;
+
+/// 模板样式3 - 顶部圆角样式 + 图标按钮
+/// @param doneBtnImage 完成按钮的 image
++ (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage;
+
+/// 模板样式4 - 日期选择器单位顶部显示
++ (instancetype)pickerStyleWithDateUnitOnTop;
 
 
 @end

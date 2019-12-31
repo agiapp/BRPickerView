@@ -12,8 +12,6 @@
 @interface BRBaseView ()
 // 蒙层视图
 @property (nonatomic, strong) UIView *maskView;
-// 弹出背景视图
-@property (nonatomic, strong) UIView *alertView;
 // 标题栏背景视图
 @property (nonatomic, strong) UIView *titleBarView;
 // 左边取消按钮
@@ -142,7 +140,7 @@
         _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        if (!self.pickerStyle.hiddenTitleBottomBorder) {
+        if (!self.pickerStyle.hiddenTitleLine) {
             // 设置标题栏底部分割线
             UIView *titleLineView = [[UIView alloc]initWithFrame:CGRectMake(0, _titleBarView.frame.size.height - 0.5f, _titleBarView.frame.size.width, 0.5f)];
             titleLineView.backgroundColor = self.pickerStyle.titleLineColor;
@@ -308,16 +306,6 @@
 - (void)addSubViewToTitleBar:(UIView *)customView {
     if (!self.pickerStyle.hiddenTitleBarView) {
         [self.titleBarView addSubview:customView];
-    }
-}
-
-- (void)setPickerView:(UIView *)pickerView toView:(UIView *)view {
-    if (view) {
-        self.frame = view.bounds;
-        pickerView.frame = view.bounds;
-        [self addSubview:pickerView];
-    } else {
-        [self.alertView addSubview:pickerView];
     }
 }
 

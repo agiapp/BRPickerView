@@ -30,6 +30,9 @@ typedef void(^BRResultBlock)(void);
 /** 选择结果的回调（框架内部使用） */
 @property (nonatomic, copy) BRResultBlock doneBlock;
 
+/** 弹框视图 */
+@property (nonatomic, strong) UIView *alertView;
+
 
 /// 扩展一：添加选择器到指定容器视图上
 /// 应用场景：可将选择器（pickerView，不包含标题栏）添加到任何自定义视图上，也支持自定义更多的弹框样式
@@ -49,11 +52,5 @@ typedef void(^BRResultBlock)(void);
 /// 应用场景：先自定义标题栏高度，再添加一些固定的标题等到标题栏底部
 /// @param customView 自定义视图
 - (void)addSubViewToTitleBar:(UIView *)customView;
-
-/// 添加 pickerView 到 alertView（框架内部使用）
-/// @param pickerView 选择器视图
-/// @param view 容器视图
-- (void)setPickerView:(UIView *)pickerView toView:(UIView *)view;
-
 
 @end
