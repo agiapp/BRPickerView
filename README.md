@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.4.6` 。
+- 当前最新版本为： `2.5.0` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -150,30 +150,6 @@ datePickerView.pickerStyle = customStyle;
 |                                                              |                                                              |
 | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
-|                                                              |                                                              |
-| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_dark.png?raw=true) |                                                              |
-| 适配深色模式样式：datePickerView.pickerStyle = [self pickerStyleWithDarkModel]; |                                                              |
-
-```objective-c
-#pragma mark - 适配深色模式的自定义样式
-- (BRPickerStyle *)pickerStyleWithDarkModel {
-    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-    if (@available(iOS 13.0, *)) {
-        customStyle.shadowLineColor = [UIColor quaternaryLabelColor];
-        customStyle.titleBarColor = [UIColor systemBackgroundColor];
-        customStyle.cancelTextColor = [UIColor labelColor];
-        customStyle.doneTextColor = [UIColor labelColor];
-        customStyle.titleTextColor = [UIColor placeholderTextColor];
-        customStyle.titleLineColor = [UIColor quaternaryLabelColor];
-        
-        customStyle.pickerColor = [UIColor systemBackgroundColor];
-        customStyle.pickerTextColor = [UIColor labelColor];
-        customStyle.separatorColor = [UIColor separatorColor];
-    }
-    
-    return customStyle;
-}
-```
 
 #### 2. 地址选择器：`BRAddressPickerView`
 
@@ -252,6 +228,12 @@ addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColo
 |             3列字符串选择器（自定义主题色样式）              |             4列字符串选择器（自定义主题色样式）              |
 
 # 更新记录
+
+#### 2020-01-02（V2.5.0）
+
+- 日期选择器新增属性：`showUnitType`（日期单位显示样式）、`minuteInterval`、`secondInterval`
+- 封装了常用的几种模板样式，使用更加简单便捷
+- 框架内默认适配深色模式显示
 
 #### 2019-12-26（V2.4.6）
 
