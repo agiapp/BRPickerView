@@ -16,7 +16,7 @@
 #endif
 #ifndef kBorderColor
 // 边框颜色
-#define kBorderColor BR_RGB_HEX(0xdadada, 1.0f)
+#define kBorderColor BR_RGB_HEX(0xe2e2e3, 1.0f)
 #endif
 
 @implementation BRPickerStyle
@@ -39,14 +39,22 @@
 
 - (UIColor *)shadowLineColor {
     if (!_shadowLineColor) {
-        _shadowLineColor = kBorderColor;
+        if (@available(iOS 13.0, *)) {
+            _shadowLineColor = [UIColor separatorColor];
+        } else {
+            _shadowLineColor = kBorderColor;
+        }
     }
     return _shadowLineColor;
 }
 
 - (UIColor *)titleBarColor {
     if (!_titleBarColor) {
-        _titleBarColor = BR_RGB_HEX(0xfdfdfd, 1.0f);
+        if (@available(iOS 13.0, *)) {
+            _titleBarColor = [self br_customDynamicColor:[UIColor whiteColor] darkColor:[UIColor secondarySystemBackgroundColor]];
+        } else {
+            _titleBarColor = [UIColor whiteColor];
+        }
     }
     return _titleBarColor;
 }
@@ -64,7 +72,11 @@
 
 - (UIColor *)titleLineColor {
     if (!_titleLineColor) {
-        _titleLineColor = kBorderColor;
+        if (@available(iOS 13.0, *)) {
+            _titleLineColor = [UIColor quaternaryLabelColor];
+        } else {
+            _titleLineColor = BR_RGB_HEX(0xededee, 1.0f);
+        }
     }
     return _titleLineColor;
 }
@@ -78,7 +90,11 @@
 
 - (UIColor *)cancelTextColor {
     if (!_cancelTextColor) {
-        _cancelTextColor = kDefaultTextColor;
+        if (@available(iOS 13.0, *)) {
+            _cancelTextColor = [UIColor labelColor];
+        } else {
+            _cancelTextColor = kDefaultTextColor;
+        }
     }
     return _cancelTextColor;
 }
@@ -113,7 +129,11 @@
 
 - (UIColor *)titleTextColor {
     if (!_titleTextColor) {
-        _titleTextColor = [kDefaultTextColor colorWithAlphaComponent:0.8f];
+        if (@available(iOS 13.0, *)) {
+            _titleTextColor = [UIColor secondaryLabelColor];
+        } else {
+            _titleTextColor = BR_RGB_HEX(0x999999, 1.0f);
+        }
     }
     return _titleTextColor;
 }
@@ -141,7 +161,11 @@
 
 - (UIColor *)doneTextColor {
     if (!_doneTextColor) {
-        _doneTextColor = kDefaultTextColor;
+        if (@available(iOS 13.0, *)) {
+            _doneTextColor = [UIColor labelColor];
+        } else {
+            _doneTextColor = kDefaultTextColor;
+        }
     }
     return _doneTextColor;
 }
@@ -169,21 +193,33 @@
 
 - (UIColor *)pickerColor {
     if (!_pickerColor) {
-        _pickerColor = [UIColor whiteColor];
+        if (@available(iOS 13.0, *)) {
+            _pickerColor = [self br_customDynamicColor:[UIColor whiteColor] darkColor:[UIColor secondarySystemBackgroundColor]];
+        } else {
+            _pickerColor = [UIColor whiteColor];
+        }
     }
     return _pickerColor;
 }
 
 - (UIColor *)separatorColor {
     if (!_separatorColor) {
-        _separatorColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+        if (@available(iOS 13.0, *)) {
+            _separatorColor = [UIColor separatorColor];
+        } else {
+            _separatorColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+        }
     }
     return _separatorColor;
 }
 
 - (UIColor *)pickerTextColor {
     if (!_pickerTextColor) {
-        _pickerTextColor = kDefaultTextColor;
+        if (@available(iOS 13.0, *)) {
+            _pickerTextColor = [UIColor labelColor];
+        } else {
+            _pickerTextColor = kDefaultTextColor;
+        }
     }
     return _pickerTextColor;
 }
@@ -219,7 +255,11 @@
 
 - (UIColor *)dateUnitTextColor {
     if (!_dateUnitTextColor) {
-        _dateUnitTextColor = kDefaultTextColor;
+        if (@available(iOS 13.0, *)) {
+            _dateUnitTextColor = [UIColor labelColor];
+        } else {
+            _dateUnitTextColor = kDefaultTextColor;
+        }
     }
     return _dateUnitTextColor;
 }
@@ -231,10 +271,26 @@
     return _dateUnitTextFont;
 }
 
+#pragma mark - 创建自定义动态颜色（适配深色模式）
+- (UIColor *)br_customDynamicColor:(UIColor *)lightColor darkColor:(UIColor *)darkColor {
+    if (@available(iOS 13.0, *)) {
+        UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+            if ([traitCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
+                return lightColor;
+            } else {
+                return darkColor;
+            }
+        }];
+        return dyColor;
+    } else {
+        return lightColor;
+    }
+}
+
 #pragma mark - 模板样式1 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];
-    if (themeColor && [themeColor isKindOfClass:[UIColor class]]) {
+    if (themeColor) {
         customStyle.cancelTextColor = themeColor;
         customStyle.cancelBorderStyle = BRBorderStyleSolid;
         customStyle.doneColor = themeColor;
@@ -247,30 +303,30 @@
 #pragma mark - 模板样式2 - 顶部圆角样式 + 完成按钮
 + (instancetype)pickerStyleWithDoneTextColor:(UIColor *)doneTextColor {
     BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-    customStyle.topCornerRadius = 16.0f;
-    customStyle.titleBarColor = [UIColor whiteColor];
-    customStyle.hiddenCancelBtn = YES;
-    customStyle.hiddenTitleLine = YES;
-    customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
-    customStyle.doneTextColor = doneTextColor;
-    customStyle.doneTextFont = [UIFont boldSystemFontOfSize:16.0f];
-    customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 60, 4, 60, 40);
-    customStyle.doneBtnTitle = [NSBundle br_localizedStringForKey:@"完成" language:customStyle.language];
-
+    if (doneTextColor) {
+        customStyle.topCornerRadius = 16.0f;
+        customStyle.hiddenCancelBtn = YES;
+        customStyle.hiddenTitleLine = YES;
+        customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
+        customStyle.doneTextColor = doneTextColor;
+        customStyle.doneTextFont = [UIFont boldSystemFontOfSize:16.0f];
+        customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 60, 4, 60, 40);
+        customStyle.doneBtnTitle = [NSBundle br_localizedStringForKey:@"完成" language:customStyle.language];
+    }
     return customStyle;
 }
 
 #pragma mark - 模板样式3 - 顶部圆角样式 + 图标按钮
 + (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage {
     BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-    customStyle.topCornerRadius = 16.0f;
-    customStyle.titleBarColor = [UIColor whiteColor];
-    customStyle.hiddenTitleLine = YES;
-    customStyle.hiddenCancelBtn = YES;
-    customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
-    customStyle.doneBtnImage = doneBtnImage;
-    customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 4, 40, 40);
-    
+    if (doneBtnImage) {
+        customStyle.topCornerRadius = 16.0f;
+        customStyle.hiddenTitleLine = YES;
+        customStyle.hiddenCancelBtn = YES;
+        customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
+        customStyle.doneBtnImage = doneBtnImage;
+        customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 4, 40, 40);
+    }
     return customStyle;
 }
 

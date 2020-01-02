@@ -293,7 +293,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         {
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
-            datePickerView.pickerMode = BRDatePickerModeYMD;
+            datePickerView.pickerMode = BRDatePickerModeYMDH;
             datePickerView.title = @"请选择年月日";
             datePickerView.selectValue = self.infoModel.birthdayStr;
             //datePickerView.selectDate = self.birthdaySelectDate;
@@ -301,7 +301,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             datePickerView.isAutoSelect = YES;
             datePickerView.addToNow = YES;
             //datePickerView.showToday = YES;
-            datePickerView.showWeek = YES;
+            //datePickerView.showWeek = YES;
+            datePickerView.showUnitType = BRShowUnitTypeSingleRow;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -313,17 +314,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 
             };
             
-            // 自定义弹框样式
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.topCornerRadius = 16.0f;
-            customStyle.hiddenTitleBottomBorder = YES;
-            customStyle.hiddenCancelBtn = YES;
-            customStyle.titleBarHeight = 50.0f;
-            customStyle.titleLabelFrame = CGRectMake(20, 0, 100, 50);
-            customStyle.doneBtnImage = [UIImage imageNamed:@"icon_close"];
-            customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 0, 44, 50);
-            customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
-            datePickerView.pickerStyle = customStyle;
+            // 模板样式
+            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]];
+            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
+            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]];
+            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDateUnitOnTop];
             
             [datePickerView show];
             
@@ -366,9 +361,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 textField.text = self.infoModel.addressStr;
             };
             
-            // 自定义弹框样式（适配深色模式）
-            addressPickerView.pickerStyle = [self pickerStyleWithDarkModel];
-            
             [addressPickerView show];
             
         }
@@ -391,7 +383,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             
             // 自定义弹框样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
+            if (@available(iOS 13.0, *)) {
+                customStyle.pickerColor = [UIColor secondarySystemBackgroundColor];
+            } else {
+                customStyle.pickerColor = BR_RGB_HEX(0xf2f2f7, 1.0f);
+            }
             customStyle.separatorColor = [UIColor clearColor];
             stringPickerView.pickerStyle = customStyle;
             
@@ -485,25 +481,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     }
 }
 
-#pragma mark - 自定义适配深色模式样式
-- (BRPickerStyle *)pickerStyleWithDarkModel {
-    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-    if (@available(iOS 13.0, *)) {
-        customStyle.shadowLineColor = [UIColor quaternaryLabelColor];
-        customStyle.titleBarColor = [UIColor systemBackgroundColor];
-        customStyle.cancelTextColor = [UIColor labelColor];
-        customStyle.doneTextColor = [UIColor labelColor];
-        customStyle.titleTextColor = [UIColor placeholderTextColor];
-        customStyle.titleLineColor = [UIColor quaternaryLabelColor];
-        
-        customStyle.pickerColor = [UIColor systemBackgroundColor];
-        customStyle.pickerTextColor = [UIColor labelColor];
-        customStyle.separatorColor = [UIColor separatorColor];
-    }
-    
-    return customStyle;
-}
-
 #pragma mark - footerView
 - (UIView *)footerView {
     if (!_footerView) {
@@ -575,16 +552,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
         
-        // 提示：当 containerView 使用自动布局时，需先立即刷新布局，计算出frame后；再添加选择器视图（否则无法正常显示选择器视图）
-        // 立即刷新布局
-        //[containerView setNeedsLayout];
-        //[containerView layoutIfNeeded];
         
         // 4.创建日期选择器
         BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
         datePickerView.pickerMode = BRDatePickerModeYMD;
         datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
-        datePickerView.minDate = [NSDate br_setYear:2010 month:10 day:1];
         datePickerView.maxDate = [NSDate date];
         datePickerView.showWeek = YES;
         datePickerView.isAutoSelect = YES;
@@ -597,7 +569,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         };
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-        customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
+        if (@available(iOS 13.0, *)) {
+            customStyle.pickerColor = [UIColor secondarySystemBackgroundColor];
+        } else {
+            customStyle.pickerColor = BR_RGB_HEX(0xf2f2f7, 1.0f);
+        }
         datePickerView.pickerStyle = customStyle;
         self.datePickerView = datePickerView;
         

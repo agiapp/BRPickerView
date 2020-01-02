@@ -198,7 +198,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /// @param doneBtnImage 完成按钮的 image
 + (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage;
 
-/// 模板样式4 - 日期选择器单位顶部显示
+/// 模板样式4 - 日期选择器单位顶部显示（showUnitType == BRShowUnitTypeSingleRow 时，可设置）
 + (instancetype)pickerStyleWithDateUnitOnTop;
 
 
