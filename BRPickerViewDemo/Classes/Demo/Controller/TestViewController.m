@@ -78,9 +78,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     self.infoModel.addressStr = @"";
     self.infoModel.educationStr = @"";
     self.infoModel.otherStr = @"";
-    
-    NSLog(@"date时间：%@", [NSDate date]);
-    NSLog(@"当前时间：%@", [NSDate br_getDateString:[NSDate date] format:@"yyyy-MM-dd HH:mm:ss Z"]);
 }
 
 - (void)initUI {
