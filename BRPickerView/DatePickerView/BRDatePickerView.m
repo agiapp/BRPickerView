@@ -1667,56 +1667,68 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 - (NSInteger)yearIndex {
     if (_yearIndex < 0) {
-        return 0;
+        _yearIndex = 0;
+    } else {
+        _yearIndex = MIN(_yearIndex, self.yearArr.count - 1);
     }
-    return MIN(_yearIndex, self.yearArr.count - 1);
+    return _yearIndex;
 }
 
 - (NSInteger)monthIndex {
     if (_monthIndex < 0) {
-        return 0;
+        _monthIndex = 0;
+    } else {
+        _monthIndex = MIN(_monthIndex, self.monthArr.count - 1);
     }
-    return MIN(_monthIndex, self.monthArr.count - 1);
+    return _monthIndex;
 }
 
 - (NSInteger)dayIndex {
     if (_dayIndex < 0) {
-        return 0;
+        _dayIndex = 0;
+    } else {
+        _dayIndex = MIN(_dayIndex, self.dayArr.count - 1);
     }
-    return MIN(_dayIndex, self.dayArr.count - 1);
+    return _dayIndex;
 }
 
 - (NSInteger)hourIndex {
     if (_hourIndex < 0) {
-        return 0;
+        _hourIndex = 0;
+    } else {
+        _hourIndex = MIN(_hourIndex, self.hourArr.count - 1);
     }
-    return MIN(_hourIndex, self.hourArr.count - 1);
+    return _hourIndex;
 }
 
 - (NSInteger)minuteIndex {
     if (_minuteIndex < 0) {
-        return 0;
+        _minuteIndex = 0;
+    } else {
+        _minuteIndex = MIN(_minuteIndex, self.minuteArr.count - 1);
     }
-    return MIN(_minuteIndex, self.minuteArr.count - 1);
+    return _minuteIndex;
 }
 
 - (NSInteger)secondIndex {
     if (_secondIndex < 0) {
-        return 0;
+        _secondIndex = 0;
+    } else {
+        _secondIndex = MIN(_secondIndex, self.secondArr.count - 1);
     }
-    return MIN(_secondIndex, self.secondArr.count - 1);
+    return _secondIndex;
 }
 
 - (NSInteger)minuteInterval {
     if (_minuteInterval < 1 || _minuteInterval >= 59) {
-        return 1;
+        _minuteInterval = 1;
     }
     return _minuteInterval;
 }
 
 - (NSInteger)secondInterval {
     if (_secondInterval < 1 || _secondInterval >= 59) {
-        return 1;
+        _secondInterval = 1;
     }
     return _secondInterval;
 }
