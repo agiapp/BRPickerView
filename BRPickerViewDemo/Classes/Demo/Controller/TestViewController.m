@@ -78,6 +78,9 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     self.infoModel.addressStr = @"";
     self.infoModel.educationStr = @"";
     self.infoModel.otherStr = @"";
+    
+    NSLog(@"date时间：%@", [NSDate date]);
+    NSLog(@"当前时间：%@", [NSDate br_getDateString:[NSDate date] format:@"yyyy-MM-dd HH:mm:ss Z"]);
 }
 
 - (void)initUI {
@@ -142,7 +145,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     switch (indexPath.row) {
         case 0:
         {
-            cell.isNext = NO;
+            cell.canEdit = YES;
             cell.textField.placeholder = @"请输入";
             cell.textField.returnKeyType = UIReturnKeyDone;
             cell.textField.text = self.infoModel.nameStr;
@@ -150,28 +153,28 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             break;
         case 1:
         {
-            cell.isNext = YES;
+            cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.genderStr;
         }
             break;
         case 2:
         {
-            cell.isNext = YES;
+            cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.birthdayStr;
         }
             break;
         case 3:
         {
-            cell.isNext = YES;
+            cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.birthtimeStr;
         }
             break;
         case 4:
         {
-            cell.isNext = NO;
+            cell.canEdit = YES;
             cell.textField.placeholder = @"请输入";
             cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             cell.textField.returnKeyType = UIReturnKeyDone;
@@ -180,21 +183,21 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             break;
         case 5:
         {
-            cell.isNext = YES;
+            cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.addressStr;
         }
             break;
         case 6:
         {
-            cell.isNext = YES;
+            cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.educationStr;
         }
             break;
         case 7:
         {
-            cell.isNext = YES;
+            cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.otherStr;
         }
@@ -293,13 +296,13 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         {
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
-            datePickerView.pickerMode = BRDatePickerModeYMDH;
+            datePickerView.pickerMode = BRDatePickerModeYMD;
             datePickerView.title = @"请选择年月日";
-            datePickerView.selectValue = self.infoModel.birthdayStr;
-            //datePickerView.selectDate = self.birthdaySelectDate;
+            datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
+            datePickerView.maxDate = [NSDate date];
             datePickerView.isAutoSelect = YES;
-            datePickerView.addToNow = YES;
+            //datePickerView.addToNow = YES;
             //datePickerView.showToday = YES;
             //datePickerView.showWeek = YES;
             datePickerView.showUnitType = BRShowUnitTypeSingleRow;
@@ -311,7 +314,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 NSLog(@"selectValue=%@", selectValue);
                 NSLog(@"selectDate=%@", selectDate);
                 NSLog(@"---------------------------------");
-
+                
             };
             
             // 模板样式
@@ -437,8 +440,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 format = @"yyyy-MM";
             } else if (self.datePickerView.pickerMode == BRDatePickerModeYMDH) {
                 format = @"yyyy-MM-dd HH";
-            } else if (self.datePickerView.pickerMode == BRDatePickerModeMDHM) {
-                format = @"MM-dd HH:mm";
             }
             
             if (self.beginTimeTF.text.length == 0) {
@@ -464,8 +465,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 format = @"yyyy-MM";
             } else if (self.datePickerView.pickerMode == BRDatePickerModeYMDH) {
                 format = @"yyyy-MM-dd HH";
-            } else if (self.datePickerView.pickerMode == BRDatePickerModeMDHM) {
-                format = @"MM-dd HH:mm";
             }
             if (self.endTimeTF.text.length == 0) {
                 self.endTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];
@@ -489,8 +488,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         // 1.切换日期选择器的显示模式
-        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日", @"年月", @"年月日时", @"月日时分"]];
-        segmentedControl.frame = CGRectMake(20, 50, SCREEN_WIDTH - 40, 36);
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月"]];
+        segmentedControl.frame = CGRectMake(40, 50, SCREEN_WIDTH - 80, 36);
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
@@ -588,17 +587,14 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 - (void)pickerModeSegmentedControlAction:(UISegmentedControl *)sender {
     NSInteger selecIndex = sender.selectedSegmentIndex;
     if (selecIndex == 0) {
-        NSLog(@"年月日");
-        self.datePickerView.pickerMode = BRDatePickerModeYMD;
-    } else if (selecIndex == 1) {
-        NSLog(@"年月");
-        self.datePickerView.pickerMode = BRDatePickerModeYM;
-    } else if (selecIndex == 2) {
         NSLog(@"年月日时");
         self.datePickerView.pickerMode = BRDatePickerModeYMDH;
-    } else if (selecIndex == 3) {
-        NSLog(@"月日时分");
-        self.datePickerView.pickerMode = BRDatePickerModeMDHM;
+    } else if (selecIndex == 1) {
+        NSLog(@"年月日");
+        self.datePickerView.pickerMode = BRDatePickerModeYMD;
+    } else if (selecIndex == 2) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYM;
     }
     
     self.datePickerView.selectDate = nil;

@@ -20,7 +20,7 @@
 @implementation BRInfoCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if ([super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.textField];
@@ -36,10 +36,10 @@
     self.titleLabel.frame = CGRectMake(kLeftMargin, 0, 100, kRowHeight);
     self.nextImageView.frame = CGRectMake(self.contentView.bounds.size.width - kLeftMargin - 14, (kRowHeight - 14) / 2, 14, 14);
     self.textField.frame = CGRectMake(self.nextImageView.frame.origin.x - 200, 0, 200, kRowHeight);
-    if (self.isNext) {
-        self.nextImageView.hidden = NO;
-    } else {
+    if (self.canEdit) {
         self.nextImageView.hidden = YES;
+    } else {
+        self.nextImageView.hidden = NO;
     }
 }
 
