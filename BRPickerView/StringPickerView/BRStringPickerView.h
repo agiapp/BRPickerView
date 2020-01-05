@@ -37,8 +37,8 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
 
 /**
  *  1.设置数据源
- *    单列：@[@"男", @"女", @"其他"]
- *    两列：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]
+ *    单列：@[@"男", @"女", @"其他"]，或直接传模型数组（NSArray <BRResultModel *>* dataSourceArr）
+ *    两列：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]，或直接传模型数组
  *    多列：... ...
  */
 @property (nonatomic, copy) NSArray *dataSourceArr;
@@ -97,7 +97,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  *  1.显示【单列】字符串选择器
  *
  *  @param title               选择器标题
- *  @param dataSourceArr       数据源（如：@[@"男", @"女", @"其他"]）
+ *  @param dataSourceArr       数据源（如：@[@"男", @"女", @"其他"]，或直接传模型数组）
  *  @param selectIndex         默认选中的位置
  *  @param resultBlock         选择后的回调
  *
@@ -111,7 +111,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  *  2.显示【单列】字符串选择器
  *
  *  @param title               选择器标题
- *  @param dataSourceArr       数据源（如：@[@"男", @"女", @"其他"]）
+ *  @param dataSourceArr       数据源（如：@[@"男", @"女", @"其他"]，或直接传模型数组）
  *  @param selectIndex         默认选中的位置
  *  @param isAutoSelect        是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
  *  @param resultBlock         选择后的回调
@@ -127,7 +127,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  *  3.显示【多列】字符串选择器
  *
  *  @param title               选择器标题
- *  @param dataSourceArr       数据源（如：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]）
+ *  @param dataSourceArr       数据源（如：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]，或直接传模型数组）
  *  @param selectIndexs        默认选中的位置（传索引数组，如：@[@2, @1]）
  *  @param resultBlock         选择后的回调
  *
@@ -141,7 +141,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
  *  4.显示【多列】字符串选择器
  *
  *  @param title               选择器标题
- *  @param dataSourceArr       数据源（如：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]）
+ *  @param dataSourceArr       数据源（如：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好", @"及格"]]，或直接传模型数组）
  *  @param selectIndexs        默认选中的位置（传索引数组，如：@[@2, @1]）
  *  @param isAutoSelect        是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
  *  @param resultBlock         选择后的回调

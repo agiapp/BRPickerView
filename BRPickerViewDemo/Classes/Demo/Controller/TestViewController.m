@@ -199,6 +199,12 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             cell.textField.text = self.infoModel.otherStr;
         }
             break;
+        case 8:
+        {
+            cell.canEdit = NO;
+            cell.textField.placeholder = @"请选择";
+        }
+            break;
             
         default:
             break;
@@ -282,8 +288,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             stringPickerView.selectIndex = self.genderSelectIndex ;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.genderSelectIndex = resultModel.index;
-                self.infoModel.genderStr = resultModel.selectValue;
-                textField.text = resultModel.selectValue;
+                self.infoModel.genderStr = resultModel.value;
+                textField.text = resultModel.value;
             };
             [stringPickerView show];
             
@@ -377,7 +383,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.educationSelectIndex = resultModel.index;
-                self.infoModel.educationStr = resultModel.name;
+                self.infoModel.educationStr = resultModel.value;
                 textField.text = self.infoModel.educationStr;
             };
             
@@ -397,7 +403,31 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             break;
         case 7:
         {
-            /// 其它
+            /// 融资情况
+            NSArray *infoArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
+                                 @{@"key": @"2001", @"value": @"天使轮", @"remark": @""},
+                                 @{@"key": @"3001", @"value": @"A轮", @"remark": @""},
+                                 @{@"key": @"4001", @"value": @"B轮", @"remark": @""},
+                                 @{@"key": @"5001", @"value": @"C轮以后", @"remark": @""},
+                                 @{@"key": @"6001", @"value": @"已上市", @"remark": @""}];
+            NSMutableArray *modelArr = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in infoArr) {
+                BRResultModel *model = [[BRResultModel alloc]init];
+                model.key = dic[@"key"];
+                model.value = dic[@"value"];
+                model.remark = dic[@"remark"];
+                [modelArr addObject:model];
+            }
+            [BRStringPickerView showPickerWithTitle:@"融资情况" dataSourceArr:[modelArr copy] selectIndex:1 resultBlock:^(BRResultModel *resultModel) {
+                textField.text = resultModel.value;
+                NSLog(@"选择的值[%@]：%@", @(resultModel.index), resultModel.value);
+            }];
+            
+        }
+            break;
+        case 8:
+        {
+            /// 多列字符串
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
             stringPickerView.pickerMode = BRStringPickerComponentMulti;
             stringPickerView.title = @"自定义多列字符串";
@@ -407,7 +437,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 self.otherSelectIndexs = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
-                self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].name, resultModelArr[1].name];
+                self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value];
                 textField.text = self.infoModel.otherStr;
             };
             
@@ -422,7 +452,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             
         }
             break;
-            
         case 100:
         {
             NSLog(@"开始时间：%@", self.beginTimeTF.text);
@@ -615,7 +644,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
 
 - (NSArray *)titleArr {
     if (!_titleArr) {
-        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"其它"];
+        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资（传模型数组）", @"多列字符串"];
     }
     return _titleArr;
 }

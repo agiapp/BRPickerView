@@ -33,7 +33,7 @@
     [super layoutSubviews];
     // 调整cell分割线的边距：top, left, bottom, right
     //self.separatorInset = UIEdgeInsetsMake(0, kLeftMargin, 0, kLeftMargin);
-    self.titleLabel.frame = CGRectMake(kLeftMargin, 0, 100, kRowHeight);
+    self.titleLabel.frame = CGRectMake(kLeftMargin, 0, 200, kRowHeight);
     self.nextImageView.frame = CGRectMake(self.contentView.bounds.size.width - kLeftMargin - 14, (kRowHeight - 14) / 2, 14, 14);
     self.textField.frame = CGRectMake(self.nextImageView.frame.origin.x - 200, 0, 200, kRowHeight);
     if (self.canEdit) {

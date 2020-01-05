@@ -11,8 +11,12 @@
 
 @implementation BRResultModel
 
+- (NSString *)name {
+    return _value;
+}
+
 - (NSString *)selectValue {
-    return _name;
+    return _value;
 }
 
 @end

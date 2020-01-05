@@ -11,7 +11,7 @@
 
 @interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
 {
-    BOOL _isDataSourceValid; // 数据源是否合法
+    BOOL _invalidFormat; // 数据源格式是否有误
 }
 /** 字符串选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
@@ -47,11 +47,8 @@
     strPickerView.isAutoSelect = isAutoSelect;
     strPickerView.resultModelBlock = resultBlock;
     
-    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
-    if (strPickerView->_isDataSourceValid) {
-        // 显示
-        [strPickerView show];
-    }
+    // 显示
+    [strPickerView show];
 }
 
 #pragma mark - 3.显示【多列】字符串选择器
@@ -77,11 +74,8 @@
     strPickerView.isAutoSelect = isAutoSelect;
     strPickerView.resultModelArrayBlock = resultBlock;
     
-    NSAssert(strPickerView->_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
-    if (strPickerView->_isDataSourceValid) {
-        // 显示
-        [strPickerView show];
-    }
+    // 显示
+    [strPickerView show];
 }
 
 #pragma mark - 初始化自定义字符串选择器
@@ -94,22 +88,21 @@
 
 #pragma mark - 设置默认选择的值
 - (void)handlerDefaultSelectValue {
-    _isDataSourceValid = YES;
     if (self.dataSourceArr.count == 0) {
-        _isDataSourceValid = NO;
+        _invalidFormat = YES;
         return;
     }
     
     if (self.pickerMode == BRStringPickerComponentSingle) {
         id element = [self.dataSourceArr firstObject];
         if ([element isKindOfClass:[NSArray class]]) {
-            _isDataSourceValid = NO;
+            _invalidFormat = YES;
             return;
         }
     } else if (self.pickerMode == BRStringPickerComponentMulti) {
         id element = [self.dataSourceArr firstObject];
         if ([element isKindOfClass:[NSString class]]) {
-            _isDataSourceValid = NO;
+            _invalidFormat = YES;
             return;
         }
     }
@@ -194,6 +187,51 @@
     }
 }
 
+// 自定义 pickerView 的 label
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
+    
+    // 设置分割线的颜色
+    for (UIView *subView in pickerView.subviews) {
+        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
+            subView.backgroundColor = self.pickerStyle.separatorColor;
+        }
+    }
+    
+    UILabel *label = (UILabel *)view;
+    if (!label) {
+        label = [[UILabel alloc]init];
+        label.backgroundColor = [UIColor clearColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = self.pickerStyle.pickerTextColor;
+        label.font = self.pickerStyle.pickerTextFont;
+        // 字体自适应属性
+        label.adjustsFontSizeToFitWidth = YES;
+        // 自适应最小字体缩放比例
+        label.minimumScaleFactor = 0.5f;
+    }
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, self.pickerStyle.rowHeight);
+        id element = self.dataSourceArr[row];
+        if ([element isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)element;
+            label.text = model.value;
+        } else {
+            label.text = element;
+        }
+    } else if (self.pickerMode == BRStringPickerComponentMulti) {
+        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, self.pickerStyle.rowHeight);
+        id element = self.dataSourceArr[component][row];
+        if ([element isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)element;
+            label.text = model.value;
+        } else {
+            label.text = element;
+        }
+    }
+    
+    return label;
+}
+
 #pragma mark - UIPickerViewDelegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     switch (self.pickerMode) {
@@ -243,10 +281,17 @@
 
 #pragma mark - 获取【单列】选择器选择的值
 - (BRResultModel *)getResultModel {
-    BRResultModel *resultModel = [[BRResultModel alloc]init];
-    resultModel.index = self.selectIndex;
-    resultModel.name = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
-    return resultModel;
+    id element = self.selectIndex < self.dataSourceArr.count ? self.dataSourceArr[self.selectIndex] : nil;
+    if ([element isKindOfClass:[BRResultModel class]]) {
+        BRResultModel *model = (BRResultModel *)element;
+        model.index = self.selectIndex;
+        return model;
+    } else {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.index = self.selectIndex;
+        model.value = element;
+        return model;
+    }
 }
 
 #pragma mark - 获取【多列】选择器选择的值
@@ -255,45 +300,20 @@
     for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
         NSInteger index = [self.selectIndexs[i] integerValue];
         NSArray *dataArr = self.dataSourceArr[i];
-        BRResultModel *resultModel = [[BRResultModel alloc]init];
-        resultModel.index = index;
-        resultModel.name = index < dataArr.count ? dataArr[index] : nil;
-        [resultModelArr addObject:resultModel];
-    }
-    return [resultModelArr copy];
-}
-
-// 自定义 pickerView 的 label
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    
-    // 设置分割线的颜色
-    for (UIView *subView in pickerView.subviews) {
-        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
-            subView.backgroundColor = self.pickerStyle.separatorColor;
+        
+        id element = index < dataArr.count ? dataArr[index] : nil;
+        if ([element isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)element;
+            model.index = index;
+            [resultModelArr addObject:model];
+        } else {
+            BRResultModel *model = [[BRResultModel alloc]init];
+            model.index = index;
+            model.value = element;
+            [resultModelArr addObject:model];
         }
     }
-    
-    UILabel *label = (UILabel *)view;
-    if (!label) {
-        label = [[UILabel alloc]init];
-        label.backgroundColor = [UIColor clearColor];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = self.pickerStyle.pickerTextColor;
-        label.font = self.pickerStyle.pickerTextFont;
-        // 字体自适应属性
-        label.adjustsFontSizeToFitWidth = YES;
-        // 自适应最小字体缩放比例
-        label.minimumScaleFactor = 0.5f;
-    }
-    if (self.pickerMode == BRStringPickerComponentSingle) {
-        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, self.pickerStyle.rowHeight);
-        label.text = self.dataSourceArr[row];
-    } else if (self.pickerMode == BRStringPickerComponentMulti) {
-        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, self.pickerStyle.rowHeight);
-        label.text = self.dataSourceArr[component][row];
-    }
-    
-    return label;
+    return [resultModelArr copy];
 }
 
 // 设置行高
@@ -305,9 +325,9 @@
 - (void)addPickerToView:(UIView *)view {
     [self handlerDefaultSelectValue];
     
-    NSAssert(_isDataSourceValid, @"数据源不合法！请检查字符串选择器数据源的格式");
+    NSAssert(!_invalidFormat, @"数据源不合法！请检查字符串选择器数据源的格式");
     
-    if (_isDataSourceValid) {
+    if (!_invalidFormat) {
         // 添加字符串选择器
         if (view) {
             // 立即刷新容器视图 view 的布局（防止 view 使用自动布局时，选择器视图无法正常显示）
