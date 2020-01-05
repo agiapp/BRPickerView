@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.5.0` 。
+- 当前最新版本为： `2.5.1` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -195,7 +195,7 @@ stringPickerView.title = @"请选择性别";
 stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
 stringPickerView.selectIndex = 1;
 stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
-    NSLog(@"选择的值：%@", resultModel.name);
+    NSLog(@"选择的值：%@", resultModel.value);
 };
 
 [stringPickerView show];
@@ -209,9 +209,9 @@ stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4�
 stringPickerView.selectIndexs = @[@2, @3];
 stringPickerView.isAutoSelect = YES;
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].name, resultModelArr[1].name]);
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value]);
 };
-// 快捷设置主题样式
+// 模板样式1
 addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
 
 [stringPickerView show];
@@ -228,6 +228,10 @@ addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColo
 |             3列字符串选择器（自定义主题色样式）              |             4列字符串选择器（自定义主题色样式）              |
 
 # 更新记录
+
+#### 2020-01-05（V2.5.1）
+
+- 优化字符串选择器，添加支持数据源直接传模型数组
 
 #### 2020-01-02（V2.5.0）
 
