@@ -151,7 +151,7 @@ datePickerView.pickerStyle = customStyle;
 | ![设置添加至今](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![设置显示今天](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 |                                                              |                                                              |
-| ![日期单位显示样式](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) |                                                              |
+| ![日期单位单行显示样式](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) |                                                              |
 | 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeSingleRow; |                                                              |
 
 **【模板样式】：**
@@ -203,9 +203,9 @@ addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, 
 /// 1.单列字符串选择器（传字符串数组）
 BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
 stringPickerView.pickerMode = BRStringPickerComponentSingle;
-stringPickerView.title = @"请选择性别";
-stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-stringPickerView.selectIndex = 1;
+stringPickerView.title = @"学历";
+stringPickerView.dataSourceArr = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
+stringPickerView.selectIndex = 2;
 stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
     NSLog(@"选择的值：%@", resultModel.value);
 };
@@ -228,9 +228,10 @@ for (NSDictionary *dic in infoArr) {
     model.remark = dic[@"remark"];
     [modelArr addObject:model];
 }
-[BRStringPickerView showPickerWithTitle:@"融资情况" dataSourceArr:[modelArr copy] selectIndex:1 resultBlock:^(BRResultModel *resultModel) {
-    textField.text = resultModel.value;
-    NSLog(@"选择的值[%@]：%@", @(resultModel.index), resultModel.value);
+
+[BRStringPickerView showPickerWithTitle:@"融资情况" dataSourceArr:[modelArr copy] selectIndex:2 resultBlock:^(BRResultModel *resultModel) {
+  	NSLog(@"选择的索引：%@", @(resultModel.index));
+    NSLog(@"选择的值：%@", resultModel.value);
 }];
 
 
@@ -244,8 +245,6 @@ stringPickerView.isAutoSelect = YES;
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value]);
 };
-// 模板样式1
-addressPickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
 
 [stringPickerView show];
 ```
