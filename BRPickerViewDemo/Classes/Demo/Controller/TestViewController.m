@@ -57,14 +57,14 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
     [self loadData];
     [self initUI];
     // 设置开始时间默认选择的值及状态
-    //NSString *beginTime = @"2018-10-01";
+    //NSString *beginTime = @"2018-10-01 00";
     NSString *beginTime = nil;
     if (beginTime && beginTime.length > 0) {
         self.beginTimeTF.text = beginTime;
         self.beginTimeTF.textColor = kThemeColor;
         self.beginTimeLineView.backgroundColor = kThemeColor;
         // 设置选择器滚动到指定的日期
-        self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd"];
+        self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd HH"];
     }
 }
 
@@ -580,8 +580,8 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 4.创建日期选择器
         BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
-        datePickerView.pickerMode = BRDatePickerModeYMD;
-        datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd"];
+        datePickerView.pickerMode = BRDatePickerModeYMDH;
+        datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd HH"];
         datePickerView.maxDate = [NSDate date];
         datePickerView.showWeek = YES;
         datePickerView.isAutoSelect = YES;
