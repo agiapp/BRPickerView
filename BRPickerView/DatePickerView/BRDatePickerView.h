@@ -69,10 +69,10 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
-/** 日期选择器显示类型 */
+/** 日期选择器显示类型（支持动态更新！） */
 @property (nonatomic, assign) BRDatePickerMode pickerMode;
 
-/** 设置选中的时间（selectDate 优先级高于 selectValue，推荐使用 selectDate）*/
+/** 设置选中的时间（支持动态更新！）*/
 @property (nonatomic, strong) NSDate *selectDate;
 @property (nonatomic, copy) NSString *selectValue;
 

@@ -302,7 +302,7 @@
 
 #pragma mark - 模板样式2 - 顶部圆角样式 + 完成按钮
 + (instancetype)pickerStyleWithDoneTextColor:(UIColor *)doneTextColor {
-    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+    BRPickerStyle *customStyle = [[self alloc]init];
     if (doneTextColor) {
         customStyle.topCornerRadius = 16.0f;
         customStyle.hiddenCancelBtn = YES;
@@ -318,7 +318,7 @@
 
 #pragma mark - 模板样式3 - 顶部圆角样式 + 图标按钮
 + (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage {
-    BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+    BRPickerStyle *customStyle = [[self alloc]init];
     if (doneBtnImage) {
         customStyle.topCornerRadius = 16.0f;
         customStyle.hiddenTitleLine = YES;
