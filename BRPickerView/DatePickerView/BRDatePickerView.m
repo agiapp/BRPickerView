@@ -51,6 +51,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, copy) NSString *selectDateFormatter;
 /** 单位数组 */
 @property (nonatomic, copy) NSArray *unitArr;
+/** 单位label数组 */
+@property (nonatomic, copy) NSArray <UILabel *> *unitLabelArr;
 
 @end
 
@@ -721,7 +723,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器1
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
@@ -770,7 +773,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 #pragma mark - 时间选择器2
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
@@ -1339,9 +1343,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     } else if (self.style == BRDatePickerStyleCustom) {
         [self setPickerView:self.pickerView toView:view];
         
-        if (self.showUnitType == BRShowUnitTypeSingleRow) {
+        if (self.showUnitType == BRShowUnitTypeOnlyCenter) {
             // 添加时间单位到选择器
-            [self addUnitLabelToPickerView:view];
+            [self addUnitLabel];
         }
     }
         
@@ -1376,7 +1380,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [view layoutIfNeeded];
         
         self.frame = view.bounds;
-        pickerView.frame = view.bounds;
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        CGFloat pickerFooterViewHeight = self.pickerFooterView ? self.pickerFooterView.bounds.size.height : 0;
+        pickerView.frame = CGRectMake(0, pickerHeaderViewHeight, view.bounds.size.width, view.bounds.size.height - pickerHeaderViewHeight - pickerFooterViewHeight);
         [self addSubview:pickerView];
     } else {
         [self.alertView addSubview:pickerView];
@@ -1384,7 +1390,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 添加时间单位到选择器
-- (void)addUnitLabelToPickerView:(UIView *)view {
+- (void)addUnitLabel {
+    if (self.unitLabelArr.count > 0) {
+        for (UILabel *unitLabel in self.unitLabelArr) {
+            [unitLabel removeFromSuperview];
+        }
+        self.unitLabelArr = nil;
+    }
+    
+    NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i < self.pickerView.numberOfComponents; i++) {
         // label宽度
         CGFloat labelWidth = self.pickerView.bounds.size.width / self.pickerView.numberOfComponents;
@@ -1426,22 +1440,19 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         unitLabel.text = (self.unitArr.count > 0 && i < self.unitArr.count) ? self.unitArr[i] : nil;
         
         CGFloat originX = i * labelWidth + labelWidth / 2.0 + labelTextWidth / 2.0 + self.pickerStyle.dateUnitOffsetX;
-        if (self.pickerStyle.horizontalCenter) {
-            originX = i * labelWidth + labelWidth / 2.0 - self.pickerStyle.rowHeight / 2.0;
-        }
-        CGFloat originY = (self.pickerStyle.pickerHeight - self.pickerStyle.rowHeight) / 2 + self.pickerStyle.dateUnitOffsetY;
-        if (view) {
-            if (self.style == BRDatePickerStyleSystem) {
-                [self.datePicker addSubview:unitLabel];
-            } else if (self.style == BRDatePickerStyleCustom) {
-                [self.pickerView addSubview:unitLabel];
-            }
-        } else {
-            originY = self.pickerStyle.titleBarHeight + originY;
-            [self.alertView addSubview:unitLabel];
-        }
+        CGFloat originY = (self.pickerView.frame.size.height - self.pickerStyle.rowHeight) / 2 + self.pickerStyle.dateUnitOffsetY;
         unitLabel.frame = CGRectMake(originX, originY, self.pickerStyle.rowHeight, self.pickerStyle.rowHeight);
+        
+        if (self.style == BRDatePickerStyleSystem) {
+            [self.datePicker addSubview:unitLabel];
+        } else if (self.style == BRDatePickerStyleCustom) {
+            [self.pickerView addSubview:unitLabel];
+        }
+        
+        [tempArr addObject:unitLabel];
     }
+    
+    self.unitLabelArr = [tempArr copy];
 }
 
 #pragma mark - 重写父类方法
@@ -1558,6 +1569,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (self.style == BRDatePickerStyleSystem) {
             [self.datePicker setDate:self.mSelectDate animated:NO];
         } else if (self.style == BRDatePickerStyleCustom) {
+            if (self.showUnitType == BRShowUnitTypeOnlyCenter) {
+                // 添加时间单位到选择器
+                [self addUnitLabel];
+            }
             [self scrollToSelectDate:self.mSelectDate animated:NO];
         }
     }
@@ -1738,6 +1753,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         _unitArr = [NSArray array];
     }
     return _unitArr;
+}
+
+- (NSArray<UILabel *> *)unitLabelArr {
+    if (!_unitLabelArr) {
+        _unitLabelArr = [NSArray array];
+    }
+    return _unitLabelArr;
 }
 
 @end

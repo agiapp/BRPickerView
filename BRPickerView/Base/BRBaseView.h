@@ -30,6 +30,12 @@ typedef void(^BRResultBlock)(void);
 /** 选择结果的回调（框架内部使用） */
 @property (nonatomic, copy) BRResultBlock doneBlock;
 
+/** accessory view for above picker view. default is nil */
+@property (nonatomic, strong) UIView *pickerHeaderView;
+
+/** accessory view below picker view. default is nil */
+@property (nonatomic, strong) UIView *pickerFooterView;
+
 /** 弹框视图 */
 @property (nonatomic, strong) UIView *alertView;
 

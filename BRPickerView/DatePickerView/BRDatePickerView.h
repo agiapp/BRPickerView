@@ -51,8 +51,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 typedef NS_ENUM(NSInteger, BRShowUnitType) {
     /** 日期单位显示全部行（默认） */
     BRShowUnitTypeAll,
-    /** 日期单位只显示一行，默认在选择器的中间行 */
-    BRShowUnitTypeSingleRow,
+    /** 日期单位仅显示中间行 */
+    BRShowUnitTypeOnlyCenter,
     /** 日期单位不显示 */
     BRShowUnitTypeNone
 };

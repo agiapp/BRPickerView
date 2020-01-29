@@ -330,14 +330,4 @@
     return customStyle;
 }
 
-#pragma mark - 模板样式4 - 日期选择器单位顶部显示
-+ (instancetype)pickerStyleWithDateUnitOnTop {
-    BRPickerStyle *customStyle = [[self alloc]init];
-    customStyle.titleBarHeight += customStyle.rowHeight + 10;
-    customStyle.horizontalCenter = YES;
-    customStyle.dateUnitOffsetY = -(customStyle.pickerHeight / 2 + customStyle.rowHeight / 2);
-    
-    return customStyle;
-}
-
 @end

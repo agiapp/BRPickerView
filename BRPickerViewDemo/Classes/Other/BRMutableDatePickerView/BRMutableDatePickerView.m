@@ -582,23 +582,29 @@
 
 - (NSInteger)yearIndex {
     if (_yearIndex < 0) {
-        return 0;
+        _yearIndex = 0;
+    } else {
+        _yearIndex = MIN(_yearIndex, self.yearArr.count - 1);
     }
-    return MIN(_yearIndex, self.yearArr.count - 1);
+    return _yearIndex;
 }
 
 - (NSInteger)monthIndex {
     if (_monthIndex < 0) {
-        return 0;
+        _monthIndex = 0;
+    } else {
+        _monthIndex = MIN(_monthIndex, self.monthArr.count - 1);
     }
-    return MIN(_monthIndex, self.monthArr.count - 1);
+    return _monthIndex;
 }
 
 - (NSInteger)dayIndex {
     if (_dayIndex < 0) {
-        return 0;
+        _dayIndex = 0;
+    } else {
+        _dayIndex = MIN(_dayIndex, self.dayArr.count - 1);
     }
-    return MIN(_dayIndex, self.dayArr.count - 1);
+    return _dayIndex;
 }
 
 - (NSDate *)selectDate {

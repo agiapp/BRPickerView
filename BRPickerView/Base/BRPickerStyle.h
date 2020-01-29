@@ -166,7 +166,7 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 @property(nonatomic, copy) NSString *language;
 
 
-/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeSingleRow 时，生效）////////
+/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeOnlyCenter 时，生效）///////
 
 /** 设置日期选择器单位文本的颜色（textColor）*/
 @property (nonatomic, strong) UIColor *dateUnitTextColor;
@@ -179,9 +179,6 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 设置日期选择器单位 label 的竖直方向偏移量（offsetY）*/
 @property (nonatomic, assign) CGFloat dateUnitOffsetY;
-
-/** 设置日期选择器单位是否与 选择器的列 水平居中对齐 */
-@property (nonatomic, assign) BOOL horizontalCenter;
 
 
 //////////////////////////////// 常用的几种模板样式 ////////////////////////////////
@@ -197,9 +194,5 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /// 模板样式3 - 顶部圆角样式 + 图标按钮
 /// @param doneBtnImage 完成按钮的 image
 + (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage;
-
-/// 模板样式4 - 日期选择器单位顶部显示（showUnitType == BRShowUnitTypeSingleRow 时，可设置）
-+ (instancetype)pickerStyleWithDateUnitOnTop;
-
 
 @end

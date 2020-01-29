@@ -308,7 +308,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             //datePickerView.addToNow = YES;
             //datePickerView.showToday = YES;
             //datePickerView.showWeek = YES;
-            datePickerView.showUnitType = BRShowUnitTypeSingleRow;
+            //datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -320,11 +320,18 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 
             };
             
+//            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+//            headerView.backgroundColor = [UIColor orangeColor];
+//            datePickerView.pickerHeaderView = headerView;
+//
+//            UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+//            footerView.backgroundColor = [UIColor blueColor];
+//            datePickerView.pickerFooterView = footerView;
+            
             // 模板样式
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]];
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]];
-            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDateUnitOnTop];
             
             [datePickerView show];
             
@@ -573,18 +580,18 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 3.创建选择器容器视图
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 170, _footerView.frame.size.width - 60, 200)];
-        containerView.backgroundColor = [UIColor redColor];
+        containerView.backgroundColor = [UIColor clearColor];
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
         
-        
+    
         // 4.创建日期选择器
         BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
         datePickerView.pickerMode = BRDatePickerModeYMDH;
         datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd HH"];
         datePickerView.maxDate = [NSDate date];
-        datePickerView.showWeek = YES;
         datePickerView.isAutoSelect = YES;
+        datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
         datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
             if (self.timeType == BRTimeTypeBeginTime) {
                 self.beginTimeTF.text = selectValue;
@@ -592,6 +599,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 self.endTimeTF.text = selectValue;
             }
         };
+        
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
         if (@available(iOS 13.0, *)) {
