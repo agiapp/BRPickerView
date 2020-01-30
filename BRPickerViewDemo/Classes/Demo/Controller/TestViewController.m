@@ -308,7 +308,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             //datePickerView.addToNow = YES;
             //datePickerView.showToday = YES;
             //datePickerView.showWeek = YES;
-            //datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
+            datePickerView.showUnitType = BRShowUnitTypeNone;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -320,13 +320,27 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
                 
             };
             
-//            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-//            headerView.backgroundColor = [UIColor orangeColor];
-//            datePickerView.pickerHeaderView = headerView;
-//
-//            UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-//            footerView.backgroundColor = [UIColor blueColor];
-//            datePickerView.pickerFooterView = footerView;
+            // 添加头视图
+            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+            headerView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1f];
+            NSArray *unitArr = @[@"年", @"月", @"日"];
+            for (NSInteger i = 0; i < unitArr.count; i++) {
+                CGFloat width = SCREEN_WIDTH / unitArr.count;
+                CGFloat orginX = i * (SCREEN_WIDTH / unitArr.count);
+                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(orginX, 0, width, 40)];
+                label.backgroundColor = [UIColor clearColor];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.font = [UIFont systemFontOfSize:16.0f];
+                label.textColor = [UIColor darkGrayColor];
+                label.text = unitArr[i];
+                [headerView addSubview:label];
+            }
+            datePickerView.pickerHeaderView = headerView;
+
+            // 添加尾视图
+            //UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+            //footerView.backgroundColor = [UIColor blueColor];
+            //datePickerView.pickerFooterView = footerView;
             
             // 模板样式
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]];
