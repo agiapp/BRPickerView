@@ -322,7 +322,7 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             
             // 添加头视图
             UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 36)];
-            headerView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1f];
+            headerView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.1f];
             NSArray *unitArr = @[@"年", @"月", @"日"];
             for (NSInteger i = 0; i < unitArr.count; i++) {
                 CGFloat width = SCREEN_WIDTH / unitArr.count;

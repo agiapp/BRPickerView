@@ -106,9 +106,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 处理选择器数据
 - (void)handlerPickerData {
-    
-    [self setupSelectDateFormatter:self.pickerMode];
-    
     // 1.最小日期限制
     if (!self.minDate) {
         if (self.pickerMode == BRDatePickerModeMDHM) {
@@ -1335,21 +1332,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 重写父类方法
-- (void)addPickerToView:(UIView *)view {
+- (void)reloadData {
+    // 1.处理数据源
     [self handlerPickerData];
-    // 添加时间选择器
-    if (self.style == BRDatePickerStyleSystem) {
-        [self setPickerView:self.datePicker toView:view];
-    } else if (self.style == BRDatePickerStyleCustom) {
-        [self setPickerView:self.pickerView toView:view];
-        
-        if (self.showUnitType == BRShowUnitTypeOnlyCenter) {
-            // 添加时间单位到选择器
-            [self addUnitLabel];
-        }
-    }
-        
-    // 默认滚动的行
+    // 2.刷新选择器
+    [self.pickerView reloadAllComponents];
+    // 3.滚动到选择的时间
     if (self.style == BRDatePickerStyleSystem) {
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {
@@ -1359,6 +1347,23 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             [self scrollToSelectDate:self.mSelectDate animated:NO];
         }
     }
+}
+
+- (void)addPickerToView:(UIView *)view {
+    [self setupSelectDateFormatter:self.pickerMode];
+    // 1.添加时间选择器
+    if (self.style == BRDatePickerStyleSystem) {
+        [self setPickerView:self.datePicker toView:view];
+    } else if (self.style == BRDatePickerStyleCustom) {
+        [self setPickerView:self.pickerView toView:view];
+        if (self.showUnitType == BRShowUnitTypeOnlyCenter) {
+            // 添加时间单位到选择器
+            [self addUnitLabel];
+        }
+    }
+    
+    // 2.绑定数据
+    [self reloadData];
     
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
@@ -1563,17 +1568,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     _pickerMode = pickerMode;
     // 非空，表示二次设置
     if (_datePicker || _pickerView) {
-        [self handlerPickerData];
-        [self.pickerView reloadAllComponents];
-        // 默认滚动的行
-        if (self.style == BRDatePickerStyleSystem) {
-            [self.datePicker setDate:self.mSelectDate animated:NO];
-        } else if (self.style == BRDatePickerStyleCustom) {
-            if (self.showUnitType == BRShowUnitTypeOnlyCenter) {
-                // 添加时间单位到选择器
-                [self addUnitLabel];
-            }
-            [self scrollToSelectDate:self.mSelectDate animated:NO];
+        [self setupSelectDateFormatter:pickerMode];
+        // 刷新选择器数据
+        [self reloadData];
+        if (self.style == BRDatePickerStyleCustom && self.showUnitType == BRShowUnitTypeOnlyCenter) {
+            // 添加时间单位到选择器
+            [self addUnitLabel];
         }
     }
 }
@@ -1597,18 +1597,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     _selectDate = selectDate;
     _mSelectDate = selectDate;
     if (_datePicker || _pickerView) {
-        // 处理选择的日期
-        [self handlerDefaultSelectDate];
-        if (self.style == BRDatePickerStyleCustom) {
-            [self initDateArray];
-        }
-        [self.pickerView reloadAllComponents];
-        // 更新选择的时间
-        if (self.style == BRDatePickerStyleSystem) {
-            [self.datePicker setDate:self.mSelectDate animated:NO];
-        } else if (self.style == BRDatePickerStyleCustom) {
-            [self scrollToSelectDate:self.mSelectDate animated:NO];
-        }
+        // 刷新选择器数据
+        [self reloadData];
     }
 }
 
@@ -1616,18 +1606,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     _selectValue = selectValue;
     _mSelectValue = selectValue;
     if (_datePicker || _pickerView) {
-        // 处理选择的日期
-        [self handlerDefaultSelectDate];
-        if (self.style == BRDatePickerStyleCustom) {
-            [self initDateArray];
-        }
-        [self.pickerView reloadAllComponents];
-        // 更新选择的时间
-        if (self.style == BRDatePickerStyleSystem) {
-            [self.datePicker setDate:self.mSelectDate animated:NO];
-        } else if (self.style == BRDatePickerStyleCustom) {
-            [self scrollToSelectDate:self.mSelectDate animated:NO];
-        }
+        // 刷新选择器数据
+        [self reloadData];
     }
 }
 

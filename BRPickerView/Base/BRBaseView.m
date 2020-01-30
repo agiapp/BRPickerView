@@ -335,6 +335,11 @@
     }
 }
 
+#pragma mark - 刷新选择器数据
+- (void)reloadData {
+    
+}
+
 #pragma mark - 添加自定义视图到选择器（picker）上
 - (void)addSubViewToPicker:(UIView *)customView {
     

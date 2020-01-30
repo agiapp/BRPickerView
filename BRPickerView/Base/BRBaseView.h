@@ -27,18 +27,22 @@ typedef void(^BRResultBlock)(void);
 /** 取消选择的回调 */
 @property (nonatomic, copy) BRCancelBlock cancelBlock;
 
-/** 选择结果的回调（框架内部使用） */
-@property (nonatomic, copy) BRResultBlock doneBlock;
-
 /** accessory view for above picker view. default is nil */
 @property (nonatomic, strong) UIView *pickerHeaderView;
 
 /** accessory view below picker view. default is nil */
 @property (nonatomic, strong) UIView *pickerFooterView;
 
+/** 选择结果的回调（框架内部使用） */
+@property (nonatomic, copy) BRResultBlock doneBlock;
+
 /** 弹框视图 */
 @property (nonatomic, strong) UIView *alertView;
 
+
+/// 刷新选择器数据
+/// 应用场景：动态更新数据源、动态更新选择的值、选择器类型切换等
+- (void)reloadData;
 
 /// 扩展一：添加选择器到指定容器视图上
 /// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式

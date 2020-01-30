@@ -214,21 +214,6 @@
             }];
         }
     }
-    
-    // 注意必须先刷新UI，再设置默认滚动
-    [self.pickerView reloadAllComponents];
-    
-    // 滚动到指定行
-    if (self.pickerMode == BRAddressPickerModeProvince) {
-        [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
-    } else if (self.pickerMode == BRAddressPickerModeCity) {
-        [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
-        [self.pickerView selectRow:self.cityIndex inComponent:1 animated:YES];
-    } else if (self.pickerMode == BRAddressPickerModeArea) {
-        [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
-        [self.pickerView selectRow:self.cityIndex inComponent:1 animated:YES];
-        [self.pickerView selectRow:self.areaIndex inComponent:2 animated:YES];
-    }
 }
 
 // 根据 省索引 获取 城市模型数组
@@ -427,8 +412,26 @@
 }
 
 #pragma mark - 重写父类方法
+- (void)reloadData {
+    // 1.处理数据源
+    [self handlerPickerData];
+    // 2.刷新选择器
+    [self.pickerView reloadAllComponents];
+    // 3.滚动到选择的地区
+    if (self.pickerMode == BRAddressPickerModeProvince) {
+        [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
+    } else if (self.pickerMode == BRAddressPickerModeCity) {
+        [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
+        [self.pickerView selectRow:self.cityIndex inComponent:1 animated:YES];
+    } else if (self.pickerMode == BRAddressPickerModeArea) {
+        [self.pickerView selectRow:self.provinceIndex inComponent:0 animated:YES];
+        [self.pickerView selectRow:self.cityIndex inComponent:1 animated:YES];
+        [self.pickerView selectRow:self.areaIndex inComponent:2 animated:YES];
+    }
+}
+
 - (void)addPickerToView:(UIView *)view {
-    // 添加地址选择器
+    // 1.添加地址选择器
     if (view) {
         // 立即刷新容器视图 view 的布局（防止 view 使用自动布局时，选择器视图无法正常显示）
         [view setNeedsLayout];
@@ -443,7 +446,8 @@
         [self.alertView addSubview:self.pickerView];
     }
     
-    [self handlerPickerData];
+    // 2.绑定数据
+    [self reloadData];
     
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
@@ -474,13 +478,6 @@
 }
 
 #pragma mark - setter方法
-- (void)setPickerMode:(BRAddressPickerMode)pickerMode {
-    _pickerMode = pickerMode;
-    if (_pickerView) {
-        [self handlerDefaultSelectValue];
-    }
-}
-
 - (void)setSelectValues:(NSArray<NSString *> *)selectValues {
     self.mSelectValues = selectValues;
 }
