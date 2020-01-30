@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.5.1` 。
+- 当前最新版本为： `2.5.2` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -152,7 +152,7 @@ datePickerView.pickerStyle = customStyle;
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 |                                                              |                                                              |
 | ![日期单位单行显示样式](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) |                                                              |
-| 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeSingleRow; |                                                              |
+| 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeOnlyCenter; |                                                              |
 
 **【模板样式】：**
 
@@ -160,8 +160,8 @@ datePickerView.pickerStyle = customStyle;
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 模板样式1：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]]; | 模板样式2：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]]; |
 |                                                              |                                                              |
-| ![模板样式3](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) | ![模板样式4](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style4.png?raw=true) |
-| 模板样式3：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]]; | 模板样式4：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDateUnitOnTop]; |
+| ![模板样式3](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) |                                                              |
+| 模板样式3：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]]; |                                                              |
 
 #### 2. 地址选择器：`BRAddressPickerView`
 
@@ -259,6 +259,12 @@ stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModel
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2020-01-30（V2.5.2）
+
+- 更新地址选择器省市区数据源
+- 新增属性：`pickerHeaderView`、`pickerFooterView`
+- 新增刷新选择器数据方法：`reloadData`
 
 #### 2020-01-05（V2.5.1）
 
