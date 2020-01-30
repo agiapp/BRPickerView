@@ -321,13 +321,13 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             };
             
             // 添加头视图
-            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 36)];
             headerView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1f];
             NSArray *unitArr = @[@"年", @"月", @"日"];
             for (NSInteger i = 0; i < unitArr.count; i++) {
                 CGFloat width = SCREEN_WIDTH / unitArr.count;
                 CGFloat orginX = i * (SCREEN_WIDTH / unitArr.count);
-                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(orginX, 0, width, 40)];
+                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(orginX, 0, width, 36)];
                 label.backgroundColor = [UIColor clearColor];
                 label.textAlignment = NSTextAlignmentCenter;
                 label.font = [UIFont systemFontOfSize:16.0f];

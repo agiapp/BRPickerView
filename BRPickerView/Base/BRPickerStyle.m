@@ -11,13 +11,8 @@
 #import "NSBundle+BRPickerView.h"
 
 // 标题颜色
-#ifndef kDefaultTextColor
-#define kDefaultTextColor BR_RGB_HEX(0x333333, 1.0f)
-#endif
-#ifndef kBorderColor
-// 边框颜色
-#define kBorderColor BR_RGB_HEX(0xe2e2e3, 1.0f)
-#endif
+#define kBRDefaultTextColor BR_RGB_HEX(0x333333, 1.0f)
+#define kBRSeparatorColor BR_RGB_HEX(0xc6c6c8, 1.0f)
 
 @implementation BRPickerStyle
 
@@ -39,11 +34,7 @@
 
 - (UIColor *)shadowLineColor {
     if (!_shadowLineColor) {
-        if (@available(iOS 13.0, *)) {
-            _shadowLineColor = [UIColor separatorColor];
-        } else {
-            _shadowLineColor = kBorderColor;
-        }
+        _shadowLineColor = [self br_customDynamicColor:kBRSeparatorColor darkColor:BR_RGB_HEX(0x161618, 1.0f)];
     }
     return _shadowLineColor;
 }
@@ -72,11 +63,7 @@
 
 - (UIColor *)titleLineColor {
     if (!_titleLineColor) {
-        if (@available(iOS 13.0, *)) {
-            _titleLineColor = [UIColor quaternaryLabelColor];
-        } else {
-            _titleLineColor = BR_RGB_HEX(0xededee, 1.0f);
-        }
+        _titleLineColor = [self br_customDynamicColor:BR_RGB_HEX(0xededee, 1.0f) darkColor:BR_RGB_HEX(0x18181c, 1.0f)];
     }
     return _titleLineColor;
 }
@@ -93,7 +80,7 @@
         if (@available(iOS 13.0, *)) {
             _cancelTextColor = [UIColor labelColor];
         } else {
-            _cancelTextColor = kDefaultTextColor;
+            _cancelTextColor = kBRDefaultTextColor;
         }
     }
     return _cancelTextColor;
@@ -164,7 +151,7 @@
         if (@available(iOS 13.0, *)) {
             _doneTextColor = [UIColor labelColor];
         } else {
-            _doneTextColor = kDefaultTextColor;
+            _doneTextColor = kBRDefaultTextColor;
         }
     }
     return _doneTextColor;
@@ -207,7 +194,7 @@
         if (@available(iOS 13.0, *)) {
             _separatorColor = [UIColor separatorColor];
         } else {
-            _separatorColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+            _separatorColor = kBRSeparatorColor;
         }
     }
     return _separatorColor;
@@ -218,7 +205,7 @@
         if (@available(iOS 13.0, *)) {
             _pickerTextColor = [UIColor labelColor];
         } else {
-            _pickerTextColor = kDefaultTextColor;
+            _pickerTextColor = kBRDefaultTextColor;
         }
     }
     return _pickerTextColor;
@@ -258,7 +245,7 @@
         if (@available(iOS 13.0, *)) {
             _dateUnitTextColor = [UIColor labelColor];
         } else {
-            _dateUnitTextColor = kDefaultTextColor;
+            _dateUnitTextColor = kBRDefaultTextColor;
         }
     }
     return _dateUnitTextColor;
