@@ -160,6 +160,7 @@
 }
 
 #pragma mark - UIPickerViewDataSource
+// 1.设置 pickerView 的列数
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
@@ -174,6 +175,7 @@
     }
 }
 
+// 2.设置 pickerView 每列的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
@@ -188,7 +190,8 @@
     }
 }
 
-// 自定义 pickerView 的 label
+#pragma mark - UIPickerViewDelegate
+// 3.设置 pickerView 的显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
     // 设置分割线的颜色
@@ -233,7 +236,7 @@
     return label;
 }
 
-#pragma mark - UIPickerViewDelegate
+// 4.滚动 pickerView 执行的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:

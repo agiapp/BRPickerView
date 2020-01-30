@@ -785,7 +785,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1. 设置 picker 的列数
+// 1.设置 pickerView 的列数
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         return 6;
@@ -813,7 +813,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return 0;
 }
 
-// 2. 设置 picker 每列的行数
+// 2.设置 pickerView 每列的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     NSArray *rowsArr = [NSArray array];
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
@@ -843,7 +843,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - UIPickerViewDelegate
-// 3. 设置 picker 的 显示内容
+// 3. 设置 pickerView 的显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
     // 设置分割线的颜色
@@ -961,7 +961,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return label;
 }
 
-// 4. 时间选择器2 每次滚动后的回调方法
+// 4.滚动 pickerView 执行的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString *lastSelectValue = self.mSelectValue;
     if (self.pickerMode == BRDatePickerModeYMDHMS) {

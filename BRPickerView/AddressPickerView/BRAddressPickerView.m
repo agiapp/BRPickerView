@@ -265,7 +265,7 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1.指定pickerview有几个表盘(几列)
+// 1.设置 pickerView 的列数
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.pickerMode) {
         case BRAddressPickerModeProvince:
@@ -283,7 +283,7 @@
     }
 }
 
-// 2.指定每个表盘上有几行数据
+// 2.设置 pickerView 每列的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
         // 返回省个数
@@ -298,11 +298,10 @@
         return self.areaModelArr.count;
     }
     return 0;
-    
 }
 
 #pragma mark - UIPickerViewDelegate
-// 3.设置 pickerView 的 显示内容
+// 3.设置 pickerView 的显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     
     // 设置分割线的颜色
@@ -338,7 +337,7 @@
     return label;
 }
 
-// 4.选中时回调的委托方法，在此方法中实现省份和城市间的联动
+// 4.滚动 pickerView 执行的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) { // 选择省
         // 保存选择的省份的索引

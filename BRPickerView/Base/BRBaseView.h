@@ -41,7 +41,7 @@ typedef void(^BRResultBlock)(void);
 
 
 /// 扩展一：添加选择器到指定容器视图上
-/// 应用场景：可将选择器（pickerView，不包含标题栏）添加到任何自定义视图上，也支持自定义更多的弹框样式
+/// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
 /// @param view 容器视图
 - (void)addPickerToView:(UIView *)view;
 
@@ -50,13 +50,14 @@ typedef void(^BRResultBlock)(void);
 - (void)removePickerFromView:(UIView *)view;
 
 /// 扩展二：添加自定义视图到选择器（pickerView）上
-/// 应用场景：可以添加一些固定的标题、数值的单位等到选择器中间
+/// 应用场景：可以添加一些固定的标题、单位等到选择器中间
 /// @param customView 自定义视图
 - (void)addSubViewToPicker:(UIView *)customView;
 
 /// 扩展三：添加自定义视图到标题栏（titleBarView）上
-/// 应用场景：先自定义标题栏高度，再添加一些固定的标题等到标题栏底部
+/// 应用场景：可以添加一些子控件到标题栏
 /// @param customView 自定义视图
 - (void)addSubViewToTitleBar:(UIView *)customView;
+
 
 @end
