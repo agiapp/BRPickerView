@@ -119,4 +119,5 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
                      isAutoSelect:(BOOL)isAutoSelect
                       resultBlock:(BRAddressResultBlock)resultBlock;
 
+
 @end

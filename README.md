@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.5.2` 。
+- 当前最新版本为： `2.5.3` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -260,9 +260,8 @@ stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModel
 
 # 更新记录
 
-#### 2020-01-30（V2.5.2）
+#### 2020-01-31（V2.5.3）
 
-- 更新地址选择器省市区数据源
 - 新增属性：`pickerHeaderView`、`pickerFooterView`
 - 新增刷新选择器数据方法：`reloadData`
 

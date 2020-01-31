@@ -153,4 +153,5 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
                     isAutoSelect:(BOOL)isAutoSelect
                      resultBlock:(BRStringResultModelArrayBlock)resultBlock;
 
+
 @end

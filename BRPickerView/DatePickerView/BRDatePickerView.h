@@ -69,10 +69,10 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  ///
  ////////////////////////////////////////////////////////////////////////*/
 
-/** 日期选择器显示类型（支持动态更新！） */
+/** 日期选择器显示类型 */
 @property (nonatomic, assign) BRDatePickerMode pickerMode;
 
-/** 设置选中的时间（支持动态更新！）*/
+/** 设置选中的时间（推荐使用 selectDate） */
 @property (nonatomic, strong) NSDate *selectDate;
 @property (nonatomic, copy) NSString *selectValue;
 
@@ -183,5 +183,6 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
                        maxDate:(NSDate *)maxDate
                   isAutoSelect:(BOOL)isAutoSelect
                    resultBlock:(BRDateResultBlock)resultBlock;
+
 
 @end
