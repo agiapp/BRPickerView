@@ -12,7 +12,6 @@
 
 // 标题颜色
 #define kBRDefaultTextColor BR_RGB_HEX(0x333333, 1.0f)
-#define kBRSeparatorColor BR_RGB_HEX(0xc6c6c8, 1.0f)
 
 @implementation BRPickerStyle
 
@@ -34,15 +33,28 @@
 
 - (UIColor *)shadowLineColor {
     if (!_shadowLineColor) {
-        _shadowLineColor = [self br_customDynamicColor:kBRSeparatorColor darkColor:BR_RGB_HEX(0x161618, 1.0f)];
+        if (@available(iOS 13.0, *)) {
+            // 边框线颜色，有透明度
+            _shadowLineColor = [UIColor separatorColor];
+        } else {
+            _shadowLineColor = BR_RGB_HEX(0xc6c6c8, 1.0f);
+        }
     }
     return _shadowLineColor;
+}
+
+- (CGFloat)shadowLineHeight {
+    if (_shadowLineHeight <= 0 || _shadowLineHeight > 5.0f) {
+        _shadowLineHeight = 0.5f;
+    }
+    return _shadowLineHeight;
 }
 
 - (UIColor *)titleBarColor {
     if (!_titleBarColor) {
         if (@available(iOS 13.0, *)) {
-            _titleBarColor = [self br_customDynamicColor:[UIColor whiteColor] darkColor:[UIColor secondarySystemBackgroundColor]];
+            // #ffffff(正常)、#1c1c1e(深色)
+            _titleBarColor = [UIColor secondarySystemGroupedBackgroundColor];
         } else {
             _titleBarColor = [UIColor whiteColor];
         }
@@ -63,7 +75,7 @@
 
 - (UIColor *)titleLineColor {
     if (!_titleLineColor) {
-        _titleLineColor = [self br_customDynamicColor:BR_RGB_HEX(0xededee, 1.0f) darkColor:BR_RGB_HEX(0x18181c, 1.0f)];
+        _titleLineColor = [self br_colorWithLightColor:BR_RGB_HEX(0xededee, 1.0f) darkColor:BR_RGB_HEX(0x18181c, 1.0f)];
     }
     return _titleLineColor;
 }
@@ -181,7 +193,8 @@
 - (UIColor *)pickerColor {
     if (!_pickerColor) {
         if (@available(iOS 13.0, *)) {
-            _pickerColor = [self br_customDynamicColor:[UIColor whiteColor] darkColor:[UIColor secondarySystemBackgroundColor]];
+            // #ffffff(正常)、#1c1c1e(深色)
+            _pickerColor = [UIColor secondarySystemGroupedBackgroundColor];
         } else {
             _pickerColor = [UIColor whiteColor];
         }
@@ -192,9 +205,10 @@
 - (UIColor *)separatorColor {
     if (!_separatorColor) {
         if (@available(iOS 13.0, *)) {
-            _separatorColor = [UIColor separatorColor];
+            // 分割线颜色，无透明度
+            _separatorColor = [UIColor opaqueSeparatorColor];
         } else {
-            _separatorColor = kBRSeparatorColor;
+            _separatorColor = BR_RGB_HEX(0xc6c6c8, 1.0f);
         }
     }
     return _separatorColor;
@@ -259,7 +273,7 @@
 }
 
 #pragma mark - 创建自定义动态颜色（适配深色模式）
-- (UIColor *)br_customDynamicColor:(UIColor *)lightColor darkColor:(UIColor *)darkColor {
+- (UIColor *)br_colorWithLightColor:(UIColor *)lightColor darkColor:(UIColor *)darkColor {
     if (@available(iOS 13.0, *)) {
         UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
             if ([traitCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {

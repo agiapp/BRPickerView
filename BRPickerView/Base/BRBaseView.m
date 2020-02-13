@@ -132,7 +132,7 @@
         _alertView.backgroundColor = self.pickerStyle.alertViewColor;
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
-            UIView *shadowLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _alertView.frame.size.width, 1.0f)];
+            UIView *shadowLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _alertView.frame.size.width, self.pickerStyle.shadowLineHeight)];
             shadowLineView.backgroundColor = self.pickerStyle.shadowLineColor;
             shadowLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [_alertView addSubview:shadowLineView];

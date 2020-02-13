@@ -44,6 +44,9 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 /** 设置 alertView 弹框视图顶部边框线颜色  */
 @property (nonatomic, strong) UIColor *shadowLineColor;
 
+/** 设置 alertView 弹框视图顶部边框线高度  */
+@property (nonatomic, assign) CGFloat shadowLineHeight;
+
 /** 隐藏 alertView 弹框视图顶部边框线，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenShadowLine;
 
