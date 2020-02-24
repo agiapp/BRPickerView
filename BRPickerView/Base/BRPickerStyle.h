@@ -12,7 +12,7 @@
 #import "BRPickerViewMacro.h"
 
 // 边框样式（左边取消按钮/右边确定按钮）
-typedef NS_ENUM(NSUInteger, BRBorderStyle) {
+typedef NS_ENUM(NSInteger, BRBorderStyle) {
     /** 无边框（默认） */
     BRBorderStyleNone = 0,
     /** 有圆角和边框 */
@@ -148,6 +148,12 @@ typedef NS_ENUM(NSUInteger, BRBorderStyle) {
 
 /** 设置 picker 中间两条分割线的背景颜色（separatorColor）*/
 @property (nonatomic, strong) UIColor *separatorColor;
+
+/**
+ *  设置 picker 选中行的背景颜色，默认为nil
+ *  提示：当有设置选中行的背景颜色时，pickerColor默认会等于clearColor，此时可通过设置 pickerView 父视图的背景颜色 来设置选择器的背景颜色
+ */
+@property (nonatomic, strong) UIColor *selectRowColor;
 
 /** 设置 picker 文本的颜色（textColor）*/
 @property (nonatomic, strong) UIColor *pickerTextColor;

@@ -102,6 +102,9 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
+/** 是否显示农历日期，默认为 NO */
+@property (nonatomic, assign) BOOL isChineseCalendar;
+
 /** 设置分的时间间隔，默认为1 */
 @property (nonatomic, assign) NSInteger minuteInterval;
 

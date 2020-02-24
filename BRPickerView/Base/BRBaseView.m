@@ -20,6 +20,8 @@
 @property (nonatomic, strong) UIButton *doneBtn;
 // 中间标题
 @property (nonatomic, strong) UILabel *titleLabel;
+// 选中行背景视图
+@property (nonatomic, strong) UIView *selectRowView;
 
 // 取消按钮离屏幕边缘的距离
 @property (nonatomic, assign) CGFloat cancelBtnMargin;
@@ -40,6 +42,11 @@
     }
     
     [self addSubview:self.alertView];
+    
+    if (self.pickerStyle.selectRowColor) {
+        [self.alertView addSubview:self.selectRowView];
+        [self.alertView sendSubviewToBack:self.selectRowView];
+    }
     
     // 是否隐藏标题栏
     if (!self.pickerStyle.hiddenTitleBarView) {
@@ -129,7 +136,7 @@
         }
         CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + BR_BOTTOM_MARGIN + accessoryViewHeight;
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - height, SCREEN_WIDTH, height)];
-        _alertView.backgroundColor = self.pickerStyle.alertViewColor;
+        _alertView.backgroundColor = self.pickerStyle.alertViewColor ? self.pickerStyle.alertViewColor : self.pickerStyle.pickerColor;
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
             UIView *shadowLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _alertView.frame.size.width, self.pickerStyle.shadowLineHeight)];
@@ -233,6 +240,16 @@
     return _titleLabel;
 }
 
+- (UIView *)selectRowView {
+    if (!_selectRowView) {
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        CGFloat orginY = self.pickerStyle.titleBarHeight + pickerHeaderViewHeight + self.pickerStyle.pickerHeight / 2 - self.pickerStyle.rowHeight / 2;
+        _selectRowView = [[UIView alloc]initWithFrame:CGRectMake(0, orginY, SCREEN_WIDTH, self.pickerStyle.rowHeight)];
+        _selectRowView.backgroundColor = self.pickerStyle.selectRowColor;
+    }
+    return _selectRowView;
+}
+
 #pragma mark - 点击蒙层视图事件
 - (void)didTapMaskView:(UITapGestureRecognizer *)sender {
     [self removePickerFromView:nil];
@@ -262,18 +279,28 @@
         self.frame = view.bounds;
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
+        CGFloat accessoryViewHeight = 0;
         if (self.pickerHeaderView) {
             CGRect rect = self.pickerHeaderView.frame;
             self.pickerHeaderView.frame = CGRectMake(0, 0, view.bounds.size.width, rect.size.height);
             self.pickerHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [self addSubview:self.pickerHeaderView];
+            
+            accessoryViewHeight += self.pickerHeaderView.bounds.size.height;
         }
         if (self.pickerFooterView) {
             CGRect rect = self.pickerFooterView.frame;
             self.pickerFooterView.frame = CGRectMake(0, view.bounds.size.height - rect.size.height, view.bounds.size.width, rect.size.height);
             self.pickerFooterView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [self addSubview:self.pickerFooterView];
+            
+            accessoryViewHeight += self.pickerFooterView.bounds.size.height;
         }
+        
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        CGFloat orginY = pickerHeaderViewHeight + (view.bounds.size.height- accessoryViewHeight) / 2 - self.pickerStyle.rowHeight / 2;
+        self.selectRowView.frame = CGRectMake(0, orginY, view.bounds.size.width, self.pickerStyle.rowHeight);
+        [view addSubview:self.selectRowView];
         
         [view addSubview:self];
     } else {

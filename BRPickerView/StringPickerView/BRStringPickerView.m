@@ -147,7 +147,11 @@
     if (!_pickerView) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
-        _pickerView.backgroundColor = self.pickerStyle.pickerColor;
+        if (self.pickerStyle.selectRowColor) {
+            _pickerView.backgroundColor = [UIColor clearColor];
+        } else {
+            _pickerView.backgroundColor = self.pickerStyle.pickerColor;
+        }
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;

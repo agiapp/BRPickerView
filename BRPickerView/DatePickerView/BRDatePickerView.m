@@ -722,7 +722,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (!_datePicker) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
         _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
-        _datePicker.backgroundColor = self.pickerStyle.pickerColor;
+        if (self.pickerStyle.selectRowColor) {
+            _datePicker.backgroundColor = [UIColor clearColor];
+        } else {
+            _datePicker.backgroundColor = self.pickerStyle.pickerColor;
+        }
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _datePicker.datePickerMode = _datePickerMode;
         // 设置该 UIDatePicker 的国际化 Locale
@@ -772,7 +776,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (!_pickerView) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
-        _pickerView.backgroundColor = self.pickerStyle.pickerColor;
+        if (self.pickerStyle.selectRowColor) {
+            _pickerView.backgroundColor = [UIColor clearColor];
+        } else {
+            _pickerView.backgroundColor = self.pickerStyle.pickerColor;
+        }
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;

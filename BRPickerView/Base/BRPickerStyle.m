@@ -24,13 +24,6 @@
     return _maskColor;
 }
 
-- (UIColor *)alertViewColor {
-    if (!_alertViewColor) {
-        _alertViewColor = self.pickerColor;
-    }
-    return _alertViewColor;
-}
-
 - (UIColor *)shadowLineColor {
     if (!_shadowLineColor) {
         if (@available(iOS 13.0, *)) {
