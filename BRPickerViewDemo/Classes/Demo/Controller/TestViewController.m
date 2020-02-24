@@ -625,6 +625,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+        customStyle.pickerColor = containerView.backgroundColor;
         datePickerView.pickerStyle = customStyle;
         self.datePickerView = datePickerView;
         
