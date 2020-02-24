@@ -51,11 +51,11 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *>*resultMod
 
 /** 设置默认选中的位置【单列】 */
 @property (nonatomic, assign) NSInteger selectIndex;
-@property (nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("推荐使用 selectIndex");
+@property (nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("Use `selectIndex` instead");
 
 /** 设置默认选中的位置【多列】 */
 @property (nonatomic, copy) NSArray <NSNumber *>* selectIndexs;
-@property (nonatomic, copy) NSArray <NSString *>* selectValues BRPickerViewDeprecated("推荐使用 selectIndexs");
+@property (nonatomic, copy) NSArray <NSString *>* selectValues BRPickerViewDeprecated("Use `selectIndexs` instead");
 
 /** 选择结果的回调【单列】 */
 @property (nonatomic, copy) BRStringResultModelBlock resultModelBlock;

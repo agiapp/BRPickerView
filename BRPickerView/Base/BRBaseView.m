@@ -246,6 +246,7 @@
         CGFloat orginY = self.pickerStyle.titleBarHeight + pickerHeaderViewHeight + self.pickerStyle.pickerHeight / 2 - self.pickerStyle.rowHeight / 2;
         _selectRowView = [[UIView alloc]initWithFrame:CGRectMake(0, orginY, SCREEN_WIDTH, self.pickerStyle.rowHeight)];
         _selectRowView.backgroundColor = self.pickerStyle.selectRowColor;
+        _selectRowView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     return _selectRowView;
 }

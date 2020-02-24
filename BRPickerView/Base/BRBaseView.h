@@ -21,9 +21,6 @@ typedef void(^BRResultBlock)(void);
 /** 是否自动选择，即滚动选择器后就执行结果回调，默认为 NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
-/** 是否循环滚动，默认为 NO */
-@property (nonatomic, assign) BOOL isLoop;
-
 /** 自定义UI样式（不传或为nil时，是默认样式） */
 @property (nonatomic, strong) BRPickerStyle *pickerStyle;
 

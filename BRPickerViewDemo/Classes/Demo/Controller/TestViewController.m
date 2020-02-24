@@ -16,7 +16,7 @@
 
 #define kThemeColor BR_RGB_HEX(0x2e70c2, 1.0f)
 
-typedef NS_ENUM(NSUInteger, BRTimeType) {
+typedef NS_ENUM(NSInteger, BRTimeType) {
     BRTimeTypeBeginTime = 0,
     BRTimeTypeEndTime
 };
@@ -347,6 +347,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]];
             
+            // 设置选择器选中行的背景颜色
+            //BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            //customStyle.selectRowColor = [UIColor orangeColor];
+            //datePickerView.pickerStyle = customStyle;
+            
             [datePickerView show];
             
         }
@@ -594,7 +599,11 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 3.创建选择器容器视图
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(30, 170, _footerView.frame.size.width - 60, 200)];
-        containerView.backgroundColor = [UIColor clearColor];
+        if (@available(iOS 13.0, *)) {
+            containerView.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        } else {
+            containerView.backgroundColor = BR_RGB_HEX(0xf2f2f7, 1.0f);
+        }
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:containerView];
         
@@ -616,11 +625,6 @@ typedef NS_ENUM(NSUInteger, BRTimeType) {
         
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-        if (@available(iOS 13.0, *)) {
-            customStyle.pickerColor = [UIColor secondarySystemBackgroundColor];
-        } else {
-            customStyle.pickerColor = BR_RGB_HEX(0xf2f2f7, 1.0f);
-        }
         datePickerView.pickerStyle = customStyle;
         self.datePickerView = datePickerView;
         
