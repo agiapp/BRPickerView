@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.5.3` 。
+- 当前最新版本为： `2.5.5` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -99,7 +99,7 @@ datePickerView.isAutoSelect = YES;
 datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
     NSLog(@"选择的值：%@", selectValue);
 };
-// 自定义主题样式
+// 设置自定义样式
 BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
 customStyle.pickerColor = BR_RGB_HEX(0xd9dbdf, 1.0f);
 customStyle.pickerTextColor = [UIColor redColor];
@@ -259,6 +259,10 @@ stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModel
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2020-02-24（V2.5.5）
+
+- 实现设置选择器选中行颜色的功能，新增属性 `selectRowColor`
 
 #### 2020-01-31（V2.5.3）
 
