@@ -10,6 +10,8 @@
 #import "BRBaseView.h"
 #import "NSDate+BRPickerView.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// 日期选择器格式
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     // ----- 以下4种是系统自带的样式 -----
@@ -57,7 +59,7 @@ typedef NS_ENUM(NSInteger, BRShowUnitType) {
     BRShowUnitTypeNone
 };
 
-typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
+typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nullable selectValue);
 
 @interface BRDatePickerView : BRBaseView
 
@@ -73,19 +75,19 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
 @property (nonatomic, assign) BRDatePickerMode pickerMode;
 
 /** 设置选中的时间（推荐使用 selectDate） */
-@property (nonatomic, strong) NSDate *selectDate;
-@property (nonatomic, copy) NSString *selectValue;
+@property (nullable, nonatomic, strong) NSDate *selectDate;
+@property (nullable, nonatomic, copy) NSString *selectValue;
 
 /** 最小时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
-@property (nonatomic, strong) NSDate *minDate;
+@property (nullable, nonatomic, strong) NSDate *minDate;
 /** 最大时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
-@property (nonatomic, strong) NSDate *maxDate;
+@property (nullable, nonatomic, strong) NSDate *maxDate;
 
 /** 选择结果的回调 */
-@property (nonatomic, copy) BRDateResultBlock resultBlock;
+@property (nullable, nonatomic, copy) BRDateResultBlock resultBlock;
 
 /** 滚动选择时触发的回调 */
-@property (nonatomic, copy) BRDateResultBlock changeBlock;
+@property (nullable, nonatomic, copy) BRDateResultBlock changeBlock;
 
 /** 日期单位显示类型 */
 @property (nonatomic, assign) BRShowUnitType showUnitType;
@@ -144,9 +146,9 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *
  */
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
-                         title:(NSString *)title
-                   selectValue:(NSString *)selectValue
-                   resultBlock:(BRDateResultBlock)resultBlock;
+                         title:(nullable NSString *)title
+                   selectValue:(nullable NSString *)selectValue
+                   resultBlock:(nullable BRDateResultBlock)resultBlock;
 
 /**
  *  2.显示时间选择器
@@ -159,10 +161,10 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *
  */
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
-                         title:(NSString *)title
-                   selectValue:(NSString *)selectValue
+                         title:(nullable NSString *)title
+                   selectValue:(nullable NSString *)selectValue
                   isAutoSelect:(BOOL)isAutoSelect
-                   resultBlock:(BRDateResultBlock)resultBlock;
+                   resultBlock:(nullable BRDateResultBlock)resultBlock;
 
 /**
  *  3.显示时间选择器
@@ -177,12 +179,14 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue);
  *
  */
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
-                         title:(NSString *)title
-                   selectValue:(NSString *)selectValue
-                       minDate:(NSDate *)minDate
-                       maxDate:(NSDate *)maxDate
+                         title:(nullable NSString *)title
+                   selectValue:(nullable NSString *)selectValue
+                       minDate:(nullable NSDate *)minDate
+                       maxDate:(nullable NSDate *)maxDate
                   isAutoSelect:(BOOL)isAutoSelect
-                   resultBlock:(BRDateResultBlock)resultBlock;
+                   resultBlock:(nullable BRDateResultBlock)resultBlock;
 
 
 @end
+
+NS_ASSUME_NONNULL_END

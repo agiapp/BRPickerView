@@ -10,34 +10,36 @@
 #import <UIKit/UIKit.h>
 #import "BRPickerStyle.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void(^BRCancelBlock)(void);
 typedef void(^BRResultBlock)(void);
 
 @interface BRBaseView : UIView
 
 /** 选择器标题 */
-@property (nonatomic, copy) NSString *title;
+@property (nullable, nonatomic, copy) NSString *title;
 
 /** 是否自动选择，即滚动选择器后就执行结果回调，默认为 NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 自定义UI样式（不传或为nil时，是默认样式） */
-@property (nonatomic, strong) BRPickerStyle *pickerStyle;
+@property (nullable, nonatomic, strong) BRPickerStyle *pickerStyle;
 
 /** 取消选择的回调 */
-@property (nonatomic, copy) BRCancelBlock cancelBlock;
+@property (nullable, nonatomic, copy) BRCancelBlock cancelBlock;
 
 /** accessory view for above picker view. default is nil */
-@property (nonatomic, strong) UIView *pickerHeaderView;
+@property (nullable, nonatomic, strong) UIView *pickerHeaderView;
 
 /** accessory view below picker view. default is nil */
-@property (nonatomic, strong) UIView *pickerFooterView;
+@property (nullable, nonatomic, strong) UIView *pickerFooterView;
 
 /** 选择结果的回调（框架内部使用） */
-@property (nonatomic, copy) BRResultBlock doneBlock;
+@property (nullable, nonatomic, copy) BRResultBlock doneBlock;
 
 /** 弹框视图 */
-@property (nonatomic, strong) UIView *alertView;
+@property (nullable, nonatomic, strong) UIView *alertView;
 
 
 /// 刷新选择器数据
@@ -47,11 +49,11 @@ typedef void(^BRResultBlock)(void);
 /// 扩展一：添加选择器到指定容器视图上
 /// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
 /// @param view 容器视图
-- (void)addPickerToView:(UIView *)view;
+- (void)addPickerToView:(nullable UIView *)view;
 
 /// 从指定容器视图上移除选择器
 /// @param view 容器视图
-- (void)removePickerFromView:(UIView *)view;
+- (void)removePickerFromView:(nullable UIView *)view;
 
 /// 扩展二：添加自定义视图到选择器（pickerView）上
 /// 应用场景：可以添加一些固定的标题、单位等到选择器中间
@@ -65,3 +67,5 @@ typedef void(^BRResultBlock)(void);
 
 
 @end
+
+NS_ASSUME_NONNULL_END

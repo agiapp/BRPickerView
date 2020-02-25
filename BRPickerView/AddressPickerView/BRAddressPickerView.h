@@ -10,6 +10,8 @@
 #import "BRBaseView.h"
 #import "BRAddressModel.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// 地址选择器类型
 typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
     /** 显示【省市区】（默认） */
@@ -20,7 +22,7 @@ typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
     BRAddressPickerModeProvince
 };
 
-typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area);
+typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCityModel * _Nullable city, BRAreaModel * _Nullable area);
 
 @interface BRAddressPickerView : BRBaseView
 
@@ -36,22 +38,22 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
 @property (nonatomic, assign) BRAddressPickerMode pickerMode;
 
 /** 默认选中的位置(1.传索引数组，如：@[@10, @0, @4]) */
-@property (nonatomic, copy) NSArray <NSNumber *>* selectIndexs;
+@property (nullable, nonatomic, copy) NSArray <NSNumber *> *selectIndexs;
 /** 默认选中的位置(2.传值数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
-@property (nonatomic, copy) NSArray <NSString *>* selectValues; // 推荐使用 selectIndexs
+@property (nullable, nonatomic, copy) NSArray <NSString *> *selectValues; // 推荐使用 selectIndexs
 
 /** 选择结果的回调 */
-@property (nonatomic, copy) BRAddressResultBlock resultBlock;
+@property (nullable, nonatomic, copy) BRAddressResultBlock resultBlock;
 
 /** 滚动选择时触发的回调 */
-@property (nonatomic, copy) BRAddressResultBlock changeBlock;
+@property (nullable, nonatomic, copy) BRAddressResultBlock changeBlock;
 
 /**
  *  地区数据源（不传或为nil，默认就获取框架内 BRCity.json 文件的数据）
  *  1.可以传 JSON数组，要注意 层级结构 和 key 要与 BRCity.json 保持一致
- *  2.可以传 模型数组(NSArray <BRProvinceModel *>* 类型)，自己解析数据源 只需要注意层级结构就行
+ *  2.可以传 模型数组(NSArray <BRProvinceModel *> * 类型)，自己解析数据源 只需要注意层级结构就行
  */
-@property (nonatomic, copy) NSArray *dataSourceArr;
+@property (nullable, nonatomic, copy) NSArray *dataSourceArr;
 
 /// 初始化地址选择器
 /// @param pickerMode 地址选择器显示类型
@@ -86,8 +88,8 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
  *  @param resultBlock              选择后的回调
  *
  */
-+ (void)showAddressPickerWithSelectIndexs:(NSArray <NSNumber *>*)selectIndexs
-                              resultBlock:(BRAddressResultBlock)resultBlock;
++ (void)showAddressPickerWithSelectIndexs:(nullable NSArray <NSNumber *> *)selectIndexs
+                              resultBlock:(nullable BRAddressResultBlock)resultBlock;
 
 /**
  *  2.显示地址选择器
@@ -99,9 +101,9 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
  *
  */
 + (void)showAddressPickerWithMode:(BRAddressPickerMode)mode
-                     selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                     selectIndexs:(nullable NSArray <NSNumber *> *)selectIndexs
                      isAutoSelect:(BOOL)isAutoSelect
-                      resultBlock:(BRAddressResultBlock)resultBlock;
+                      resultBlock:(nullable BRAddressResultBlock)resultBlock;
 
 /**
  *  3.显示地址选择器
@@ -114,10 +116,12 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel *province, BRCityModel *city
  *
  */
 + (void)showAddressPickerWithMode:(BRAddressPickerMode)mode
-                       dataSource:(NSArray *)dataSource
-                     selectIndexs:(NSArray <NSNumber *>*)selectIndexs
+                       dataSource:(nullable NSArray *)dataSource
+                     selectIndexs:(nullable NSArray <NSNumber *> *)selectIndexs
                      isAutoSelect:(BOOL)isAutoSelect
-                      resultBlock:(BRAddressResultBlock)resultBlock;
+                      resultBlock:(nullable BRAddressResultBlock)resultBlock;
 
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -10,24 +10,28 @@
 #import <Foundation/Foundation.h>
 #import "BRPickerViewMacro.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface BRResultModel : NSObject
 /** 父级ID */
-@property (nonatomic, copy) NSString *ParentID;
+@property (nullable, nonatomic, copy) NSString *ParentID;
 /** ID */
-@property (nonatomic, copy) NSString *ID;
+@property (nullable, nonatomic, copy) NSString *ID;
 /** key */
-@property (nonatomic, copy) NSString *key;
+@property (nullable, nonatomic, copy) NSString *key;
 /** 值 */
-@property (nonatomic, copy) NSString *value;
+@property (nullable, nonatomic, copy) NSString *value;
 /** 备注 */
-@property (nonatomic, copy) NSString *remark;
+@property (nullable, nonatomic, copy) NSString *remark;
 
 /** 选择值对应的索引（行数） */
 @property (nonatomic, assign) NSInteger index;
 
 /** 值 */
-@property (nonatomic, copy) NSString *name BRPickerViewDeprecated("请使用 value");
+@property (nullable, nonatomic, copy) NSString *name BRPickerViewDeprecated("请使用 value");
 /** 选择的值 */
-@property (nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("请使用 value");
+@property (nullable, nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("请使用 value");
 
 @end
+
+NS_ASSUME_NONNULL_END
