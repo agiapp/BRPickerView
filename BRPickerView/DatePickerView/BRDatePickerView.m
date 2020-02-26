@@ -765,6 +765,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (self.maxDate) {
             _datePicker.maximumDate = self.maxDate;
         }
+        if (_datePickerMode == UIDatePickerModeCountDownTimer && self.countDownDuration > 0) {
+            _datePicker.countDownDuration = self.countDownDuration;
+        }
+        if (self.minuteInterval > 1) {
+            _datePicker.minuteInterval = self.minuteInterval;
+        }
         // 滚动改变值的响应事件
         [_datePicker addTarget:self action:@selector(didSelectValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
@@ -1723,14 +1729,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 - (NSInteger)minuteInterval {
-    if (_minuteInterval < 1 || _minuteInterval >= 59) {
+    if (_minuteInterval < 1 || _minuteInterval > 30) {
         _minuteInterval = 1;
     }
     return _minuteInterval;
 }
 
 - (NSInteger)secondInterval {
-    if (_secondInterval < 1 || _secondInterval >= 59) {
+    if (_secondInterval < 1 || _secondInterval > 30) {
         _secondInterval = 1;
     }
     return _secondInterval;

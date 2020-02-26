@@ -110,6 +110,9 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 设置秒的时间间隔，默认为1 */
 @property (nonatomic, assign) NSInteger secondInterval;
 
+/** 设置倒计时的时长（单位为秒，范围：0 ~ 24*60*60-1） for BRDatePickerModeCountDownTimer, ignored otherwise. */
+@property (nonatomic, assign) NSTimeInterval countDownDuration;
+
 /// 初始化时间选择器
 /// @param pickerMode  日期选择器显示类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;
