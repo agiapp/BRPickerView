@@ -194,15 +194,15 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 //////////////////////////////// 常用的几种模板样式 ////////////////////////////////
 
-/// 模板样式1 - 取消/确定按钮圆角样式
+/// 弹框模板样式1 - 取消/确定按钮圆角样式
 /// @param themeColor 主题颜色
 + (instancetype)pickerStyleWithThemeColor:(nullable UIColor *)themeColor;
 
-/// 模板样式2 - 顶部圆角样式 + 完成按钮
+/// 弹框模板样式2 - 顶部圆角样式 + 完成按钮
 /// @param doneTextColor 完成按钮标题的颜色
 + (instancetype)pickerStyleWithDoneTextColor:(nullable UIColor *)doneTextColor;
 
-/// 模板样式3 - 顶部圆角样式 + 图标按钮
+/// 弹框模板样式3 - 顶部圆角样式 + 图标按钮
 /// @param doneBtnImage 完成按钮的 image
 + (instancetype)pickerStyleWithDoneBtnImage:(nullable UIImage *)doneBtnImage;
 

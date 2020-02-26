@@ -281,7 +281,7 @@
     }
 }
 
-#pragma mark - 模板样式1 - 取消/确定按钮圆角样式
+#pragma mark - 弹框模板样式1 - 取消/确定按钮圆角样式
 + (instancetype)pickerStyleWithThemeColor:(UIColor *)themeColor {
     BRPickerStyle *customStyle = [[self alloc]init];
     if (themeColor) {
@@ -294,7 +294,7 @@
     return customStyle;
 }
 
-#pragma mark - 模板样式2 - 顶部圆角样式 + 完成按钮
+#pragma mark - 弹框模板样式2 - 顶部圆角样式 + 完成按钮
 + (instancetype)pickerStyleWithDoneTextColor:(UIColor *)doneTextColor {
     BRPickerStyle *customStyle = [[self alloc]init];
     if (doneTextColor) {
@@ -310,7 +310,7 @@
     return customStyle;
 }
 
-#pragma mark - 模板样式3 - 顶部圆角样式 + 图标按钮
+#pragma mark - 弹框模板样式3 - 顶部圆角样式 + 图标按钮
 + (instancetype)pickerStyleWithDoneBtnImage:(UIImage *)doneBtnImage {
     BRPickerStyle *customStyle = [[self alloc]init];
     if (doneBtnImage) {

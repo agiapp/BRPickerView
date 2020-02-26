@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 日期选择器格式
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
-    // ----- 以下4种是系统自带的样式 -----
-    /** 【yyyy-MM-dd】UIDatePickerModeDate（默认） */
+    // ----- 以下4种是系统自带的样式（兼容国际化日期格式） -----
+    /** 【yyyy-MM-dd】UIDatePickerModeDate（美式日期：MM-dd-yyyy；英式日期：dd-MM-yyyy）*/
     BRDatePickerModeDate,
     /** 【yyyy-MM-dd HH:mm】 UIDatePickerModeDateAndTime */
     BRDatePickerModeDateAndTime,
@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeMDHM,
     /** 【yyyy-MM-dd】年月日 */
     BRDatePickerModeYMD,
-    /** 【yyyy-MM】年月 */
+    /** 【yyyy-MM】年月（兼容国际化日期：MM-yyyy）*/
     BRDatePickerModeYM,
     /** 【yyyy】年 */
     BRDatePickerModeY,
