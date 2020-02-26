@@ -242,6 +242,8 @@
 - (NSString *)language {
     if (!_language) {
         // 跟随系统的首选语言自动改变
+        // zh-Hans-CN(简体中文)、zh-Hant-CN(繁体中文)、en-CN(美式英语)、en-GB(英式英语)
+        // 其中`CN`是iOS9以后新增的地区代码，如：CN 代表中国，US 代表美国
         _language = [NSLocale preferredLanguages].firstObject;
     }
     return _language;

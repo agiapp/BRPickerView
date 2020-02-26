@@ -59,6 +59,16 @@ typedef NS_ENUM(NSInteger, BRShowUnitType) {
     BRShowUnitTypeNone
 };
 
+/// 月份名称类型
+typedef NS_ENUM(NSInteger, BRMonthNameType) {
+    /** 月份英文全称 */
+    BRMonthNameTypeFullName,
+    /** 月份英文简称 */
+    BRMonthNameTypeShortName,
+    /** 月份数字 */
+    BRMonthNameTypeNumber
+};
+
 typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nullable selectValue);
 
 @interface BRDatePickerView : BRBaseView
@@ -104,14 +114,17 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
-/** 设置分的时间间隔，默认为1 */
+/** 设置分的时间间隔，默认为1（范围：1 ~ 30）*/
 @property (nonatomic, assign) NSInteger minuteInterval;
 
-/** 设置秒的时间间隔，默认为1 */
+/** 设置秒的时间间隔，默认为1（范围：1 ~ 30）*/
 @property (nonatomic, assign) NSInteger secondInterval;
 
-/** 设置倒计时的时长（单位为秒，范围：0 ~ 24*60*60-1） for BRDatePickerModeCountDownTimer, ignored otherwise. */
+/** 设置倒计时的时长，默认为0（范围：0 ~ 24*60*60-1，单位为秒） for `BRDatePickerModeCountDownTimer`, ignored otherwise. */
 @property (nonatomic, assign) NSTimeInterval countDownDuration;
+
+/** for `BRDatePickerModeYM`, ignored otherwise. */
+@property (nonatomic, assign) BRMonthNameType monthNameType;
 
 /// 初始化时间选择器
 /// @param pickerMode  日期选择器显示类型
