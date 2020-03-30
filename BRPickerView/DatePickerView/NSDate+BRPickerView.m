@@ -187,12 +187,8 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSDate时间 和 字符串时间 之间的转换：NSDate 转 NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
-    if (!date) {
-        return nil;
-    }
+    // NSDateFormatter 默认时区为系统时区
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    // 不设置会默认使用当前所在的时区
-    // dateFormatter.timeZone = [NSTimeZone systemTimeZone];
     // 设置日期格式
     dateFormatter.dateFormat = format;
     NSString *dateString = [dateFormatter stringFromDate:date];
@@ -202,28 +198,28 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSDate时间 和 字符串时间 之间的转换：NSString 转 NSDate
 + (NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format {
-    if (!dateString || dateString.length == 0) {
-        return nil;
-    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = format;
-    // 一些夏令时时间（如：1949-05-01等），会导致 NSDateFormatter 格式化失败，返回null
-    NSDate *date = [dateFormatter dateFromString:dateString];
-    if (!date) {
-        date = [NSDate date];
-    }
+    // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
+    // 设置时区(默认不使用夏时制)
+    dateFormatter.timeZone = [self currentTimeZone];
+    // 如果当前时间不存在，就获取距离最近的整点时间
+    dateFormatter.lenient = YES;
     
-    // 设置转换后的目标日期时区
-    NSTimeZone *toTimeZone = [NSTimeZone localTimeZone];
-    // 转换后源日期与世界标准时间的偏移量（解决8小时时间差问题）
-    NSInteger toGMTOffset = [toTimeZone secondsFromGMTForDate:date];
-    // 设置时区：字符串时间是当前时区的时间，NSDate存储的是世界标准时间(零时区的时间)
-    dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:toGMTOffset];
+    return [dateFormatter dateFromString:dateString];
+}
+
+#pragma mark - 获取当前时区(不使用夏时制)
++ (NSTimeZone *)currentTimeZone {
+    // 当前时区
+    NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
+    // 当前时区相对于GMT(零时区)的偏移秒数
+    NSInteger interval = [currentTimeZone secondsFromGMTForDate:[NSDate date]];
+    // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
+    currentTimeZone = [NSTimeZone timeZoneForSecondsFromGMT:interval];
     
-    date = [dateFormatter dateFromString:dateString];
-    
-    return date;
+    return currentTimeZone;
 }
 
 #pragma mark - 获取某个月的天数（通过年月求每月天数）
