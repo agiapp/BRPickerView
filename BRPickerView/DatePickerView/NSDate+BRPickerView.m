@@ -20,8 +20,8 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 + (NSCalendar *)calendar {
     static NSCalendar *sharedCalendar = nil;
     if (!sharedCalendar) {
-        // 创建日历对象：返回当前客户端的逻辑日历(当每次修改系统日历设定，其实例化的对象也会随之改变)
-        sharedCalendar = [NSCalendar autoupdatingCurrentCalendar];
+        // 创建日历对象，指定日历的算法（公历）
+        sharedCalendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     }
     return sharedCalendar;
 }
@@ -117,9 +117,10 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - 创建date
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
-    NSCalendar *calendar = [NSDate calendar];
+    NSCalendar *calendar = [self calendar];
     // 初始化日期组件
-    NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
+    //NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
+    NSDateComponents *components = [[NSDateComponents alloc]init];
     if (year > 0) {
         components.year = year;
     }

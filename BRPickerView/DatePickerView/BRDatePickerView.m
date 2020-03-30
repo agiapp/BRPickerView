@@ -637,7 +637,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else {
             minuteIndex = 0;
         }
-        
     }
     self.minuteIndex = minuteIndex;
     
@@ -1203,7 +1202,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             self.mSelectDate = [NSDate date];
             self.mSelectValue = [self getNowString];
         }
-        
     } else if (self.pickerMode == BRDatePickerModeY) {
         if (component == 0) {
             self.yearIndex = row;
