@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【**特别提示**】：
 
-- 当前最新版本为： `2.5.6` 。
+- 当前最新版本为： `2.5.7` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -287,6 +287,10 @@ stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModel
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2020-03-31（V2.5.7）
+
+- 优化代码，解决已知问题
 
 #### 2020-02-26（V2.5.6）
 
