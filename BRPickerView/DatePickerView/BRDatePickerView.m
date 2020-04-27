@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @interface BRDatePickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
     UIDatePickerMode _datePickerMode;
+    UIView *_containerView;
 }
 /** 时间选择器1 */
 @property (nonatomic, strong) UIDatePicker *datePicker;
@@ -733,49 +734,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         }
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-        _datePicker.datePickerMode = _datePickerMode;
-        // 设置该 UIDatePicker 的国际化 Locale
-        _datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
-        // textColor 隐藏属性，使用KVC赋值
-        [_datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
-        
-    /*
-         // 通过 NSInvocation 来改变默认选中字体的状态
-         SEL selector= NSSelectorFromString(@"setHighlightsToday:");
-         // 创建NSInvocation
-         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDatePicker instanceMethodSignatureForSelector:selector]];
-         BOOL no = NO;
-         [invocation setSelector:selector];
-         [invocation setArgument:&no atIndex:2];
-         // 让invocation执行setHighlightsToday方法
-         [invocation invokeWithTarget:_datePicker];
-         
-         
-         // 设置分割线颜色
-         for (UIView *view in _datePicker.subviews) {
-             if ([view isKindOfClass:[UIView class]]) {
-                 for (UIView *subView in view.subviews) {
-                     if (subView.frame.size.height < 1) {
-                         subView.backgroundColor = self.pickerStyle.separatorColor;
-                     }
-                 }
-             }
-         }
-    */
-        
-        // 设置时间范围
-        if (self.minDate) {
-            _datePicker.minimumDate = self.minDate;
-        }
-        if (self.maxDate) {
-            _datePicker.maximumDate = self.maxDate;
-        }
-        if (_datePickerMode == UIDatePickerModeCountDownTimer && self.countDownDuration > 0) {
-            _datePicker.countDownDuration = self.countDownDuration;
-        }
-        if (self.minuteInterval > 1) {
-            _datePicker.minuteInterval = self.minuteInterval;
-        }
         // 滚动改变值的响应事件
         [_datePicker addTarget:self action:@selector(didSelectValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
@@ -1367,12 +1325,31 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)reloadData {
     // 1.处理数据源
     [self handlerPickerData];
-    // 2.刷新选择器
-    [self.pickerView reloadAllComponents];
-    // 3.滚动到选择的时间
     if (self.style == BRDatePickerStyleSystem) {
+        // 2.刷新选择器（重新设置相关值）
+        self.datePicker.datePickerMode = _datePickerMode;
+        // 设置该 UIDatePicker 的国际化 Locale
+        self.datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
+        // textColor 隐藏属性，使用KVC赋值
+        [self.datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
+        if (self.minDate) {
+            self.datePicker.minimumDate = self.minDate;
+        }
+        if (self.maxDate) {
+            self.datePicker.maximumDate = self.maxDate;
+        }
+        if (_datePickerMode == UIDatePickerModeCountDownTimer && self.countDownDuration > 0) {
+            self.datePicker.countDownDuration = self.countDownDuration;
+        }
+        if (self.minuteInterval > 1) {
+            self.datePicker.minuteInterval = self.minuteInterval;
+        }
+        // 3.滚动到选择的时间
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {
+        // 2.刷新选择器
+        [self.pickerView reloadAllComponents];
+        // 3.滚动到选择的时间
         if (self.selectValue && [self.selectValue isEqualToString:[self getNowString]]) {
             [self scrollToNowDate:NO];
         } else {
@@ -1382,6 +1359,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 - (void)addPickerToView:(UIView *)view {
+    _containerView = view;
     [self setupDateFormatter:self.pickerMode];
     // 1.添加时间选择器
     if (self.style == BRDatePickerStyleSystem) {
@@ -1625,7 +1603,18 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     _pickerMode = pickerMode;
     // 非空，表示二次设置
     if (_datePicker || _pickerView) {
+        BRDatePickerStyle lastStyle = self.style;
         [self setupDateFormatter:pickerMode];
+        // 系统样式 切换到 自定义样式
+        if (lastStyle == BRDatePickerStyleSystem && self.style == BRDatePickerStyleCustom) {
+            [self.datePicker removeFromSuperview];
+            [self setPickerView:self.pickerView toView:_containerView];
+        }
+        // 自定义样式 切换到 系统样式
+        if (lastStyle == BRDatePickerStyleCustom && self.style == BRDatePickerStyleSystem) {
+            [self.pickerView removeFromSuperview];
+            [self setPickerView:self.datePicker toView:_containerView];
+        }
         // 刷新选择器数据
         [self reloadData];
         if (self.style == BRDatePickerStyleCustom && self.showUnitType == BRShowUnitTypeOnlyCenter) {

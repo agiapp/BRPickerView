@@ -118,10 +118,11 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 #pragma mark - 创建date（通过NSCalendar类来创建日期）
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
     NSCalendar *calendar = [self calendar];
-    // 初始化日期组件
-    //NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
-    NSDateComponents *components = [[NSDateComponents alloc]init];
+    // 获取当前日期组件
+    NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
     if (year > 0) {
+        // 初始化日期组件
+        components = [[NSDateComponents alloc]init];
         components.year = year;
     }
     if (month > 0) {
