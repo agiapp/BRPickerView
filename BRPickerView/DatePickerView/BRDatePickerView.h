@@ -105,14 +105,17 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 隐藏日期单位，默认为NO */
 @property (nonatomic, assign) BOOL hiddenDateUnit BRPickerViewDeprecated("Use `showUnitType` instead");
 
-/** 是否显示【星期】，默认为 NO  */
+/** 是否显示【星期】，默认为 NO */
 @property (nonatomic, assign, getter=isShowWeek) BOOL showWeek;
 
-/** 是否显示【今天】，默认为 NO  */
+/** 是否显示【今天】，默认为 NO */
 @property (nonatomic, assign, getter=isShowToday) BOOL showToday;
 
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
+
+/** 时间列表排序是否降序，默认为 NO（升序）*/
+@property (nonatomic, assign, getter=isDescending) BOOL descending;
 
 /** 设置分的时间间隔，默认为1（范围：1 ~ 30）*/
 @property (nonatomic, assign) NSInteger minuteInterval;
