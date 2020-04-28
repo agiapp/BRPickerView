@@ -153,7 +153,17 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [self handlerDefaultSelectDate];
     
     if (self.style == BRDatePickerStyleCustom) {
+        
+        // 4.初始化选择器日期列表数据
         [self initDateArray];
+        
+        // 5.默认选中的索引
+        self.yearIndex = [self.yearArr indexOfObject:[@(self.mSelectDate.br_year) stringValue]];
+        self.monthIndex = [self.monthArr indexOfObject:[@(self.mSelectDate.br_month) stringValue]];
+        self.dayIndex = [self.dayArr indexOfObject:[@(self.mSelectDate.br_day) stringValue]];
+        self.hourIndex = [self.hourArr indexOfObject:[@(self.mSelectDate.br_hour) stringValue]];
+        self.minuteIndex = [self.minuteArr indexOfObject:[@(self.mSelectDate.br_minute) stringValue]];
+        self.secondIndex = [self.secondArr indexOfObject:[@(self.mSelectDate.br_second) stringValue]];
     }
 }
 
@@ -655,36 +665,35 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 滚动到指定时间的位置
 - (void)scrollToSelectDate:(NSDate *)selectDate animated:(BOOL)animated {
-    self.yearIndex = [self.yearArr indexOfObject:[@(selectDate.br_year) stringValue]];
-    self.monthIndex = [self.monthArr indexOfObject:[@(selectDate.br_month) stringValue]];
-    self.dayIndex = [self.dayArr indexOfObject:[@(selectDate.br_day) stringValue]];
-    self.hourIndex = [self.hourArr indexOfObject:[@(selectDate.br_hour) stringValue]];
-    self.minuteIndex = [self.minuteArr indexOfObject:[@(selectDate.br_minute) stringValue]];
-    self.secondIndex = [self.secondArr indexOfObject:[@(selectDate.br_second) stringValue]];
-    
+    NSInteger yearIndex = [self.yearArr indexOfObject:[@(selectDate.br_year) stringValue]];
+    NSInteger monthIndex = [self.monthArr indexOfObject:[@(selectDate.br_month) stringValue]];
+    NSInteger dayIndex = [self.dayArr indexOfObject:[@(selectDate.br_day) stringValue]];
+    NSInteger hourIndex = [self.hourArr indexOfObject:[@(selectDate.br_hour) stringValue]];
+    NSInteger minuteIndex = [self.minuteArr indexOfObject:[@(selectDate.br_minute) stringValue]];
+    NSInteger secondIndex = [self.secondArr indexOfObject:[@(selectDate.br_second) stringValue]];
     NSArray *indexArr = [NSArray array];
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
-        indexArr = @[@(self.yearIndex), @(self.monthIndex), @(self.dayIndex), @(self.hourIndex), @(self.minuteIndex), @(self.secondIndex)];
+        indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex), @(hourIndex), @(minuteIndex), @(secondIndex)];
     } else if (self.pickerMode == BRDatePickerModeYMDHM) {
-        indexArr = @[@(self.yearIndex), @(self.monthIndex), @(self.dayIndex), @(self.hourIndex), @(self.minuteIndex)];
+        indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex), @(hourIndex), @(minuteIndex)];
     } else if (self.pickerMode == BRDatePickerModeYMDH) {
-        indexArr = @[@(self.yearIndex), @(self.monthIndex), @(self.dayIndex), @(self.hourIndex)];
+        indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex), @(hourIndex)];
     } else if (self.pickerMode == BRDatePickerModeMDHM) {
-        indexArr = @[@(self.monthIndex), @(self.dayIndex), @(self.hourIndex), @(self.minuteIndex)];
+        indexArr = @[@(monthIndex), @(dayIndex), @(hourIndex), @(minuteIndex)];
     } else if (self.pickerMode == BRDatePickerModeYMD) {
-        indexArr = @[@(self.yearIndex), @(self.monthIndex), @(self.dayIndex)];
+        indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex)];
     } else if (self.pickerMode == BRDatePickerModeYM) {
-        indexArr = [self.pickerStyle.language hasPrefix:@"zh"] ? @[@(self.yearIndex), @(self.monthIndex)] : @[@(self.monthIndex), @(self.yearIndex)];
+        indexArr = [self.pickerStyle.language hasPrefix:@"zh"] ? @[@(yearIndex), @(monthIndex)] : @[@(monthIndex), @(yearIndex)];
     } else if (self.pickerMode == BRDatePickerModeY) {
-        indexArr = @[@(self.yearIndex)];
+        indexArr = @[@(yearIndex)];
     } else if (self.pickerMode == BRDatePickerModeMD) {
-        indexArr = @[@(self.monthIndex), @(self.dayIndex)];
+        indexArr = @[@(monthIndex), @(dayIndex)];
     } else if (self.pickerMode == BRDatePickerModeHMS) {
-        indexArr = @[@(self.hourIndex), @(self.minuteIndex), @(self.secondIndex)];
+        indexArr = @[@(hourIndex), @(minuteIndex), @(secondIndex)];
     } else if (self.pickerMode == BRDatePickerModeHM) {
-        indexArr = @[@(self.hourIndex), @(self.minuteIndex)];
+        indexArr = @[@(hourIndex), @(minuteIndex)];
     } else if (self.pickerMode == BRDatePickerModeMS) {
-        indexArr = @[@(self.minuteIndex), @(self.secondIndex)];
+        indexArr = @[@(minuteIndex), @(secondIndex)];
     }
     for (NSInteger i = 0; i < indexArr.count; i++) {
         [self.pickerView selectRow:[indexArr[i] integerValue] inComponent:i animated:animated];
@@ -843,6 +852,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         }
     }
     
+    // 自定义 row 的 UILabel
     UILabel *label = (UILabel *)view;
     if (!label) {
         label = [[UILabel alloc]init];
@@ -856,99 +866,130 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         label.minimumScaleFactor = 0.5f;
     }
     // 给选择器上的label赋值
+    label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    
+    // 设置中间行的字体颜色/字体大小
+    if (self.pickerStyle.selectRowTextColor || self.pickerStyle.selectRowTextFont) {
+        // 上一个选中row的颜色
+        UILabel *lastLabel = (UILabel*)[pickerView viewForRow:row - 1 forComponent:component];
+        if (lastLabel) {
+            lastLabel.textColor = self.pickerStyle.pickerTextColor;
+            lastLabel.font = self.pickerStyle.pickerTextFont;
+        }
+        // 当前选中row的颜色
+        UILabel *selectLabel = (UILabel*)[pickerView viewForRow:row forComponent:component];
+        if (selectLabel && self.pickerStyle.selectRowTextColor) {
+            selectLabel.textColor = self.pickerStyle.selectRowTextColor;
+        }
+        if (selectLabel && self.pickerStyle.selectRowTextFont) {
+            selectLabel.font = self.pickerStyle.selectRowTextFont;
+        }
+        // 下一个选中row的颜色
+        UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
+        if (nextLabel) {
+            nextLabel.textColor = self.pickerStyle.pickerTextColor;
+            nextLabel.font = self.pickerStyle.pickerTextFont;
+        }
+    }
+
+    return label;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString *titleString = @"";
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         if (component == 0) {
-            label.text = [self getYearText:row];
+            titleString = [self getYearText:row];
         } else if (component == 1) {
-            label.text = [self getMonthText:row];
+            titleString = [self getMonthText:row];
         } else if (component == 2) {
-            label.text = [self getDayText:row];
+            titleString = [self getDayText:row];
         } else if (component == 3) {
-            label.text = [self getHourText:row];
+            titleString = [self getHourText:row];
         } else if (component == 4) {
-            label.text = [self getMinuteText:row];
+            titleString = [self getMinuteText:row];
         } else if (component == 5) {
-            label.text = [self getSecondText:row];
+            titleString = [self getSecondText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeYMDHM) {
         if (component == 0) {
-            label.text = [self getYearText:row];
+            titleString = [self getYearText:row];
         } else if (component == 1) {
-            label.text = [self getMonthText:row];
+            titleString = [self getMonthText:row];
         } else if (component == 2) {
-            label.text = [self getDayText:row];
+            titleString = [self getDayText:row];
         } else if (component == 3) {
-            label.text = [self getHourText:row];
+            titleString = [self getHourText:row];
         } else if (component == 4) {
-            label.text = [self getMinuteText:row];
+            titleString = [self getMinuteText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeYMDH) {
         if (component == 0) {
-            label.text = [self getYearText:row];
+            titleString = [self getYearText:row];
         } else if (component == 1) {
-            label.text = [self getMonthText:row];
+            titleString = [self getMonthText:row];
         } else if (component == 2) {
-            label.text = [self getDayText:row];
+            titleString = [self getDayText:row];
         } else if (component == 3) {
-            label.text = [self getHourText:row];
+            titleString = [self getHourText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeMDHM) {
         if (component == 0) {
-            label.text = [self getMonthText:row];
+            titleString = [self getMonthText:row];
         } else if (component == 1) {
-            label.text = [self getDayText:row];
+            titleString = [self getDayText:row];
         } else if (component == 2) {
-            label.text = [self getHourText:row];
+            titleString = [self getHourText:row];
         } else if (component == 3) {
-            label.text = [self getMinuteText:row];
+            titleString = [self getMinuteText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeYMD) {
         if (component == 0) {
-            label.text = [self getYearText:row];
+            titleString = [self getYearText:row];
         } else if (component == 1) {
-            label.text = [self getMonthText:row];
+            titleString = [self getMonthText:row];
         } else if (component == 2) {
-            label.text = [self getDayText:row];
+            titleString = [self getDayText:row];
         }
     }  else if (self.pickerMode == BRDatePickerModeYM) {
         if (component == 0) {
-            label.text = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getYearText:row] : [self getMonthText:row];
+            titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getYearText:row] : [self getMonthText:row];
         } else if (component == 1) {
-            label.text = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getMonthText:row] : [self getYearText:row];
+            titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getMonthText:row] : [self getYearText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeY) {
         if (component == 0) {
-            label.text = [self getYearText:row];
+            titleString = [self getYearText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeMD) {
         if (component == 0) {
-            label.text = [self getMonthText:row];
+            titleString = [self getMonthText:row];
         } else if (component == 1) {
-            label.text = [self getDayText:row];
+            titleString = [self getDayText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeHMS) {
         if (component == 0) {
-            label.text = [self getHourText:row];
+            titleString = [self getHourText:row];
         } else if (component == 1) {
-            label.text = [self getMinuteText:row];
+            titleString = [self getMinuteText:row];
         } else if (component == 2) {
-            label.text = [self getSecondText:row];
+            titleString = [self getSecondText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeHM) {
         if (component == 0) {
-            label.text = [self getHourText:row];
+            titleString = [self getHourText:row];
         } else if (component == 1) {
-            label.text = [self getMinuteText:row];
+            titleString = [self getMinuteText:row];
         }
     } else if (self.pickerMode == BRDatePickerModeMS) {
         if (component == 0) {
-            label.text = [self getMinuteText:row];
+            titleString = [self getMinuteText:row];
         } else if (component == 1) {
-            label.text = [self getSecondText:row];
+            titleString = [self getSecondText:row];
         }
     }
     
-    return label;
+    return titleString;
 }
 
 // 4.滚动 pickerView 执行的回调方法

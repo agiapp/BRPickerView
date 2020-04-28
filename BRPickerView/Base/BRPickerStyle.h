@@ -151,17 +151,23 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 中间两条分割线的背景颜色（separatorColor）*/
 @property (nullable, nonatomic, strong) UIColor *separatorColor;
 
-/**
- *  设置 picker 选中行的背景颜色，默认为nil
- *  提示：当有设置选中行的背景颜色时，pickerColor默认会等于clearColor，此时可通过设置 pickerView 父视图的背景颜色 来设置选择器的背景颜色
- */
-@property (nullable, nonatomic, strong) UIColor *selectRowColor;
-
 /** 设置 picker 文本的颜色（textColor）*/
 @property (nullable, nonatomic, strong) UIColor *pickerTextColor;
 
 /** 设置 picker 文本的字体（font）*/
 @property (nullable, nonatomic, strong) UIFont *pickerTextFont;
+
+/**
+ *  设置 picker 选中行的背景颜色，默认为nil
+ *  提示：当有设置 selectRowColor 时，pickerColor 设置会失效， 默认重置为 clearColor
+ */
+@property (nullable, nonatomic, strong) UIColor *selectRowColor;
+
+/** 设置 picker 中间选中行文本的颜色（textColor）*/
+@property (nullable, nonatomic, strong) UIColor *selectRowTextColor;
+
+/** 设置 picker 中间选中行文本的字体（font）*/
+@property (nullable, nonatomic, strong) UIFont *selectRowTextFont;
 
 /** 设置 picker 的高度（height），系统默认高度为 216 */
 @property (nonatomic, assign) CGFloat pickerHeight;

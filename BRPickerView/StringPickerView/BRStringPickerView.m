@@ -234,6 +234,30 @@
         }
     }
     
+    // 设置中间行的字体颜色/字体大小
+    if (self.pickerStyle.selectRowTextColor || self.pickerStyle.selectRowTextFont) {
+        // 上一个选中row的颜色
+        UILabel *lastLabel = (UILabel*)[pickerView viewForRow:row - 1 forComponent:component];
+        if (lastLabel) {
+            lastLabel.textColor = self.pickerStyle.pickerTextColor;
+            lastLabel.font = self.pickerStyle.pickerTextFont;
+        }
+        // 当前选中row的颜色
+        UILabel *selectLabel = (UILabel*)[pickerView viewForRow:row forComponent:component];
+        if (selectLabel && self.pickerStyle.selectRowTextColor) {
+            selectLabel.textColor = self.pickerStyle.selectRowTextColor;
+        }
+        if (selectLabel && self.pickerStyle.selectRowTextFont) {
+            selectLabel.font = self.pickerStyle.selectRowTextFont;
+        }
+        // 下一个选中row的颜色
+        UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
+        if (nextLabel) {
+            nextLabel.textColor = self.pickerStyle.pickerTextColor;
+            nextLabel.font = self.pickerStyle.pickerTextFont;
+        }
+    }
+    
     return label;
 }
 
