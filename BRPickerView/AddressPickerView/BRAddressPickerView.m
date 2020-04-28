@@ -153,6 +153,8 @@
             self.provinceIndex = (provinceIndex > 0 && provinceIndex < self.provinceModelArr.count) ? provinceIndex : 0;
             self.selectProvinceModel = self.provinceModelArr.count > self.provinceIndex ? self.provinceModelArr[self.provinceIndex] : nil;
         } else {
+            self.provinceIndex = 0;
+            self.selectProvinceModel = self.provinceModelArr.count > 0 ? self.provinceModelArr[0] : nil;
             @weakify(self)
             [self.provinceModelArr enumerateObjectsUsingBlock:^(BRProvinceModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
@@ -160,10 +162,6 @@
                     self.provinceIndex = idx;
                     self.selectProvinceModel = model;
                     *stop = YES;
-                }
-                if (idx == self.provinceModelArr.count - 1) {
-                    self.provinceIndex = 0;
-                    self.selectProvinceModel = self.provinceModelArr.count > 0 ? self.provinceModelArr[0] : nil;
                 }
             }];
         }
@@ -176,6 +174,8 @@
             self.cityIndex = (cityIndex > 0 && cityIndex < self.cityModelArr.count) ? cityIndex : 0;
             self.selectCityModel = self.cityModelArr.count > self.cityIndex ? self.cityModelArr[self.cityIndex] : nil;
         } else {
+            self.cityIndex = 0;
+            self.selectCityModel = self.cityModelArr.count > 0 ? self.cityModelArr[0] : nil;
             @weakify(self)
             [self.cityModelArr enumerateObjectsUsingBlock:^(BRCityModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
@@ -183,10 +183,6 @@
                     self.cityIndex = idx;
                     self.selectCityModel = model;
                     *stop = YES;
-                }
-                if (idx == self.cityModelArr.count - 1) {
-                    self.cityIndex = 0;
-                    self.selectCityModel = self.cityModelArr.count > 0 ? self.cityModelArr[0] : nil;
                 }
             }];
         }
@@ -199,6 +195,8 @@
             self.areaIndex = (areaIndex > 0 && areaIndex < self.areaModelArr.count) ? areaIndex : 0;
             self.selectAreaModel = self.areaModelArr.count > self.areaIndex ? self.areaModelArr[self.areaIndex] : nil;
         } else {
+            self.areaIndex = 0;
+            self.selectAreaModel = self.areaModelArr.count > 0 ? self.areaModelArr[0] : nil;
             @weakify(self)
             [self.areaModelArr enumerateObjectsUsingBlock:^(BRAreaModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(self)
@@ -206,10 +204,6 @@
                     self.areaIndex = idx;
                     self.selectAreaModel = model;
                     *stop = YES;
-                }
-                if (idx == self.areaModelArr.count - 1) {
-                    self.areaIndex = 0;
-                    self.selectAreaModel = self.areaModelArr.count > 0 ? self.areaModelArr[0] : nil;
                 }
             }];
         }
