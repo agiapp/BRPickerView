@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 日期选择器格式
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
-    // ----- 以下4种是系统自带的样式（兼容国际化日期格式） -----
+    // ----- 以下4种是系统样式（兼容国际化日期格式） -----
     /** 【yyyy-MM-dd】UIDatePickerModeDate（美式日期：MM-dd-yyyy；英式日期：dd-MM-yyyy）*/
     BRDatePickerModeDate,
     /** 【yyyy-MM-dd HH:mm】 UIDatePickerModeDateAndTime */
@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeYMDH,
     /** 【MM-dd HH:mm】月日时分 */
     BRDatePickerModeMDHM,
-    /** 【yyyy-MM-dd】年月日 */
+    /** 【yyyy-MM-dd】年月日（兼容国际化日期：dd-MM-yyyy）*/
     BRDatePickerModeYMD,
     /** 【yyyy-MM】年月（兼容国际化日期：MM-yyyy）*/
     BRDatePickerModeYM,
@@ -51,11 +51,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
 
 /// 日期单位显示的位置
 typedef NS_ENUM(NSInteger, BRShowUnitType) {
-    /** 日期单位显示全部行（默认） */
+    /** 日期单位显示全部行（默认）*/
     BRShowUnitTypeAll,
     /** 日期单位仅显示中间行 */
     BRShowUnitTypeOnlyCenter,
-    /** 日期单位不显示 */
+    /** 日期单位不显示（隐藏日期单位）*/
     BRShowUnitTypeNone
 };
 
@@ -101,9 +101,6 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 
 /** 日期单位显示类型 */
 @property (nonatomic, assign) BRShowUnitType showUnitType;
-
-/** 隐藏日期单位，默认为NO */
-@property (nonatomic, assign) BOOL hiddenDateUnit BRPickerViewDeprecated("Use `showUnitType` instead");
 
 /** 是否显示【星期】，默认为 NO */
 @property (nonatomic, assign, getter=isShowWeek) BOOL showWeek;

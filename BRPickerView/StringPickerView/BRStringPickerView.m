@@ -222,13 +222,13 @@
         }
     }
     
-    // 2.设置选择器选中行的样式
+    // 2.设置选择器中间选中行的样式
     [self setPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
     
     return label;
 }
 
-#pragma mark - 设置选择器选中行的样式
+#pragma mark - 设置选择器中间选中行的样式
 - (void)setPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     // 1.设置分割线的颜色
     for (UIView *subView in pickerView.subviews) {
@@ -237,7 +237,7 @@
         }
     }
     
-    // 2.设置选择器中间选择行的背景颜色
+    // 2.设置选择器中间选中行的背景颜色
     if (self.pickerStyle.selectRowColor) {
         UIView *contentView = nil;
         NSArray *subviews = pickerView.subviews;
@@ -269,30 +269,32 @@
         }
     }
     
-    // 3.设置中间行的字体颜色/字体大小
+    // 3.设置选择器中间选中行的字体颜色/字体大小
     if (self.pickerStyle.selectRowTextColor || self.pickerStyle.selectRowTextFont) {
-        // 当前选中的 label
-        UILabel *selectLabel = (UILabel *)[pickerView viewForRow:row forComponent:component];
-        if (selectLabel) {
-            if (self.pickerStyle.selectRowTextColor) {
-                selectLabel.textColor = self.pickerStyle.selectRowTextColor;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 当前选中的 label
+            UILabel *selectLabel = (UILabel *)[pickerView viewForRow:row forComponent:component];
+            if (selectLabel) {
+                if (self.pickerStyle.selectRowTextColor) {
+                    selectLabel.textColor = self.pickerStyle.selectRowTextColor;
+                }
+                if (self.pickerStyle.selectRowTextFont) {
+                    selectLabel.font = self.pickerStyle.selectRowTextFont;
+                }
+                // 上一个选中的 label
+                UILabel *lastLabel = (UILabel *)[pickerView viewForRow:row - 1 forComponent:component];
+                if (lastLabel) {
+                    lastLabel.textColor = self.pickerStyle.pickerTextColor;
+                    lastLabel.font = self.pickerStyle.pickerTextFont;
+                }
+                // 下一个选中的 label
+                UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
+                if (nextLabel) {
+                    nextLabel.textColor = self.pickerStyle.pickerTextColor;
+                    nextLabel.font = self.pickerStyle.pickerTextFont;
+                }
             }
-            if (self.pickerStyle.selectRowTextFont) {
-                selectLabel.font = self.pickerStyle.selectRowTextFont;
-            }
-            // 上一个选中的 label
-            UILabel *lastLabel = (UILabel *)[pickerView viewForRow:row - 1 forComponent:component];
-            if (lastLabel) {
-                lastLabel.textColor = self.pickerStyle.pickerTextColor;
-                lastLabel.font = self.pickerStyle.pickerTextFont;
-            }
-            // 下一个选中的 label
-            UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
-            if (nextLabel) {
-                nextLabel.textColor = self.pickerStyle.pickerTextColor;
-                nextLabel.font = self.pickerStyle.pickerTextFont;
-            }
-        }
+        });
     }
 }
 
