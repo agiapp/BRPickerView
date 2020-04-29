@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /////////////////////////////// 蒙层视图（maskView）///////////////////////////////
 
-/** 设置背景颜色（backgroundColor）*/
+/** 设置背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *maskColor;
 
 /** 隐藏 maskView，默认为 NO */
@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 ////////////////////////////// 弹框视图（alertView）///////////////////////////////
 
-/** 设置 alertView 弹框视图的背景颜色（backgroundColor）*/
+/** 设置 alertView 弹框视图的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *alertViewColor;
 
 /** 设置 alertView 弹框视图左上和右上的圆角半径  */
@@ -55,10 +55,10 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 //////////////////////////// 标题栏视图（titleBarView） ////////////////////////////
 
-/** 设置 titleBarView 标题栏的背景颜色（backgroundColor）*/
+/** 设置 titleBarView 标题栏的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *titleBarColor;
 
-/** 设置 titleBarView 标题栏的高度（height）*/
+/** 设置 titleBarView 标题栏的高度 */
 @property (nonatomic, assign) CGFloat titleBarHeight;
 
 /** 设置 titleBarView 标题栏底部分割线颜色 */
@@ -73,13 +73,13 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 ////////////////////////// 标题栏中间label（titleLabel）///////////////////////////
 
-/** 设置 titleLabel 的背景颜色（backgroundColor）*/
+/** 设置 titleLabel 的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *titleLabelColor;
 
-/** 设置 titleLabel 文本颜色（textColor）*/
+/** 设置 titleLabel 文本颜色 */
 @property (nullable, nonatomic, strong) UIColor *titleTextColor;
 
-/** 设置 titleLabel 字体大小（font）*/
+/** 设置 titleLabel 字体大小 */
 @property (nullable, nonatomic, strong) UIFont *titleTextFont;
 
 /** 设置 titleLabel 的 frame */
@@ -91,16 +91,16 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /////////////////////////////// 取消按钮（cancelBtn）//////////////////////////////
 
-/** 设置 cancelBtn 的背景颜色（backgroundColor）*/
+/** 设置 cancelBtn 的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *cancelColor;
 
-/** 设置 cancelBtn 标题的颜色（titleColor）*/
+/** 设置 cancelBtn 标题的颜色 */
 @property (nullable, nonatomic, strong) UIColor *cancelTextColor;
 
-/** 设置 cancelBtn 标题的字体（font）*/
+/** 设置 cancelBtn 标题的字体 */
 @property (nullable, nonatomic, strong) UIFont *cancelTextFont;
 
-/** 设置 cancelBtn 的边框样式（borderStyle）*/
+/** 设置 cancelBtn 的边框样式 */
 @property (nonatomic, assign) BRBorderStyle cancelBorderStyle;
 
 /** 设置 cancelBtn 的 frame */
@@ -118,16 +118,16 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /////////////////////////////// 确定按钮（doneBtn）////////////////////////////////
 
-/** 设置 doneBtn 的背景颜色（backgroundColor）*/
+/** 设置 doneBtn 的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *doneColor;
 
-/** 设置 doneBtn 标题的颜色（titleColor）*/
+/** 设置 doneBtn 标题的颜色 */
 @property (nullable, nonatomic, strong) UIColor *doneTextColor;
 
-/** 设置 doneBtn 标题的字体（font）*/
+/** 设置 doneBtn 标题的字体 */
 @property (nullable, nonatomic, strong) UIFont *doneTextFont;
 
-/** 设置 doneBtn 的边框样式（borderStyle）*/
+/** 设置 doneBtn 的边框样式 */
 @property (nonatomic, assign) BRBorderStyle doneBorderStyle;
 
 /** 设置 doneBtn 的 frame */
@@ -145,34 +145,31 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /////////////////////////////// 选择器（pickerView）///////////////////////////////
 
-/** 设置 picker 的背景颜色（backgroundColor）*/
+/** 设置 picker 的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *pickerColor;
 
-/** 设置 picker 中间两条分割线的背景颜色（separatorColor）*/
+/** 设置 picker 中间两条分割线的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *separatorColor;
 
-/** 设置 picker 文本的颜色（textColor）*/
+/** 设置 picker 文本的颜色 */
 @property (nullable, nonatomic, strong) UIColor *pickerTextColor;
 
-/** 设置 picker 文本的字体（font）*/
+/** 设置 picker 文本的字体 */
 @property (nullable, nonatomic, strong) UIFont *pickerTextFont;
 
-/**
- *  设置 picker 选中行的背景颜色，默认为nil
- *  提示：当有设置 selectRowColor 时，pickerColor 设置会失效， 默认重置为 clearColor
- */
+/** 设置 picker 中间选中行的背景颜色，默认为nil */
 @property (nullable, nonatomic, strong) UIColor *selectRowColor;
 
-/** 设置 picker 中间选中行文本的颜色（textColor）*/
+/** 设置 picker 中间选中行文本的颜色，默认为nil */
 @property (nullable, nonatomic, strong) UIColor *selectRowTextColor;
 
-/** 设置 picker 中间选中行文本的字体（font）*/
+/** 设置 picker 中间选中行文本的字体，默认为nil */
 @property (nullable, nonatomic, strong) UIFont *selectRowTextFont;
 
-/** 设置 picker 的高度（height），系统默认高度为 216 */
+/** 设置 picker 的高度，系统默认高度为 216 */
 @property (nonatomic, assign) CGFloat pickerHeight;
 
-/** 设置 picker 的行高（rowHeight）*/
+/** 设置 picker 的行高 */
 @property (nonatomic, assign) CGFloat rowHeight;
 
 
@@ -185,16 +182,16 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /////// 日期选择器单位样式（showUnitType == BRShowUnitTypeOnlyCenter 时，生效）///////
 
-/** 设置日期选择器单位文本的颜色（textColor）*/
+/** 设置日期选择器单位文本的颜色 */
 @property (nullable, nonatomic, strong) UIColor *dateUnitTextColor;
 
-/** 设置日期选择器单位文本的字体（font）*/
+/** 设置日期选择器单位文本的字体 */
 @property (nullable, nonatomic, strong) UIFont *dateUnitTextFont;
 
-/** 设置日期选择器单位 label 的水平方向偏移量（offsetX）*/
+/** 设置日期选择器单位 label 的水平方向偏移量 */
 @property (nonatomic, assign) CGFloat dateUnitOffsetX;
 
-/** 设置日期选择器单位 label 的竖直方向偏移量（offsetY）*/
+/** 设置日期选择器单位 label 的竖直方向偏移量 */
 @property (nonatomic, assign) CGFloat dateUnitOffsetY;
 
 

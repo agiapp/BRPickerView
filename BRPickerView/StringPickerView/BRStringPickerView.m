@@ -147,15 +147,10 @@
     if (!_pickerView) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, SCREEN_WIDTH, self.pickerStyle.pickerHeight)];
-        if (self.pickerStyle.selectRowColor) {
-            _pickerView.backgroundColor = [UIColor clearColor];
-        } else {
-            _pickerView.backgroundColor = self.pickerStyle.pickerColor;
-        }
+        _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
-        _pickerView.showsSelectionIndicator = YES;
     }
     return _pickerView;
 }
@@ -194,14 +189,7 @@
 #pragma mark - UIPickerViewDelegate
 // 3.设置 pickerView 的显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    
-    // 设置分割线的颜色
-    for (UIView *subView in pickerView.subviews) {
-        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
-            subView.backgroundColor = self.pickerStyle.separatorColor;
-        }
-    }
-    
+    // 1.自定义 row 的内容视图
     UILabel *label = (UILabel *)view;
     if (!label) {
         label = [[UILabel alloc]init];
@@ -234,31 +222,78 @@
         }
     }
     
-    // 设置中间行的字体颜色/字体大小
-    if (self.pickerStyle.selectRowTextColor || self.pickerStyle.selectRowTextFont) {
-        // 上一个选中row的颜色
-        UILabel *lastLabel = (UILabel*)[pickerView viewForRow:row - 1 forComponent:component];
-        if (lastLabel) {
-            lastLabel.textColor = self.pickerStyle.pickerTextColor;
-            lastLabel.font = self.pickerStyle.pickerTextFont;
-        }
-        // 当前选中row的颜色
-        UILabel *selectLabel = (UILabel*)[pickerView viewForRow:row forComponent:component];
-        if (selectLabel && self.pickerStyle.selectRowTextColor) {
-            selectLabel.textColor = self.pickerStyle.selectRowTextColor;
-        }
-        if (selectLabel && self.pickerStyle.selectRowTextFont) {
-            selectLabel.font = self.pickerStyle.selectRowTextFont;
-        }
-        // 下一个选中row的颜色
-        UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
-        if (nextLabel) {
-            nextLabel.textColor = self.pickerStyle.pickerTextColor;
-            nextLabel.font = self.pickerStyle.pickerTextFont;
+    // 2.设置选择器选中行的样式
+    [self setPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
+    
+    return label;
+}
+
+#pragma mark - 设置选择器选中行的样式
+- (void)setPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    // 1.设置分割线的颜色
+    for (UIView *subView in pickerView.subviews) {
+        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
+            subView.backgroundColor = self.pickerStyle.separatorColor;
         }
     }
     
-    return label;
+    // 2.设置选择器中间选择行的背景颜色
+    if (self.pickerStyle.selectRowColor) {
+        UIView *contentView = nil;
+        NSArray *subviews = pickerView.subviews;
+        if (subviews.count > 0) {
+            id obj = subviews.firstObject;
+            if (obj && [obj isKindOfClass:[UIView class]]) {
+                contentView = (UIView *)obj;
+            }
+        }
+        UIView *columnView = nil;
+        if (contentView) {
+            id obj = [contentView valueForKey:@"subviewCache"];
+            if (obj && [obj isKindOfClass:[NSArray class]]) {
+                NSArray *columnViews = (NSArray *)obj;
+                if (columnViews.count > 0) {
+                    id columnObj = columnViews.firstObject;
+                    if (columnObj && [columnObj isKindOfClass:[UIView class]]) {
+                        columnView = (UIView *)columnObj;
+                    }
+                }
+            }
+        }
+        if (columnView) {
+            id obj = [columnView valueForKey:@"middleContainerView"];
+            if (obj && [obj isKindOfClass:[UIView class]]) {
+                UIView *selectRowView = (UIView *)obj;
+                selectRowView.backgroundColor = self.pickerStyle.selectRowColor;
+            }
+        }
+    }
+    
+    // 3.设置中间行的字体颜色/字体大小
+    if (self.pickerStyle.selectRowTextColor || self.pickerStyle.selectRowTextFont) {
+        // 当前选中的 label
+        UILabel *selectLabel = (UILabel *)[pickerView viewForRow:row forComponent:component];
+        if (selectLabel) {
+            if (self.pickerStyle.selectRowTextColor) {
+                selectLabel.textColor = self.pickerStyle.selectRowTextColor;
+            }
+            if (self.pickerStyle.selectRowTextFont) {
+                selectLabel.font = self.pickerStyle.selectRowTextFont;
+            }
+            // 上一个选中的 label
+            UILabel *lastLabel = (UILabel *)[pickerView viewForRow:row - 1 forComponent:component];
+            if (lastLabel) {
+                lastLabel.textColor = self.pickerStyle.pickerTextColor;
+                lastLabel.font = self.pickerStyle.pickerTextFont;
+            }
+            // 下一个选中的 label
+            UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
+            if (nextLabel) {
+                nextLabel.textColor = self.pickerStyle.pickerTextColor;
+                nextLabel.font = self.pickerStyle.pickerTextFont;
+            }
+        }
+    }
 }
 
 // 4.滚动 pickerView 执行的回调方法
