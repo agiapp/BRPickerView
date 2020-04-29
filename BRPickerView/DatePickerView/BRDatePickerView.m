@@ -158,12 +158,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         [self initDateArray];
         
         // 5.默认选中的索引
-        self.yearIndex = [self.yearArr indexOfObject:[@(self.mSelectDate.br_year) stringValue]];
-        self.monthIndex = [self.monthArr indexOfObject:[@(self.mSelectDate.br_month) stringValue]];
-        self.dayIndex = [self.dayArr indexOfObject:[@(self.mSelectDate.br_day) stringValue]];
-        self.hourIndex = [self.hourArr indexOfObject:[@(self.mSelectDate.br_hour) stringValue]];
-        self.minuteIndex = [self.minuteArr indexOfObject:[@(self.mSelectDate.br_minute) stringValue]];
-        self.secondIndex = [self.secondArr indexOfObject:[@(self.mSelectDate.br_second) stringValue]];
+        self.yearIndex = [self.yearArr indexOfObject:[self getYearNumber:self.mSelectDate.br_year]];
+        self.monthIndex = [self.monthArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_month]];
+        self.dayIndex = [self.dayArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_day]];
+        self.hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_hour]];
+        self.minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_minute]];
+        self.secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_second]];
     }
 }
 
@@ -472,7 +472,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (NSArray *)getYearArr {
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = self.minDate.br_year; i <= self.maxDate.br_year; i++) {
-        [tempArr addObject:[@(i) stringValue]];
+        [tempArr addObject:[self getYearNumber:i]];
     }
     // 判断是否需要添加【至今】
     if (self.isAddToNow) {
@@ -511,7 +511,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startMonth; i <= endMonth; i++) {
-        [tempArr addObject:[@(i) stringValue]];
+        [tempArr addObject:[self getMDHMSNumber:i]];
     }
     // 判断是否需要添加【至今】
     if (self.isAddToNow) {
@@ -546,7 +546,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startDay; i <= endDay; i++) {
-        [tempArr addObject:[NSString stringWithFormat:@"%@", @(i)]];
+        [tempArr addObject:[self getMDHMSNumber:i]];
     }
     if (self.isDescending) {
         return [[[tempArr copy] reverseObjectEnumerator] allObjects];
@@ -567,7 +567,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startHour; i <= endHour; i++) {
-        [tempArr addObject:[@(i) stringValue]];
+        [tempArr addObject:[self getMDHMSNumber:i]];
     }
     // 判断是否需要添加【至今】
     if (self.isAddToNow) {
@@ -602,7 +602,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startMinute; i <= endMinute; i += self.minuteInterval) {
-        [tempArr addObject:[@(i) stringValue]];
+        [tempArr addObject:[self getMDHMSNumber:i]];
     }
     // 判断是否需要添加【至今】
     if (self.isAddToNow) {
@@ -636,7 +636,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startSecond; i <= endSecond; i += self.secondInterval) {
-        [tempArr addObject:[@(i) stringValue]];
+        [tempArr addObject:[self getMDHMSNumber:i]];
     }
     if (self.isDescending) {
         return [[[tempArr copy] reverseObjectEnumerator] allObjects];
@@ -647,12 +647,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 滚动到指定时间的位置
 - (void)scrollToSelectDate:(NSDate *)selectDate animated:(BOOL)animated {
-    NSInteger yearIndex = [self.yearArr indexOfObject:[@(selectDate.br_year) stringValue]];
-    NSInteger monthIndex = [self.monthArr indexOfObject:[@(selectDate.br_month) stringValue]];
-    NSInteger dayIndex = [self.dayArr indexOfObject:[@(selectDate.br_day) stringValue]];
-    NSInteger hourIndex = [self.hourArr indexOfObject:[@(selectDate.br_hour) stringValue]];
-    NSInteger minuteIndex = [self.minuteArr indexOfObject:[@(selectDate.br_minute) stringValue]];
-    NSInteger secondIndex = [self.secondArr indexOfObject:[@(selectDate.br_second) stringValue]];
+    NSInteger yearIndex = [self.yearArr indexOfObject:[self getYearNumber:selectDate.br_year]];
+    NSInteger monthIndex = [self.monthArr indexOfObject:[self getMDHMSNumber:selectDate.br_month]];
+    NSInteger dayIndex = [self.dayArr indexOfObject:[self getMDHMSNumber:selectDate.br_day]];
+    NSInteger hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:selectDate.br_hour]];
+    NSInteger minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:selectDate.br_minute]];
+    NSInteger secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:selectDate.br_second]];
     NSArray *indexArr = [NSArray array];
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex), @(hourIndex), @(minuteIndex), @(secondIndex)];
@@ -1650,6 +1650,22 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     NSInteger day = [self.dayArr[dayRow] integerValue];
     NSDate *date = [NSDate br_setYear:self.mSelectDate.br_year month:self.mSelectDate.br_month day:day];
     return [NSBundle br_localizedStringForKey:[date br_weekdayString] language:self.pickerStyle.language];
+}
+
+- (NSString *)getYearNumber:(NSInteger)year {
+    NSString *yearString = [NSString stringWithFormat:@"%@", @(year)];
+    if (self.isNumberFullName) {
+        yearString = [NSString stringWithFormat:@"%04d", [yearString intValue]];
+    }
+    return yearString;
+}
+
+- (NSString *)getMDHMSNumber:(NSInteger)number {
+    NSString *string = [NSString stringWithFormat:@"%@", @(number)];
+    if (self.isNumberFullName) {
+        string = [NSString stringWithFormat:@"%02d", [string intValue]];
+    }
+    return string;
 }
 
 - (NSString *)getYearUnit {

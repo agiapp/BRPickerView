@@ -114,6 +114,9 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 时间列表排序是否降序，默认为 NO（升序）*/
 @property (nonatomic, assign, getter=isDescending) BOOL descending;
 
+/** 选择器上日期/时间数字显示全称（即显示带前导零的数字，如：2020-01-01），默认为 NO */
+@property (nonatomic, assign, getter=isNumberFullName) BOOL numberFullName;
+
 /** 设置分的时间间隔，默认为1（范围：1 ~ 30）*/
 @property (nonatomic, assign) NSInteger minuteInterval;
 
@@ -123,7 +126,7 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 设置倒计时的时长，默认为0（范围：0 ~ 24*60*60-1，单位为秒） for `BRDatePickerModeCountDownTimer`, ignored otherwise. */
 @property (nonatomic, assign) NSTimeInterval countDownDuration;
 
-/** for `BRDatePickerModeYM`, ignored otherwise. */
+/** for `BRDatePickerModeYMD` or `BRDatePickerModeYM`, ignored otherwise. */
 @property (nonatomic, assign) BRMonthNameType monthNameType;
 
 /// 初始化时间选择器
