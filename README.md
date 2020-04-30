@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.5.8` 。
+- 当前最新版本为： `2.6.0` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -47,7 +47,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 ```objective-c
 /// 日期选择器格式
 typedef NS_ENUM(NSInteger, BRDatePickerMode) {
-    // ----- 以下4种是系统自带的样式（兼容国际化日期格式） -----
+    // ----- 以下4种是系统样式（兼容国际化日期格式） -----
     /** 【yyyy-MM-dd】UIDatePickerModeDate（美式日期：MM-dd-yyyy；英式日期：dd-MM-yyyy）*/
     BRDatePickerModeDate,
     /** 【yyyy-MM-dd HH:mm】 UIDatePickerModeDateAndTime */
@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeYMDH,
     /** 【MM-dd HH:mm】月日时分 */
     BRDatePickerModeMDHM,
-    /** 【yyyy-MM-dd】年月日 */
+    /** 【yyyy-MM-dd】年月日（兼容国际化日期：dd-MM-yyyy）*/
     BRDatePickerModeYMD,
     /** 【yyyy-MM】年月（兼容国际化日期：MM-yyyy）*/
     BRDatePickerModeYM,
@@ -152,25 +152,29 @@ datePickerView.pickerStyle = customStyle;
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 |                                                              |                                                              |
 | ![日期单位单行显示样式](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) | ![自定义选择器选中行颜色](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_row.png?raw=true) |
-| 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeOnlyCenter; | 设置选择器选中行的背景颜色：selectRowColor                   |
+| 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeOnlyCenter; | 设置选择器中间选中行的背景颜色：selectRowColor               |
 
 ```objective-c
-// 设置选择器选中行的背景颜色
+// 设置选择器中间选中行的样式
 BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-//customStyle.alertViewColor = [UIColor groupTableViewBackgroundColor];
-customStyle.selectRowColor = [UIColor orangeColor]; // 设置选择器选中行的背景颜色
-//customStyle.separatorColor = [UIColor clearColor];  // 隐藏选择器中间的两条分割线
+customStyle.selectRowColor = [UIColor blueColor];
+customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+customStyle.selectRowTextColor = [UIColor redColor];
 datePickerView.pickerStyle = customStyle;
 ```
 
-- 几种常见的自定义弹框样式
+| ![英式日期年月日](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en1.png?raw=true) | ![英式日期年月](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en2.png?raw=true) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 样式：BRDatePickerModeYMD （默认非中文环境显示英式日期）     | 样式：BRDatePickerModeYM （默认非中文环境显示英式日期）      |
+
+- 几种常见的弹框样式模板
 
 | ![模板样式1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style1.png?raw=true) | ![模板样式2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 弹框模板样式1：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]]; | 弹框模板样式2：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]]; |
+| 弹框样式模板1：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]]; | 弹框样式模板2：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]]; |
 |                                                              |                                                              |
 | ![模板样式3](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) | ![添加选择器的头视图](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_top.png?raw=true) |
-| 弹框模板样式3：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]]; | 添加选择器的头视图：pickerHeaderView                         |
+| 弹框样式模板3：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]]; | 添加选择器的头视图：pickerHeaderView                         |
 
 ```objective-c
 // 添加选择器头视图（pickerHeaderView）
@@ -241,7 +245,7 @@ stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
 [stringPickerView show];
 
 
-/// 2.单列字符串选择器（传模型数组）
+/// 2.单列字符串选择器（可以传模型数组）
 NSArray *infoArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
                      @{@"key": @"2001", @"value": @"天使轮", @"remark": @""},
                      @{@"key": @"3001", @"value": @"A轮", @"remark": @""},
@@ -256,23 +260,34 @@ for (NSDictionary *dic in infoArr) {
     model.remark = dic[@"remark"];
     [modelArr addObject:model];
 }
-
-[BRStringPickerView showPickerWithTitle:@"融资情况" dataSourceArr:[modelArr copy] selectIndex:2 resultBlock:^(BRResultModel *resultModel) {
-  	NSLog(@"选择的索引：%@", @(resultModel.index));
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+stringPickerView.pickerMode = BRStringPickerComponentSingle;
+stringPickerView.title = @"融资情况";
+stringPickerView.dataSourceArr = [modelArr copy];
+stringPickerView.selectIndex = 2;
+stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+    NSLog(@"选择的索引：%@", @(resultModel.index));
     NSLog(@"选择的值：%@", resultModel.value);
-}];
+};
+
+[stringPickerView show];
 
 
 /// 3.多列字符串选择器
 BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
 stringPickerView.pickerMode = BRStringPickerComponentMulti;
 stringPickerView.title = @"自定义多列字符串";
-stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
-stringPickerView.selectIndexs = @[@2, @3];
-stringPickerView.isAutoSelect = YES;
+stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
+stringPickerView.selectIndexs = @[@2, @1];
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
     NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value]);
 };
+
+// 设置选择器中间选中行的样式
+BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+customStyle.selectRowTextColor = [UIColor blueColor];
+stringPickerView.pickerStyle = customStyle;
 
 [stringPickerView show];
 ```
@@ -287,6 +302,20 @@ stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModel
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2020-04-30（V2.6.0）
+
+- 新增样式属性：`selectRowTextColor` 和 `selectRowTextFont`
+- 日期选择器新增数字显示属性：`numberFullName`
+- 优化代码，添加 `BRDatePickerModeYMD` 支持国际化英式日期
+
+- 修复 [#143](#143)
+
+#### 2020-04-27（V2.5.8）
+
+- 修复 [#138](https://github.com/91renb/BRPickerView/issues/138) 和 [#142](https://github.com/91renb/BRPickerView/issues/142)
+- 日期选择器新增 `descending` 属性，支持降序的时间列表
+- 更新地址选择器地区数据源
 
 #### 2020-03-31（V2.5.7）
 
@@ -307,7 +336,7 @@ stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModel
 
 #### 2020-01-05（V2.5.1）
 
-- 优化字符串选择器，添加支持数据源直接传模型数组
+- 优化代码，添加 `BRDatePickerModeYM` 支持国际化英式日期
 
 #### 2020-01-02（V2.5.0）
 
