@@ -303,12 +303,11 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.title = @"请选择年月日";
             datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
-            datePickerView.maxDate = [NSDate date];
+            //datePickerView.maxDate = [NSDate date];
             datePickerView.isAutoSelect = YES;
-            //datePickerView.addToNow = YES;
-            //datePickerView.showToday = YES;
-            //datePickerView.showWeek = YES;
-            datePickerView.showUnitType = BRShowUnitTypeNone;
+            datePickerView.showToday = YES;
+            datePickerView.showWeek = YES;
+            //datePickerView.showUnitType = BRShowUnitTypeNone;
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -320,22 +319,22 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 
             };
             
-            // 添加头视图
-            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 36)];
-            headerView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.1f];
-            NSArray *unitArr = @[@"年", @"月", @"日"];
-            for (NSInteger i = 0; i < unitArr.count; i++) {
-                CGFloat width = SCREEN_WIDTH / unitArr.count;
-                CGFloat orginX = i * (SCREEN_WIDTH / unitArr.count);
-                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(orginX, 0, width, 36)];
-                label.backgroundColor = [UIColor clearColor];
-                label.textAlignment = NSTextAlignmentCenter;
-                label.font = [UIFont systemFontOfSize:16.0f];
-                label.textColor = [UIColor darkGrayColor];
-                label.text = unitArr[i];
-                [headerView addSubview:label];
-            }
-            datePickerView.pickerHeaderView = headerView;
+//            // 添加头视图
+//            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 36)];
+//            headerView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.1f];
+//            NSArray *unitArr = @[@"年", @"月", @"日"];
+//            for (NSInteger i = 0; i < unitArr.count; i++) {
+//                CGFloat width = SCREEN_WIDTH / unitArr.count;
+//                CGFloat orginX = i * (SCREEN_WIDTH / unitArr.count);
+//                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(orginX, 0, width, 36)];
+//                label.backgroundColor = [UIColor clearColor];
+//                label.textAlignment = NSTextAlignmentCenter;
+//                label.font = [UIFont systemFontOfSize:16.0f];
+//                label.textColor = [UIColor darkGrayColor];
+//                label.text = unitArr[i];
+//                [headerView addSubview:label];
+//            }
+//            datePickerView.pickerHeaderView = headerView;
 
             // 添加尾视图
             //UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
@@ -347,10 +346,12 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
             //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]];
             
-            // 设置选择器选中行的背景颜色
-            //BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            //customStyle.selectRowColor = [UIColor orangeColor];
-            //datePickerView.pickerStyle = customStyle;
+//            // 设置选择器中间选中行的样式
+//            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+//            customStyle.selectRowColor = [UIColor blueColor];
+//            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+//            customStyle.selectRowTextColor = [UIColor redColor];
+//            datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
             
@@ -444,10 +445,19 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 model.remark = dic[@"remark"];
                 [modelArr addObject:model];
             }
-            [BRStringPickerView showPickerWithTitle:@"融资情况" dataSourceArr:[modelArr copy] selectIndex:1 resultBlock:^(BRResultModel *resultModel) {
+            
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentSingle;
+            stringPickerView.title = @"融资情况";
+            stringPickerView.dataSourceArr = [modelArr copy];
+            stringPickerView.selectIndex = 2;
+            stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+                NSLog(@"选择的索引：%@", @(resultModel.index));
+                NSLog(@"选择的值：%@", resultModel.value);
                 textField.text = resultModel.value;
-                NSLog(@"选择的值[%@]：%@", @(resultModel.index), resultModel.value);
-            }];
+            };
+            
+            [stringPickerView show];
             
         }
             break;
@@ -457,7 +467,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
             stringPickerView.pickerMode = BRStringPickerComponentMulti;
             stringPickerView.title = @"自定义多列字符串";
-            stringPickerView.dataSourceArr = @[@[@"第1周", @"第2周", @"第3周", @"第4周", @"第5周", @"第6周", @"第7周"], @[@"第1天", @"第2天", @"第3天", @"第4天", @"第5天", @"第6天", @"第7天"]];
+            stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
             stringPickerView.selectIndexs = self.otherSelectIndexs;
             //stringPickerView.selectValues = [self.infoModel.otherStr componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
@@ -467,11 +477,10 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 textField.text = self.infoModel.otherStr;
             };
             
-            // 自定义弹框样式
-            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor orangeColor]];
-            customStyle.pickerTextColor = [UIColor redColor];
-            customStyle.separatorColor = [UIColor redColor];
-            customStyle.titleTextColor = [UIColor redColor];
+            // 设置选择器中间选中行的样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+            customStyle.selectRowTextColor = [UIColor blueColor];
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
