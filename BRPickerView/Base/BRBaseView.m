@@ -177,12 +177,12 @@
         [_cancelBtn addTarget:self action:@selector(clickCancelBtn) forControlEvents:UIControlEventTouchUpInside];
         // 设置按钮圆角或边框
         if (self.pickerStyle.cancelBorderStyle == BRBorderStyleSolid) {
-            _cancelBtn.layer.cornerRadius = 6.0f;
+            _cancelBtn.layer.cornerRadius = self.pickerStyle.cancelCornerRadius > 0 ? self.pickerStyle.cancelCornerRadius : 6.0f;
             _cancelBtn.layer.borderColor = self.pickerStyle.cancelTextColor.CGColor;
-            _cancelBtn.layer.borderWidth = 1.0f;
+            _cancelBtn.layer.borderWidth = self.pickerStyle.cancelBorderWidth > 0 ? self.pickerStyle.cancelBorderWidth : 1.0f;
             _cancelBtn.layer.masksToBounds = YES;
         } else if (self.pickerStyle.cancelBorderStyle == BRBorderStyleFill) {
-            _cancelBtn.layer.cornerRadius = 6.0f;
+            _cancelBtn.layer.cornerRadius = self.pickerStyle.cancelCornerRadius > 0 ? self.pickerStyle.cancelCornerRadius : 6.0f;
             _cancelBtn.layer.masksToBounds = YES;
         }
     }
@@ -207,12 +207,12 @@
         [_doneBtn addTarget:self action:@selector(clickDoneBtn) forControlEvents:UIControlEventTouchUpInside];
         // 设置按钮圆角或边框
         if (self.pickerStyle.doneBorderStyle == BRBorderStyleSolid) {
-            _doneBtn.layer.cornerRadius = 6.0f;
+            _doneBtn.layer.cornerRadius = self.pickerStyle.doneCornerRadius > 0 ? self.pickerStyle.doneCornerRadius : 6.0f;
             _doneBtn.layer.borderColor = self.pickerStyle.doneTextColor.CGColor;
-            _doneBtn.layer.borderWidth = 1.0f;
+            _doneBtn.layer.borderWidth = self.pickerStyle.doneBorderWidth > 0 ? self.pickerStyle.doneBorderWidth : 1.0f;
             _doneBtn.layer.masksToBounds = YES;
         } else if (self.pickerStyle.doneBorderStyle == BRBorderStyleFill) {
-            _doneBtn.layer.cornerRadius = 6.0f;
+            _doneBtn.layer.cornerRadius = self.pickerStyle.doneCornerRadius > 0 ? self.pickerStyle.doneCornerRadius : 6.0f;
             _doneBtn.layer.masksToBounds = YES;
         }
     }

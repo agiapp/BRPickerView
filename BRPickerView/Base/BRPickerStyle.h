@@ -100,11 +100,17 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 cancelBtn 标题的字体 */
 @property (nullable, nonatomic, strong) UIFont *cancelTextFont;
 
+/** 设置 cancelBtn 的 frame */
+@property (nonatomic, assign) CGRect cancelBtnFrame;
+
 /** 设置 cancelBtn 的边框样式 */
 @property (nonatomic, assign) BRBorderStyle cancelBorderStyle;
 
-/** 设置 cancelBtn 的 frame */
-@property (nonatomic, assign) CGRect cancelBtnFrame;
+/** 设置 cancelBtn 的圆角大小 */
+@property (nonatomic, assign) CGFloat cancelCornerRadius;
+
+/** 设置 cancelBtn 的边框宽度 */
+@property (nonatomic, assign) CGFloat cancelBorderWidth;
 
 /** 设置 cancelBtn 的 image */
 @property (nullable, nonatomic, strong) UIImage *cancelBtnImage;
@@ -127,11 +133,17 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 doneBtn 标题的字体 */
 @property (nullable, nonatomic, strong) UIFont *doneTextFont;
 
+/** 设置 doneBtn 的 frame */
+@property (nonatomic, assign) CGRect doneBtnFrame;
+
 /** 设置 doneBtn 的边框样式 */
 @property (nonatomic, assign) BRBorderStyle doneBorderStyle;
 
-/** 设置 doneBtn 的 frame */
-@property (nonatomic, assign) CGRect doneBtnFrame;
+/** 设置 doneBtn 的圆角大小 */
+@property (nonatomic, assign) CGFloat doneCornerRadius;
+
+/** 设置 doneBtn 的边框宽度 */
+@property (nonatomic, assign) CGFloat doneBorderWidth;
 
 /** 设置 doneBtn 的 image */
 @property (nullable, nonatomic, strong) UIImage *doneBtnImage;
