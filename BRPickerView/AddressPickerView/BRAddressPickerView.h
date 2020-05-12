@@ -40,7 +40,7 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCity
 /** 默认选中的位置(1.传索引数组，如：@[@10, @0, @4]) */
 @property (nullable, nonatomic, copy) NSArray <NSNumber *> *selectIndexs;
 /** 默认选中的位置(2.传值数组，如：@[@"浙江省", @"杭州市", @"西湖区"]) */
-@property (nullable, nonatomic, copy) NSArray <NSString *> *selectValues; // 推荐使用 selectIndexs
+@property (nullable, nonatomic, copy) NSArray <NSString *> *selectValues;
 
 /** 选择结果的回调 */
 @property (nullable, nonatomic, copy) BRAddressResultBlock resultBlock;

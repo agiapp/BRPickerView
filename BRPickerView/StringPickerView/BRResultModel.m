@@ -11,12 +11,31 @@
 
 @implementation BRResultModel
 
-- (NSString *)name {
-    return _value;
+/// 判断两个对象是否相等
+/// @param object 目标对象
+- (BOOL)isEqual:(id)object {
+    // 1.对象的地址相同
+    if (self == object) {
+        return YES;
+    }
+    
+    if (![object isKindOfClass:[BRResultModel class]]) {
+        return NO;
+    }
+    
+    BRResultModel *model = (BRResultModel *)object;
+    if (!model) {
+        return NO;
+    }
+    // 2.对象的类型相同，且对象的各个属性相等
+    BOOL isSameKey = (!self.key && !model.key) || [self.key isEqualToString:model.key];
+    BOOL isSameValue = (!self.value && !model.value) || [self.value isEqualToString:model.value];
+    
+    return isSameKey && isSameValue;
 }
 
-- (NSString *)selectValue {
-    return _value;
+- (NSUInteger)hash {
+    return [self.key hash] ^ [self.value hash];
 }
 
 @end

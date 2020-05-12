@@ -161,7 +161,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.yearIndex = [self.yearArr indexOfObject:[self getYearNumber:self.mSelectDate.br_year]];
         self.monthIndex = [self.monthArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_month]];
         self.dayIndex = [self.dayArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_day]];
-        self.hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_hour]];
+        NSInteger hourIndex = 0;
+        if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
+            hourIndex = (self.mSelectDate.br_hour < 12 ? 0 : 1);
+            self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %@", (int)self.mSelectDate.br_year, (int)self.mSelectDate.br_month, (int)self.mSelectDate.br_day, self.hourArr[hourIndex]];
+        } else {
+            hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_hour]];
+        }
+        self.hourIndex = hourIndex;
         self.minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_minute]];
         self.secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_second]];
     }
@@ -171,6 +178,17 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     // selectDate 优先级高于 selectValue（推荐使用 selectDate 设置默认选中的时间）
     if (!self.selectDate) {
         if (self.selectValue && self.selectValue.length > 0) {
+            if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
+                NSString *firstString = [[self.selectValue componentsSeparatedByString:@" "] firstObject];
+                NSString *lastString = [[self.selectValue componentsSeparatedByString:@" "] lastObject];
+                if ([lastString isEqualToString:[self getAMText]]) {
+                    self.selectValue = [NSString stringWithFormat:@"%@ 00", firstString];
+                }
+                if ([lastString isEqualToString:[self getPMText]]) {
+                    self.selectValue = [NSString stringWithFormat:@"%@ 12", firstString];
+                }
+            }
+            
             NSDate *defaultSelDate = [self.selectValue isEqualToString:[self getNowString]] ? [NSDate date] : [NSDate br_getDate:self.selectValue format:self.dateFormatter];
             if (!defaultSelDate) {
                 BRErrorLog(@"参数异常！字符串 selectValue 的正确格式是：%@", self.dateFormatter);
@@ -259,7 +277,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         {
             self.dateFormatter = @"yyyy-MM-dd HH";
             self.style = BRDatePickerStyleCustom;
-            self.unitArr = @[[self getYearUnit], [self getMonthUnit], [self getDayUnit], [self getHourUnit]];
+            self.unitArr = @[[self getYearUnit], [self getMonthUnit], [self getDayUnit], self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM ? @"" : [self getHourUnit]];
         }
             break;
         case BRDatePickerModeMDHM:
@@ -557,6 +575,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 // 获取 hourArr 数组
 - (NSArray *)getHourArr:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
+    if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
+        return @[[self getAMText], [self getPMText]];
+    }
+    
     NSInteger startHour = 0;
     NSInteger endHour = 23;
     if (year == self.minDate.br_year && month == self.minDate.br_month && day == self.minDate.br_day) {
@@ -650,7 +672,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     NSInteger yearIndex = [self.yearArr indexOfObject:[self getYearNumber:selectDate.br_year]];
     NSInteger monthIndex = [self.monthArr indexOfObject:[self getMDHMSNumber:selectDate.br_month]];
     NSInteger dayIndex = [self.dayArr indexOfObject:[self getMDHMSNumber:selectDate.br_day]];
-    NSInteger hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:selectDate.br_hour]];
+    NSInteger hourIndex = 0;
+    if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
+        hourIndex = selectDate.br_hour < 12 ? 0 : 1;
+    } else {
+        hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:selectDate.br_hour]];
+    }
     NSInteger minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:selectDate.br_minute]];
     NSInteger secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:selectDate.br_second]];
     NSArray *indexArr = [NSArray array];
@@ -1142,9 +1169,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             int year = [self.yearArr[self.yearIndex] intValue];
             int month = [self.monthArr[self.monthIndex] intValue];
             int day = [self.dayArr[self.dayIndex] intValue];
-            int hour = [self.hourArr[self.hourIndex] intValue];
+            int hour = 0;
+            if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
+                hour = (self.hourIndex == 0 ? 0 : 12);
+                self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %@", year, month, day, self.hourArr[self.hourIndex]];
+            } else {
+                hour = [self.hourArr[self.hourIndex] intValue];
+                self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d", year, month, day, hour];
+            }
             self.mSelectDate = [NSDate br_setYear:year month:month day:day hour:hour];
-            self.mSelectValue = [NSString stringWithFormat:@"%04d-%02d-%02d %02d", year, month, day, hour];
         } else {
             self.mSelectDate = [NSDate date];
             self.mSelectValue = [self getNowString];
@@ -1668,6 +1701,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return string;
 }
 
+- (NSString *)getAMText {
+    return [NSBundle br_localizedStringForKey:@"上午" language:self.pickerStyle.language];
+}
+
+- (NSString *)getPMText {
+    return [NSBundle br_localizedStringForKey:@"下午" language:self.pickerStyle.language];
+}
+
 - (NSString *)getYearUnit {
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
@@ -1691,6 +1732,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 - (NSString *)getHourUnit {
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
+        return @"";
+    }
+    if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
         return @"";
     }
     return [NSBundle br_localizedStringForKey:@"时" language:self.pickerStyle.language];

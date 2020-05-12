@@ -53,11 +53,13 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
 
 /** 设置默认选中的位置【单列】 */
 @property (nonatomic, assign) NSInteger selectIndex;
-@property (nullable, nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("Use `selectIndex` instead");
+// 推荐使用 selectIndex，更加严谨，可以避免使用 selectValue 时，有名称相同的情况
+@property (nullable, nonatomic, copy) NSString *selectValue;
 
 /** 设置默认选中的位置【多列】 */
 @property (nullable, nonatomic, copy) NSArray <NSNumber *> *selectIndexs;
-@property (nullable, nonatomic, copy) NSArray <NSString *> *selectValues BRPickerViewDeprecated("Use `selectIndexs` instead");
+// 推荐使用 selectIndexs，更加严谨，可以避免使用 selectValues 时，有名称相同的情况
+@property (nullable, nonatomic, copy) NSArray <NSString *> *selectValues;
 
 /** 选择结果的回调【单列】 */
 @property (nullable, nonatomic, copy) BRStringResultModelBlock resultModelBlock;

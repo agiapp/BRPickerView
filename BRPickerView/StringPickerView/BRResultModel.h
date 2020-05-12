@@ -13,24 +13,26 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BRResultModel : NSObject
-/** 父级ID */
-@property (nullable, nonatomic, copy) NSString *ParentID;
-/** ID */
-@property (nullable, nonatomic, copy) NSString *ID;
+/** 父级key */
+@property (nullable, nonatomic, copy) NSString *parentKey;
+/** 父级value */
+@property (nullable, nonatomic, copy) NSString *parentValue;
 /** key */
 @property (nullable, nonatomic, copy) NSString *key;
-/** 值 */
+/** value */
 @property (nullable, nonatomic, copy) NSString *value;
+/** 简称 */
+@property (nullable, nonatomic, copy) NSString *shortName;
 /** 备注 */
 @property (nullable, nonatomic, copy) NSString *remark;
-
-/** 选择值对应的索引（行数） */
+/** 索引 */
 @property (nonatomic, assign) NSInteger index;
 
-/** 值 */
-@property (nullable, nonatomic, copy) NSString *name BRPickerViewDeprecated("请使用 value");
-/** 选择的值 */
-@property (nullable, nonatomic, copy) NSString *selectValue BRPickerViewDeprecated("请使用 value");
+/// 其它扩展字段
+@property (nonatomic, assign) BOOL boolField;
+@property (nullable, nonatomic, strong) NSNumber *numberField;
+@property (nullable, nonatomic, copy) NSArray *arrayField;
+@property (nullable, nonatomic, copy) NSString *ID BRPickerViewDeprecated("请使用 key");
 
 @end
 
