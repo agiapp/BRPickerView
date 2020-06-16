@@ -186,70 +186,51 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return [self br_setYear:0 month:0 day:0 hour:0 minute:minute second:second];
 }
 
-#pragma mark - NSDate时间 和 字符串时间 之间的转换：NSDate 转 NSString
+#pragma mark - NSDate 转 NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
     // NSDateFormatter 默认时区为系统时区
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = format;
+    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:[NSLocale preferredLanguages].firstObject];
     NSString *dateString = [dateFormatter stringFromDate:date];
-    
+
     return dateString;
-}
-
-#pragma mark - NSDate时间 和 字符串时间 之间的转换：NSString 转 NSDate
-+ (NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    // 设置日期格式
-    dateFormatter.dateFormat = format;
-    // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
-    // 设置时区(默认不使用夏时制)
-    dateFormatter.timeZone = [self currentTimeZone];
-    // 如果当前时间不存在，就获取距离最近的整点时间
-    dateFormatter.lenient = YES;
-    
-    return [dateFormatter dateFromString:dateString];
-}
-
-#pragma mark - 获取当前时区(不使用夏时制)
-+ (NSTimeZone *)currentTimeZone {
-    // 当前时区
-    NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
-    // 当前时区相对于GMT(零时区)的偏移秒数
-    NSInteger interval = [currentTimeZone secondsFromGMTForDate:[NSDate date]];
-    // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
-    currentTimeZone = [NSTimeZone timeZoneForSecondsFromGMT:interval];
-    
-    return currentTimeZone;
 }
 
 #pragma mark - 获取某个月的天数（通过年月求每月天数）
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month {
     BOOL isLeapYear = year % 4 == 0 ? (year % 100 == 0 ? (year % 400 == 0 ? YES : NO) : YES) : NO;
     switch (month) {
-        case 1:case 3:case 5:case 7:case 8:case 10:case 12:
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
         {
             return 31;
-            break;
         }
-        case 4:case 6:case 9:case 11:
+        case 4:
+        case 6:
+        case 9:
+        case 11:
         {
             return 30;
-            break;
         }
         case 2:
         {
             if (isLeapYear) {
                 return 29;
-                break;
             } else {
                 return 28;
-                break;
             }
         }
         default:
             break;
     }
+    
     return 0;
 }
 
@@ -257,21 +238,6 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 - (NSDate *)br_getNewDate:(NSDate *)date addDays:(NSTimeInterval)days {
     // days 为正数时，表示几天之后的日期；负数表示几天之前的日期
     return [self dateByAddingTimeInterval:60 * 60 * 24 * days];
-}
-
-#pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
-- (NSComparisonResult)br_compare:(NSDate *)targetDate format:(NSString *)format {
-    NSString *dateString1 = [NSDate br_getDateString:self format:format];
-    NSString *dateString2 = [NSDate br_getDateString:targetDate format:format];
-    NSDate *date1 = [NSDate br_getDate:dateString1 format:format];
-    NSDate *date2 = [NSDate br_getDate:dateString2 format:format];
-    if ([date1 compare:date2] == NSOrderedDescending) {
-        return 1;
-    } else if ([date1 compare:date2] == NSOrderedAscending) {
-        return -1;
-    } else {
-        return 0;
-    }
 }
 
 @end

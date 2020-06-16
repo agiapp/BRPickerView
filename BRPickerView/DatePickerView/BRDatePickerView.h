@@ -132,6 +132,9 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 显示上午和下午，默认为 NO. for `BRDatePickerModeYMDH`, ignored otherwise. */
 @property (nonatomic, assign, getter=isShowAMAndPM) BOOL showAMAndPM;
 
+/** 设置时区，默认为当前时区 */
+@property (nullable, nonatomic, copy) NSTimeZone *timeZone;
+
 /// 初始化时间选择器
 /// @param pickerMode  日期选择器显示类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;

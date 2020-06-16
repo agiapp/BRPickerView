@@ -302,6 +302,54 @@
     }];
 }
 
+#pragma mark - NSDate 转 NSString
+- (NSString *)br_stringFromDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    // 设置日期格式
+    dateFormatter.dateFormat = self.dateFormat;
+    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:[NSLocale preferredLanguages].firstObject];
+    
+    return [dateFormatter stringFromDate:date];
+}
+
+#pragma mark - NSString 转 NSDate
+- (NSDate *)br_dateFromString:(NSString *)dateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    // 设置日期格式
+    dateFormatter.dateFormat = self.dateFormat;
+    // 设置时区(默认不使用夏时制)
+    dateFormatter.timeZone = self.timeZone;
+    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:[NSLocale preferredLanguages].firstObject];
+    // 如果当前时间不存在，就获取距离最近的整点时间
+    dateFormatter.lenient = YES;
+    
+    return [dateFormatter dateFromString:dateString];
+}
+
+#pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
+- (NSComparisonResult)br_compareDate:(NSDate *)date targetDate:(NSDate *)targetDate {
+    NSString *dateString1 = [self br_stringFromDate:date];
+    NSString *dateString2 = [self br_stringFromDate:targetDate];
+    NSDate *date1 = [self br_dateFromString:dateString1];
+    NSDate *date2 = [self br_dateFromString:dateString2];
+    if ([date1 compare:date2] == NSOrderedDescending) {
+        return 1;
+    } else if ([date1 compare:date2] == NSOrderedAscending) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+- (NSTimeZone *)timeZone {
+    // 当前时区
+    NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
+    // 当前时区相对于GMT(零时区)的偏移秒数
+    NSInteger interval = [localTimeZone secondsFromGMTForDate:[NSDate date]];
+    // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
+    // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
+    return [NSTimeZone timeZoneForSecondsFromGMT:interval];
+}
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickDoneBtn {
@@ -312,7 +360,7 @@
     [self handlerUpdateSelectDate];
     
     if (self.resultBlock) {
-        NSString *selectValue = [NSDate br_getDateString:self.selectDate format:self.dateFormat];
+        NSString *selectValue = [self br_stringFromDate:self.selectDate];
         self.resultBlock(self.selectDate, selectValue, self.hiddenMonth, self.hiddenDay);
     }
 }
@@ -344,7 +392,7 @@
     if (!self.maxDate) {
         self.maxDate = [NSDate distantFuture];
     }
-    BOOL minMoreThanMax = [self.minDate br_compare:self.maxDate format:@"yyyy-MM-dd"] == NSOrderedDescending;
+    BOOL minMoreThanMax = [self br_compareDate:self.minDate targetDate:self.maxDate] == NSOrderedDescending;
     NSAssert(!minMoreThanMax, @"最小日期不能大于最大日期！");
     if (minMoreThanMax) {
         // 如果最小日期大于了最大日期，就忽略两个值
@@ -353,8 +401,8 @@
     }
     
     // 3.默认选中的日期
-    BOOL selectLessThanMin = [self.selectDate br_compare:self.minDate format:@"yyyy-MM-dd"] == NSOrderedAscending;
-    BOOL selectMoreThanMax = [self.selectDate br_compare:self.maxDate format:@"yyyy-MM-dd"] == NSOrderedDescending;
+    BOOL selectLessThanMin = [self br_compareDate:self.selectDate targetDate:self.minDate] == NSOrderedAscending;
+    BOOL selectMoreThanMax = [self br_compareDate:self.selectDate targetDate:self.maxDate] == NSOrderedDescending;
     if (selectLessThanMin) {
         BRErrorLog(@"默认选择的日期不能小于最小日期！");
         self.selectDate = self.minDate;
@@ -527,7 +575,7 @@
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
         if (self.resultBlock) {
-            NSString *selectValue = [NSDate br_getDateString:self.selectDate format:self.dateFormat];
+            NSString *selectValue = [self br_stringFromDate:self.selectDate];
             self.resultBlock(self.selectDate, selectValue, self.hiddenMonth, self.hiddenDay);
         }
     }
