@@ -14,6 +14,7 @@
 		4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DA23B4425700CD59D4 /* UIImage+Color.m */; };
 		4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
+		45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */; };
 		45E81D042399387700B8878A /* testData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* testData.plist */; };
 		45E81D072399387700B8878A /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81CFD2399387700B8878A /* BRInfoModel.m */; };
 		45E81D082399387700B8878A /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D002399387700B8878A /* BRInfoCell.m */; };
@@ -48,6 +49,8 @@
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
+		45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BRDatePickerView+BR.h"; sourceTree = "<group>"; };
+		45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BRDatePickerView+BR.m"; sourceTree = "<group>"; };
 		45E81CF62399387700B8878A /* testData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testData.plist; sourceTree = "<group>"; };
 		45E81CFC2399387700B8878A /* BRInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
 		45E81CFD2399387700B8878A /* BRInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
@@ -222,6 +225,8 @@
 			children = (
 				C5ACE5091F3D7D890069978B /* BRDatePickerView.h */,
 				C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */,
+				45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */,
+				45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */,
 				C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */,
 				C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */,
 			);
@@ -355,6 +360,7 @@
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
 				451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */,
 				45E81D1123993A0500B8878A /* BRMutableDatePickerView.m in Sources */,
+				45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */,
 				C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */,
 				45E81D082399387700B8878A /* BRInfoCell.m in Sources */,
 				C5ACE5081F3D7D060069978B /* BRAddressModel.m in Sources */,

@@ -32,7 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL boolField;
 @property (nullable, nonatomic, strong) NSNumber *numberField;
 @property (nullable, nonatomic, copy) NSArray *arrayField;
+
 @property (nullable, nonatomic, copy) NSString *ID BRPickerViewDeprecated("请使用 key");
+@property (nullable, nonatomic, copy) NSString *name BRPickerViewDeprecated("请使用 value");
 
 @end
 
