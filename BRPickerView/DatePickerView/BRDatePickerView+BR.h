@@ -13,13 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BRDatePickerView (BR)
 
 /** 最小日期 */
-- (NSDate *)handlerMinDate:(NSDate *)minDate;
+- (NSDate *)handlerMinDate:(nullable NSDate *)minDate;
 
 /** 最大日期 */
-- (NSDate *)handlerMaxDate:(NSDate *)maxDate;
+- (NSDate *)handlerMaxDate:(nullable NSDate *)maxDate;
 
 /** 默认选中的日期 */
-- (NSDate *)handlerSelectDate:(NSDate *)selectDate dateFormat:(NSString *)dateFormat;
+- (NSDate *)handlerSelectDate:(nullable NSDate *)selectDate dateFormat:(NSString *)dateFormat;
 
 /** NSDate 转 NSString */
 - (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat;

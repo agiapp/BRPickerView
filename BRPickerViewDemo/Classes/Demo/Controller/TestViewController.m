@@ -45,6 +45,9 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, copy) NSArray <NSNumber *> *addressSelectIndexs;
 @property (nonatomic, copy) NSArray <NSNumber *> *otherSelectIndexs;
 
+@property (nonatomic, strong) NSDate *beginSelectDate;
+@property (nonatomic, strong) NSDate *endSelectDate;
+
 @end
 
 @implementation TestViewController
@@ -56,16 +59,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickSaveBtn)];
     [self loadData];
     [self initUI];
-    // 设置开始时间默认选择的值及状态
-    //NSString *beginTime = @"2018-10-01 00";
-    NSString *beginTime = nil;
-    if (beginTime && beginTime.length > 0) {
-        self.beginTimeTF.text = beginTime;
-        self.beginTimeTF.textColor = kThemeColor;
-        self.beginTimeLineView.backgroundColor = kThemeColor;
-        // 设置选择器滚动到指定的日期
-        self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:@"yyyy-MM-dd HH"];
-    }
 }
 
 - (void)loadData {
@@ -82,6 +75,14 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (void)initUI {
     self.tableView.hidden = NO;
+    
+    // 设置开始时间默认选择的值及状态
+    self.beginSelectDate = [NSDate date];
+    self.beginTimeTF.text = [NSDate br_getDateString:self.beginSelectDate format:@"yyyy-MM-dd HH"];
+    self.beginTimeTF.textColor = kThemeColor;
+    self.beginTimeLineView.backgroundColor = kThemeColor;
+    // 设置选择器滚动到指定的日期
+    self.datePickerView.selectDate = self.beginSelectDate;
 }
 
 - (void)clickGotoTest2VC {
@@ -489,7 +490,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             break;
         case 100:
         {
-            NSLog(@"开始时间：%@", self.beginTimeTF.text);
+            NSLog(@"点击了开始时间：%@", self.beginTimeTF.text);
             self.timeType = BRTimeTypeBeginTime;
             self.endTimeTF.textColor = [UIColor br_labelColor];
             self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
@@ -508,13 +509,13 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             }
             // 设置选择器滚动到指定的日期
             //self.datePickerView.selectValue = self.beginTimeTF.text;
-            self.datePickerView.selectDate = [NSDate br_getDate:self.beginTimeTF.text format:format];
+            self.datePickerView.selectDate = self.beginSelectDate;
         }
             break;
             
         case 101:
         {
-            NSLog(@"结束时间:%@", self.endTimeTF.text);
+            NSLog(@"点击了结束时间:%@", self.endTimeTF.text);
             self.timeType = BRTimeTypeEndTime;
             self.beginTimeTF.textColor = [UIColor br_labelColor];
             self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
@@ -532,7 +533,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             }
             // 设置选择器滚动到指定的日期
             //self.datePickerView.selectValue = self.endTimeTF.text;
-            self.datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:format];
+            self.datePickerView.selectDate = self.endSelectDate;
         }
             break;
             
@@ -620,14 +621,15 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         // 4.创建日期选择器
         BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
         datePickerView.pickerMode = BRDatePickerModeYMDH;
-        datePickerView.selectDate = [NSDate br_getDate:self.endTimeTF.text format:@"yyyy-MM-dd HH"];
         datePickerView.maxDate = [NSDate date];
         datePickerView.isAutoSelect = YES;
         datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
         datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
             if (self.timeType == BRTimeTypeBeginTime) {
+                self.beginSelectDate = selectDate;
                 self.beginTimeTF.text = selectValue;
             } else if (self.timeType == BRTimeTypeEndTime) {
+                self.endSelectDate = selectDate;
                 self.endTimeTF.text = selectValue;
             }
         };
@@ -659,11 +661,13 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         self.datePickerView.pickerMode = BRDatePickerModeYM;
     }
     
+    // 重置选择的值
     self.datePickerView.selectDate = nil;
     self.beginTimeTF.text = nil;
     self.endTimeTF.text = nil;
     self.beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
     self.endTimeLineView.backgroundColor = [UIColor lightGrayColor];
+    self.timeType = BRTimeTypeBeginTime;
 }
 
 - (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
