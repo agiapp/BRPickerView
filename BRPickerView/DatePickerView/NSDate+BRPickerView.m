@@ -188,12 +188,23 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSDate 转 NSString
 + (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
-    // NSDateFormatter 默认时区为系统时区
+    return [date br_convertDateWithFormat:format timeZone:nil language:nil];
+}
+
+#pragma mark - NSDate 转 NSString
+- (NSString *)br_convertDateWithFormat:(NSString *)format timeZone:(NSTimeZone *)timeZone language:(NSString *)language {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = format;
-    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:[NSLocale preferredLanguages].firstObject];
-    NSString *dateString = [dateFormatter stringFromDate:date];
+    // 设置时区：不设置，默认为系统时区
+    if (timeZone) {
+        dateFormatter.timeZone = timeZone;
+    }
+    if (!language) {
+        language = [NSLocale preferredLanguages].firstObject;
+    }
+    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:language];
+    NSString *dateString = [dateFormatter stringFromDate:self];
 
     return dateString;
 }

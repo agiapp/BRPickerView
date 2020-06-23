@@ -101,16 +101,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 
 #pragma mark - NSDate 转 NSString
 - (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    // 设置日期格式
-    dateFormatter.dateFormat = dateFormat;
-    // 设置时区(默认不使用夏时制)
-    dateFormatter.timeZone = [self currentTimeZone];
-    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
-    // 如果当前时间不存在，就获取距离最近的整点时间
-    dateFormatter.lenient = YES;
-    
-    return [dateFormatter stringFromDate:date];
+    return [date br_convertDateWithFormat:dateFormat timeZone:[self currentTimeZone] language:self.pickerStyle.language];
 }
 
 #pragma mark - NSString 转 NSDate

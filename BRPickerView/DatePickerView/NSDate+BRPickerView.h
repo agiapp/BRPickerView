@@ -49,7 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /** NSDate -> NSString */
-+ (nullable  NSString *)br_getDateString:(NSDate *)date format:(NSString *)format;
++ (nullable NSString *)br_getDateString:(NSDate *)date format:(NSString *)format;
+/** NSDate -> NSString */
+- (nullable NSString *)br_convertDateWithFormat:(NSString *)format timeZone:(nullable NSTimeZone *)timeZone language:(nullable NSString *)language;
 /** 获取某个月的天数（通过年月求每月天数）*/
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month;
 
