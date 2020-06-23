@@ -1142,8 +1142,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         self.datePicker.datePickerMode = _datePickerMode;
         // 设置该 UIDatePicker 的国际化 Locale
         self.datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
-        // textColor 隐藏属性，使用KVC赋值
-        [self.datePicker setValue:self.pickerStyle.pickerTextColor forKey:@"textColor"];
         if (self.minDate) {
             self.datePicker.minimumDate = self.minDate;
         }
