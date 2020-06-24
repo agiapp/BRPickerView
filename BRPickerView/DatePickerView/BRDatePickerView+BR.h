@@ -30,9 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 比较两个时间大小（可以指定比较级数，即按指定格式进行比较） */
 - (NSComparisonResult)br_compareDate:(NSDate *)date targetDate:(NSDate *)targetDate dateFormat:(NSString *)dateFormat;
 
-/** 至今 */
-- (NSString *)getNowString;
-
 /** 获取 yearArr 数组 */
 - (NSArray *)getYearArr;
 

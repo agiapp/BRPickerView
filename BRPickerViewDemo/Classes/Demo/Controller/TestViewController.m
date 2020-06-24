@@ -303,12 +303,11 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.pickerMode = BRDatePickerModeYMD;
             datePickerView.title = @"请选择年月日";
             datePickerView.selectDate = self.birthdaySelectDate;
+            datePickerView.selectValue = self.infoModel.birthdayStr;
             datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
-            //datePickerView.maxDate = [NSDate date];
+            datePickerView.maxDate = [NSDate br_setYear:2022 month:10 day:20];
             datePickerView.isAutoSelect = YES;
-            datePickerView.showToday = YES;
-            datePickerView.showWeek = YES;
-            //datePickerView.showUnitType = BRShowUnitTypeNone;
+            datePickerView.addCustomString = @"自定义";
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -319,33 +318,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 NSLog(@"---------------------------------");
                 
             };
-            
-//            // 添加头视图
-//            UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 36)];
-//            headerView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.1f];
-//            NSArray *unitArr = @[@"年", @"月", @"日"];
-//            for (NSInteger i = 0; i < unitArr.count; i++) {
-//                CGFloat width = SCREEN_WIDTH / unitArr.count;
-//                CGFloat orginX = i * (SCREEN_WIDTH / unitArr.count);
-//                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(orginX, 0, width, 36)];
-//                label.backgroundColor = [UIColor clearColor];
-//                label.textAlignment = NSTextAlignmentCenter;
-//                label.font = [UIFont systemFontOfSize:16.0f];
-//                label.textColor = [UIColor darkGrayColor];
-//                label.text = unitArr[i];
-//                [headerView addSubview:label];
-//            }
-//            datePickerView.pickerHeaderView = headerView;
-
-            // 添加尾视图
-            //UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-            //footerView.backgroundColor = [UIColor blueColor];
-            //datePickerView.pickerFooterView = footerView;
-            
-            // 模板样式
-            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]];
-            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
-            //datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]];
             
 //            // 设置选择器中间选中行的样式
 //            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
