@@ -2,8 +2,8 @@
 //  NSDate+BRPickerView.m
 //  BRPickerViewDemo
 //
-//  Created by 任波 on 2018/3/15.
-//  Copyright © 2018年 91renb. All rights reserved.
+//  Created by renbo on 2018/3/15.
+//  Copyright © 2018 irenb. All rights reserved.
 //
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 

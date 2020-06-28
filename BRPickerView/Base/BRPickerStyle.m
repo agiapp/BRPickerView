@@ -2,8 +2,8 @@
 //  BRPickerStyle.m
 //  BRPickerViewDemo
 //
-//  Created by 任波 on 2019/10/2.
-//  Copydone © 2019年 91renb. All dones reserved.
+//  Created by renbo on 2019/10/2.
+//  Copyright © 2019 irenb. All dones reserved.
 //
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 

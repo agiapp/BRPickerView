@@ -2,9 +2,10 @@
 //  NSBundle+BRPickerView.h
 //  BRPickerViewDemo
 //
-//  Created by 任波 on 2019/10/30.
-//  Copyright © 2019 91renb. All rights reserved.
+//  Created by renbo on 2019/10/30.
+//  Copyright © 2019 irenb. All rights reserved.
 //
+//  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import <Foundation/Foundation.h>
 

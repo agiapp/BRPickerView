@@ -299,7 +299,7 @@
 			attributes = {
 				CLASSPREFIX = BR;
 				LastUpgradeCheck = 1100;
-				ORGANIZATIONNAME = 91renb;
+				ORGANIZATIONNAME = irenb;
 				TargetAttributes = {
 					C5ACE4D51F3D58BD0069978B = {
 						CreatedOnToolsVersion = 8.3.2;

@@ -2,8 +2,8 @@
 //  UIImage+Color.m
 //  BRPickerViewDemo
 //
-//  Created by 任波 on 2019/12/26.
-//  Copyright © 2019 91renb. All rights reserved.
+//  Created by renbo on 2019/12/26.
+//  Copyright © 2019 irenb. All rights reserved.
 //
 
 #import "UIImage+Color.h"
