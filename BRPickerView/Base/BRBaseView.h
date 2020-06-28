@@ -49,7 +49,7 @@ typedef void(^BRResultBlock)(void);
 /// 扩展一：添加选择器到指定容器视图上
 /// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
 /// @param view 容器视图
-- (void)addPickerToView:(nullable UIView *)view;
+- (void)addPickerToView:(nullable UIView *)view NS_REQUIRES_SUPER;
 
 /// 从指定容器视图上移除选择器
 /// @param view 容器视图

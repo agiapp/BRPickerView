@@ -117,34 +117,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 
 #pragma mark - NSDate 转 NSString
 - (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat {
-    return [date br_convertDateWithFormat:dateFormat timeZone:[self currentTimeZone] language:self.pickerStyle.language];
+    return [NSDate br_stringFromDate:date dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
 }
 
 #pragma mark - NSString 转 NSDate
 - (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    // 设置日期格式
-    dateFormatter.dateFormat = dateFormat;
-    // 设置时区(默认不使用夏时制)
-    dateFormatter.timeZone = [self currentTimeZone];
-    dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
-    // 如果当前时间不存在，就获取距离最近的整点时间
-    dateFormatter.lenient = YES;
-    
-    return [dateFormatter dateFromString:dateString];
-}
-
-- (NSTimeZone *)currentTimeZone {
-    if (!self.timeZone) {
-        // 当前时区
-        NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
-        // 当前时区相对于GMT(零时区)的偏移秒数
-        NSInteger interval = [localTimeZone secondsFromGMTForDate:[NSDate date]];
-        // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
-        // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
-        return [NSTimeZone timeZoneForSecondsFromGMT:interval];
-    }
-    return self.timeZone;
+    return [NSDate br_dateFromString:dateString dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
 }
 
 #pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
@@ -154,11 +132,11 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     NSDate *date1 = [self br_dateFromString:dateString1 dateFormat:dateFormat];
     NSDate *date2 = [self br_dateFromString:dateString2 dateFormat:dateFormat];
     if ([date1 compare:date2] == NSOrderedDescending) {
-        return 1;
+        return 1; // 大于
     } else if ([date1 compare:date2] == NSOrderedAscending) {
-        return -1;
+        return -1; // 小于
     } else {
-        return 0;
+        return 0; // 等于
     }
 }
 

@@ -50,9 +50,6 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
 
 #endif
 
-// 过期提醒
-#define BRPickerViewDeprecated(instead) NS_DEPRECATED(2_0, 2_0, 2_0, 2_0, instead)
-
 // 打印错误日志
 #ifdef DEBUG
     #define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])

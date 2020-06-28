@@ -26,37 +26,69 @@ NS_ASSUME_NONNULL_BEGIN
 /** 创建 date */
 /** yyyy */
 + (nullable NSDate *)br_setYear:(NSInteger)year;
+
 /** yyyy-MM */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month;
+
 /** yyyy-MM-dd */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
+
 /** yyyy-MM-dd HH */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour;
+
 /** yyyy-MM-dd HH:mm */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
+
 /** yyyy-MM-dd HH:mm:ss */
 + (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
+
 /** MM-dd HH:mm */
 + (nullable NSDate *)br_setMonth:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
+
 /** MM-dd */
 + (nullable NSDate *)br_setMonth:(NSInteger)month day:(NSInteger)day;
+
 /** HH:mm:ss */
 + (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
+
 /** HH:mm */
 + (nullable NSDate *)br_setHour:(NSInteger)hour minute:(NSInteger)minute;
+
 /** mm:ss */
 + (nullable NSDate *)br_setMinute:(NSInteger)minute second:(NSInteger)second;
 
 
-/** NSDate -> NSString */
-+ (nullable NSString *)br_getDateString:(NSDate *)date format:(NSString *)format;
-/** NSDate -> NSString */
-- (nullable NSString *)br_convertDateWithFormat:(NSString *)format timeZone:(nullable NSTimeZone *)timeZone language:(nullable NSString *)language;
 /** 获取某个月的天数（通过年月求每月天数）*/
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month;
 
 /**  获取 日期加上/减去某天数后的新日期 */
 - (nullable NSDate *)br_getNewDate:(NSDate *)date addDays:(NSTimeInterval)days;
+
+
+/** NSDate 转 NSString */
++ (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat;
+/** NSDate 转 NSString */
++ (NSString *)br_stringFromDate:(NSDate *)date
+                     dateFormat:(NSString *)dateFormat
+                       timeZone:(nullable NSTimeZone *)timeZone
+                       language:(nullable NSString *)language;
+
+
+/** NSString 转 NSDate */
++ (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat;
+/** NSString 转 NSDate */
++ (NSDate *)br_dateFromString:(NSString *)dateString
+                   dateFormat:(NSString *)dateFormat
+                     timeZone:(nullable NSTimeZone *)timeZone
+                     language:(nullable NSString *)language;
+
+
+/** NSDate 转 NSString（已弃用） */
++ (nullable NSString *)br_getDateString:(NSDate *)date format:(NSString *)format DEPRECATED_MSG_ATTRIBUTE("Use 'br_stringFromDate:dateFormat:' instead");
+
+/** NSString 转 NSDate（已弃用） */
++ (nullable NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format DEPRECATED_MSG_ATTRIBUTE("Use 'br_dateFromString:dateFormat:' instead");
+
 
 @end
 

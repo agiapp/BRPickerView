@@ -8,7 +8,6 @@
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import <Foundation/Foundation.h>
-#import "BRPickerViewMacro.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,8 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong) NSNumber *numberField;
 @property (nullable, nonatomic, strong) id idField;
 
-@property (nullable, nonatomic, copy) NSString *ID BRPickerViewDeprecated("请使用 key");
-@property (nullable, nonatomic, copy) NSString *name BRPickerViewDeprecated("请使用 value");
+@property (nullable, nonatomic, copy) NSString *ID __attribute__((deprecated("Use 'key' instead")));
+@property (nullable, nonatomic, copy) NSString *name __attribute__((deprecated("Use 'value' instead")));
 
 @end
 
