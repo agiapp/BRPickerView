@@ -13,8 +13,8 @@
 
 /// 时间选择器的类型
 typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
-    BRDatePickerStyleSystem,   // 系统样式：使用 UIDatePicker 类
-    BRDatePickerStyleCustom    // 自定义样式：使用 UIPickerView 类
+    BRDatePickerStyleSystem,   // 系统样式：使用 UIDatePicker
+    BRDatePickerStyleCustom    // 自定义样式：使用 UIPickerView
 };
 
 @interface BRDatePickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>

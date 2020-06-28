@@ -115,7 +115,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return @"";
 }
 
-#pragma mark - 创建date（通过NSCalendar类来创建日期）
+#pragma mark - 创建date（通过 NSCalendar 类来创建日期）
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
     NSCalendar *calendar = [self calendar];
     // 获取当前日期组件

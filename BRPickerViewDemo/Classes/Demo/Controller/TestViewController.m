@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     
     // 设置开始时间默认选择的值及状态
     self.beginSelectDate = [NSDate date];
-    self.beginTimeTF.text = [NSDate br_getDateString:self.beginSelectDate format:@"yyyy-MM-dd HH"];
+    self.beginTimeTF.text = [NSDate br_stringFromDate:self.beginSelectDate dateFormat:@"yyyy-MM-dd HH"];
     self.beginTimeTF.textColor = kThemeColor;
     self.beginTimeLineView.backgroundColor = kThemeColor;
     // 设置选择器滚动到指定的日期
@@ -478,7 +478,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             }
             
             if (self.beginTimeTF.text.length == 0) {
-                self.beginTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];
+                self.beginTimeTF.text = [NSDate br_stringFromDate:[NSDate date] dateFormat:format];
             }
             // 设置选择器滚动到指定的日期
             //self.datePickerView.selectValue = self.beginTimeTF.text;
@@ -502,7 +502,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 format = @"yyyy-MM-dd HH";
             }
             if (self.endTimeTF.text.length == 0) {
-                self.endTimeTF.text = [NSDate br_getDateString:[NSDate date] format:format];
+                self.endTimeTF.text = [NSDate br_stringFromDate:[NSDate date] dateFormat:format];
             }
             // 设置选择器滚动到指定的日期
             //self.datePickerView.selectValue = self.endTimeTF.text;
