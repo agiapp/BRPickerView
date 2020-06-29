@@ -20,10 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSInteger br_minute;  // 分
 @property (readonly) NSInteger br_second;  // 秒
 @property (readonly) NSInteger br_weekday; // 星期
-/** 获取中文星期字符串 */
-@property (nonatomic, readonly, copy) NSString *br_weekdayString;
 
-/** 创建 date */
+/** 获取中文星期字符串 */
+@property (nullable, nonatomic, readonly, copy) NSString *br_weekdayString;
+
+
+/// 创建 date
 /** yyyy */
 + (nullable NSDate *)br_setYear:(NSInteger)year;
 
@@ -66,18 +68,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /** NSDate 转 NSString */
-+ (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat;
++ (nullable NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat;
 /** NSDate 转 NSString */
-+ (NSString *)br_stringFromDate:(NSDate *)date
++ (nullable NSString *)br_stringFromDate:(NSDate *)date
                      dateFormat:(NSString *)dateFormat
                        timeZone:(nullable NSTimeZone *)timeZone
                        language:(nullable NSString *)language;
 
 
 /** NSString 转 NSDate */
-+ (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat;
++ (nullable NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat;
 /** NSString 转 NSDate */
-+ (NSDate *)br_dateFromString:(NSString *)dateString
++ (nullable NSDate *)br_dateFromString:(NSString *)dateString
                    dateFormat:(NSString *)dateFormat
                      timeZone:(nullable NSTimeZone *)timeZone
                      language:(nullable NSString *)language;

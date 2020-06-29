@@ -51,14 +51,18 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
  */
 @property (nullable, nonatomic, copy) NSString *plistName;
 
-/** 设置默认选中的位置【单列】 */
+/**
+ *  设置默认选中的位置【单列】
+ *  推荐使用 selectIndex，更加严谨，可以避免使用 selectValue 时，有名称相同的情况
+ */
 @property (nonatomic, assign) NSInteger selectIndex;
-// 推荐使用 selectIndex，更加严谨，可以避免使用 selectValue 时，有名称相同的情况
 @property (nullable, nonatomic, copy) NSString *selectValue;
 
-/** 设置默认选中的位置【多列】 */
+/**
+ *  设置默认选中的位置【多列】
+ *  推荐使用 selectIndexs，更加严谨，可以避免使用 selectValues 时，有名称相同的情况
+ */
 @property (nullable, nonatomic, copy) NSArray <NSNumber *> *selectIndexs;
-// 推荐使用 selectIndexs，更加严谨，可以避免使用 selectValues 时，有名称相同的情况
 @property (nullable, nonatomic, copy) NSArray <NSString *> *selectValues;
 
 /** 选择结果的回调【单列】 */
