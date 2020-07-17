@@ -44,7 +44,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) NSDate *birthtimeSelectDate;
 @property (nonatomic, assign) NSInteger educationSelectIndex;
 @property (nonatomic, copy) NSArray <NSNumber *> *addressSelectIndexs;
-@property (nonatomic, copy) NSArray <NSNumber *> *otherSelectIndexs;
+@property (nonatomic, copy) NSArray <NSNumber *> *linkage2SelectIndexs;
+@property (nonatomic, copy) NSArray <NSNumber *> *linkage3SelectIndexs;
 
 @property (nonatomic, strong) NSDate *beginSelectDate;
 @property (nonatomic, strong) NSDate *endSelectDate;
@@ -71,7 +72,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     self.infoModel.phoneStr = @"";
     self.infoModel.addressStr = @"";
     self.infoModel.educationStr = @"";
-    self.infoModel.otherStr = @"";
 }
 
 - (void)initUI {
@@ -100,7 +100,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     NSLog(@"联系方式：%@", self.infoModel.phoneStr);
     NSLog(@"地址：%@", self.infoModel.addressStr);
     NSLog(@"学历：%@", self.infoModel.educationStr);
-    NSLog(@"其它：%@", self.infoModel.otherStr);
 }
 
 - (UITableView *)tableView {
@@ -198,10 +197,21 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         {
             cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
-            cell.textField.text = self.infoModel.otherStr;
         }
             break;
         case 8:
+        {
+            cell.canEdit = NO;
+            cell.textField.placeholder = @"请选择";
+        }
+            break;
+        case 9:
+        {
+            cell.canEdit = NO;
+            cell.textField.placeholder = @"请选择";
+        }
+            break;
+        case 10:
         {
             cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
@@ -225,16 +235,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.0001f;
-}
-
-#pragma mark - 获取地区数据源
-- (NSArray *)getAddressDataSource {
-    // 加载地区数据源（实际开发中这里可以写网络请求，从服务端请求数据。可以把 BRCity.json 文件的数据放到服务端去维护，通过接口获取这个数据源数组）
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    return dataSource;
 }
 
 #pragma mark - UITextFieldDelegate 返回键
@@ -297,6 +297,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
         case 2:
         {
             // 出生年月日
@@ -331,6 +332,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
         case 3:
         {
             // 出生时刻
@@ -353,6 +355,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
         case 5:
         {
             // 地区
@@ -372,6 +375,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
         case 6:
         {
             // 学历
@@ -379,8 +383,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             stringPickerView.pickerMode = BRStringPickerComponentSingle;
             stringPickerView.title = @"请选择学历";
             stringPickerView.plistName = @"testData.plist";
-            stringPickerView.selectIndex = self.educationSelectIndex;
-            //stringPickerView.selectValue = self.infoModel.educationStr;
+            //stringPickerView.selectIndex = self.educationSelectIndex;
+            stringPickerView.selectValue = self.infoModel.educationStr;
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.educationSelectIndex = resultModel.index;
@@ -402,6 +406,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
         case 7:
         {
             /// 融资情况
@@ -424,7 +429,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             stringPickerView.pickerMode = BRStringPickerComponentSingle;
             stringPickerView.title = @"融资情况";
             stringPickerView.dataSourceArr = [modelArr copy];
-            stringPickerView.selectIndex = 2;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 NSLog(@"选择的索引：%@", @(resultModel.index));
                 NSLog(@"选择的值：%@", resultModel.value);
@@ -435,20 +439,17 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
         case 8:
         {
             /// 多列字符串
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
             stringPickerView.pickerMode = BRStringPickerComponentMulti;
-            stringPickerView.title = @"自定义多列字符串";
+            stringPickerView.title = @"多列选择器";
             stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
-            stringPickerView.selectIndexs = self.otherSelectIndexs;
-            //stringPickerView.selectValues = [self.infoModel.otherStr componentsSeparatedByString:@"，"];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-                self.otherSelectIndexs = @[@(resultModelArr[0].index), @(resultModelArr[1].index)];
-                self.infoModel.otherStr = [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value];
-                textField.text = self.infoModel.otherStr;
+                textField.text = [NSString stringWithFormat:@"%@ %@", resultModelArr[0].value, resultModelArr[1].value];
             };
             
             // 设置选择器中间选中行的样式
@@ -461,6 +462,79 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         }
             break;
+            
+        case 9:
+        {
+            /// 二级联动选择
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentLinkage;
+            stringPickerView.title = @"二级联动选择";
+            stringPickerView.dataSourceArr = [self getLinkag2DataSource];
+            stringPickerView.selectIndexs = self.linkage2SelectIndexs;
+            stringPickerView.isAutoSelect = YES;
+            stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+                // 1.选择的索引
+                NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
+                // 2.选择的值
+                NSString *selectValue = @"";
+                for (BRResultModel *model in resultModelArr) {
+                    [selectIndexs addObject:@(model.index)];
+                    selectValue = [NSString stringWithFormat:@"%@ %@", selectValue, model.value];
+                }
+                if ([selectValue hasPrefix:@" "]) {
+                    selectValue = [selectValue substringFromIndex:1];
+                }
+                self.linkage2SelectIndexs = selectIndexs;
+                textField.text = selectValue;
+            };
+            
+            // 设置选择器中间选中行的样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+            customStyle.selectRowTextColor = [UIColor blueColor];
+            stringPickerView.pickerStyle = customStyle;
+            
+            [stringPickerView show];
+            
+        }
+            break;
+            
+        case 10:
+        {
+            /// 三级联动选择
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentLinkage;
+            stringPickerView.title = @"三级联动选择";
+            stringPickerView.dataSourceArr = [self getLinkag3DataSource];
+            stringPickerView.selectIndexs = self.linkage3SelectIndexs;
+            stringPickerView.isAutoSelect = YES;
+            stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+                // 1.选择的索引
+                NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
+                // 2.选择的值
+                NSString *selectValue = @"";
+                // 提示：【广东省-东莞市】，【广东省-中山市】 没有对应的区数据，三级联动会自动变成二级联动，使用 for循环遍历 获取选择的值而不直接使用数组下标，可以避免数组越界。如果想始终保持三级联动，在包装数据源时 可以把没有区数据用空字符串补上。
+                for (BRResultModel *model in resultModelArr) {
+                    [selectIndexs addObject:@(model.index)];
+                    selectValue = [NSString stringWithFormat:@"%@ %@", selectValue, model.value];
+                }
+                if ([selectValue hasPrefix:@" "]) {
+                    selectValue = [selectValue substringFromIndex:1];
+                }
+                self.linkage3SelectIndexs = selectIndexs;
+                textField.text = selectValue;
+            };
+            // 设置选择器中间选中行的样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+            customStyle.selectRowTextColor = [UIColor blueColor];
+            stringPickerView.pickerStyle = customStyle;
+            
+            [stringPickerView show];
+            
+        }
+            break;
+            
         case 100:
         {
             NSLog(@"点击了开始时间：%@", self.beginTimeTF.text);
@@ -513,6 +587,67 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         default:
             break;
     }
+}
+
+#pragma mark - 获取二级联动的数据源
+- (NSArray <BRResultModel *>*)getLinkag2DataSource {
+    // 获取本地数据源
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"linkage2_data.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    NSArray *dataArr = responseObj[@"data"];
+    
+    NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
+    for (NSDictionary *dic in dataArr) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = [NSString stringWithFormat:@"%@", dic[@"parent_key"]];
+        model.parentValue = dic[@"parent_value"];
+        model.key = [NSString stringWithFormat:@"%@", dic[@"key"]];
+        model.value = dic[@"value"];
+        [listModelArr addObject:model];
+    }
+    return [listModelArr copy];
+}
+
+#pragma mark - 获取三级联动的数据源
+- (NSArray <BRResultModel *>*)getLinkag3DataSource {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"linkage3_data.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    
+    NSMutableArray *allRegionModelArr = [[NSMutableArray alloc]init];
+    // 省
+    NSArray *provinceArr = responseObj[@"Result"][@"Province"];
+    for (NSInteger i = 0; i < provinceArr.count; i++) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = @"-1";
+        model.parentValue = @"";
+        model.key = [NSString stringWithFormat:@"%@", provinceArr[i][@"ProvinceID"]];
+        model.value = provinceArr[i][@"Province"];
+        [allRegionModelArr addObject:model];
+    }
+    // 市
+    NSArray *cityArr = responseObj[@"Result"][@"City"];
+    for (NSInteger i = 0; i < cityArr.count; i++) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = [NSString stringWithFormat:@"%@", cityArr[i][@"ProvinceID"]];
+        model.parentValue = @"";
+        model.key = [NSString stringWithFormat:@"%@", cityArr[i][@"CityID"]];
+        model.value = cityArr[i][@"City"];
+        [allRegionModelArr addObject:model];
+    }
+    // 区
+    NSArray *areaArr = responseObj[@"Result"][@"Area"];
+    for (NSInteger i = 0; i < areaArr.count; i++) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = [NSString stringWithFormat:@"%@", areaArr[i][@"CityID"]];;
+        model.parentValue = @"";
+        model.key = [NSString stringWithFormat:@"%@", areaArr[i][@"AreaID"]];
+        model.value = areaArr[i][@"Area"];
+        [allRegionModelArr addObject:model];
+    }
+    
+    return [allRegionModelArr copy];
 }
 
 #pragma mark - footerView
@@ -657,7 +792,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (NSArray *)titleArr {
     if (!_titleArr) {
-        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资（传模型数组）", @"多列字符串"];
+        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资", @"多列选择", @"二级联动选择", @"三级联动选择"];
     }
     return _titleArr;
 }
@@ -674,13 +809,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         _addressSelectIndexs = [NSArray array];
     }
     return _addressSelectIndexs;
-}
-
-- (NSArray<NSNumber *> *)otherSelectIndexs {
-    if (!_otherSelectIndexs) {
-        _otherSelectIndexs = [NSArray array];
-    }
-    return _otherSelectIndexs;
 }
 
 @end

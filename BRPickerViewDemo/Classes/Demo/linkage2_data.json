@@ -1,0 +1,72 @@
+{
+  "errno": 0,
+  "msg": "success",
+  "data": [
+      {
+          "parent_key": -1,
+          "parent_value": "",
+          "key": 1000,
+          "value": "城区"
+      },
+      {
+          "parent_key": -1,
+          "parent_value": "",
+          "key": 2000,
+          "value": "地铁"
+      },
+      {
+          "parent_key": -1,
+          "parent_value": "",
+          "key": 3000,
+          "value": "附近"
+      },
+      {
+          "parent_key": 1000,
+          "parent_value": "城区",
+          "key": 0,
+          "value": "不限"
+      },
+      {
+          "parent_key": 2000,
+          "parent_value": "地铁",
+          "key": 0,
+          "value": "不限"
+      },
+      {
+          "parent_key": 2000,
+          "parent_value": "地铁",
+          "key": 2001,
+          "value": "1号线"
+      },
+      {
+          "parent_key": 2000,
+          "parent_value": "地铁",
+          "key": 2002,
+          "value": "2号线"
+      },
+      {
+          "parent_key": 3000,
+          "parent_value": "附近",
+          "key": 0,
+          "value": "不限"
+      },
+      {
+          "parent_key": 3000,
+          "parent_value": "附近",
+          "key": 3001,
+          "value": "1公里"
+      },
+      {
+          "parent_key": 3000,
+          "parent_value": "附近",
+          "key": 3002,
+          "value": "2公里"
+      },
+      {
+          "parent_key": 3000,
+          "parent_value": "附近",
+          "key": 3003,
+          "value": "3公里"
+      }
+  ]
+}

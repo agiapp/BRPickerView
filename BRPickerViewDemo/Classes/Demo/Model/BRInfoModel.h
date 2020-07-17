@@ -24,7 +24,5 @@
 @property (nonatomic, copy) NSString *addressStr;
 /** 学历 */
 @property (nonatomic, copy) NSString *educationStr;
-/** 其它 */
-@property (nonatomic, copy) NSString *otherStr;
 
 @end

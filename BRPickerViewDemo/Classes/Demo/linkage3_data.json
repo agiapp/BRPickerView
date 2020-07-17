@@ -223,6 +223,30 @@
     ],
     "City" : [
       {
+        "ShortName" : "北京",
+        "City" : "北京市",
+        "CityID" : 110100,
+        "ProvinceID" : 110000
+      },
+      {
+        "ShortName" : "天津",
+        "City" : "天津市",
+        "CityID" : 120100,
+        "ProvinceID" : 120000
+      },
+      {
+        "ShortName" : "上海",
+        "City" : "上海市",
+        "CityID" : 310100,
+        "ProvinceID" : 310000
+      },
+      {
+        "ShortName" : "重庆",
+        "City" : "重庆市",
+        "CityID" : 500100,
+        "ProvinceID" : 500000
+      },
+      {
         "ShortName" : "石家庄",
         "City" : "石家庄市",
         "CityID" : 130100,
