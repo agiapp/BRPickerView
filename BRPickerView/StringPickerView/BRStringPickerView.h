@@ -43,7 +43,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
  *  1.设置数据源
  *    单列：@[@"男", @"女", @"其他"]，或直接传一维模型数组(NSArray <BRResultModel *>*)
  *    多列：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好"]]，或直接传多维模型数组
- *    联动：直接传一维模型数组(NSArray <BRResultModel *>*)
+ *    联动：直接传一维模型数组(NSArray <BRResultModel *>*)，要注意数据源联动格式，可参考Demo
  */
 @property (nullable, nonatomic, copy) NSArray *dataSourceArr;
 /**

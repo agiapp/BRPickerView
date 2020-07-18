@@ -160,28 +160,28 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 的背景颜色 */
 @property (nullable, nonatomic, strong) UIColor *pickerColor;
 
-/** 设置 picker 中间两条分割线的背景颜色 */
+/** 设置 picker 中间两条分割线的背景颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *separatorColor;
 
-/** 设置 picker 文本的颜色 */
+/** 设置 picker 文本的颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *pickerTextColor;
 
-/** 设置 picker 文本的字体 */
+/** 设置 picker 文本的字体。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIFont *pickerTextFont;
 
-/** 设置 picker 中间选中行的背景颜色，默认为nil */
+/** 设置 picker 中间选中行的背景颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *selectRowColor;
 
-/** 设置 picker 中间选中行文本的颜色，默认为nil */
+/** 设置 picker 中间选中行文本的颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *selectRowTextColor;
 
-/** 设置 picker 中间选中行文本的字体，默认为nil */
+/** 设置 picker 中间选中行文本的字体。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIFont *selectRowTextFont;
 
 /** 设置 picker 的高度，系统默认高度为 216 */
 @property (nonatomic, assign) CGFloat pickerHeight;
 
-/** 设置 picker 的行高 */
+/** 设置 picker 的行高。暂不支持日期选择器前4种类型 */
 @property (nonatomic, assign) CGFloat rowHeight;
 
 
@@ -192,7 +192,7 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 @property(nullable, nonatomic, copy) NSString *language;
 
 
-/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeOnlyCenter 时，生效）///////
+/////// 日期选择器单位样式（showUnitType == BRShowUnitTypeOnlyCenter 时生效。暂不支持日期选择器前4种类型 ）///////
 
 /** 设置日期选择器单位文本的颜色 */
 @property (nullable, nonatomic, strong) UIColor *dateUnitTextColor;

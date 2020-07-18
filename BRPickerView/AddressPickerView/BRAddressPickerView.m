@@ -80,9 +80,9 @@
 #pragma mark - 处理选择器数据
 - (void)handlerPickerData {
     if (self.dataSourceArr && self.dataSourceArr.count > 0) {
-        id element = [self.dataSourceArr firstObject];
+        id item = [self.dataSourceArr firstObject];
         // 如果传的值是解析好的模型数组
-        if ([element isKindOfClass:[BRProvinceModel class]]) {
+        if ([item isKindOfClass:[BRProvinceModel class]]) {
             self.provinceModelArr = self.dataSourceArr;
         } else {
             self.provinceModelArr = [self getProvinceModelArr:self.dataSourceArr];

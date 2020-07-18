@@ -11,7 +11,7 @@
 
 @interface BRStringPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
 {
-    BOOL _invalidDataSource; // 数据源格式是否有误
+    BOOL _dataSourceException; // 数据源格式是否有误
 }
 /** 选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
@@ -111,18 +111,18 @@
 #pragma mark - 处理选择器数据
 - (void)handlerPickerData {
     if (self.dataSourceArr.count == 0) {
-        _invalidDataSource = YES;
+        _dataSourceException = YES;
     }
     id item = [self.dataSourceArr firstObject];
     if (self.pickerMode == BRStringPickerComponentSingle) {
-        _invalidDataSource = [item isKindOfClass:[NSArray class]];
+        _dataSourceException = [item isKindOfClass:[NSArray class]];
     } else if (self.pickerMode == BRStringPickerComponentMulti) {
-        _invalidDataSource = [item isKindOfClass:[NSString class]];
+        _dataSourceException = [item isKindOfClass:[NSString class]];
     } else if (self.pickerMode == BRStringPickerComponentLinkage) {
-        _invalidDataSource = ![item isKindOfClass:[BRResultModel class]];
+        _dataSourceException = ![item isKindOfClass:[BRResultModel class]];
     }
-    if (_invalidDataSource) {
-        NSAssert(!_invalidDataSource, @"无效数据源！请检查选择器数据源的格式");
+    if (_dataSourceException) {
+        NSAssert(!_dataSourceException, @"数据源异常！请检查选择器数据源的格式");
         return;
     }
     
