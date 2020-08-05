@@ -194,9 +194,13 @@
         BRResultModel *selectModel = nil;
         BOOL hasNext = YES;
         NSInteger i = 0;
+
+        NSMutableArray *dataArr = [self.dataSourceArr mutableCopy];
+        
         do {
-            NSArray *nextArr = [self getNextDataArr:self.dataSourceArr selectModel:selectModel];
-            if (nextArr.count == 0) {
+            NSArray *nextArr = [self getNextDataArr:dataArr selectModel:selectModel];
+            // 设置默认最大层级为三级，防止 key 等于 parentKey 时，进入死循环
+            if (nextArr.count == 0 || i > self.maxLevel - 1) {
                 hasNext = NO;
                 break;
             }
@@ -209,7 +213,23 @@
             
             [selectIndexs addObject:@(selectIndex)];
             [mDataSourceArr addObject:nextArr];
-            
+/*
+            // 过滤数据源，防止出现死循环(key等于parentKey时)；这种方式比较影响性能，改用使用 maxLevel
+            for (BRResultModel *model in nextArr) {
+                if (![model isEqual:selectModel]) {
+                    NSMutableArray *tmpArr = [dataArr mutableCopy];
+                    for (BRResultModel *tmpModel in dataArr) {
+                        if ([model.key isEqualToString:tmpModel.parentKey]) {
+                            [tmpArr removeObject:tmpModel];
+                        }
+                    }
+                    dataArr = [tmpArr mutableCopy];
+                    // NSPredicate *pred = [NSPredicate predicateWithFormat:@"NOT SELF.parentKey IN %@.key", model];
+                    // [dataArr filterUsingPredicate:pred];
+                }
+                [dataArr removeObject:model];
+            }
+*/
             i++;
             
         } while (hasNext);
@@ -221,9 +241,9 @@
 
 - (NSArray <BRResultModel *>*)getNextDataArr:(NSArray *)dataArr selectModel:(BRResultModel *)selectModel {
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
+    // parentKey = @"-1"，表示是第一列数据
+    NSString *key = selectModel ? selectModel.key : @"-1";
     for (BRResultModel *model in dataArr) {
-        // parentKey = @"-1"，表示是第一列数据
-        NSString *key = selectModel ? selectModel.key : @"-1";
         if ([model.parentKey isEqualToString:key]) {
             [tempArr addObject:model];
         }
@@ -556,7 +576,7 @@
             if (self.resultModelBlock) {
                 self.resultModelBlock([self getResultModel]);
             }
-        } else if (self.pickerMode == BRStringPickerComponentMulti) {
+        } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
             if (self.resultModelArrayBlock) {
                 self.resultModelArrayBlock([self getResultModelArr]);
             }
@@ -617,6 +637,13 @@
         _mSelectValues = [NSArray array];
     }
     return _mSelectValues;
+}
+
+- (NSInteger)maxLevel {
+    if (_maxLevel <= 0) {
+        _maxLevel = 3;
+    }
+    return _maxLevel;
 }
 
 @end
