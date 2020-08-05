@@ -143,8 +143,16 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
             hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_hour]];
         }
         self.hourIndex = hourIndex;
-        self.minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_minute]];
-        self.secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_second]];
+        NSInteger minuteIndex = 0;
+        if ([self.minuteArr containsObject:[self getMDHMSNumber:self.mSelectDate.br_minute]]) {
+            minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_minute]];
+        }
+        NSInteger secondIndex = 0;
+        if ([self.secondArr containsObject:[self getMDHMSNumber:self.mSelectDate.br_second]]) {
+            secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:self.mSelectDate.br_second]];
+        }
+        self.minuteIndex = minuteIndex;
+        self.secondIndex = secondIndex;
     }
     
     if (self.selectValue && [self.selectValue isEqualToString:self.addCustomString]) {
@@ -419,8 +427,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     } else {
         hourIndex = [self.hourArr indexOfObject:[self getMDHMSNumber:selectDate.br_hour]];
     }
-    NSInteger minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:selectDate.br_minute]];
-    NSInteger secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:selectDate.br_second]];
+    NSInteger minuteIndex = 0;
+    if ([self.minuteArr containsObject:[self getMDHMSNumber:selectDate.br_minute]]) {
+        minuteIndex = [self.minuteArr indexOfObject:[self getMDHMSNumber:selectDate.br_minute]];
+    }
+    NSInteger secondIndex = 0;
+    if ([self.secondArr containsObject:[self getMDHMSNumber:selectDate.br_second]]) {
+        secondIndex = [self.secondArr indexOfObject:[self getMDHMSNumber:selectDate.br_second]];
+    }
     NSArray *indexArr = [NSArray array];
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex), @(hourIndex), @(minuteIndex), @(secondIndex)];

@@ -95,8 +95,25 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 selectDate = date;
             }
         } else {
-            // 不设置默认日期，就默认选中今天的日期
-            selectDate = [NSDate date];
+            // 不设置默认日期
+            if (self.pickerMode == BRDatePickerModeTime ||
+                self.pickerMode == BRDatePickerModeCountDownTimer ||
+                self.pickerMode == BRDatePickerModeHM ||
+                self.pickerMode == BRDatePickerModeHMS ||
+                self.pickerMode == BRDatePickerModeMS) {
+                // 默认选中最小时间
+                selectDate = self.minDate;
+            } else {
+                if (self.minuteInterval > 1 || self.secondInterval > 1) {
+                    NSDate *date = [NSDate date];
+                    NSInteger minute = self.minDate.br_minute % self.minuteInterval == 0 ? self.minDate.br_minute : 0;
+                    NSInteger second = self.minDate.br_second % self.secondInterval == 0 ? self.minDate.br_second : 0;
+                    selectDate = [NSDate br_setYear:date.br_year month:date.br_month day:date.br_day hour:date.br_hour minute:minute second:second];
+                } else {
+                    // 默认选中今天的时间
+                    selectDate = [NSDate date];
+                }
+            }
         }
     }
     
