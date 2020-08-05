@@ -199,7 +199,7 @@
         
         do {
             NSArray *nextArr = [self getNextDataArr:dataArr selectModel:selectModel];
-            // 设置默认最大层级为三级，防止 key 等于 parentKey 时，进入死循环
+            // 设置 maxLevel，防止 key 等于 parentKey 时进入死循环
             if (nextArr.count == 0 || i > self.maxLevel - 1) {
                 hasNext = NO;
                 break;
@@ -213,23 +213,7 @@
             
             [selectIndexs addObject:@(selectIndex)];
             [mDataSourceArr addObject:nextArr];
-/*
-            // 过滤数据源，防止出现死循环(key等于parentKey时)；这种方式比较影响性能，改用使用 maxLevel
-            for (BRResultModel *model in nextArr) {
-                if (![model isEqual:selectModel]) {
-                    NSMutableArray *tmpArr = [dataArr mutableCopy];
-                    for (BRResultModel *tmpModel in dataArr) {
-                        if ([model.key isEqualToString:tmpModel.parentKey]) {
-                            [tmpArr removeObject:tmpModel];
-                        }
-                    }
-                    dataArr = [tmpArr mutableCopy];
-                    // NSPredicate *pred = [NSPredicate predicateWithFormat:@"NOT SELF.parentKey IN %@.key", model];
-                    // [dataArr filterUsingPredicate:pred];
-                }
-                [dataArr removeObject:model];
-            }
-*/
+
             i++;
             
         } while (hasNext);

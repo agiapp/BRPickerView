@@ -469,9 +469,10 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
             stringPickerView.pickerMode = BRStringPickerComponentLinkage;
             stringPickerView.title = @"二级联动选择";
-            stringPickerView.dataSourceArr = [self getLinkag2DataSource];
+            //stringPickerView.dataSourceArr = [self getLinkag2DataSource];
+            stringPickerView.dataSourceArr = [self getStagesDataSource];
             stringPickerView.selectIndexs = self.linkage2SelectIndexs;
-            stringPickerView.isAutoSelect = YES;
+            stringPickerView.maxLevel = 2;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 // 1.选择的索引
                 NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
@@ -507,7 +508,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             stringPickerView.title = @"三级联动选择";
             stringPickerView.dataSourceArr = [self getLinkag3DataSource];
             stringPickerView.selectIndexs = self.linkage3SelectIndexs;
-            stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 // 1.选择的索引
                 NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
@@ -600,14 +600,45 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
     for (NSDictionary *dic in dataArr) {
         BRResultModel *model = [[BRResultModel alloc]init];
-        model.parentKey = [NSString stringWithFormat:@"%@", dic[@"parent_key"]];
+        model.parentKey = dic[@"parent_key"];
         model.parentValue = dic[@"parent_value"];
-        model.key = [NSString stringWithFormat:@"%@", dic[@"key"]];
+        model.key = dic[@"key"];
         model.value = dic[@"value"];
         [listModelArr addObject:model];
     }
     return [listModelArr copy];
 }
+
+
+#pragma mark - 获取二级联动的数据源
+- (NSArray <BRResultModel *>*)getStagesDataSource {
+    // 获取本地数据源
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"stages.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    NSArray *dataArr = responseObj[@"GetStageInfoDto"];
+    
+    NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
+    for (NSDictionary *dic in dataArr) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = @"-1";
+        model.parentValue = @"";
+        model.key = dic[@"StageID"];
+        model.value = dic[@"Name"];
+        [listModelArr addObject:model];
+        
+        for (NSDictionary *param in dic[@"GetGradeInfoDto"]) {
+            BRResultModel *model1 = [[BRResultModel alloc]init];
+            model1.parentKey = param[@"StageID"];
+            model1.parentValue = dic[@"Name"];
+            model1.key = param[@"GradeID"];
+            model1.value = param[@"Name"];
+            [listModelArr addObject:model1];
+        }
+    }
+    return [listModelArr copy];
+}
+
 
 #pragma mark - 获取三级联动的数据源
 - (NSArray <BRResultModel *>*)getLinkag3DataSource {

@@ -14,6 +14,7 @@
 		4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7D723B377D800CD59D4 /* TestViewController.m */; };
 		4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DA23B4425700CD59D4 /* UIImage+Color.m */; };
 		4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */; };
+		457DA34D24D90AFB009D75F3 /* stages.json in Resources */ = {isa = PBXBuildFile; fileRef = 457DA34C24D90AFB009D75F3 /* stages.json */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */; };
 		45AB6DD4249A1306004EB3D0 /* linkage3_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 45AB6DD3249A1306004EB3D0 /* linkage3_data.json */; };
@@ -49,6 +50,7 @@
 		4566F7DA23B4425700CD59D4 /* UIImage+Color.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		4566F7DC23B4BCE100CD59D4 /* UIColor+BRAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+BRAdd.h"; sourceTree = "<group>"; };
 		4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BRAdd.m"; sourceTree = "<group>"; };
+		457DA34C24D90AFB009D75F3 /* stages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stages.json; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				45E81CFE2399387700B8878A /* View */,
 				45FD41D023E3DAD900DD742B /* 2020年1月县以上行政区划代码.json */,
 				456506DD24C1AF7100A2E4EE /* linkage2_data.json */,
+				457DA34C24D90AFB009D75F3 /* stages.json */,
 				45AB6DD3249A1306004EB3D0 /* linkage3_data.json */,
 				45E81CF62399387700B8878A /* testData.plist */,
 			);
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E81D042399387700B8878A /* testData.plist in Resources */,
+				457DA34D24D90AFB009D75F3 /* stages.json in Resources */,
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
 				45AB6DD4249A1306004EB3D0 /* linkage3_data.json in Resources */,
