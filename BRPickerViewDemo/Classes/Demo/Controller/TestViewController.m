@@ -486,7 +486,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             //stringPickerView.dataSourceArr = [self getLinkag2DataSource];
             stringPickerView.dataSourceArr = [self getStagesDataSource];
             stringPickerView.selectIndexs = self.linkage2SelectIndexs;
-            stringPickerView.maxLevel = 2;
+            stringPickerView.numberOfComponents = 2;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
                 // 1.选择的索引
                 NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];

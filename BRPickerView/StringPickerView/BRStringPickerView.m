@@ -199,8 +199,8 @@
         
         do {
             NSArray *nextArr = [self getNextDataArr:dataArr selectModel:selectModel];
-            // 设置 maxLevel，防止 key 等于 parentKey 时进入死循环
-            if (nextArr.count == 0 || i > self.maxLevel - 1) {
+            // 设置 numberOfComponents，防止 key 等于 parentKey 时进入死循环
+            if (nextArr.count == 0 || i > self.numberOfComponents - 1) {
                 hasNext = NO;
                 break;
             }
@@ -623,11 +623,11 @@
     return _mSelectValues;
 }
 
-- (NSInteger)maxLevel {
-    if (_maxLevel <= 0) {
-        _maxLevel = 3;
+- (NSInteger)numberOfComponents {
+    if (_numberOfComponents <= 0) {
+        _numberOfComponents = 3;
     }
-    return _maxLevel;
+    return _numberOfComponents;
 }
 
 @end
