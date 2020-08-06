@@ -321,12 +321,22 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 
             };
             
-//            // 设置选择器中间选中行的样式
-//            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-//            customStyle.selectRowColor = [UIColor blueColor];
-//            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
-//            customStyle.selectRowTextColor = [UIColor redColor];
-//            datePickerView.pickerStyle = customStyle;
+            // 设置年份背景
+            UILabel *yearLabel = [[UILabel alloc]initWithFrame:datePickerView.alertView.bounds];
+            yearLabel.backgroundColor = [UIColor clearColor];
+            yearLabel.textAlignment = NSTextAlignmentCenter;
+            yearLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.2f];
+            yearLabel.font = [UIFont boldSystemFontOfSize:100.0f];
+            yearLabel.text = @([NSDate date].br_year).stringValue;
+            [datePickerView.alertView addSubview:yearLabel];
+            // 滚动选择器，动态更新年份
+            datePickerView.changeBlock = ^(NSDate * _Nullable selectDate, NSString * _Nullable selectValue) {
+                yearLabel.text = selectDate ? @(selectDate.br_year).stringValue : @"";
+            };
+            
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.pickerColor = [UIColor clearColor];
+            datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
             

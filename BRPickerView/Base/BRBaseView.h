@@ -38,7 +38,7 @@ typedef void(^BRResultBlock)(void);
 /** 选择结果的回调（框架内部使用） */
 @property (nullable, nonatomic, copy) BRResultBlock doneBlock;
 
-/** 弹框视图 */
+/** 弹框视图(使用场景：可以在 alertView 上添加选择器的背景视图) */
 @property (nullable, nonatomic, strong) UIView *alertView;
 
 
