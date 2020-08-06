@@ -327,7 +327,11 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             yearLabel.textAlignment = NSTextAlignmentCenter;
             yearLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.2f];
             yearLabel.font = [UIFont boldSystemFontOfSize:100.0f];
-            yearLabel.text = @([NSDate date].br_year).stringValue;
+            NSString *yearString = @([NSDate date].br_year).stringValue;
+            if (self.infoModel.birthdayStr && [self.infoModel.birthdayStr isEqualToString:@"自定义"]) {
+                yearString = @"";
+            }
+            yearLabel.text = yearString;
             [datePickerView.alertView addSubview:yearLabel];
             // 滚动选择器，动态更新年份
             datePickerView.changeBlock = ^(NSDate * _Nullable selectDate, NSString * _Nullable selectValue) {
