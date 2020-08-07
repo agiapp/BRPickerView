@@ -322,7 +322,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             };
             
             // 设置年份背景
-            UILabel *yearLabel = [[UILabel alloc]initWithFrame:datePickerView.alertView.bounds];
+            UILabel *yearLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 216)];
+            yearLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             yearLabel.backgroundColor = [UIColor clearColor];
             yearLabel.textAlignment = NSTextAlignmentCenter;
             yearLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.2f];

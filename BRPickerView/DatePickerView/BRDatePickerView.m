@@ -1142,6 +1142,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.style == BRDatePickerStyleSystem) {
         // 2.刷新选择器（重新设置相关值）
         self.datePicker.datePickerMode = _datePickerMode;
+        if (@available(iOS 13.4, *)) {
+            // 适配iOS14
+            self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+        } else {
+            // Fallback on earlier versions
+        }
         // 设置该 UIDatePicker 的国际化 Locale
         self.datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
         if (self.minDate) {

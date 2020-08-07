@@ -298,7 +298,7 @@
             [self.alertView addSubview:self.pickerFooterView];
         }
     
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        UIWindow *keyWindow = [self getKeyWindow];
         [keyWindow addSubview:self];
         // 动画前初始位置
         CGRect rect = self.alertView.frame;
@@ -318,6 +318,22 @@
             self.alertView.frame = rect;
         }];
     }
+}
+
+- (UIWindow *)getKeyWindow {
+    UIWindow *window = nil;
+    // 适配iOS13，iPad支持的多窗口功能
+    if (@available(iOS 13.0, *)) {
+        for (UIWindowScene *windowScene in [UIApplication sharedApplication].connectedScenes) {
+            if (windowScene.activationState == UISceneActivationStateForegroundActive) {
+                window = windowScene.windows.lastObject; // 顶层窗口
+                break;
+            }
+        }
+    } else {
+        window = [UIApplication sharedApplication].keyWindow;
+    }
+    return window;
 }
 
 #pragma mark - 移除视图方法
