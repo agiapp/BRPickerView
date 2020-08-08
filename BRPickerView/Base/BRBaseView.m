@@ -127,7 +127,7 @@
         if (self.pickerFooterView) {
             accessoryViewHeight += self.pickerFooterView.bounds.size.height;
         }
-        CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + BR_BOTTOM_MARGIN + accessoryViewHeight;
+        CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + self.pickerStyle.paddingBottom + accessoryViewHeight;
         _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, BRScreenHeight() - height, BRScreenWidth(), height)];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor ? self.pickerStyle.alertViewColor : self.pickerStyle.pickerColor;
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
@@ -293,7 +293,7 @@
         }
         if (self.pickerFooterView) {
             CGRect rect = self.pickerFooterView.frame;
-            self.pickerFooterView.frame = CGRectMake(0, self.alertView.bounds.size.height - BR_BOTTOM_MARGIN - rect.size.height, self.alertView.bounds.size.width, rect.size.height);
+            self.pickerFooterView.frame = CGRectMake(0, self.alertView.bounds.size.height - self.pickerStyle.paddingBottom - rect.size.height, self.alertView.bounds.size.width, rect.size.height);
             self.pickerFooterView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [self.alertView addSubview:self.pickerFooterView];
         }

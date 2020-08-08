@@ -12,8 +12,13 @@
 
 #import <UIKit/UIKit.h>
 
-// RGB颜色(16进制)
-#define BR_RGB_HEX(rgbValue, a) BRUIColorWithRGB(rgbValue, a)
+// 底部安全区域高度
+#define BR_BOTTOM_MARGIN \
+({CGFloat safeBottomHeight = 0;\
+if (@available(iOS 11.0, *)) {\
+safeBottomHeight = BRGetKeyWindow().safeAreaInsets.bottom;\
+}\
+(safeBottomHeight);})
 
 
 // 静态库中编写 Category 时的便利宏，用于解决 Category 方法从静态库中加载需要特别设置的问题
@@ -25,6 +30,7 @@
 
 #endif
 
+
 // 打印错误日志
 #ifdef DEBUG
     #define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])
@@ -32,8 +38,9 @@
     #define BRErrorLog(...)
 #endif
 
+
 /**
- 合成弱引用/强引用
+ 弱引用/强引用
  
  Example:
      @weakify(self)
@@ -77,39 +84,34 @@
 #endif
 
 
-// 底部安全区域高度
-#define BR_BOTTOM_MARGIN \
-({CGFloat safeBottomHeight = 0;\
-if (@available(iOS 11.0, *)) {\
-safeBottomHeight = BRGetKeyWindow().safeAreaInsets.bottom;\
-}\
-(safeBottomHeight);})
-
-
-// 获取屏幕大小
+/** 屏幕大小 */
 static inline CGRect BRScreenBounds(void) {
     return [UIScreen mainScreen].bounds;
 }
 
-// 获取屏幕宽度
+
+/** 屏幕宽度 */
 static inline CGFloat BRScreenWidth(void) {
     return [UIScreen mainScreen].bounds.size.width;
 }
 
-// 获取屏幕高度
+
+/** 屏幕高度 */
 static inline CGFloat BRScreenHeight(void) {
     return [UIScreen mainScreen].bounds.size.height;
 }
 
-// RGB颜色(16进制)
-static inline UIColor *BRUIColorWithRGB(uint32_t rgbValue, CGFloat alpha) {
+
+/** RGB颜色(16进制) */
+static inline UIColor *BR_RGB_HEX(uint32_t rgbValue, CGFloat alpha) {
     return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0
                            green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0
                             blue:((CGFloat)(rgbValue & 0xFF)) / 255.0
                            alpha:(alpha)];
 }
 
-// 获取 keyWindow（比较严谨的获取方法）
+
+/** 获取 keyWindow（比较严谨的获取方法）*/
 static inline UIWindow *BRGetKeyWindow(void) {
     // 适配iOS13，iPad支持的多窗口功能
     if (@available(iOS 13.0, *)) {
@@ -129,5 +131,6 @@ static inline UIWindow *BRGetKeyWindow(void) {
         return [UIApplication sharedApplication].keyWindow;
     }
 }
+
 
 #endif /* BRPickerViewMacro_h */

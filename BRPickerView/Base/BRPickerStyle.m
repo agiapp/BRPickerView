@@ -43,6 +43,13 @@
     return _shadowLineHeight;
 }
 
+- (CGFloat)paddingBottom {
+    if (_paddingBottom <= 0) {
+        _paddingBottom = BR_BOTTOM_MARGIN;
+    }
+    return _paddingBottom;
+}
+
 - (UIColor *)titleBarColor {
     if (!_titleBarColor) {
         if (@available(iOS 13.0, *)) {

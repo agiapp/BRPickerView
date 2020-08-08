@@ -52,6 +52,9 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 隐藏 alertView 弹框视图顶部边框线，默认为 NO */
 @property (nonatomic, assign) BOOL hiddenShadowLine;
 
+/** 设置 alertView 弹框视图底部内边距，默认为安全区域底部距屏幕底部的高度  */
+@property (nonatomic, assign) CGFloat paddingBottom;
+
 
 //////////////////////////// 标题栏视图（titleBarView） ////////////////////////////
 

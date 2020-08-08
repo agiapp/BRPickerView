@@ -1143,7 +1143,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 2.刷新选择器（重新设置相关值）
         self.datePicker.datePickerMode = _datePickerMode;
         if (@available(iOS 13.4, *)) {
-            // 适配iOS14
+            // 适配iOS14。如果编译报错，请使用 Xcode11.5 以上版本进行编译
             self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
         } else {
             // Fallback on earlier versions
