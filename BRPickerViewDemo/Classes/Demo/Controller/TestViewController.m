@@ -328,7 +328,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             yearLabel.textAlignment = NSTextAlignmentCenter;
             yearLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.2f];
             yearLabel.font = [UIFont boldSystemFontOfSize:100.0f];
-            NSString *yearString = @([NSDate date].br_year).stringValue;
+            NSString *yearString = self.birthdaySelectDate ? @(self.birthdaySelectDate.br_year).stringValue : @([NSDate date].br_year).stringValue;
             if (self.infoModel.birthdayStr && [self.infoModel.birthdayStr isEqualToString:@"自定义"]) {
                 yearString = @"";
             }
