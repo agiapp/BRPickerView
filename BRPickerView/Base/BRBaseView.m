@@ -31,7 +31,7 @@
 @implementation BRBaseView
 
 - (void)initUI {
-    self.frame = SCREEN_BOUNDS;
+    self.frame = BRScreenBounds();
     // 设置子视图的宽度随着父视图变化
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -106,7 +106,7 @@
 #pragma mark - 蒙层视图
 - (UIView *)maskView {
     if (!_maskView) {
-        _maskView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
+        _maskView = [[UIView alloc]initWithFrame:BRScreenBounds()];
         _maskView.backgroundColor = self.pickerStyle.maskColor;
         // 设置子视图的大小随着父视图变化
         _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -128,7 +128,7 @@
             accessoryViewHeight += self.pickerFooterView.bounds.size.height;
         }
         CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + BR_BOTTOM_MARGIN + accessoryViewHeight;
-        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - height, SCREEN_WIDTH, height)];
+        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, BRScreenHeight() - height, BRScreenWidth(), height)];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor ? self.pickerStyle.alertViewColor : self.pickerStyle.pickerColor;
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
@@ -145,7 +145,7 @@
 #pragma mark - 标题栏视图
 - (UIView *)titleBarView {
     if (!_titleBarView) {
-        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.pickerStyle.titleBarHeight)];
+        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, BRScreenWidth(), self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         if (!self.pickerStyle.hiddenTitleLine) {
@@ -298,11 +298,11 @@
             [self.alertView addSubview:self.pickerFooterView];
         }
     
-        UIWindow *keyWindow = [self getKeyWindow];
+        UIWindow *keyWindow = BRGetKeyWindow();
         [keyWindow addSubview:self];
         // 动画前初始位置
         CGRect rect = self.alertView.frame;
-        rect.origin.y = SCREEN_HEIGHT;
+        rect.origin.y = BRScreenHeight();
         self.alertView.frame = rect;
         // 弹出动画
         if (!self.pickerStyle.hiddenMaskView) {
@@ -318,22 +318,6 @@
             self.alertView.frame = rect;
         }];
     }
-}
-
-- (UIWindow *)getKeyWindow {
-    UIWindow *window = nil;
-    // 适配iOS13，iPad支持的多窗口功能
-    if (@available(iOS 13.0, *)) {
-        for (UIWindowScene *windowScene in [UIApplication sharedApplication].connectedScenes) {
-            if (windowScene.activationState == UISceneActivationStateForegroundActive) {
-                window = windowScene.windows.lastObject; // 顶层窗口
-                break;
-            }
-        }
-    } else {
-        window = [UIApplication sharedApplication].keyWindow;
-    }
-    return window;
 }
 
 #pragma mark - 移除视图方法

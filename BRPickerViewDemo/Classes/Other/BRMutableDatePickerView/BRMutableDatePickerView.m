@@ -64,7 +64,7 @@
 }
 
 - (void)initUI {
-    self.frame = SCREEN_BOUNDS;
+    self.frame = BRScreenBounds();
     // 设置子视图的宽度随着父视图变化
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -80,7 +80,7 @@
 #pragma mark - 蒙层视图
 - (UIView *)maskView {
     if (!_maskView) {
-        _maskView = [[UIView alloc]initWithFrame:SCREEN_BOUNDS];
+        _maskView = [[UIView alloc]initWithFrame:BRScreenBounds()];
         _maskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
         // 设置子视图的大小随着父视图变化
         _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -94,7 +94,7 @@
 #pragma mark - 弹框视图
 - (UIView *)alertView {
     if (!_alertView) {
-        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kTitleBarViewHeight - kPickerViewHeight - BR_BOTTOM_MARGIN, SCREEN_WIDTH, kTitleBarViewHeight + kPickerViewHeight + BR_BOTTOM_MARGIN)];
+        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, BRScreenHeight() - kTitleBarViewHeight - kPickerViewHeight - BR_BOTTOM_MARGIN, BRScreenWidth(), kTitleBarViewHeight + kPickerViewHeight + BR_BOTTOM_MARGIN)];
         _alertView.backgroundColor = [UIColor whiteColor];
         _alertView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     }
@@ -104,7 +104,7 @@
 #pragma mark - 标题栏视图
 - (UIView *)titleBarView {
     if (!_titleBarView) {
-        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kTitleBarViewHeight)];
+        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, BRScreenWidth(), kTitleBarViewHeight)];
         _titleBarView.backgroundColor = [UIColor whiteColor];
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         // 设置标题栏底部分割线
@@ -217,7 +217,7 @@
 - (UIButton *)doneBtn {
     if (!_doneBtn) {
         _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _doneBtn.frame = CGRectMake(SCREEN_WIDTH - 60 - 5, 8, 60, 28);
+        _doneBtn.frame = CGRectMake(BRScreenWidth() - 60 - 5, 8, 60, 28);
         _doneBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _doneBtn.backgroundColor = [UIColor clearColor];
         _doneBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
@@ -231,7 +231,7 @@
 #pragma mark - 中间标题label
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5 + 60 + 2, 0, SCREEN_WIDTH - 2 * (5 + 60 + 2), kTitleBarViewHeight)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5 + 60 + 2, 0, BRScreenWidth() - 2 * (5 + 60 + 2), kTitleBarViewHeight)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -245,7 +245,7 @@
 #pragma mark - 时间选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarViewHeight, SCREEN_WIDTH, kPickerViewHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarViewHeight, BRScreenWidth(), kPickerViewHeight)];
         _pickerView.backgroundColor = [UIColor whiteColor];
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
@@ -278,7 +278,7 @@
     [keyWindow addSubview:self];
     // 动画前初始位置
     CGRect rect = self.alertView.frame;
-    rect.origin.y = SCREEN_HEIGHT;
+    rect.origin.y = BRScreenHeight();
     self.alertView.frame = rect;
     // 弹出动画
     self.maskView.alpha = 1;

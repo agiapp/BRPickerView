@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, BRScreenWidth(), BRScreenHeight()) style:UITableViewStyleGrouped];
         if (@available(iOS 13.0, *)) {
             _tableView.backgroundColor = [UIColor systemBackgroundColor];
         } else {
@@ -322,7 +322,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             };
             
             // 设置年份背景
-            UILabel *yearLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 216)];
+            UILabel *yearLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, BRScreenWidth(), 216)];
             yearLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             yearLabel.backgroundColor = [UIColor clearColor];
             yearLabel.textAlignment = NSTextAlignmentCenter;
@@ -705,7 +705,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         
         // 1.切换日期选择器的显示模式
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月"]];
-        segmentedControl.frame = CGRectMake(40, 50, SCREEN_WIDTH - 80, 36);
+        segmentedControl.frame = CGRectMake(40, 50, BRScreenWidth() - 80, 36);
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
@@ -724,20 +724,20 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         
         
         // 2.开始时间label
-        UITextField *beginTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 110, 120, 36) placeholder:@"开始时间"];
+        UITextField *beginTimeTF = [self getTextField:CGRectMake(BRScreenWidth() / 2 - 120 - 15, 110, 120, 36) placeholder:@"开始时间"];
         beginTimeTF.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         beginTimeTF.tag = 100;
         beginTimeTF.textColor = [UIColor br_labelColor];
         self.beginTimeTF = beginTimeTF;
         [_footerView addSubview:beginTimeTF];
         
-        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 120 - 15, 146, 120, 0.8f)];
+        UIView *beginTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(BRScreenWidth() / 2 - 120 - 15, 146, 120, 0.8f)];
         beginTimeLineView.backgroundColor = [UIColor lightGrayColor];
         beginTimeLineView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:beginTimeLineView];
         self.beginTimeLineView = beginTimeLineView;
         
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 15, 110, 30, 36)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(BRScreenWidth() / 2 - 15, 110, 30, 36)];
         label.backgroundColor = [UIColor clearColor];
         label.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         label.font = [UIFont systemFontOfSize:16.0f];
@@ -747,14 +747,14 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         [_footerView addSubview:label];
         
         // 结束时间label
-        UITextField *endTimeTF = [self getTextField:CGRectMake(SCREEN_WIDTH / 2 + 15, 110, 120, 36) placeholder:@"结束时间"];
+        UITextField *endTimeTF = [self getTextField:CGRectMake(BRScreenWidth() / 2 + 15, 110, 120, 36) placeholder:@"结束时间"];
         endTimeTF.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         endTimeTF.tag = 101;
         endTimeTF.textColor = [UIColor br_labelColor];
         self.endTimeTF = endTimeTF;
         [_footerView addSubview:endTimeTF];
         
-        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + 15, 146, 120, 0.8f)];
+        UIView *endTimeLineView = [[UIView alloc]initWithFrame:CGRectMake(BRScreenWidth() / 2 + 15, 146, 120, 0.8f)];
         endTimeLineView.backgroundColor = [UIColor lightGrayColor];
         endTimeLineView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [_footerView addSubview:endTimeLineView];

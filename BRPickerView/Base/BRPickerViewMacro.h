@@ -10,36 +10,11 @@
 #ifndef BRPickerViewMacro_h
 #define BRPickerViewMacro_h
 
-// 屏幕大小、宽、高
-#ifndef SCREEN_BOUNDS
-#define SCREEN_BOUNDS [UIScreen mainScreen].bounds
-#endif
-#ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
-#endif
-#ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-#endif
+#import <UIKit/UIKit.h>
 
 // RGB颜色(16进制)
-#define BR_RGB_HEX(rgbValue, a) \
-[UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
-green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0 \
-blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
+#define BR_RGB_HEX(rgbValue, a) BRUIColorWithRGB(rgbValue, a)
 
-#define BR_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-#define BR_IS_PAD (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
-
-// 等比例适配系数
-#ifndef kScaleFit
-#define kScaleFit (BR_IS_IPHONE ? ((SCREEN_WIDTH < SCREEN_HEIGHT) ? SCREEN_WIDTH / 375.0f : SCREEN_WIDTH / 667.0f) : 1.1f)
-#endif
-
-// 状态栏的高度(20 / 44(iPhoneX))
-#define BR_STATUSBAR_HEIGHT ([UIApplication sharedApplication].statusBarFrame.size.height)
-#define BR_IS_iPhoneX ((BR_STATUSBAR_HEIGHT == 44) ? YES : NO)
-// 底部安全区域远离高度
-#define BR_BOTTOM_MARGIN ((CGFloat)(BR_IS_iPhoneX ? ((SCREEN_WIDTH < SCREEN_HEIGHT) ? 34 : 21) : 0))
 
 // 静态库中编写 Category 时的便利宏，用于解决 Category 方法从静态库中加载需要特别设置的问题
 #ifndef BRSYNTH_DUMMY_CLASS
@@ -100,5 +75,59 @@ blue:((CGFloat)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
         #endif
     #endif
 #endif
+
+
+// 底部安全区域高度
+#define BR_BOTTOM_MARGIN \
+({CGFloat safeBottomHeight = 0;\
+if (@available(iOS 11.0, *)) {\
+safeBottomHeight = BRGetKeyWindow().safeAreaInsets.bottom;\
+}\
+(safeBottomHeight);})
+
+
+// 获取屏幕大小
+static inline CGRect BRScreenBounds(void) {
+    return [UIScreen mainScreen].bounds;
+}
+
+// 获取屏幕宽度
+static inline CGFloat BRScreenWidth(void) {
+    return [UIScreen mainScreen].bounds.size.width;
+}
+
+// 获取屏幕高度
+static inline CGFloat BRScreenHeight(void) {
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
+// RGB颜色(16进制)
+static inline UIColor *BRUIColorWithRGB(uint32_t rgbValue, CGFloat alpha) {
+    return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0
+                           green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0
+                            blue:((CGFloat)(rgbValue & 0xFF)) / 255.0
+                           alpha:(alpha)];
+}
+
+// 获取 keyWindow（比较严谨的获取方法）
+static inline UIWindow *BRGetKeyWindow(void) {
+    // 适配iOS13，iPad支持的多窗口功能
+    if (@available(iOS 13.0, *)) {
+        for (UIWindowScene *windowScene in [UIApplication sharedApplication].connectedScenes) {
+            // Scene的当前执行状态: 在前台运行
+            if (windowScene.activationState == UISceneActivationStateForegroundActive) {
+                return windowScene.windows.lastObject; // 顶层窗口
+            }
+        }
+        return [[UIApplication sharedApplication].windows lastObject];
+    } else {
+        NSArray *windows = [UIApplication sharedApplication].windows;
+        for (UIWindow *window in [windows reverseObjectEnumerator]) {
+            if ([window isKindOfClass:[UIWindow class]] && CGRectEqualToRect(window.bounds, [UIScreen mainScreen].bounds))
+                return window;
+        }
+        return [UIApplication sharedApplication].keyWindow;
+    }
+}
 
 #endif /* BRPickerViewMacro_h */
