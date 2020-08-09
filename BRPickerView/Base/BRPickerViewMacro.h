@@ -16,7 +16,7 @@
 #define BR_BOTTOM_MARGIN \
 ({CGFloat safeBottomHeight = 0;\
 if (@available(iOS 11.0, *)) {\
-safeBottomHeight = BRGetKeyWindow().safeAreaInsets.bottom;\
+safeBottomHeight = BRGetWindow().safeAreaInsets.bottom;\
 }\
 (safeBottomHeight);})
 
@@ -111,14 +111,13 @@ static inline UIColor *BR_RGB_HEX(uint32_t rgbValue, CGFloat alpha) {
 }
 
 
-/** 获取 keyWindow（比较严谨的获取方法）*/
-static inline UIWindow *BRGetKeyWindow(void) {
-    // 适配iOS13，iPad支持的多窗口功能
+/** 获取 window（比较严谨的获取方法）*/
+static inline UIWindow *BRGetWindow(void) {
+    // 适配iOS13
     if (@available(iOS 13.0, *)) {
         for (UIWindowScene *windowScene in [UIApplication sharedApplication].connectedScenes) {
-            // Scene的当前执行状态: 在前台运行
             if (windowScene.activationState == UISceneActivationStateForegroundActive) {
-                return windowScene.windows.lastObject; // 顶层窗口
+                return windowScene.windows.lastObject;
             }
         }
         return [[UIApplication sharedApplication].windows lastObject];

@@ -274,7 +274,7 @@
     // 默认滚动的行
     [self scrollToSelectDate:self.selectDate animated:NO];
     
-    UIWindow *keyWindow = BRGetKeyWindow();
+    UIWindow *keyWindow = BRGetWindow();
     [keyWindow addSubview:self];
     // 动画前初始位置
     CGRect rect = self.alertView.frame;
