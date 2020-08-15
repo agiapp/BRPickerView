@@ -41,6 +41,9 @@ typedef void(^BRResultBlock)(void);
 /** 弹框视图(使用场景：可以在 alertView 上添加选择器的背景视图) */
 @property (nullable, nonatomic, strong) UIView *alertView;
 
+/** 显示的 window */
+@property (nullable, nonatomic, strong) UIWindow *mainWindow;
+
 
 /// 刷新选择器数据
 /// 应用场景：动态更新数据源、动态更新选择的值、选择器类型切换等
