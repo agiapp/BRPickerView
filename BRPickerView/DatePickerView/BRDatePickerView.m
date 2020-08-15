@@ -158,7 +158,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.selectValue && [self.selectValue isEqualToString:self.addCustomString]) {
         self.mSelectDate = self.addToNow ? [NSDate date] : nil;
     } else {
-        self.mSelectValue = [self br_stringFromDate:self.mSelectDate dateFormat:self.dateFormatter];
+        if (!(self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM)) {
+            self.mSelectValue = [self br_stringFromDate:self.mSelectDate dateFormat:self.dateFormatter];
+        }
     }
 }
 
