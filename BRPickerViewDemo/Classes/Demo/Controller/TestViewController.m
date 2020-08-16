@@ -310,6 +310,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.maxDate = [NSDate br_setYear:2022 month:10 day:20];
             datePickerView.isAutoSelect = YES;
             datePickerView.addCustomString = @"自定义";
+            //datePickerView.keyView = self.view; // 将组件 datePickerView 添加到 self.view 上，方便适配多窗口显示；默认是添加到 keyWindow 上
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
