@@ -298,7 +298,7 @@
             [self.alertView addSubview:self.pickerFooterView];
         }
     
-        [self.mainWindow addSubview:self];
+        [self.keyView addSubview:self];
         // 动画前初始位置
         CGRect rect = self.alertView.frame;
         rect.origin.y = BRScreenHeight();
@@ -363,11 +363,11 @@
     return _pickerStyle;
 }
 
-- (UIWindow *)mainWindow {
-    if (!_mainWindow) {
-        _mainWindow = BRGetWindow();
+- (UIView *)keyView {
+    if (!_keyView) {
+        _keyView = BRGetKeyWindow();
     }
-    return _mainWindow;
+    return _keyView;
 }
 
 #pragma mark - 设置 view 的部分圆角
