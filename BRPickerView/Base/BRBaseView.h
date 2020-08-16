@@ -41,7 +41,7 @@ typedef void(^BRResultBlock)(void);
 /** 弹框视图(使用场景：可以在 alertView 上添加选择器的自定义背景视图) */
 @property (nullable, nonatomic, strong) UIView *alertView;
 
-/** 组件的父视图：可以传 keyWindow / view (方便适配多窗口显示) */
+/** 组件的父视图：可以传 自己获取的 keyWindow，或页面的 view */
 @property (nullable, nonatomic, strong) UIView *keyView;
 
 

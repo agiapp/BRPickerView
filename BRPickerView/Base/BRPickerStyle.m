@@ -146,7 +146,7 @@
 
 - (CGRect)titleLabelFrame {
     if (CGRectEqualToRect(_titleLabelFrame, CGRectZero) || _titleLabelFrame.size.height == 0) {
-        _titleLabelFrame = CGRectMake(5 + 60 + 2, 0, BRScreenWidth() - 2 * (5 + 60 + 2), 44);
+        _titleLabelFrame = CGRectMake(5 + 60 + 2, 0, BRGetKeyWindow().bounds.size.width - 2 * (5 + 60 + 2), 44);
     }
     return _titleLabelFrame;
 }
@@ -185,7 +185,7 @@
 
 - (CGRect)doneBtnFrame {
     if (CGRectEqualToRect(_doneBtnFrame, CGRectZero) || _doneBtnFrame.size.height == 0) {
-        _doneBtnFrame = CGRectMake(BRScreenWidth() - 60 - 5, 8, 60, 28);
+        _doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 60 - 5, 8, 60, 28);
     }
     return _doneBtnFrame;
 }
@@ -313,7 +313,7 @@
         customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
         customStyle.doneTextColor = doneTextColor;
         customStyle.doneTextFont = [UIFont boldSystemFontOfSize:16.0f];
-        customStyle.doneBtnFrame = CGRectMake(BRScreenWidth() - 60, 4, 60, 40);
+        customStyle.doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 60, 4, 60, 40);
         customStyle.doneBtnTitle = [NSBundle br_localizedStringForKey:@"完成" language:customStyle.language];
     }
     return customStyle;
@@ -328,7 +328,7 @@
         customStyle.hiddenCancelBtn = YES;
         customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
         customStyle.doneBtnImage = doneBtnImage;
-        customStyle.doneBtnFrame = CGRectMake(BRScreenWidth() - 44, 4, 40, 40);
+        customStyle.doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 44, 4, 40, 40);
     }
     return customStyle;
 }

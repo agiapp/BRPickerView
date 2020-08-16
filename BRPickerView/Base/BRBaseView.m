@@ -31,7 +31,7 @@
 @implementation BRBaseView
 
 - (void)initUI {
-    self.frame = BRScreenBounds();
+    self.frame = self.keyView.bounds;
     // 设置子视图的宽度随着父视图变化
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -106,7 +106,7 @@
 #pragma mark - 蒙层视图
 - (UIView *)maskView {
     if (!_maskView) {
-        _maskView = [[UIView alloc]initWithFrame:BRScreenBounds()];
+        _maskView = [[UIView alloc]initWithFrame:self.keyView.bounds];
         _maskView.backgroundColor = self.pickerStyle.maskColor;
         // 设置子视图的大小随着父视图变化
         _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -128,7 +128,7 @@
             accessoryViewHeight += self.pickerFooterView.bounds.size.height;
         }
         CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + self.pickerStyle.paddingBottom + accessoryViewHeight;
-        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, BRScreenHeight() - height, BRScreenWidth(), height)];
+        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, self.keyView.bounds.size.height - height, self.keyView.bounds.size.width, height)];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor ? self.pickerStyle.alertViewColor : self.pickerStyle.pickerColor;
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
@@ -145,7 +145,7 @@
 #pragma mark - 标题栏视图
 - (UIView *)titleBarView {
     if (!_titleBarView) {
-        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, BRScreenWidth(), self.pickerStyle.titleBarHeight)];
+        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.keyView.bounds.size.width, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         if (!self.pickerStyle.hiddenTitleLine) {
@@ -301,7 +301,7 @@
         [self.keyView addSubview:self];
         // 动画前初始位置
         CGRect rect = self.alertView.frame;
-        rect.origin.y = BRScreenHeight();
+        rect.origin.y = self.bounds.size.height;
         self.alertView.frame = rect;
         // 弹出动画
         if (!self.pickerStyle.hiddenMaskView) {

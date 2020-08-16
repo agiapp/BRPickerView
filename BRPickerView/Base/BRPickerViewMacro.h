@@ -84,24 +84,6 @@ safeBottomHeight = BRGetKeyWindow().safeAreaInsets.bottom;\
 #endif
 
 
-/** 屏幕大小 */
-static inline CGRect BRScreenBounds(void) {
-    return [UIScreen mainScreen].bounds;
-}
-
-
-/** 屏幕宽度 */
-static inline CGFloat BRScreenWidth(void) {
-    return [UIScreen mainScreen].bounds.size.width;
-}
-
-
-/** 屏幕高度 */
-static inline CGFloat BRScreenHeight(void) {
-    return [UIScreen mainScreen].bounds.size.height;
-}
-
-
 /** RGB颜色(16进制) */
 static inline UIColor *BR_RGB_HEX(uint32_t rgbValue, CGFloat alpha) {
     return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0

@@ -31,7 +31,7 @@
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 150, BRScreenWidth() - 200, 44)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 150, self.view.bounds.size.width - 40, 44)];
         _titleLabel.backgroundColor = [UIColor redColor];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
