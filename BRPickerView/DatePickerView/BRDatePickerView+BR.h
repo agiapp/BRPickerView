@@ -62,17 +62,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)getMDHMSNumber:(NSInteger)number;
 
-- (NSString *)getYearText:(NSString *)yearString;
+- (NSString *)getYearText:(NSArray *)yearArr row:(NSInteger)row;
 
-- (NSString *)getMonthText:(NSString *)monthString monthNames:(NSArray *)monthNames;
+- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row monthNames:(NSArray *)monthNames;
 
-- (NSString *)getDayText:(NSString *)dayString mSelectDate:(NSDate *)mSelectDate;
+- (NSString *)getDayText:(NSArray *)dayArr row:(NSInteger)row mSelectDate:(NSDate *)mSelectDate;
 
-- (NSString *)getHourText:(NSString *)hourString;
+- (NSString *)getHourText:(NSArray *)hourArr row:(NSInteger)row;
 
-- (NSString *)getMinuteText:(NSString *)minuteString;
+- (NSString *)getMinuteText:(NSArray *)minuteArr row:(NSInteger)row;
 
-- (NSString *)getSecondText:(NSString *)secondString;
+- (NSString *)getSecondText:(NSArray *)secondArr row:(NSInteger)row;
 
 - (NSString *)getAMText;
 

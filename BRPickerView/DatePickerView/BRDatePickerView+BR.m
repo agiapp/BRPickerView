@@ -484,7 +484,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return string;
 }
 
-- (NSString *)getYearText:(NSString *)yearString {
+- (NSString *)getYearText:(NSArray *)yearArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, yearArr.count - 1);
+    }
+    NSString *yearString = [yearArr objectAtIndex:index];
     if (self.addCustomString && [yearString isEqualToString:self.addCustomString]) {
         return yearString;
     }
@@ -492,7 +497,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", yearString, yearUnit];
 }
 
-- (NSString *)getMonthText:(NSString *)monthString monthNames:(NSArray *)monthNames {
+- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row monthNames:(NSArray *)monthNames {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, monthArr.count - 1);
+    }
+    NSString *monthString = [monthArr objectAtIndex:index];
     if ([self.pickerStyle.language hasPrefix:@"zh"]) {
         self.monthNameType = BRMonthNameTypeNumber;
     }
@@ -507,7 +517,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", monthString, monthUnit];
 }
 
-- (NSString *)getDayText:(NSString *)dayString mSelectDate:(NSDate *)mSelectDate {
+- (NSString *)getDayText:(NSArray *)dayArr row:(NSInteger)row mSelectDate:(NSDate *)mSelectDate {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, dayArr.count - 1);
+    }
+    NSString *dayString = [dayArr objectAtIndex:index];
     if (self.isShowToday && mSelectDate.br_year == [NSDate date].br_year && mSelectDate.br_month == [NSDate date].br_month && [dayString integerValue] == [NSDate date].br_day) {
         return [NSBundle br_localizedStringForKey:@"今天" language:self.pickerStyle.language];
     }
@@ -521,7 +536,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return dayString;
 }
 
-- (NSString *)getHourText:(NSString *)hourString {
+- (NSString *)getHourText:(NSArray *)hourArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, hourArr.count - 1);
+    }
+    NSString *hourString = [hourArr objectAtIndex:index];
     if (self.addCustomString && [hourString isEqualToString:self.addCustomString]) {
         return hourString;
     }
@@ -529,12 +549,22 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", hourString, hourUnit];
 }
 
-- (NSString *)getMinuteText:(NSString *)minuteString {
+- (NSString *)getMinuteText:(NSArray *)minuteArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, minuteArr.count - 1);
+    }
+    NSString *minuteString = [minuteArr objectAtIndex:index];
     NSString *minuteUnit = self.showUnitType == BRShowUnitTypeAll ? [self getMinuteUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", minuteString, minuteUnit];
 }
 
-- (NSString *)getSecondText:(NSString *)secondString {
+- (NSString *)getSecondText:(NSArray *)secondArr row:(NSInteger)row {
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, secondArr.count - 1);
+    }
+    NSString *secondString = [secondArr objectAtIndex:index];
     NSString *secondUnit = self.showUnitType == BRShowUnitTypeAll ? [self getSecondUnit] : @"";
     return [NSString stringWithFormat:@"%@%@", secondString, secondUnit];
 }
