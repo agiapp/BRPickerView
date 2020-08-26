@@ -364,18 +364,6 @@
                 if (self.pickerStyle.selectRowTextFont) {
                     selectLabel.font = self.pickerStyle.selectRowTextFont;
                 }
-                // 上一个选中的 label
-                UILabel *lastLabel = (UILabel *)[pickerView viewForRow:row - 1 forComponent:component];
-                if (lastLabel) {
-                    lastLabel.textColor = self.pickerStyle.pickerTextColor;
-                    lastLabel.font = self.pickerStyle.pickerTextFont;
-                }
-                // 下一个选中的 label
-                UILabel *nextLabel = (UILabel*)[pickerView viewForRow:row + 1 forComponent:component];
-                if (nextLabel) {
-                    nextLabel.textColor = self.pickerStyle.pickerTextColor;
-                    nextLabel.font = self.pickerStyle.pickerTextFont;
-                }
             }
         });
     }
