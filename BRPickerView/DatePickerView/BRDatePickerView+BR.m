@@ -622,4 +622,14 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSBundle br_localizedStringForKey:@"秒" language:self.pickerStyle.language];
 }
 
+- (NSInteger)getIndexWithArray:(NSArray *)array object:(NSString *)obj {
+    if (!array || array.count == 0 || !obj) {
+        return 0;
+    }
+    if ([array containsObject:obj]) {
+        return [array indexOfObject:obj];
+    }
+    return 0;
+}
+
 @end

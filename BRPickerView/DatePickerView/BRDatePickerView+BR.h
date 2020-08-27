@@ -90,6 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)getSecondUnit;
 
+- (NSInteger)getIndexWithArray:(NSArray *)array object:(NSString *)obj;
+
 @end
 
 NS_ASSUME_NONNULL_END
