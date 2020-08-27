@@ -138,6 +138,9 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 设置时区，默认为当前时区 */
 @property (nullable, nonatomic, copy) NSTimeZone *timeZone;
 
+/** 指定不允许选择的日期 */
+@property (nullable, nonatomic, copy) NSArray <NSDate *> *nonSelectableDates;
+
 /// 初始化时间选择器
 /// @param pickerMode  日期选择器显示类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;

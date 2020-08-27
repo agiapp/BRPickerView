@@ -737,6 +737,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 // 4.滚动 pickerView 执行的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString *lastSelectValue = self.mSelectValue;
+    NSDate *lastSelectDate = self.mSelectDate;
     if (self.pickerMode == BRDatePickerModeYMDHMS) {
         if (component == 0) {
             self.yearIndex = row;
@@ -1079,6 +1080,19 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         } else {
             self.mSelectDate = self.addToNow ? [NSDate date] : nil;
             self.mSelectValue = self.addCustomString;
+        }
+    }
+    
+    // 过滤不可选择日期
+    if (self.nonSelectableDates && self.nonSelectableDates.count > 0 && ![self.mSelectValue isEqualToString:self.addCustomString]) {
+        for (NSDate *date in self.nonSelectableDates) {
+            if ([self br_compareDate:date targetDate:self.mSelectDate dateFormat:self.dateFormatter] == NSOrderedSame) {
+                // 如果当前的日期不可选择，就回滚到上次选择的日期
+                [self scrollToSelectDate:lastSelectDate animated:YES];
+                self.mSelectDate = lastSelectDate;
+                self.mSelectValue = lastSelectValue;
+                break;
+            }
         }
     }
     
