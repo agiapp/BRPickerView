@@ -311,8 +311,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.isAutoSelect = YES;
             datePickerView.addCustomString = @"自定义";
             // 指定不可选择的日期
-            // datePickerView.nonSelectableDates = @[[NSDate br_setYear:2020 month:8 day:25], [NSDate br_setYear:2020 month:8 day:28]];
-            // datePickerView.keyView = self.view; // 将组件 datePickerView 添加到 self.view 上，默认是添加到 keyWindow 上
+            //datePickerView.nonSelectableDates = @[[NSDate br_setYear:2020 month:8 day:25], [NSDate br_setYear:2020 month:8 day:28]];
+            datePickerView.keyView = self.view; // 将组件 datePickerView 添加到 self.view 上，默认是添加到 keyWindow 上
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
@@ -329,7 +329,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             yearLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             yearLabel.backgroundColor = [UIColor clearColor];
             yearLabel.textAlignment = NSTextAlignmentCenter;
-            yearLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.2f];
+            yearLabel.textColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2f];
             yearLabel.font = [UIFont boldSystemFontOfSize:100.0f];
             NSString *yearString = self.birthdaySelectDate ? @(self.birthdaySelectDate.br_year).stringValue : @([NSDate date].br_year).stringValue;
             if (self.infoModel.birthdayStr && [self.infoModel.birthdayStr isEqualToString:@"自定义"]) {
@@ -344,6 +344,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.pickerColor = [UIColor clearColor];
+            customStyle.selectRowTextColor = [UIColor blueColor];
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
