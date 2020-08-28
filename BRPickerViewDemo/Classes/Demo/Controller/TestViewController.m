@@ -311,7 +311,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.isAutoSelect = YES;
             datePickerView.addCustomString = @"自定义";
             // 指定不可选择的日期
-            //datePickerView.nonSelectableDates = @[[NSDate br_setYear:2020 month:8 day:25], [NSDate br_setYear:2020 month:8 day:28]];
+            //datePickerView.nonSelectableDates = @[[NSDate br_setYear:2020 month:7 day:25], [NSDate br_setYear:2020 month:8 day:26]];
             datePickerView.keyView = self.view; // 将组件 datePickerView 添加到 self.view 上，默认是添加到 keyWindow 上
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
