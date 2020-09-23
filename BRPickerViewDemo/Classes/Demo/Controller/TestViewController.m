@@ -333,7 +333,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             yearLabel.textColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2f];
             yearLabel.font = [UIFont boldSystemFontOfSize:100.0f];
             NSString *yearString = self.birthdaySelectDate ? @(self.birthdaySelectDate.br_year).stringValue : @([NSDate date].br_year).stringValue;
-            if (self.infoModel.birthdayStr && [self.infoModel.birthdayStr isEqualToString:@"自定义"]) {
+            if (self.infoModel.birthdayStr && [self.infoModel.birthdayStr containsString:@"自定义"]) {
                 yearString = @"";
             }
             yearLabel.text = yearString;

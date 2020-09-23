@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.7.0` 。
+- 当前最新版本为： `2.7.2` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -302,6 +302,11 @@ stringPickerView.pickerStyle = customStyle;
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2020-09-23（V2.7.2）
+
+- 日期选择器新增添加自定义字符串属性：`firstRowContent` 和 `lastRowContent`
+- 解决日期选择器设置最小日期时，存在的联动不正确的问题：[#184](https://github.com/91renb/BRPickerView/issues/184) 
 
 #### 2020-08-28（V2.7.0）
 
