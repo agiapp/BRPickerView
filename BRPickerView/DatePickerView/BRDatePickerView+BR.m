@@ -169,6 +169,10 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     for (NSInteger i = self.minDate.br_year; i <= self.maxDate.br_year; i++) {
         [tempArr addObject:[self getYearNumber:i]];
     }
+    if (self.isDescending) {
+        NSArray *reversedArr = [[tempArr reverseObjectEnumerator] allObjects];
+        tempArr = [reversedArr mutableCopy];
+    }
     // 判断是否需要添加【自定义字符串】
     if (self.lastRowContent || self.firstRowContent) {
         switch (self.pickerMode) {
@@ -192,9 +196,6 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 break;
         }
     }
-    if (self.isDescending) {
-        return [[[tempArr copy] reverseObjectEnumerator] allObjects];
-    }
     
     return [tempArr copy];
 }
@@ -212,6 +213,10 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startMonth; i <= endMonth; i++) {
         [tempArr addObject:[self getMDHMSNumber:i]];
+    }
+    if (self.isDescending) {
+        NSArray *reversedArr = [[tempArr reverseObjectEnumerator] allObjects];
+        tempArr = [reversedArr mutableCopy];
     }
     // 判断是否需要添加【自定义字符串】
     if (self.lastRowContent || self.firstRowContent) {
@@ -232,9 +237,6 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 break;
         }
     }
-    if (self.isDescending) {
-        return [[[tempArr copy] reverseObjectEnumerator] allObjects];
-    }
     
     return [tempArr copy];
 }
@@ -254,7 +256,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         [tempArr addObject:[self getMDHMSNumber:i]];
     }
     if (self.isDescending) {
-        return [[[tempArr copy] reverseObjectEnumerator] allObjects];
+        return [[tempArr reverseObjectEnumerator] allObjects];
     }
     
     return [tempArr copy];
@@ -278,6 +280,10 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     for (NSInteger i = startHour; i <= endHour; i++) {
         [tempArr addObject:[self getMDHMSNumber:i]];
     }
+    if (self.isDescending) {
+        NSArray *reversedArr = [[tempArr reverseObjectEnumerator] allObjects];
+        tempArr = [reversedArr mutableCopy];
+    }
     // 判断是否需要添加【自定义字符串】
     if (self.lastRowContent || self.firstRowContent) {
         switch (self.pickerMode) {
@@ -297,9 +303,6 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 break;
         }
     }
-    if (self.isDescending) {
-        return [[[tempArr copy] reverseObjectEnumerator] allObjects];
-    }
     
     return [tempArr copy];
 }
@@ -318,6 +321,10 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     for (NSInteger i = startMinute; i <= endMinute; i += self.minuteInterval) {
         [tempArr addObject:[self getMDHMSNumber:i]];
     }
+    if (self.isDescending) {
+        NSArray *reversedArr = [[tempArr reverseObjectEnumerator] allObjects];
+        tempArr = [reversedArr mutableCopy];
+    }
     // 判断是否需要添加【自定义字符串】
     if (self.lastRowContent || self.firstRowContent) {
         switch (self.pickerMode) {
@@ -335,9 +342,6 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
             default:
                 break;
         }
-    }
-    if (self.isDescending) {
-        return [[[tempArr copy] reverseObjectEnumerator] allObjects];
     }
     
     return [tempArr copy];
@@ -358,7 +362,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         [tempArr addObject:[self getMDHMSNumber:i]];
     }
     if (self.isDescending) {
-        return [[[tempArr copy] reverseObjectEnumerator] allObjects];
+        return [[tempArr reverseObjectEnumerator] allObjects];
     }
     
     return [tempArr copy];
@@ -415,7 +419,9 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         UILabel *unitLabel = [[UILabel alloc]init];
         unitLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         unitLabel.backgroundColor = [UIColor clearColor];
-        unitLabel.textAlignment = NSTextAlignmentCenter;
+        if (self.pickerMode != BRDatePickerModeYMDHMS) {
+            unitLabel.textAlignment = NSTextAlignmentCenter;
+        }
         unitLabel.font = self.pickerStyle.dateUnitTextFont;
         unitLabel.textColor = self.pickerStyle.dateUnitTextColor;
         // 字体自适应属性
