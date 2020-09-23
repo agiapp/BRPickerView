@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** NSString 转 NSDate */
 - (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat;
 
-/** 比较两个时间大小（可以指定比较级数，即按指定格式进行比较） */
+/** 比较两个日期大小（可以指定比较级数，即按指定格式进行比较） */
 - (NSComparisonResult)br_compareDate:(NSDate *)date targetDate:(NSDate *)targetDate dateFormat:(NSString *)dateFormat;
 
 /** 获取 yearArr 数组 */
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 添加 pickerView */
 - (void)setupPickerView:(UIView *)pickerView toView:(UIView *)view;
 
-/** 设置时间单位 */
+/** 设置日期单位 */
 - (NSArray *)setupPickerUnitLabel:(UIPickerView *)pickerView unitArr:(NSArray *)unitArr;
 
 /** 设置选择器中间选中行的样式 */

@@ -60,7 +60,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 
 #pragma mark - 默认选中的日期
 - (NSDate *)handlerSelectDate:(NSDate *)selectDate dateFormat:(NSString *)dateFormat {
-    // selectDate 优先级高于 selectValue（推荐使用 selectDate 设置默认选中的时间）
+    // selectDate 优先级高于 selectValue（推荐使用 selectDate 设置默认选中的日期）
     if (!selectDate) {
         if (self.selectValue && self.selectValue.length > 0) {
             if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
@@ -107,7 +107,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 self.pickerMode == BRDatePickerModeHM ||
                 self.pickerMode == BRDatePickerModeHMS ||
                 self.pickerMode == BRDatePickerModeMS) {
-                // 默认选中最小时间
+                // 默认选中最小日期
                 selectDate = self.minDate;
             } else {
                 if (self.minuteInterval > 1 || self.secondInterval > 1) {
@@ -116,7 +116,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                     NSInteger second = self.minDate.br_second % self.secondInterval == 0 ? self.minDate.br_second : 0;
                     selectDate = [NSDate br_setYear:date.br_year month:date.br_month day:date.br_day hour:date.br_hour minute:minute second:second];
                 } else {
-                    // 默认选中今天的时间
+                    // 默认选中今天的日期
                     selectDate = [NSDate date];
                 }
             }
@@ -148,7 +148,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSDate br_dateFromString:dateString dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
 }
 
-#pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
+#pragma mark - 比较两个日期大小（可以指定比较级数，即按指定格式进行比较）
 - (NSComparisonResult)br_compareDate:(NSDate *)date targetDate:(NSDate *)targetDate dateFormat:(NSString *)dateFormat {
     NSString *dateString1 = [self br_stringFromDate:date dateFormat:dateFormat];
     NSString *dateString2 = [self br_stringFromDate:targetDate dateFormat:dateFormat];
@@ -385,7 +385,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     }
 }
 
-#pragma mark - 获取时间单位
+#pragma mark - 获取日期单位
 - (NSArray *)setupPickerUnitLabel:(UIPickerView *)pickerView unitArr:(NSArray *)unitArr {
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i < pickerView.numberOfComponents; i++) {

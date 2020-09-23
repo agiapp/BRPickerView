@@ -11,7 +11,7 @@
 #import "NSBundle+BRPickerView.h"
 #import "BRDatePickerView+BR.h"
 
-/// 时间选择器的类型
+/// 日期选择器的类型
 typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     BRDatePickerStyleSystem,   // 系统样式：使用 UIDatePicker
     BRDatePickerStyleCustom    // 自定义样式：使用 UIPickerView
@@ -23,9 +23,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     UIView *_containerView;
     BOOL _isAdjustSelectRow; // 设置minDate时，调整日期联动的选择(解决日期选择器联动不正确的问题)
 }
-/** 时间选择器1 */
+/** 日期选择器1 */
 @property (nonatomic, strong) UIDatePicker *datePicker;
-/** 时间选择器2 */
+/** 日期选择器2 */
 @property (nonatomic, strong) UIPickerView *pickerView;
 
 /// 日期存储数组
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, strong) NSDate *mSelectDate;
 @property (nonatomic, copy) NSString *mSelectValue;
 
-/** 时间选择器的类型 */
+/** 日期选择器的类型 */
 @property (nonatomic, assign) BRDatePickerStyle style;
 /** 日期的格式 */
 @property (nonatomic, copy) NSString *dateFormatter;
@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 @implementation BRDatePickerView
 
-#pragma mark - 1.显示时间选择器
+#pragma mark - 1.显示日期选择器
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
                          title:(NSString *)title
                    selectValue:(NSString *)selectValue
@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [self showDatePickerWithMode:mode title:title selectValue:selectValue minDate:nil maxDate:nil isAutoSelect:NO resultBlock:resultBlock];
 }
 
-#pragma mark - 2.显示时间选择器
+#pragma mark - 2.显示日期选择器
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
                          title:(NSString *)title
                    selectValue:(NSString *)selectValue
@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [self showDatePickerWithMode:mode title:title selectValue:selectValue minDate:nil maxDate:nil isAutoSelect:isAutoSelect resultBlock:resultBlock];
 }
 
-#pragma mark - 3.显示时间选择器
+#pragma mark - 3.显示日期选择器
 + (void)showDatePickerWithMode:(BRDatePickerMode)mode
                          title:(NSString *)title
                    selectValue:(NSString *)selectValue
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [datePickerView show];
 }
 
-#pragma mark - 初始化时间选择器
+#pragma mark - 初始化日期选择器
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode {
     if (self = [super init]) {
         self.pickerMode = pickerMode;
@@ -464,7 +464,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma mark - 滚动到指定时间的位置(更新选择的索引)
+#pragma mark - 滚动到指定日期的位置(更新选择的索引)
 - (void)scrollToSelectDate:(NSDate *)selectDate animated:(BOOL)animated {
     self.yearIndex = [self getIndexWithArray:self.yearArr object:[self getYearNumber:selectDate.br_year]];
     self.monthIndex = [self getIndexWithArray:self.monthArr object:[self getMDHMSNumber:selectDate.br_month]];
@@ -561,7 +561,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-#pragma mark - 时间选择器1
+#pragma mark - 日期选择器1
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
@@ -574,7 +574,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return _datePicker;
 }
 
-#pragma mark - 时间选择器2
+#pragma mark - 日期选择器2
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
@@ -1170,7 +1170,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         }
     }
     
-    // 过滤不可选择日期
+    // 纠正选择日期（解决：由【自定义字符串】滚动到 其它日期时，或设置 minDate，日期联动不正确问题）
+    BOOL isLastRowContent = [lastSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.firstRowContent];
+    BOOL isFirstRowContent = [lastSelectValue isEqualToString:self.firstRowContent] && ![self.mSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.firstRowContent];
+    if (isLastRowContent || isFirstRowContent || _isAdjustSelectRow) {
+        [self scrollToSelectDate:self.mSelectDate animated:NO];
+    }
+    
+    // 禁止选择日期：回滚到上次选择的日期
     if (self.nonSelectableDates && self.nonSelectableDates.count > 0 && ![self.mSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.firstRowContent]) {
         for (NSDate *date in self.nonSelectableDates) {
             if ([self br_compareDate:date targetDate:self.mSelectDate dateFormat:self.dateFormatter] == NSOrderedSame) {
@@ -1181,14 +1188,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                 break;
             }
         }
-    }
-    
-    // 回滚到上次选择的索引位置（由【自定义字符串】滚动到 其它时间时，或设置minDate时 需要调整日期联动的选择时）
-    BOOL isLastRowContent = [lastSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.firstRowContent];
-    BOOL isFirstRowContent = [lastSelectValue isEqualToString:self.firstRowContent] && ![self.mSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.firstRowContent];
-    if (isLastRowContent || isFirstRowContent || _isAdjustSelectRow) {
-        NSLog(@"---回滚到上次记录的索引位置----");
-        [self scrollToSelectDate:self.mSelectDate animated:NO];
     }
     
     // 滚动选择时执行 changeBlock 回调
@@ -1210,7 +1209,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return self.pickerStyle.rowHeight;
 }
 
-#pragma mark - 时间选择器1 滚动后的响应事件
+#pragma mark - 日期选择器1 滚动后的响应事件
 - (void)didSelectValueChanged:(UIDatePicker *)sender {
     // 读取日期：datePicker.date
     self.mSelectDate = sender.date;
@@ -1272,12 +1271,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (self.minuteInterval > 1) {
             self.datePicker.minuteInterval = self.minuteInterval;
         }
-        // 3.滚动到选择的时间
+        // 3.滚动到选择的日期
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {
         // 2.刷新选择器
         [self.pickerView reloadAllComponents];
-        // 3.滚动到选择的时间
+        // 3.滚动到选择的日期
         if (self.selectValue && ([self.selectValue isEqualToString:self.lastRowContent] || [self.selectValue isEqualToString:self.firstRowContent])) {
             [self scrollToCustomString:NO];
         } else {
@@ -1289,13 +1288,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (void)addPickerToView:(UIView *)view {
     _containerView = view;
     [self setupDateFormatter:self.pickerMode];
-    // 1.添加时间选择器
+    // 1.添加日期选择器
     if (self.style == BRDatePickerStyleSystem) {
         [self setupPickerView:self.datePicker toView:view];
     } else if (self.style == BRDatePickerStyleCustom) {
         [self setupPickerView:self.pickerView toView:view];
         if (self.showUnitType == BRShowUnitTypeOnlyCenter) {
-            // 添加时间单位到选择器
+            // 添加日期单位到选择器
             [self addUnitLabel];
         }
     }
@@ -1316,7 +1315,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [super addPickerToView:view];
 }
 
-#pragma mark - 添加时间单位到选择器
+#pragma mark - 添加日期单位到选择器
 - (void)addUnitLabel {
     if (self.unitLabelArr.count > 0) {
         for (UILabel *unitLabel in self.unitLabelArr) {
@@ -1366,7 +1365,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 刷新选择器数据
         [self reloadData];
         if (self.style == BRDatePickerStyleCustom && self.showUnitType == BRShowUnitTypeOnlyCenter) {
-            // 添加时间单位到选择器
+            // 添加日期单位到选择器
             [self addUnitLabel];
         }
     }
