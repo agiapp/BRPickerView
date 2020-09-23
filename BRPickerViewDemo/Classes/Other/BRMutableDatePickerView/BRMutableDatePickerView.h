@@ -18,12 +18,12 @@ typedef void (^BRDateResultBlock)(NSDate *selectDate, NSString *selectValue, BOO
 /** 是否自动选择，即滚动选择器后就执行结果回调，默认为 NO */
 @property (nonatomic, assign) BOOL isAutoSelect;
 
-/** 设置默认选中的时间（不设置或为nil时，默认就选中当前时间）*/
+/** 设置默认选中的日期（不设置或为nil时，默认就选中当前日期）*/
 @property (nonatomic, strong) NSDate *selectDate;
 
-/** 最小时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
+/** 最小日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nonatomic, strong) NSDate *minDate;
-/** 最大时间（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
+/** 最大日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nonatomic, strong) NSDate *maxDate;
 
 /** 隐藏日期单位，默认为NO */

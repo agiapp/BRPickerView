@@ -31,7 +31,7 @@
 // 中间标题
 @property (nonatomic, strong) UILabel *titleLabel;
 
-/** 时间选择器 */
+/** 日期选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
 @property (nonatomic, strong) UIButton *monthBtn;
 @property (nonatomic, strong) UIButton *dayBtn;
@@ -52,7 +52,7 @@
 
 @implementation BRMutableDatePickerView
 
-#pragma mark - 初始化时间选择器
+#pragma mark - 初始化日期选择器
 - (instancetype)init {
     if (self = [super init]) {
         self.isAutoSelect = NO;
@@ -242,7 +242,7 @@
     return _titleLabel;
 }
 
-#pragma mark - 时间选择器
+#pragma mark - 日期选择器
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kTitleBarViewHeight, self.bounds.size.width, kPickerViewHeight)];
@@ -268,7 +268,7 @@
 - (void)show {
     [self initUI];
     [self handlerInitData];
-    // 添加时间选择器
+    // 添加日期选择器
     [self.alertView addSubview:self.pickerView];
     [self.pickerView reloadAllComponents];
     // 默认滚动的行
@@ -326,7 +326,7 @@
     return [dateFormatter dateFromString:dateString];
 }
 
-#pragma mark - 比较两个时间大小（可以指定比较级数，即按指定格式进行比较）
+#pragma mark - 比较两个日期大小（可以指定比较级数，即按指定格式进行比较）
 - (NSComparisonResult)br_compareDate:(NSDate *)date targetDate:(NSDate *)targetDate {
     NSString *dateString1 = [self br_stringFromDate:date];
     NSString *dateString2 = [self br_stringFromDate:targetDate];
@@ -498,7 +498,7 @@
     return [tempArr copy];
 }
 
-#pragma mark - 滚动到指定时间的位置
+#pragma mark - 滚动到指定日期的位置
 - (void)scrollToSelectDate:(NSDate *)selectDate animated:(BOOL)animated {
     // 根据 当前选择的日期 计算出 对应的索引
     NSInteger yearIndex = selectDate.br_year - self.minDate.br_year;
@@ -559,7 +559,7 @@
     return label;
 }
 
-// 4. 时间选择器 每次滚动后的回调方法
+// 4. 日期选择器 每次滚动后的回调方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) {
         self.yearIndex = row;
