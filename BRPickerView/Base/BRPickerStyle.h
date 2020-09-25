@@ -231,7 +231,7 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置选择器中间选中行的样式（组件内部使用）*/
 - (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 
-/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）*/
+/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加；组件内部使用）*/
 - (void)addSeparatorLineView:(UIView *)pickerView;
 
 @end
