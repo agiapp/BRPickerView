@@ -35,7 +35,7 @@ typedef void(^BRResultBlock)(void);
 /** accessory view below picker view. default is nil */
 @property (nullable, nonatomic, strong) UIView *pickerFooterView;
 
-/** 选择结果的回调（框架内部使用） */
+/** 选择结果的回调（组件内部使用）*/
 @property (nullable, nonatomic, copy) BRResultBlock doneBlock;
 
 /** 弹框视图(使用场景：可以在 alertView 上添加选择器的自定义背景视图) */

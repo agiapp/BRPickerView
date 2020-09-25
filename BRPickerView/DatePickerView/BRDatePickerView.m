@@ -675,7 +675,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
     
     // 2.设置选择器中间选中行的样式
-    [self setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
+    [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
 
     return label;
 }
@@ -1271,6 +1271,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (self.minuteInterval > 1) {
             self.datePicker.minuteInterval = self.minuteInterval;
         }
+        
+        // 重新设置 datePicker 的宽高（在iOS14里，需要先 datePickerMode，再设置 frame，否则 frame 不会生效）
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        self.datePicker.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
+        
         // 3.滚动到选择的日期
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {

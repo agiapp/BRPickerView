@@ -55,9 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 设置日期单位 */
 - (NSArray *)setupPickerUnitLabel:(UIPickerView *)pickerView unitArr:(NSArray *)unitArr;
 
-/** 设置选择器中间选中行的样式 */
-- (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
-
 - (NSString *)getYearNumber:(NSInteger)year;
 
 - (NSString *)getMDHMSNumber:(NSInteger)number;

@@ -15,6 +15,13 @@
 
 @implementation BRPickerStyle
 
+- (instancetype)init {
+    if (self = [super init]) {
+        self.hideSelectRowSystemStyle = YES;
+    }
+    return self;
+}
+
 /// 设置默认样式
 
 - (UIColor *)maskColor {
@@ -331,6 +338,108 @@
         customStyle.doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 44, 4, 40, 40);
     }
     return customStyle;
+}
+
+
+#pragma mark - 设置选择器中间选中行的样式
+- (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    // 1.设置分割线的颜色
+    for (UIView *subView in pickerView.subviews) {
+        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
+            subView.backgroundColor = self.separatorColor;
+        }
+    }
+    
+    // 2.设置选择器中间选中行的背景颜色
+    UIView *contentView = nil;
+    NSArray *subviews = pickerView.subviews;
+    if (subviews.count > 0) {
+        id firstView = subviews.firstObject;
+        if (firstView && [firstView isKindOfClass:[UIView class]]) {
+            contentView = (UIView *)firstView;
+        }
+    }
+    if (self.selectRowColor) {
+        UIView *columnView = nil;
+        if (contentView) {
+            id obj = [contentView valueForKey:@"subviewCache"];
+            if (obj && [obj isKindOfClass:[NSArray class]]) {
+                NSArray *columnViews = (NSArray *)obj;
+                if (columnViews.count > 0) {
+                    id columnObj = columnViews.firstObject;
+                    if (columnObj && [columnObj isKindOfClass:[UIView class]]) {
+                        columnView = (UIView *)columnObj;
+                    }
+                }
+            }
+        }
+        if (columnView) {
+            id obj = [columnView valueForKey:@"middleContainerView"];
+            if (obj && [obj isKindOfClass:[UIView class]]) {
+                UIView *selectRowView = (UIView *)obj;
+                // 中间选中行的背景颜色
+                selectRowView.backgroundColor = self.selectRowColor;
+            }
+        }
+    }
+    
+    if (self.hideSelectRowSystemStyle && contentView) {
+        if (@available(iOS 14.0, *)) {
+            // 隐藏最上层圆角矩形背景视图
+            id lastView = subviews.lastObject;
+            if (lastView && [lastView isKindOfClass:[UIView class]]) {
+                UIView *rectBgView = (UIView *)lastView;
+                rectBgView.backgroundColor = [UIColor clearColor];
+            }
+            
+            // 清除iOS14上选择器的默认样式
+            [self setPickerAllSubViewsStyle:contentView];
+        }
+    }
+    
+    // 3.设置选择器中间选中行的字体颜色/字体大小
+    if (self.selectRowTextColor || self.selectRowTextFont) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 当前选中的 label
+            UILabel *selectLabel = (UILabel *)[pickerView viewForRow:row forComponent:component];
+            if (selectLabel) {
+                if (self.selectRowTextColor) {
+                    selectLabel.textColor = self.selectRowTextColor;
+                }
+                if (self.selectRowTextFont) {
+                    selectLabel.font = self.selectRowTextFont;
+                }
+            }
+        });
+    }
+}
+
+// 遍历设置子视图（修改在 iOS14 上 UIPickerView 的默认样式）
+- (void)setPickerAllSubViewsStyle:(UIView *)view {
+    NSArray *subViews = view.subviews;
+    if (subViews.count == 0 || [view isKindOfClass:[UILabel class]]) return;
+    for (UIView *subView in subViews) {
+        NSString *className = NSStringFromClass([subView class]);
+        if ([className isEqualToString:@"UIPickerColumnView"]) {
+            CGRect rect = subView.frame;
+            rect.origin.x = 0;
+            rect.size.width = view.bounds.size.width;
+            subView.frame = rect;
+        }
+        NSString *superClassName = NSStringFromClass([view class]);
+        if ([superClassName isEqualToString:@"UIPickerColumnView"]) {
+            CGRect rect = subView.frame;
+            rect.size.width = view.bounds.size.width;
+            subView.frame = rect;
+        }
+        if ([subView isKindOfClass:[UILabel class]]) {
+            CGRect rect = subView.frame;
+            rect.origin.x = 10;
+            subView.frame = rect;
+        }
+        
+        [self setPickerAllSubViewsStyle:subView];
+    }
 }
 
 @end
