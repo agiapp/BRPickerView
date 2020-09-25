@@ -472,11 +472,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 textField.text = [NSString stringWithFormat:@"%@ %@", resultModelArr[0].value, resultModelArr[1].value];
             };
             
-            // 设置选择器中间选中行的样式
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
-            customStyle.selectRowTextColor = [UIColor blueColor];
-            stringPickerView.pickerStyle = customStyle;
+            // 使用模板样式2
+            stringPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
             
             [stringPickerView show];
             
