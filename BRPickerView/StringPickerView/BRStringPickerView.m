@@ -477,8 +477,8 @@
         [self.alertView addSubview:self.pickerView];
     }
     
-    // iOS14以上手动添加分割线
-    if (self.pickerStyle.hiddenSelectRowSystemStyle) {
+    // ③添加中间选择行的两条分割线
+    if (self.pickerStyle.clearPickerNewStyle) {
         [self.pickerStyle addSeparatorLineView:self.pickerView];
     }
     

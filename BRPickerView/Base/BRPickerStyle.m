@@ -17,7 +17,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.hiddenSelectRowSystemStyle = YES;
+        self.clearPickerNewStyle = YES;
     }
     return self;
 }
@@ -386,16 +386,16 @@
         }
     }
     
-    if (contentView && self.hiddenSelectRowSystemStyle) {
+    if (contentView && self.clearPickerNewStyle) {
         if (systemVersion.doubleValue >= 14.0) {
-            // 隐藏最上层圆角矩形背景视图
+            // ①隐藏中间选择行的背景样式
             id lastView = subviews.lastObject;
             if (lastView && [lastView isKindOfClass:[UIView class]]) {
                 UIView *rectBgView = (UIView *)lastView;
                 rectBgView.backgroundColor = [UIColor clearColor];
             }
             
-            // 清除iOS14上选择器的默认样式
+            // ②清除iOS14上选择器默认的内边距
             [self setPickerAllSubViewsStyle:contentView];
         }
     }
@@ -417,7 +417,7 @@
     }
 }
 
-// 遍历设置子视图（修改在 iOS14 上 UIPickerView 的默认样式）
+// 遍历子视图，重新设置 frame（清空在 iOS14 上 UIPickerView 出现的内边距）
 - (void)setPickerAllSubViewsStyle:(UIView *)view {
     NSArray *subViews = view.subviews;
     if (subViews.count == 0 || [view isKindOfClass:[UILabel class]]) return;
