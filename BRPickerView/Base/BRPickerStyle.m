@@ -344,9 +344,12 @@
 #pragma mark - 设置选择器中间选中行的样式
 - (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     // 1.设置分割线的颜色
-    for (UIView *subView in pickerView.subviews) {
-        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
-            subView.backgroundColor = self.separatorColor;
+    NSString *systemVersion = [UIDevice currentDevice].systemVersion;
+    if (systemVersion.doubleValue < 14.0) {
+        for (UIView *subView in pickerView.subviews) {
+            if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
+                subView.backgroundColor = self.separatorColor;
+            }
         }
     }
     
@@ -383,8 +386,8 @@
         }
     }
     
-    if (self.hiddenSelectRowSystemStyle && contentView) {
-        if (@available(iOS 14.0, *)) {
+    if (contentView && self.hiddenSelectRowSystemStyle) {
+        if (systemVersion.doubleValue >= 14.0) {
             // 隐藏最上层圆角矩形背景视图
             id lastView = subviews.lastObject;
             if (lastView && [lastView isKindOfClass:[UIView class]]) {
@@ -444,15 +447,17 @@
 
 #pragma mark - 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）
 - (void)addSeparatorLineView:(UIView *)pickerView {
-    UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 - self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
-    topLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-    topLineView.backgroundColor = self.separatorColor;
-    [pickerView addSubview:topLineView];
-    
-    UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 + self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
-    bottomLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-    bottomLineView.backgroundColor = self.separatorColor;
-    [pickerView addSubview:bottomLineView];
+    if ([UIDevice currentDevice].systemVersion.doubleValue >= 14.0) {
+        UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 - self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
+        topLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+        topLineView.backgroundColor = self.separatorColor;
+        [pickerView addSubview:topLineView];
+        
+        UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 + self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
+        bottomLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+        bottomLineView.backgroundColor = self.separatorColor;
+        [pickerView addSubview:bottomLineView];
+    }
 }
 
 @end
