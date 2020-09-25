@@ -527,9 +527,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         {
             NSInteger yearIndex = ([self.selectValue isEqualToString:self.lastRowContent] && self.yearArr.count > 0) ? self.yearArr.count - 1 : 0;
             NSInteger component = 0;
-            if (self.addToNow && self.pickerMode == BRDatePickerModeYMD && ![self.pickerStyle.language hasPrefix:@"zh"]) {
+            if (self.pickerMode == BRDatePickerModeYMD && ![self.pickerStyle.language hasPrefix:@"zh"]) {
                 component = 2;
-            } else if (self.addToNow && self.pickerMode == BRDatePickerModeYM && ![self.pickerStyle.language hasPrefix:@"zh"]) {
+            } else if (self.pickerMode == BRDatePickerModeYM && ![self.pickerStyle.language hasPrefix:@"zh"]) {
                 component = 1;
             }
             [self.pickerView selectRow:yearIndex inComponent:component animated:animated];
