@@ -319,9 +319,11 @@
         customStyle.hiddenTitleLine = YES;
         customStyle.titleLabelFrame = CGRectMake(20, 4, 100, 40);
         customStyle.doneTextColor = doneTextColor;
-        customStyle.doneTextFont = [UIFont boldSystemFontOfSize:16.0f];
+        customStyle.doneTextFont = [UIFont boldSystemFontOfSize:18.0f];
         customStyle.doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 60, 4, 60, 40);
         customStyle.doneBtnTitle = [NSBundle br_localizedStringForKey:@"完成" language:customStyle.language];
+        customStyle.selectRowTextColor = doneTextColor;
+        customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
     }
     return customStyle;
 }
