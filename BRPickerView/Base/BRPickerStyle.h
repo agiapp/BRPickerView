@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 @property (nullable, nonatomic, strong) UIFont *selectRowTextFont;
 
 /** 隐藏 中间选中行 系统默认的样式（iOS14以上才有），默认为 YES */
-@property (nonatomic, assign) BOOL hideSelectRowSystemStyle;
+@property (nonatomic, assign) BOOL hiddenSelectRowSystemStyle;
 
 /** 设置 picker 的高度，系统默认高度为 216 */
 @property (nonatomic, assign) CGFloat pickerHeight;
@@ -230,6 +230,9 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /** 设置选择器中间选中行的样式（组件内部使用）*/
 - (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+
+/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）*/
+- (void)addSeparatorLineView:(UIView *)pickerView;
 
 @end
 

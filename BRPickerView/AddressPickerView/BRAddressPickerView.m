@@ -435,6 +435,13 @@
         [self.alertView addSubview:self.pickerView];
     }
     
+    // iOS14以上手动添加分割线
+    if (self.pickerStyle.hiddenSelectRowSystemStyle && self.pickerStyle.separatorColor) {
+        if (@available(iOS 14.0, *)) {
+            [self.pickerStyle addSeparatorLineView:self.pickerView];
+        }
+    }
+    
     // 2.绑定数据
     [self reloadData];
     

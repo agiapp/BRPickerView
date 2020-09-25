@@ -17,7 +17,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.hideSelectRowSystemStyle = YES;
+        self.hiddenSelectRowSystemStyle = YES;
     }
     return self;
 }
@@ -383,7 +383,7 @@
         }
     }
     
-    if (self.hideSelectRowSystemStyle && contentView) {
+    if (self.hiddenSelectRowSystemStyle && contentView) {
         if (@available(iOS 14.0, *)) {
             // 隐藏最上层圆角矩形背景视图
             id lastView = subviews.lastObject;
@@ -440,6 +440,19 @@
         
         [self setPickerAllSubViewsStyle:subView];
     }
+}
+
+#pragma mark - 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）
+- (void)addSeparatorLineView:(UIView *)pickerView {
+    UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 - self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
+    topLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+    topLineView.backgroundColor = self.separatorColor;
+    [pickerView addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 + self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
+    bottomLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+    bottomLineView.backgroundColor = self.separatorColor;
+    [pickerView addSubview:bottomLineView];
 }
 
 @end
