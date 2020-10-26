@@ -26,7 +26,7 @@
 
 - (UIColor *)maskColor {
     if (!_maskColor) {
-        _maskColor = [self br_colorWithLightColor:BR_RGB_HEX(0x000000, 0.3f) darkColor:BR_RGB_HEX(0x999999, 0.3f)];
+        _maskColor = [self br_colorWithLightColor:BR_RGB_HEX(0x000000, 0.3f) darkColor:BR_RGB_HEX(0x666666, 0.3f)];
     }
     return _maskColor;
 }
