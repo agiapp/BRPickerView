@@ -1251,6 +1251,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (@available(iOS 13.4, *)) {
             // 适配 iOS14 以后 UIDatePicker 的显示样式
             self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+            // 设置 datePicker 的 frame（在iOS14里，UIDatePicker 的 frame 赋值必须放在 datePickerMode 赋值之后， 否则 frame 不会生效）
+            CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+            self.datePicker.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
         } else
 #endif
         {
@@ -1271,10 +1274,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (self.minuteInterval > 1) {
             self.datePicker.minuteInterval = self.minuteInterval;
         }
-        
-        // 重新设置 datePicker 的宽高（在iOS14里，需要先 datePickerMode，再设置 frame，否则 frame 不会生效）
-        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
-        self.datePicker.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
         
         // 3.滚动到选择的日期
         [self.datePicker setDate:self.mSelectDate animated:NO];
