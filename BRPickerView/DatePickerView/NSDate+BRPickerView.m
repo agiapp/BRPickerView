@@ -17,56 +17,65 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 @implementation NSDate (BRPickerView)
 
 #pragma mark - 获取日历单例对象
-+ (NSCalendar *)calendar {
++ (NSCalendar *)br_calendar {
     static NSCalendar *sharedCalendar = nil;
     if (!sharedCalendar) {
-        // 创建日历对象，指定日历的算法（公历）
+        // 创建日历对象，指定日历的算法（公历/阳历）
         sharedCalendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        // NSCalendar 设置时区
+        //sharedCalendar.timeZone = [NSTimeZone timeZoneWithName:@"America/Chicago"];
     }
     return sharedCalendar;
 }
 
+#pragma mark - NSDate 转 NSDateComponents
++ (NSDateComponents *)br_componentsFromDate:(NSDate *)date {
+    // 通过日历类 NSCalendar 进行转换
+    NSCalendar *calendar = [self br_calendar];
+    // NSDateComponents 可以获得日期的详细信息，即日期的组成
+    return [calendar components:unitFlags fromDate:date];
+}
+
+#pragma mark - NSDateComponents 转 NSDate
++ (NSDate *)br_dateFromComponents:(NSDateComponents *)components {
+    // 通过日历类 NSCalendar 进行转换
+    NSCalendar *calendar = [self br_calendar];
+    return [calendar dateFromComponents:components];
+}
+
 #pragma mark - 获取指定日期的年份
 - (NSInteger)br_year {
-    // NSDateComponent 可以获得日期的详细信息，即日期的组成
-    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
-    return components.year;
+    return [NSDate br_componentsFromDate:self].year;
 }
 
 #pragma mark - 获取指定日期的月份
 - (NSInteger)br_month {
-    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
-    return components.month;
+    return [NSDate br_componentsFromDate:self].month;
 }
 
 #pragma mark - 获取指定日期的天
 - (NSInteger)br_day {
-    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
-    return components.day;
+    return [NSDate br_componentsFromDate:self].day;
 }
 
 #pragma mark - 获取指定日期的小时
 - (NSInteger)br_hour {
-    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
-    return components.hour;
+    return [NSDate br_componentsFromDate:self].hour;
 }
 
 #pragma mark - 获取指定日期的分钟
 - (NSInteger)br_minute {
-    NSDateComponents *comps = [[NSDate calendar] components:unitFlags fromDate:self];
-    return comps.minute;
+    return [NSDate br_componentsFromDate:self].minute;
 }
 
 #pragma mark - 获取指定日期的秒
 - (NSInteger)br_second {
-    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
-    return components.second;
+    return [NSDate br_componentsFromDate:self].second;
 }
 
 #pragma mark - 获取指定日期的星期
 - (NSInteger)br_weekday {
-    NSDateComponents *components = [[NSDate calendar] components:unitFlags fromDate:self];
-    return components.weekday;
+    return [NSDate br_componentsFromDate:self].weekday;
 }
 
 #pragma mark - 获取指定日期的星期
@@ -117,9 +126,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - 创建date（通过 NSCalendar 类来创建日期）
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
-    NSCalendar *calendar = [self calendar];
-    // 获取当前日期组件
-    NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
+    NSDateComponents *components = [self br_componentsFromDate:[NSDate date]];
     if (year > 0) {
         // 初始化日期组件
         components = [[NSDateComponents alloc]init];
@@ -141,9 +148,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
         components.second = second;
     }
     
-    NSDate *date = [calendar dateFromComponents:components];
-    
-    return date;
+    return [self br_dateFromComponents:components];
 }
 
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute {
@@ -240,7 +245,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = dateFormat;
-    // 设置时区，不设置默认为系统时区
+    // NSDateFormatter 设置时区 ，不设置默认为系统时区
     if (timeZone) {
         dateFormatter.timeZone = timeZone;
     }

@@ -120,8 +120,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     NSAssert(!minMoreThanMax, @"最小日期不能大于最大日期！");
     if (minMoreThanMax) {
         // 如果最小日期大于了最大日期，就忽略两个值
-        self.minDate = [NSDate distantPast];
-        self.maxDate = [NSDate distantFuture];
+        self.minDate = [NSDate distantPast]; // 0000-12-30 00:00:00 +0000
+        self.maxDate = [NSDate distantFuture]; // 4001-01-01 00:00:00 +0000
     }
     
     // 3.默认选中的日期
@@ -1262,6 +1262,9 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
         // 设置该 UIDatePicker 的国际化 Locale
         self.datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
+        if (self.timeZone) {
+            self.datePicker.timeZone = self.timeZone;
+        }
         if (self.minDate) {
             self.datePicker.minimumDate = self.minDate;
         }
