@@ -59,16 +59,6 @@ typedef NS_ENUM(NSInteger, BRShowUnitType) {
     BRShowUnitTypeNone
 };
 
-/// 月份名称类型
-typedef NS_ENUM(NSInteger, BRMonthNameType) {
-    /** 月份英文全称 */
-    BRMonthNameTypeFullName,
-    /** 月份英文简称 */
-    BRMonthNameTypeShortName,
-    /** 月份数字 */
-    BRMonthNameTypeNumber
-};
-
 typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nullable selectValue);
 
 @interface BRDatePickerView : BRBaseView
@@ -135,8 +125,8 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 设置倒计时的时长，默认为0（范围：0 ~ 24*60*60-1，单位为秒） for `BRDatePickerModeCountDownTimer`, ignored otherwise. */
 @property (nonatomic, assign) NSTimeInterval countDownDuration;
 
-/** for `BRDatePickerModeYMD` or `BRDatePickerModeYM`, ignored otherwise. */
-@property (nonatomic, assign) BRMonthNameType monthNameType;
+/** 自定义月份数据源（ 如：@[@"1", @"2",..., @"12"]、 @[@"一月", @"二月",..., @"十二月"]、 @[@"Jan", @"Feb",..., @"Dec"] 等 ）*/
+@property (nonatomic, copy) NSArray <NSString *> *monthNames;
 
 /** 显示上午和下午，默认为 NO. for `BRDatePickerModeYMDH`, ignored otherwise. */
 @property (nonatomic, assign, getter=isShowAMAndPM) BOOL showAMAndPM;

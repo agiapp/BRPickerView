@@ -477,18 +477,30 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         index = MIN(row, monthArr.count - 1);
     }
     NSString *monthString = [monthArr objectAtIndex:index];
-    if ([self.pickerStyle.language hasPrefix:@"zh"]) {
-        self.monthNameType = BRMonthNameTypeNumber;
-    }
-    if (self.monthNameType != BRMonthNameTypeNumber && (self.pickerMode == BRDatePickerModeYMD || self.pickerMode == BRDatePickerModeYM)) {
-        NSInteger index = [monthString integerValue] - 1;
-        monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
-    }
-    if ((self.lastRowContent && [monthString isEqualToString:self.lastRowContent]) || (self.firstRowContent && [monthString isEqualToString:self.firstRowContent])) {
+    // 首行/末行是自定义字符串，直接返回
+    if ((self.firstRowContent && [monthString isEqualToString:self.firstRowContent]) || (self.lastRowContent && [monthString isEqualToString:self.lastRowContent])) {
         return monthString;
     }
-    NSString *monthUnit = self.showUnitType == BRShowUnitTypeAll ? [self getMonthUnit] : @"";
-    return [NSString stringWithFormat:@"%@%@", monthString, monthUnit];
+    
+    // 自定义月份数据源
+    if (monthNames && monthNames.count > 0) {
+        NSInteger index = [monthString integerValue] - 1;
+        monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
+    } else {
+        if (![self.pickerStyle.language hasPrefix:@"zh"] && (self.pickerMode == BRDatePickerModeYMD || self.pickerMode == BRDatePickerModeYM)) {
+            // 非中文环境：月份显示英文名称
+            // monthNames = @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"];
+            monthNames = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
+            NSInteger index = [monthString integerValue] - 1;
+            monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
+        } else {
+            // 中文环境：月份显示数字
+            NSString *monthUnit = self.showUnitType == BRShowUnitTypeAll ? [self getMonthUnit] : @"";
+            monthString = [NSString stringWithFormat:@"%@%@", monthString, monthUnit];
+        }
+    }
+    
+    return monthString;
 }
 
 - (NSString *)getDayText:(NSArray *)dayArr row:(NSInteger)row mSelectDate:(NSDate *)mSelectDate {

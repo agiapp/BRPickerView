@@ -56,8 +56,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 @property (nonatomic, copy) NSArray *unitArr;
 /** 单位label数组 */
 @property (nonatomic, copy) NSArray <UILabel *> *unitLabelArr;
-/** 获取所有月份名称 */
-@property (nonatomic, copy) NSArray <NSString *> *monthNames;
 
 @end
 
@@ -1500,11 +1498,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 - (NSArray<NSString *> *)monthNames {
     if (!_monthNames) {
-        if (self.monthNameType == BRMonthNameTypeFullName) {
-            _monthNames = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
-        } else {
-            _monthNames = @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"];
-        }
+        _monthNames = [NSArray array];
     }
     return _monthNames;
 }
