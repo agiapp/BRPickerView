@@ -144,6 +144,9 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 设置时区，默认为当前时区 */
 @property (nullable, nonatomic, copy) NSTimeZone *timeZone;
 
+/** default is [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker` */
+@property (nonatomic, copy) NSCalendar *calendar;
+
 /** 指定不允许选择的日期 */
 @property (nullable, nonatomic, copy) NSArray <NSDate *> *nonSelectableDates;
 

@@ -96,8 +96,8 @@ static inline UIColor *BR_RGB_HEX(uint32_t rgbValue, CGFloat alpha) {
 /** 获取 keyWindow */
 static inline UIWindow *BRGetKeyWindow(void) {
     UIWindow *keyWindow = nil;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000 // 编译时检查SDK版本：Xcode11+编译会调用（iOS SDK 13.0 以后版本的处理）
-    if (@available(iOS 13.0, *)) {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000 // 编译时检查SDK版本（兼容不同版本的Xcode，防止编译报错）
+    if (@available(iOS 13.0, *)) { // 运行时检查系统版本（兼容不同版本的系统，防止运行报错）
         NSSet<UIScene *> *connectedScenes = [UIApplication sharedApplication].connectedScenes;
         for (UIScene *scene in connectedScenes) {
             if (scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[UIWindowScene class]]) {

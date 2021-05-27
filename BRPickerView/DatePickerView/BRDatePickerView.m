@@ -948,12 +948,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *monthString = [self getMonthString];
         if (![monthString isEqualToString:self.lastRowContent] && ![monthString isEqualToString:self.firstRowContent]) {
-            if (self.monthArr.count * self.dayArr.count * self.hourArr.count * self.minuteArr.count == 0) return;
+            if (self.yearArr.count * self.monthArr.count * self.dayArr.count * self.hourArr.count * self.minuteArr.count == 0) return;
+            int year = [[self getYearString] intValue];
             int month = [[self getMonthString] intValue];
             int day = [[self getDayString] intValue];
             int hour = [[self getHourString] intValue];
             int minute = [[self getMinuteString] intValue];
-            self.mSelectDate = [NSDate br_setMonth:month day:day hour:hour minute:minute];
+            self.mSelectDate = [NSDate br_setYear:year month:month day:day hour:hour minute:minute];
             self.mSelectValue = [NSString stringWithFormat:@"%02d-%02d %02d:%02d", month, day, hour, minute];
         } else {
             self.mSelectDate = self.addToNow ? [NSDate date] : nil;
@@ -1075,10 +1076,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         NSString *monthString = [self getMonthString];
         if (![monthString isEqualToString:self.lastRowContent] && ![monthString isEqualToString:self.firstRowContent]) {
-            if (self.monthArr.count * self.dayArr.count == 0) return;
+            if (self.yearArr.count * self.monthArr.count * self.dayArr.count == 0) return;
+            int year = [[self getYearString] intValue];
             int month = [[self getMonthString] intValue];
             int day = [[self getDayString] intValue];
-            self.mSelectDate = [NSDate br_setMonth:month day:day];
+            self.mSelectDate = [NSDate br_setYear:year month:month day:day];
             self.mSelectValue = [NSString stringWithFormat:@"%02d-%02d", month, day];
         } else {
             self.mSelectDate = self.addToNow ? [NSDate date] : nil;
@@ -1265,6 +1267,11 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (self.timeZone) {
             self.datePicker.timeZone = self.timeZone;
         }
+        
+        self.datePicker.calendar = self.calendar;
+        // 设置农历日期
+        //self.datePicker.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+        
         if (self.minDate) {
             self.datePicker.minimumDate = self.minDate;
         }
