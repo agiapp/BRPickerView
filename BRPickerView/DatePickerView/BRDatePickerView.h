@@ -125,8 +125,17 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 设置倒计时的时长，默认为0（范围：0 ~ 24*60*60-1，单位为秒） for `BRDatePickerModeCountDownTimer`, ignored otherwise. */
 @property (nonatomic, assign) NSTimeInterval countDownDuration;
 
-/** 自定义月份数据源（ 如：@[@"1", @"2",..., @"12"]、 @[@"一月", @"二月",..., @"十二月"]、 @[@"Jan", @"Feb",..., @"Dec"] 等 ）*/
+/**
+ *  自定义月份数据源
+ *  如：@[@"1月", @"2月",..., @"12月"]、 @[@"一月", @"二月",..., @"十二月"]、 @[@"Jan", @"Feb",..., @"Dec"] 等
+ */
 @property (nonatomic, copy) NSArray <NSString *> *monthNames;
+
+/**
+ *  自定义日期单位
+ *  字典格式：@{@"year": @"年", @"month": @"月", @"day": @"日", @"hour": @"时", @"minute": @"分", @"second": @"秒"}
+ */
+@property (nonatomic, copy) NSDictionary *customUnit;
 
 /** 显示上午和下午，默认为 NO. for `BRDatePickerModeYMDH`, ignored otherwise. */
 @property (nonatomic, assign, getter=isShowAMAndPM) BOOL showAMAndPM;

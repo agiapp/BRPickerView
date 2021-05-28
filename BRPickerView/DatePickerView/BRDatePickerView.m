@@ -684,7 +684,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (component == 0) {
             titleString = [self getYearText:self.yearArr row:row];
         } else if (component == 1) {
-            titleString = [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self getMonthText:self.monthArr row:row];
         } else if (component == 2) {
             titleString = [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate];
         } else if (component == 3) {
@@ -698,7 +698,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (component == 0) {
             titleString = [self getYearText:self.yearArr row:row];
         } else if (component == 1) {
-            titleString = [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self getMonthText:self.monthArr row:row];
         } else if (component == 2) {
             titleString = [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate];
         } else if (component == 3) {
@@ -710,7 +710,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (component == 0) {
             titleString = [self getYearText:self.yearArr row:row];;
         } else if (component == 1) {
-            titleString = [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self getMonthText:self.monthArr row:row];
         } else if (component == 2) {
             titleString = [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate];
         } else if (component == 3) {
@@ -718,7 +718,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         }
     } else if (self.pickerMode == BRDatePickerModeMDHM) {
         if (component == 0) {
-            titleString = [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self getMonthText:self.monthArr row:row];
         } else if (component == 1) {
             titleString = [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate];
         } else if (component == 2) {
@@ -730,15 +730,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         if (component == 0) {
             titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getYearText:self.yearArr row:row] : [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate];
         } else if (component == 1) {
-            titleString = [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self getMonthText:self.monthArr row:row];
         } else if (component == 2) {
             titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate] : [self getYearText:self.yearArr row:row];
         }
     } else if (self.pickerMode == BRDatePickerModeYM) {
         if (component == 0) {
-            titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getYearText:self.yearArr row:row] : [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getYearText:self.yearArr row:row] : [self getMonthText:self.monthArr row:row];
         } else if (component == 1) {
-            titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getMonthText:self.monthArr row:row monthNames:self.monthNames] : [self getYearText:self.yearArr row:row];
+            titleString = [self.pickerStyle.language hasPrefix:@"zh"] ? [self getMonthText:self.monthArr row:row] : [self getYearText:self.yearArr row:row];
         }
     } else if (self.pickerMode == BRDatePickerModeY) {
         if (component == 0) {
@@ -746,7 +746,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         }
     } else if (self.pickerMode == BRDatePickerModeMD) {
         if (component == 0) {
-            titleString = [self getMonthText:self.monthArr row:row monthNames:self.monthNames];
+            titleString = [self getMonthText:self.monthArr row:row];
         } else if (component == 1) {
             titleString = [self getDayText:self.dayArr row:row mSelectDate:self.mSelectDate];
         }

@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)getYearText:(NSArray *)yearArr row:(NSInteger)row;
 
-- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row monthNames:(NSArray *)monthNames;
+- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row;
 
 - (NSString *)getDayText:(NSArray *)dayArr row:(NSInteger)row mSelectDate:(NSDate *)mSelectDate;
 

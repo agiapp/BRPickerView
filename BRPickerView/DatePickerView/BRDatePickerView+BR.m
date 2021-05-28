@@ -471,7 +471,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     return [NSString stringWithFormat:@"%@%@", yearString, yearUnit];
 }
 
-- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row monthNames:(NSArray *)monthNames {
+- (NSString *)getMonthText:(NSArray *)monthArr row:(NSInteger)row {
     NSInteger index = 0;
     if (row >= 0) {
         index = MIN(row, monthArr.count - 1);
@@ -483,14 +483,14 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     }
     
     // 自定义月份数据源
-    if (monthNames && monthNames.count > 0) {
+    if (self.monthNames && self.monthNames.count > 0) {
         NSInteger index = [monthString integerValue] - 1;
-        monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
+        monthString = (index >= 0 && index < self.monthNames.count) ? self.monthNames[index] : @"";
     } else {
         if (![self.pickerStyle.language hasPrefix:@"zh"] && (self.pickerMode == BRDatePickerModeYMD || self.pickerMode == BRDatePickerModeYM)) {
             // 非中文环境：月份显示英文名称
             // monthNames = @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"];
-            monthNames = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
+            NSArray *monthNames = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
             NSInteger index = [monthString integerValue] - 1;
             monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
         } else {
@@ -564,6 +564,9 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 }
 
 - (NSString *)getYearUnit {
+    if (self.customUnit) {
+        return self.customUnit[@"year"] ? : @"";
+    }
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
     }
@@ -571,6 +574,9 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 }
 
 - (NSString *)getMonthUnit {
+    if (self.customUnit) {
+        return self.customUnit[@"month"] ? : @"";
+    }
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
     }
@@ -578,6 +584,9 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 }
 
 - (NSString *)getDayUnit {
+    if (self.customUnit) {
+        return self.customUnit[@"day"] ? : @"";
+    }
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
     }
@@ -585,16 +594,22 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 }
 
 - (NSString *)getHourUnit {
-    if (![self.pickerStyle.language hasPrefix:@"zh"]) {
+    if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
         return @"";
     }
-    if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
+    if (self.customUnit) {
+        return self.customUnit[@"hour"] ? : @"";
+    }
+    if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
     }
     return [NSBundle br_localizedStringForKey:@"时" language:self.pickerStyle.language];
 }
 
 - (NSString *)getMinuteUnit {
+    if (self.customUnit) {
+        return self.customUnit[@"minute"] ? : @"";
+    }
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
     }
@@ -602,6 +617,9 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 }
 
 - (NSString *)getSecondUnit {
+    if (self.customUnit) {
+        return self.customUnit[@"second"] ? : @"";
+    }
     if (![self.pickerStyle.language hasPrefix:@"zh"]) {
         return @"";
     }
