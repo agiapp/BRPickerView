@@ -1214,14 +1214,17 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     // 读取日期：datePicker.date
     self.mSelectDate = sender.date;
     
-    BOOL selectLessThanMin = [self br_compareDate:self.mSelectDate targetDate:self.minDate dateFormat:self.dateFormatter] == NSOrderedAscending;
-    BOOL selectMoreThanMax = [self br_compareDate:self.mSelectDate targetDate:self.maxDate dateFormat:self.dateFormatter] == NSOrderedDescending;
-    if (selectLessThanMin) {
-        self.mSelectDate = self.minDate;
+    if (_datePickerMode != UIDatePickerModeCountDownTimer) {
+        BOOL selectLessThanMin = [self br_compareDate:self.mSelectDate targetDate:self.minDate dateFormat:self.dateFormatter] == NSOrderedAscending;
+        BOOL selectMoreThanMax = [self br_compareDate:self.mSelectDate targetDate:self.maxDate dateFormat:self.dateFormatter] == NSOrderedDescending;
+        if (selectLessThanMin) {
+            self.mSelectDate = self.minDate;
+        }
+        if (selectMoreThanMax) {
+            self.mSelectDate = self.maxDate;
+        }
     }
-    if (selectMoreThanMax) {
-        self.mSelectDate = self.maxDate;
-    }
+    
     [self.datePicker setDate:self.mSelectDate animated:YES];
     
     self.mSelectValue = [self br_stringFromDate:self.mSelectDate dateFormat:self.dateFormatter];
