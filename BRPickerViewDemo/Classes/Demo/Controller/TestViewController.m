@@ -305,14 +305,13 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.pickerMode = BRDatePickerModeYMD;
             datePickerView.title = @"请选择年月日";
             datePickerView.selectDate = self.birthdaySelectDate;
-            datePickerView.selectValue = self.infoModel.birthdayStr;
             datePickerView.minDate = [NSDate br_setYear:2018 month:3 day:10];
             datePickerView.maxDate = [NSDate br_setYear:2025 month:10 day:20];
             datePickerView.isAutoSelect = YES;
-            datePickerView.firstRowContent = @"自定义1";
-            datePickerView.lastRowContent = @"自定义2";
+            //datePickerView.monthNames = @[@"一月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月", @"九月", @"十月", @"十一月", @"十二月"];
+            //datePickerView.customUnit = @{@"year": @"Y", @"month": @"M", @"day": @"D", @"hour": @"H", @"minute": @"M", @"second": @"S"};
             // 指定不可选择的日期
-            datePickerView.nonSelectableDates = @[[NSDate br_setYear:2020 month:8 day:1], [NSDate br_setYear:2020 month:9 day:10]];
+            //datePickerView.nonSelectableDates = @[[NSDate br_setYear:2020 month:8 day:1], [NSDate br_setYear:2020 month:9 day:10]];
             datePickerView.keyView = self.view; // 将组件 datePickerView 添加到 self.view 上，默认是添加到 keyWindow 上
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthdaySelectDate = selectDate;
