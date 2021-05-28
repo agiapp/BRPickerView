@@ -166,6 +166,9 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 中间两条分割线的背景颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *separatorColor;
 
+/** 设置 picker 中间两条分割线的高度。暂不支持日期选择器前4种类型 */
+@property (nonatomic, assign) CGFloat separatorHeight;
+
 /** 设置 picker 文本的颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *pickerTextColor;
 
@@ -187,7 +190,10 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 的行高。暂不支持日期选择器前4种类型 */
 @property (nonatomic, assign) CGFloat rowHeight;
 
-/** 清除iOS14之后选择器默认自带的新样式（主要是：①隐藏中间选择行的背景样式，②清除默认的内边距，③新增中间选择行的两条分割线；与iOS14之前的样式保持一致），默认为 YES */
+/**
+ *  清除iOS14之后选择器默认自带的新样式。暂不支持日期选择器前4种类型
+ *  主要是：①隐藏中间选择行的背景样式，②清除默认的内边距，③新增中间选择行的两条分割线；与iOS14之前的样式保持一致），默认为 YES
+ */
 @property (nonatomic, assign) BOOL clearPickerNewStyle;
 
 
