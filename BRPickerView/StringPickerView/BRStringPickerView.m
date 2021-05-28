@@ -485,19 +485,18 @@
     // 2.绑定数据
     [self reloadData];
     
-    @weakify(self)
+    __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
-        @strongify(self)
         // 点击确定按钮后，执行block回调
-        [self removePickerFromView:view];
+        [weakSelf removePickerFromView:view];
         
-        if (self.pickerMode == BRStringPickerComponentSingle) {
-            if (self.resultModelBlock) {
-                self.resultModelBlock([self getResultModel]);
+        if (weakSelf.pickerMode == BRStringPickerComponentSingle) {
+            if (weakSelf.resultModelBlock) {
+                weakSelf.resultModelBlock([weakSelf getResultModel]);
             }
-        } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
-            if (self.resultModelArrayBlock) {
-                self.resultModelArrayBlock([self getResultModelArr]);
+        } else if (weakSelf.pickerMode == BRStringPickerComponentMulti || weakSelf.pickerMode == BRStringPickerComponentLinkage) {
+            if (weakSelf.resultModelArrayBlock) {
+                weakSelf.resultModelArrayBlock([weakSelf getResultModelArr]);
             }
         }
     };
