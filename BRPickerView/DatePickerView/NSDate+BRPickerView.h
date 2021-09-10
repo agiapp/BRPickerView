@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month;
 
 /**  获取 日期加上/减去某天数后的新日期 */
-- (nullable NSDate *)br_getNewDate:(NSDate *)date addDays:(NSTimeInterval)days;
+- (nullable NSDate *)br_getNewDateToDays:(NSTimeInterval)days;
 
 
 /** NSDate 转 NSString */

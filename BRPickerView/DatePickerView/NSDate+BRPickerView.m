@@ -228,7 +228,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 #pragma mark - 获取 日期加上/减去某天数后的新日期
-- (NSDate *)br_getNewDate:(NSDate *)date addDays:(NSTimeInterval)days {
+- (NSDate *)br_getNewDateToDays:(NSTimeInterval)days {
     // days 为正数时，表示几天之后的日期；负数表示几天之前的日期
     return [self dateByAddingTimeInterval:60 * 60 * 24 * days];
 }

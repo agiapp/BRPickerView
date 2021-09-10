@@ -432,7 +432,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         
         CGFloat originX = i * labelWidth + labelWidth / 2.0 + labelTextWidth / 2.0 + self.pickerStyle.dateUnitOffsetX;
         CGFloat originY = (pickerView.frame.size.height - self.pickerStyle.rowHeight) / 2 + self.pickerStyle.dateUnitOffsetY;
-        unitLabel.frame = CGRectMake(originX, originY, self.pickerStyle.rowHeight, self.pickerStyle.rowHeight);
+        unitLabel.frame = CGRectMake(originX, originY, MAX(self.pickerStyle.rowHeight, labelTextWidth), self.pickerStyle.rowHeight);
         
         [tempArr addObject:unitLabel];
         
