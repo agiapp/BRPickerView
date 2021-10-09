@@ -400,11 +400,13 @@
             id lastView = subviews.lastObject;
             if (lastView && [lastView isKindOfClass:[UIView class]]) {
                 UIView *rectBgView = (UIView *)lastView;
-                rectBgView.backgroundColor = [UIColor clearColor];
+                rectBgView.hidden = YES;
             }
             
             // ②清除iOS14上选择器默认的内边距
-            [self setPickerAllSubViewsStyle:contentView];
+            if (systemVersion.doubleValue < 15.0f) {
+                [self setPickerAllSubViewsStyle:contentView];
+            }
         }
     }
     

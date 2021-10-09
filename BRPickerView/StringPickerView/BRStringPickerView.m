@@ -290,15 +290,14 @@
         label = [[UILabel alloc]init];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = self.pickerStyle.pickerTextColor;
         label.font = self.pickerStyle.pickerTextFont;
+        label.textColor = self.pickerStyle.pickerTextColor;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
         // 自适应最小字体缩放比例
         label.minimumScaleFactor = 0.5f;
     }
     if (self.pickerMode == BRStringPickerComponentSingle) {
-        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width, self.pickerStyle.rowHeight);
         id item = self.mDataSourceArr[row];
         if ([item isKindOfClass:[BRResultModel class]]) {
             BRResultModel *model = (BRResultModel *)item;
@@ -307,7 +306,6 @@
             label.text = item;
         }
     } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
-        label.frame = CGRectMake(0, 0, self.pickerView.frame.size.width / pickerView.numberOfComponents, self.pickerStyle.rowHeight);
         id item = self.mDataSourceArr[component][row];
         if ([item isKindOfClass:[BRResultModel class]]) {
             BRResultModel *model = (BRResultModel *)item;
