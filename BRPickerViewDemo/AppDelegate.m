@@ -27,14 +27,21 @@
 - (void)setupRootViewController {
     TestViewController *testVC = [[TestViewController alloc]init];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:testVC];
-    // 设置状态栏前景色为白色
-    nav.navigationBar.barStyle = UIBarStyleBlack;
-    // 设置navigationBar背景颜色
-    nav.navigationBar.barTintColor = [UIColor darkTextColor];
     // 设置navigationBar所有子控件的颜色
-    nav.navigationBar.tintColor = [UIColor whiteColor];
-    // 设置 title 颜色
-    [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    nav.navigationBar.tintColor = [UIColor blackColor];
+    
+    // 解决 iOS15 导航栏(Navigation)变白(导航栏不见)
+    if (@available(iOS 15.0, *)) {
+        UINavigationBarAppearance *appearance = [UINavigationBarAppearance new];
+        appearance.backgroundColor = [UIColor whiteColor]; // 设置navigationBar背景颜色
+        // 静止样式
+        nav.navigationBar.standardAppearance = appearance;
+        // 滚动样式（带scroll滑动的页面。iOS13新增scrollEdgeAppearance属性，在iOS15之前此属性只应用在大标题导航栏上，在iOS15中此属性适用于所有导航栏）
+        nav.navigationBar.scrollEdgeAppearance = appearance;
+    } else {
+        nav.navigationBar.barTintColor = [UIColor whiteColor]; // 设置navigationBar背景颜色
+    }
+
     self.window.rootViewController = nav;
 }
 
