@@ -490,7 +490,8 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         if (![self.pickerStyle.language hasPrefix:@"zh"] && (self.pickerMode == BRDatePickerModeYMD || self.pickerMode == BRDatePickerModeYM)) {
             // 非中文环境：月份显示英文名称
             // monthNames = @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"];
-            NSArray *monthNames = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
+            NSDateFormatter *df = [[NSDateFormatter alloc] init];
+            NSArray *monthNames = [df monthSymbols];
             NSInteger index = [monthString integerValue] - 1;
             monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
         } else {
