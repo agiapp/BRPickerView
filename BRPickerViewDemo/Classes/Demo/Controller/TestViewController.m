@@ -287,7 +287,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             stringPickerView.pickerMode = BRStringPickerComponentSingle;
             stringPickerView.title = @"请选择性别";
             stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-            stringPickerView.selectIndex = self.genderSelectIndex ;
+            stringPickerView.selectIndex = self.genderSelectIndex;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.genderSelectIndex = resultModel.index;
                 self.infoModel.genderStr = resultModel.value;

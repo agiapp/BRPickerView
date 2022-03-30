@@ -486,8 +486,6 @@
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
-        [weakSelf removePickerFromView:view];
-        
         if (weakSelf.pickerMode == BRStringPickerComponentSingle) {
             if (weakSelf.resultModelBlock) {
                 weakSelf.resultModelBlock([weakSelf getResultModel]);

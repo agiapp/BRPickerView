@@ -35,7 +35,8 @@ typedef void(^BRDoneClickBlock)(void);
 /** accessory view below picker view. default is nil */
 @property (nullable, nonatomic, strong) UIView *pickerFooterView;
 
-/** 确定按钮点击事件的回调（使用场景：如果是自定义确定按钮，需要回调默认选择的值时使用）*/
+/// 确定按钮点击事件的回调
+/// 应用场景：如果是自定义确定按钮，需要在该按钮点击事件方法里，执行一下 doneBlock 回调。目的是触发组件内部执行 resultBlock 回调，回调选择的值
 @property (nullable, nonatomic, copy) BRDoneClickBlock doneBlock;
 
 /** 弹框视图(使用场景：可以在 alertView 上添加选择器的自定义背景视图) */

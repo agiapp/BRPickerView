@@ -1325,8 +1325,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     __weak typeof(self) weakSelf = self;
     self.doneBlock = ^{
         // 点击确定按钮后，执行block回调
-        [weakSelf removePickerFromView:view];
-        
         if (weakSelf.resultBlock) {
             weakSelf.resultBlock(weakSelf.mSelectDate, weakSelf.mSelectValue);
         }

@@ -251,6 +251,7 @@
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickDoneBtn {
+    [self removePickerFromView:nil];
     if (self.doneBlock) {
         self.doneBlock();
     }
@@ -307,7 +308,7 @@
         if (!self.pickerStyle.hiddenMaskView) {
             self.maskView.alpha = 0;
         }
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.3f animations:^{
             if (!self.pickerStyle.hiddenMaskView) {
                 self.maskView.alpha = 1;
             }
@@ -325,7 +326,7 @@
         [self removeFromSuperview];
     } else {
         // 关闭动画
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.2f animations:^{
             CGFloat alertViewHeight = self.alertView.bounds.size.height;
             CGRect rect = self.alertView.frame;
             rect.origin.y += alertViewHeight;
