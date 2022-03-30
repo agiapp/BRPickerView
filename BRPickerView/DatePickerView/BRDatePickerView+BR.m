@@ -488,10 +488,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         monthString = (index >= 0 && index < self.monthNames.count) ? self.monthNames[index] : @"";
     } else {
         if (![self.pickerStyle.language hasPrefix:@"zh"] && (self.pickerMode == BRDatePickerModeYMD || self.pickerMode == BRDatePickerModeYM)) {
-            // 非中文环境：月份显示英文名称
-            // monthNames = @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"];
-            NSDateFormatter *df = [[NSDateFormatter alloc] init];
-            NSArray *monthNames = [df monthSymbols];
+            // 非中文环境：月份使用系统的月份名称
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
+            // monthSymbols: @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
+            // shortMonthSymbols: @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"];
+            NSArray *monthNames = self.isShortMonthName ? dateFormatter.shortMonthSymbols : dateFormatter.monthSymbols;
             NSInteger index = [monthString integerValue] - 1;
             monthString = (index >= 0 && index < monthNames.count) ? monthNames[index] : @"";
         } else {

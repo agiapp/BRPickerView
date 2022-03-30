@@ -132,6 +132,12 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 @property (nonatomic, copy) NSArray <NSString *> *monthNames;
 
 /**
+ *  设置国际化日期(非中文环境下)月份是否显示简称，默认为 NO。for `BRDatePickerModeYMD` and `BRDatePickerModeYM`, ignored otherwise.
+ *  如：January 的简称为：Jan
+ */
+@property (nonatomic, assign, getter=isShortMonthName) BOOL shortMonthName;
+
+/**
  *  自定义日期单位
  *  字典格式：@{@"year": @"年", @"month": @"月", @"day": @"日", @"hour": @"时", @"minute": @"分", @"second": @"秒"}
  */
