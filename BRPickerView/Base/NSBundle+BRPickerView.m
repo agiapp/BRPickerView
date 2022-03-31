@@ -17,7 +17,7 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
 #pragma mark - 获取 BRPickerView.bundle
 + (instancetype)br_pickerBundle {
     static NSBundle *pickerBundle = nil;
-    if (pickerBundle == nil) {
+    if (!pickerBundle) {
         /*
             先拿到最外面的 bundle。
             对 framework 链接方式来说就是 framework 的 bundle 根目录，
@@ -31,18 +31,6 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
     return pickerBundle;
 }
 
-#pragma mark - 获取城市JSON数据
-+ (NSArray *)br_addressJsonArray {
-    static NSArray *cityArray = nil;
-    if (cityArray == nil) {
-        // 获取本地JSON文件
-        NSString *filePath = [[self br_pickerBundle] pathForResource:@"BRCity" ofType:@"json"];
-        NSData *data = [NSData dataWithContentsOfFile:filePath];
-        cityArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    }
-    return cityArray;
-}
-
 #pragma mark - 获取国际化后的文本
 + (NSString *)br_localizedStringForKey:(NSString *)key language:(NSString *)language {
     return [self br_localizedStringForKey:key value:nil language:language];
@@ -50,7 +38,7 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
 
 + (NSString *)br_localizedStringForKey:(NSString *)key value:(NSString *)value language:(NSString *)language {
     static NSBundle *bundle = nil;
-    if (bundle == nil) {
+    if (!bundle) {
         // 如果没有手动设置语言，将随系统的语言自动改变
         if (!language) {
             // 系统首选语言

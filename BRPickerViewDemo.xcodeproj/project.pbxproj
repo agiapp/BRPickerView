@@ -18,6 +18,7 @@
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */; };
 		45AB6DD4249A1306004EB3D0 /* linkage3_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 45AB6DD3249A1306004EB3D0 /* linkage3_data.json */; };
+		45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */; };
 		45E81D042399387700B8878A /* testData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* testData.plist */; };
 		45E81D072399387700B8878A /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81CFD2399387700B8878A /* BRInfoModel.m */; };
 		45E81D082399387700B8878A /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D002399387700B8878A /* BRInfoCell.m */; };
@@ -57,6 +58,7 @@
 		45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BRDatePickerView+BR.h"; sourceTree = "<group>"; };
 		45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BRDatePickerView+BR.m"; sourceTree = "<group>"; };
 		45AB6DD3249A1306004EB3D0 /* linkage3_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkage3_data.json; sourceTree = "<group>"; };
+		45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRAddressPickerView.bundle; sourceTree = "<group>"; };
 		45E81CF62399387700B8878A /* testData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testData.plist; sourceTree = "<group>"; };
 		45E81CFC2399387700B8878A /* BRInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
 		45E81CFD2399387700B8878A /* BRInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				C5ACE5041F3D7C4F0069978B /* BRAddressPickerView.m */,
 				C5ACE5061F3D7D060069978B /* BRAddressModel.h */,
 				C5ACE5071F3D7D060069978B /* BRAddressModel.m */,
+				45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */,
 			);
 			path = AddressPickerView;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				45FD41D123E3DAD900DD742B /* 2020年1月县以上行政区划代码.json in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
 				45653925237032D90074BBBC /* BRPickerView.bundle in Resources */,
+				45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

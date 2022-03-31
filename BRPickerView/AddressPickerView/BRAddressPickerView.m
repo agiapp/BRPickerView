@@ -89,7 +89,7 @@
         }
     } else {
         // 如果外部没有传入地区数据源，就使用本地的数据源
-        NSArray *dataSource = [NSBundle br_addressJsonArray];
+        NSArray *dataSource = [self br_addressJsonArray];
         
         if (!dataSource || dataSource.count == 0) {
             return;
@@ -100,6 +100,23 @@
     
     // 设置默认值
     [self handlerDefaultSelectValue];
+}
+
+#pragma mark - 获取城市JSON数据
+- (NSArray *)br_addressJsonArray {
+    static NSArray *cityArray = nil;
+    if (!cityArray) {
+        // 获取 BRAddressPickerView.bundle
+        NSBundle *containnerBundle = [NSBundle bundleForClass:[BRAddressPickerView class]];
+        NSString *bundlePath = [containnerBundle pathForResource:@"BRAddressPickerView" ofType:@"bundle"];
+        NSBundle *addressPickerBundle = [NSBundle bundleWithPath:bundlePath];
+        
+        // 获取bundle中的JSON文件
+        NSString *filePath = [addressPickerBundle pathForResource:@"BRCity" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        cityArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    }
+    return cityArray;
 }
 
 #pragma mark - 获取模型数组

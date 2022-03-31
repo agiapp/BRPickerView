@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "2.7.7"
+  s.version      = "2.7.8"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
@@ -48,6 +48,8 @@ Pod::Spec.new do |s|
   s.subspec 'AddressPickerView' do |ss|
     ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/AddressPickerView/*.{h,m}'
+    # 地址选择器包含的资源包
+    ss.resources  = 'BRPickerView/AddressPickerView/BRAddressPickerView.bundle'
   end
   
   s.subspec 'StringPickerView' do |ss|
@@ -58,5 +60,4 @@ Pod::Spec.new do |s|
   # 框架要求ARC环境下使用
   s.requires_arc = true
 
- 
 end
