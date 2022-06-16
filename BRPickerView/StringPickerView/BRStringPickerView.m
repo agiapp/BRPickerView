@@ -156,16 +156,16 @@
         self.mDataSourceArr = self.dataSourceArr;
         NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
         for (NSInteger i = 0; i < self.mDataSourceArr.count; i++) {
+            NSArray *itemArr = self.mDataSourceArr[i];
             NSInteger row = 0;
             if (self.selectIndexs.count > 0) {
                 if (i < self.selectIndexs.count) {
                     NSInteger index = [self.selectIndexs[i] integerValue];
-                    row = ((index > 0 && index < [self.mDataSourceArr[i] count]) ? index : 0);
+                    row = ((index > 0 && index < itemArr.count) ? index : 0);
                 }
             } else {
                 if (self.mSelectValues.count > 0 && i < self.mSelectValues.count) {
                     NSString *value = self.mSelectValues[i];
-                    NSArray *itemArr = self.mDataSourceArr[i];
                     id item = [itemArr firstObject];
                     if ([item isKindOfClass:[BRResultModel class]]) {
                         for (NSInteger j = 0; j < itemArr.count; j++) {
@@ -176,8 +176,8 @@
                             }
                         }
                     } else {
-                        if ([self.mDataSourceArr[i] containsObject:value]) {
-                            row = [self.mDataSourceArr[i] indexOfObject:value];
+                        if ([itemArr containsObject:value]) {
+                            row = [itemArr indexOfObject:value];
                         }
                     }
                 }
@@ -273,7 +273,10 @@
             break;
         case BRStringPickerComponentMulti:
         case BRStringPickerComponentLinkage:
-            return [self.mDataSourceArr[component] count];
+        {
+            NSArray *itemArr = self.mDataSourceArr[component];
+            return itemArr.count;
+        }
             break;
             
         default:
@@ -306,7 +309,8 @@
             label.text = item;
         }
     } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
-        id item = self.mDataSourceArr[component][row];
+        NSArray *itemArr = self.mDataSourceArr[component];
+        id item = [itemArr objectAtIndex:row];
         if ([item isKindOfClass:[BRResultModel class]]) {
             BRResultModel *model = (BRResultModel *)item;
             label.text = model.value;
