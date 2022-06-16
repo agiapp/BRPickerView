@@ -18,6 +18,9 @@
 #define kThemeColor [UIColor blueColor]
 
 @interface BRMutableDatePickerView ()<UIPickerViewDataSource, UIPickerViewDelegate>
+{
+    BOOL _isAdjustSelectRow; // 设置minDate时，调整日期联动的选择(解决日期选择器联动不正确的问题)
+}
 // 蒙层视图
 @property (nonatomic, strong) UIView *maskView;
 // 弹出背景视图
@@ -45,6 +48,9 @@
 @property(nonatomic, assign) NSInteger yearIndex;
 @property(nonatomic, assign) NSInteger monthIndex;
 @property(nonatomic, assign) NSInteger dayIndex;
+
+// 记录选择的值
+@property (nonatomic, strong) NSDate *mSelectDate;
 
 @property(nonatomic, copy) NSString *dateFormat;
 
@@ -75,6 +81,7 @@
     [self.titleBarView addSubview:self.titleLabel];
     [self.titleBarView addSubview:self.cancelBtn];
     [self.titleBarView addSubview:self.doneBtn];
+    [self.alertView addSubview:self.pickerView];
 }
 
 #pragma mark - 蒙层视图
@@ -177,25 +184,39 @@
     if (self.hiddenMonth) {
         self.hiddenDay = YES;
         self.dayBtn.selected = YES;
+        
+        self.monthArr = nil;
+        self.dayArr = nil;
+    } else {
+        self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
+        if (!self.hiddenDay) {
+            self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
+        } else {
+            self.dayArr = nil;
+        }
     }
-    [self reloadData];
+    
+    [self.pickerView reloadAllComponents];
+    // 默认滚动的行
+    [self scrollToSelectDate:self.mSelectDate animated:NO];
 }
 
 - (void)clickDayBtn:(UIButton *)sender {
     if (!self.hiddenMonth) {
         sender.selected = !sender.selected;
         self.hiddenDay = sender.selected;
-        [self reloadData];
+        if (self.hiddenDay) {
+            self.dayArr = nil;
+        } else {
+            self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
+        }
+        
+        [self.pickerView reloadAllComponents];
+        // 默认滚动的行
+        [self scrollToSelectDate:self.mSelectDate animated:NO];
     } else {
         NSLog(@"请先选择月");
     }
-}
-
-- (void)reloadData {
-    [self handlerInitData];
-    [self.pickerView reloadAllComponents];
-    // 默认滚动的行
-    [self scrollToSelectDate:self.selectDate animated:NO];
 }
 
 #pragma mark - 取消按钮
@@ -264,15 +285,18 @@
     [self dismiss];
 }
 
+- (void)reloadData {
+    [self handlerPickerData];
+    [self.pickerView reloadAllComponents];
+    // 默认滚动的行
+    [self scrollToSelectDate:self.mSelectDate animated:NO];
+}
+
 #pragma mark - 弹出选择器视图
 - (void)show {
     [self initUI];
-    [self handlerInitData];
-    // 添加日期选择器
-    [self.alertView addSubview:self.pickerView];
-    [self.pickerView reloadAllComponents];
-    // 默认滚动的行
-    [self scrollToSelectDate:self.selectDate animated:NO];
+    // 刷新数据
+    [self reloadData];
     
     UIWindow *keyWindow = BRGetKeyWindow();
     [keyWindow addSubview:self];
@@ -282,7 +306,7 @@
     self.alertView.frame = rect;
     // 弹出动画
     self.maskView.alpha = 1;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.3f animations:^{
         CGRect rect = self.alertView.frame;
         rect.origin.y -= kPickerViewHeight + kTitleBarViewHeight + BR_BOTTOM_MARGIN;
         self.alertView.frame = rect;
@@ -292,7 +316,7 @@
 #pragma mark - 关闭选择器视图
 - (void)dismiss {
     // 关闭动画
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.2f animations:^{
         CGRect rect = self.alertView.frame;
         rect.origin.y += kPickerViewHeight + kTitleBarViewHeight + BR_BOTTOM_MARGIN;
         self.alertView.frame = rect;
@@ -357,33 +381,30 @@
     [self dismiss];
     
     // 更新 selectDate
-    [self handlerUpdateSelectDate];
-    
-    if (self.resultBlock) {
-        NSString *selectValue = [self br_stringFromDate:self.selectDate];
-        self.resultBlock(self.selectDate, selectValue, self.hiddenMonth, self.hiddenDay);
-    }
-}
-
-- (void)handlerUpdateSelectDate {
     int year = [self.yearArr[self.yearIndex] intValue];
     if (!self.hiddenMonth) {
         int month = [self.monthArr[self.monthIndex] intValue];
         if (!self.hiddenDay) {
             int day = [self.dayArr[self.dayIndex] intValue];
-            self.selectDate = [NSDate br_setYear:year month:month day:day];
+            self.mSelectDate = [NSDate br_setYear:year month:month day:day];
             self.dateFormat = @"yyyy-MM-dd";
         } else {
-            self.selectDate = [NSDate br_setYear:year month:month];
+            self.mSelectDate = [NSDate br_setYear:year month:month];
             self.dateFormat = @"yyyy-MM";
         }
     } else {
-        self.selectDate = [NSDate br_setYear:year];
+        self.mSelectDate = [NSDate br_setYear:year];
         self.dateFormat = @"yyyy";
+    }
+    
+    if (self.resultBlock) {
+        NSString *selectValue = [self br_stringFromDate:self.mSelectDate];
+        self.resultBlock(self.mSelectDate, selectValue, self.hiddenMonth, self.hiddenDay);
     }
 }
 
-- (void)handlerInitData {
+#pragma mark - 处理选择器数据
+- (void)handlerPickerData {
     // 1.最小日期限制
     if (!self.minDate) {
         self.minDate = [NSDate distantPast];
@@ -400,28 +421,30 @@
         self.maxDate = [NSDate distantFuture];
     }
     
+    self.mSelectDate = self.selectDate;
+    
     // 3.默认选中的日期
-    BOOL selectLessThanMin = [self br_compareDate:self.selectDate targetDate:self.minDate] == NSOrderedAscending;
-    BOOL selectMoreThanMax = [self br_compareDate:self.selectDate targetDate:self.maxDate] == NSOrderedDescending;
+    BOOL selectLessThanMin = [self br_compareDate:self.mSelectDate targetDate:self.minDate] == NSOrderedAscending;
+    BOOL selectMoreThanMax = [self br_compareDate:self.mSelectDate targetDate:self.maxDate] == NSOrderedDescending;
     if (selectLessThanMin) {
         BRErrorLog(@"默认选择的日期不能小于最小日期！");
-        self.selectDate = self.minDate;
+        self.mSelectDate = self.minDate;
     }
     if (selectMoreThanMax) {
         BRErrorLog(@"默认选择的日期不能大于最大日期！");
-        self.selectDate = self.maxDate;
+        self.mSelectDate = self.maxDate;
     }
     
     self.yearArr = [self getYearArr];
     // 根据 默认选择的日期 计算出 对应的索引
-    self.yearIndex = self.selectDate.br_year - self.minDate.br_year;
+    self.yearIndex = self.mSelectDate.br_year - self.minDate.br_year;
     
     if (!self.hiddenMonth) {
-        self.monthArr = [self getMonthArr:self.selectDate.br_year];
-        self.monthIndex = self.selectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
+        self.monthArr = [self getMonthArr:self.mSelectDate.br_year];
+        self.monthIndex = self.mSelectDate.br_month - ((self.yearIndex == 0) ? self.minDate.br_month : 1);
         if (!self.hiddenDay) {
-            self.dayArr = [self getDayArr:self.selectDate.br_year month:self.selectDate.br_month];
-            self.dayIndex = self.selectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
+            self.dayArr = [self getDayArr:self.mSelectDate.br_year month:self.mSelectDate.br_month];
+            self.dayIndex = self.mSelectDate.br_day - ((self.yearIndex == 0 && self.monthIndex == 0) ? self.minDate.br_day : 1);
         } else {
             self.dayArr = nil;
             self.dayIndex = 0;
@@ -436,13 +459,25 @@
 
 #pragma mark - 更新日期数据源数组
 - (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth updateDay:(BOOL)updateDay {
+    _isAdjustSelectRow = NO;
     // 1.更新 monthArr
     if (self.yearArr.count == 0) {
         return;
     }
     NSString *yearString = self.yearArr[self.yearIndex];
-    if (updateMonth) {
+    if (updateMonth && !self.hiddenMonth) {
+        NSString *lastSelectMonth = [NSString stringWithFormat:@"%@", @(self.mSelectDate.br_month)];
         self.monthArr = [self getMonthArr:[yearString integerValue]];
+        if ([self.monthArr containsObject:lastSelectMonth]) {
+            NSInteger monthIndex = [self.monthArr indexOfObject:lastSelectMonth];
+            if (monthIndex != self.monthIndex) {
+                _isAdjustSelectRow = YES;
+                self.monthIndex = monthIndex;
+            }
+        } else {
+            _isAdjustSelectRow = YES;
+            self.monthIndex = ([lastSelectMonth intValue] < [self.monthArr.firstObject intValue]) ? 0 : (self.monthArr.count - 1);
+        }
     }
     
     // 2.更新 dayArr
@@ -450,8 +485,21 @@
         return;
     }
     NSString *monthString = self.monthArr[self.monthIndex];
-    if (updateDay) {
+    if (updateDay && !self.hiddenDay) {
+        NSString *lastSelectDay = [NSString stringWithFormat:@"%@", @(self.mSelectDate.br_day)];
         self.dayArr = [self getDayArr:[yearString integerValue] month:[monthString integerValue]];
+        if (self.mSelectDate) {
+            if ([self.dayArr containsObject:lastSelectDay]) {
+                NSInteger dayIndex = [self.dayArr indexOfObject:lastSelectDay];
+                if (dayIndex != self.dayIndex) {
+                    _isAdjustSelectRow = YES;
+                    self.dayIndex = dayIndex;
+                }
+            } else {
+                _isAdjustSelectRow = YES;
+                self.dayIndex = ([lastSelectDay intValue] < [self.dayArr.firstObject intValue]) ? 0 : (self.dayArr.count - 1);
+            }
+        }
     }
 }
 
@@ -504,8 +552,17 @@
     NSInteger yearIndex = selectDate.br_year - self.minDate.br_year;
     NSInteger monthIndex = selectDate.br_month - ((yearIndex == 0) ? self.minDate.br_month : 1);
     NSInteger dayIndex = selectDate.br_day - ((yearIndex == 0 && monthIndex == 0) ? self.minDate.br_day : 1);
-    NSArray *indexArr = @[@(yearIndex), @(monthIndex), @(dayIndex)];;
-    
+    NSArray *indexArr = @[@(yearIndex)];
+    {
+        NSMutableArray *tempArr = [indexArr mutableCopy];
+        if (!self.hiddenMonth) {
+            [tempArr addObject:@(monthIndex)];
+            if (!self.hiddenDay) {
+                [tempArr addObject:@(dayIndex)];
+            }
+        }
+        indexArr = [tempArr copy];
+    }
     for (NSInteger i = 0; i < indexArr.count; i++) {
         [self.pickerView selectRow:[indexArr[i] integerValue] inComponent:i animated:animated];
     }
@@ -526,14 +583,7 @@
 #pragma mark - UIPickerViewDelegate
 // 3. 设置 picker 的 显示内容
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
-    
-    // 设置分割线的颜色
-    for (UIView *subView in pickerView.subviews) {
-        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
-            subView.backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
-        }
-    }
-    
+    // 1.自定义 row 的内容视图
     UILabel *label = (UILabel *)view;
     if (!label) {
         label = [[UILabel alloc]init];
@@ -556,6 +606,13 @@
         label.text = [self getDayText:row];
     }
     
+    // 2.设置分割线的颜色
+    for (UIView *subView in pickerView.subviews) {
+        if (subView && [subView isKindOfClass:[UIView class]] && subView.frame.size.height <= 1) {
+            subView.backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1.0];
+        }
+    }
+    
     return label;
 }
 
@@ -563,20 +620,44 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) {
         self.yearIndex = row;
+        [self reloadDateArrayWithUpdateMonth:YES updateDay:YES];
+        [self.pickerView reloadComponent:1];
+        [self.pickerView reloadComponent:2];
     } else if (component == 1) {
         self.monthIndex = row;
+        [self reloadDateArrayWithUpdateMonth:NO updateDay:YES];
+        [self.pickerView reloadComponent:2];
     } else if (component == 2) {
         self.dayIndex = row;
     }
     
     // 更新 selectDate
-    [self handlerUpdateSelectDate];
+    int year = [self.yearArr[self.yearIndex] intValue];
+    if (!self.hiddenMonth) {
+        int month = [self.monthArr[self.monthIndex] intValue];
+        if (!self.hiddenDay) {
+            int day = [self.dayArr[self.dayIndex] intValue];
+            self.mSelectDate = [NSDate br_setYear:year month:month day:day];
+            self.dateFormat = @"yyyy-MM-dd";
+        } else {
+            self.mSelectDate = [NSDate br_setYear:year month:month];
+            self.dateFormat = @"yyyy-MM";
+        }
+    } else {
+        self.mSelectDate = [NSDate br_setYear:year];
+        self.dateFormat = @"yyyy";
+    }
+    
+    if (_isAdjustSelectRow) {
+        // 默认滚动的行
+        [self scrollToSelectDate:self.mSelectDate animated:NO];
+    }
     
     // 设置是否开启自动回调
     if (self.isAutoSelect) {
         if (self.resultBlock) {
-            NSString *selectValue = [self br_stringFromDate:self.selectDate];
-            self.resultBlock(self.selectDate, selectValue, self.hiddenMonth, self.hiddenDay);
+            NSString *selectValue = [self br_stringFromDate:self.mSelectDate];
+            self.resultBlock(self.mSelectDate, selectValue, self.hiddenMonth, self.hiddenDay);
         }
     }
 }
@@ -587,19 +668,31 @@
 }
 
 - (NSString *)getYearText:(NSInteger)row {
-    NSString *yearString = self.yearArr[row];
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, self.yearArr.count - 1);
+    }
+    NSString *yearString = self.yearArr[index];
     NSString *yearUnit = !self.hiddenDateUnit ? @"年" : @"";
     return [NSString stringWithFormat:@"%@%@", yearString, yearUnit];
 }
 
 - (NSString *)getMonthText:(NSInteger)row {
-    NSString *monthString = self.monthArr[row];
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, self.monthArr.count - 1);
+    }
+    NSString *monthString = self.monthArr[index];
     NSString *monthUnit = !self.hiddenDateUnit ? @"月" : @"";
     return [NSString stringWithFormat:@"%@%@", monthString, monthUnit];
 }
 
 - (NSString *)getDayText:(NSInteger)row {
-    NSString *dayString = self.dayArr[row];
+    NSInteger index = 0;
+    if (row >= 0) {
+        index = MIN(row, self.dayArr.count - 1);
+    }
+    NSString *dayString = self.dayArr[index];
     NSString *dayUnit = !self.hiddenDateUnit ? @"日" : @"";
     dayString = [NSString stringWithFormat:@"%@%@", dayString, dayUnit];
     return dayString;
