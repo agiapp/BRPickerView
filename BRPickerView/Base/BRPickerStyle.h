@@ -234,11 +234,17 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 + (instancetype)pickerStyleWithDoneBtnImage:(nullable UIImage *)doneBtnImage;
 
 
-/** 设置选择器中间选中行的样式（组件内部使用）*/
+//////////////////////////////// 以下是组件内部使用的几个封装方法 ////////////////////////////////
+
+/** 设置选择器中间选中行的样式 */
 - (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 
-/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加；组件内部使用）*/
+/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）*/
 - (void)addSeparatorLineView:(UIView *)pickerView;
+
+/** 设置 view 的部分圆角 */
+// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
++ (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius;
 
 @end
 

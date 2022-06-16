@@ -99,7 +99,7 @@
     
     if (_alertView && self.pickerStyle.topCornerRadius > 0) {
         // 设置顶部圆角
-        [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
+        [BRPickerStyle br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
     }
 }
 
@@ -369,15 +369,6 @@
         _keyView = BRGetKeyWindow();
     }
     return _keyView;
-}
-
-#pragma mark - 设置 view 的部分圆角
-// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
-- (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
-    UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
-    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
-    [shape setPath:rounded.CGPath];
-    view.layer.mask = shape;
 }
 
 #pragma mark - setter 方法（支持动态设置标题）
