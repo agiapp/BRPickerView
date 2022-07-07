@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** 获取中文星期字符串 */
 @property (nullable, nonatomic, readonly, copy) NSString *br_weekdayString;
 
+/** 获取日历单例对象 */
++ (NSCalendar *)br_calendar;
 
 /// 创建 date
 /** yyyy */

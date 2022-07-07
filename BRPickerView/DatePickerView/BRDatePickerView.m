@@ -109,6 +109,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 处理选择器数据
 - (void)handlerPickerData {
+    if (self.timeZone) {
+        // NSCalendar 设置时区
+        [NSDate br_calendar].timeZone = self.timeZone;
+    }
     // 1.最小日期限制
     self.minDate = [self handlerMinDate:self.minDate];
     // 2.最大日期限制
