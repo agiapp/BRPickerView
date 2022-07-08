@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 父级value */
 @property (nullable, nonatomic, copy) NSString *parentValue;
 
-
 /// 其它扩展字段
 @property (nullable, nonatomic, copy) NSString *remark;
 @property (nullable, nonatomic, strong) id extras;

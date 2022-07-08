@@ -155,6 +155,9 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 指定不允许选择的日期 */
 @property (nullable, nonatomic, copy) NSArray <NSDate *> *nonSelectableDates;
 
+/** 不允许选择日期的回调 */
+@property (nullable, nonatomic, copy) BRDateResultBlock nonSelectableBlock;
+
 /// 初始化日期选择器
 /// @param pickerMode  日期选择器显示类型
 - (instancetype)initWithPickerMode:(BRDatePickerMode)pickerMode;

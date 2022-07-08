@@ -1185,6 +1185,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
                     // 如果当前的日期不可选择，就回滚到上次选择的日期
                     [self scrollToSelectDate:lastSelectDate animated:YES];
                 });
+                // 不可选择日期的回调
+                if (self.nonSelectableBlock) {
+                    self.nonSelectableBlock(self.mSelectDate, self.mSelectValue);
+                }
                 self.mSelectDate = lastSelectDate;
                 self.mSelectValue = lastSelectValue;
                 break;
