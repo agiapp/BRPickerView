@@ -28,12 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 其它扩展字段
 @property (nullable, nonatomic, copy) NSString *remark;
-@property (nonatomic, assign) BOOL boolField;
-@property (nullable, nonatomic, strong) id idField;
-@property (nullable, nonatomic, strong) NSNumber *numberField;
-
-@property (nullable, nonatomic, copy) NSString *ID __attribute__((deprecated("Use 'key' instead")));
-@property (nullable, nonatomic, copy) NSString *name __attribute__((deprecated("Use 'value' instead")));
+@property (nullable, nonatomic, strong) id extras;
 
 @end
 

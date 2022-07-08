@@ -27,7 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** 获取日历单例对象 */
 + (NSCalendar *)br_calendar;
 
-/// 创建 date
+
+/// ---------------- 创建 date ----------------
+/** 通过 NSDateComponents对象 来创建 NSDate对象（可以设置时区） */
++ (nullable NSDate *)br_setDateFromComponents:(NSDateComponents *)components timeZone:(NSTimeZone *)timeZone;
+
 /** yyyy */
 + (nullable NSDate *)br_setYear:(NSInteger)year;
 

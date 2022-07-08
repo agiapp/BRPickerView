@@ -109,10 +109,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 处理选择器数据
 - (void)handlerPickerData {
-    if (self.timeZone) {
-        // NSCalendar 设置时区
-        [NSDate br_calendar].timeZone = self.timeZone;
-    }
     // 1.最小日期限制
     self.minDate = [self handlerMinDate:self.minDate];
     // 2.最大日期限制
@@ -1185,8 +1181,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.nonSelectableDates && self.nonSelectableDates.count > 0 && ![self.mSelectValue isEqualToString:self.lastRowContent] && ![self.mSelectValue isEqualToString:self.firstRowContent]) {
         for (NSDate *date in self.nonSelectableDates) {
             if ([self br_compareDate:date targetDate:self.mSelectDate dateFormat:self.dateFormatter] == NSOrderedSame) {
-                // 如果当前的日期不可选择，就回滚到上次选择的日期
-                [self scrollToSelectDate:lastSelectDate animated:YES];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    // 如果当前的日期不可选择，就回滚到上次选择的日期
+                    [self scrollToSelectDate:lastSelectDate animated:YES];
+                });
                 self.mSelectDate = lastSelectDate;
                 self.mSelectValue = lastSelectValue;
                 break;

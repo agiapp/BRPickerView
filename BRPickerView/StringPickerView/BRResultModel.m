@@ -38,12 +38,4 @@
     return [self.key hash] ^ [self.value hash];
 }
 
-- (NSString *)ID {
-    return _key;
-}
-
-- (NSString *)name {
-    return _value;
-}
-
 @end

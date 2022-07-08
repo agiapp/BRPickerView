@@ -124,6 +124,18 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return @"";
 }
 
+/// ---------------- 创建 date ----------------
+#pragma mark - 通过 NSDateComponents对象 来创建 NSDate对象（可以设置时区）
++ (nullable NSDate *)br_setDateFromComponents:(NSDateComponents *)components timeZone:(NSTimeZone *)timeZone {
+    // 创建日历对象，指定日历的算法（公历/阳历）
+    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    if (timeZone) {
+        // NSCalendar 设置时区
+        calendar.timeZone = timeZone;
+    }
+    return [calendar dateFromComponents:components];
+}
+
 #pragma mark - 创建date（通过 NSCalendar 类来创建日期）
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
     NSDateComponents *components = [self br_componentsFromDate:[NSDate date]];
