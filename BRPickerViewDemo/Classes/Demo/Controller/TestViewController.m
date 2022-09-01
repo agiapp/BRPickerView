@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) UIView *footerView;
 @property (nonatomic, strong) UITextField *beginTimeTF;
 @property (nonatomic, strong) UITextField *endTimeTF;
+@property (nonatomic, strong) UILabel *rangeTimeL;
 @property (nonatomic, strong) UIView *beginTimeLineView;
 @property (nonatomic, strong) UIView *endTimeLineView;
 @property (nonatomic, strong) BRDatePickerView *datePickerView;
@@ -322,6 +323,13 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 NSLog(@"selectDate=%@", selectDate);
                 NSLog(@"---------------------------------");
                 
+            };
+            
+            datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
+                NSLog(@"selectValue=%@", selectValue);
+                NSLog(@"selectStartDate=%@", selectStartDate);
+                NSLog(@"selectStartDate=%@", selectEndDate);
+                NSLog(@"---------------------------------");
             };
             
             // 设置年份背景
@@ -700,14 +708,15 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 #pragma mark - footerView
 - (UIView *)footerView {
     if (!_footerView) {
-        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 400)];
+        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 450)];
         _footerView.backgroundColor = [UIColor clearColor];
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         // 1.切换日期选择器的显示模式
-        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月"]];
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月", @"月周", @"年周", @"季 度"]];
         segmentedControl.frame = CGRectMake(40, 50, self.view.bounds.size.width - 80, 36);
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        segmentedControl.apportionsSegmentWidthsByContent = YES;
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
         segmentedControl.layer.masksToBounds = YES;
@@ -778,7 +787,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         datePickerView.pickerMode = BRDatePickerModeYMDH;
         datePickerView.maxDate = [NSDate date];
         datePickerView.isAutoSelect = YES;
-        datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
+        datePickerView.showUnitType = BRShowUnitTypeAll;
         datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
             if (self.timeType == BRTimeTypeBeginTime) {
                 self.beginSelectDate = selectDate;
@@ -787,6 +796,12 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 self.endSelectDate = selectDate;
                 self.endTimeTF.text = selectValue;
             }
+        };
+        NSString *format = @"yyyy-MM-dd HH:mm:ss";
+        datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
+            NSString *startTime = [NSDate br_stringFromDate:selectStartDate dateFormat:format];
+            NSString *endTime = [NSDate br_stringFromDate:selectEndDate dateFormat:format];
+            self.rangeTimeL.text = [NSString stringWithFormat:@"%@ ~ %@", startTime, endTime];
         };
         
         // 自定义选择器主题样式
@@ -798,6 +813,15 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         // 添加选择器到容器视图
         [datePickerView addPickerToView:containerView];
         
+        // 5.创建时间选择范围label
+        self.rangeTimeL = [[UILabel alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_footerView.bounds) - 60, CGRectGetWidth(containerView.bounds), 36)];
+        _rangeTimeL.backgroundColor = [UIColor clearColor];
+        _rangeTimeL.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+        _rangeTimeL.font = [UIFont systemFontOfSize:14.0f];
+        _rangeTimeL.textAlignment = NSTextAlignmentCenter;
+        _rangeTimeL.textColor = [UIColor lightGrayColor];
+        _rangeTimeL.text = nil;
+        [_footerView addSubview:_rangeTimeL];
     }
     return _footerView;
 }
@@ -814,6 +838,15 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     } else if (selecIndex == 2) {
         NSLog(@"年月");
         self.datePickerView.pickerMode = BRDatePickerModeYM;
+    } else if (selecIndex == 3) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYMW;
+    } else if (selecIndex == 4) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYW;
+    } else if (selecIndex == 5) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYQ;
     }
     
     // 重置选择的值

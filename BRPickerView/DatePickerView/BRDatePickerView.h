@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // ----- 以下11种是自定义样式 -----
+    // ----- 以下14种是自定义样式 -----
     /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
     BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
@@ -46,7 +46,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】时分 */
     BRDatePickerModeHM,
     /** 【mm:ss】分秒 */
-    BRDatePickerModeMS
+    BRDatePickerModeMS,
+    /** 【yyyy-MM-ww】月周数 */
+    BRDatePickerModeYMW,
+    /** 【yyyy-ww】年周数 */
+    BRDatePickerModeYW,
+    /** 【yyyy-qq】季度 */
+    BRDatePickerModeYQ
 };
 
 /// 日期单位显示的位置
@@ -60,6 +66,8 @@ typedef NS_ENUM(NSInteger, BRShowUnitType) {
 };
 
 typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nullable selectValue);
+
+typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue);
 
 @interface BRDatePickerView : BRBaseView
 
@@ -85,9 +93,13 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 
 /** 选择结果的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock resultBlock;
+/** 选择结果范围的回调 */
+@property (nullable, nonatomic, copy) BRDateResultRangeBlock resultRangeBlock;
 
 /** 滚动选择时触发的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock changeBlock;
+/** 滚动选择范围时触发的回调 */
+@property (nullable, nonatomic, copy) BRDateResultRangeBlock changeRangeBlock;
 
 /** 日期单位显示类型 */
 @property (nonatomic, assign) BRShowUnitType showUnitType;
@@ -234,6 +246,27 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
                   isAutoSelect:(BOOL)isAutoSelect
                    resultBlock:(nullable BRDateResultBlock)resultBlock;
 
+/**
+ * 3.显示日期选择器
+ *
+ * @param mode             日期显示类型
+ * @param title            选择器标题
+ * @param selectValue      默认选中的日期（默认选中当前日期）
+ * @param minDate          最小日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
+ * @param maxDate          最大日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
+ * @param isAutoSelect     是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
+ * @param resultBlock      选择结果的回调
+ * @param resultRangeBlock 范围选择结果的回调
+ *
+ */
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(nullable NSString *)title
+                   selectValue:(nullable NSString *)selectValue
+                       minDate:(nullable NSDate *)minDate
+                       maxDate:(nullable NSDate *)maxDate
+                  isAutoSelect:(BOOL)isAutoSelect
+                   resultBlock:(nullable BRDateResultBlock)resultBlock
+              resultRangeBlock:(nullable BRDateResultRangeBlock)resultRangeBlock;
 
 @end
 

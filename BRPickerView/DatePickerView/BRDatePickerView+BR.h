@@ -49,6 +49,15 @@ NS_ASSUME_NONNULL_BEGIN
 /** 获取 secondArr 数组 */
 - (NSArray *)getSecondArr:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute;
 
+/**  获取 monthWeekArr 数组 */
+- (NSArray *)getMonthWeekArr:(NSInteger)year month:(NSInteger)month;
+
+/**  获取 yearWeekArr 数组 */
+- (NSArray *)getYearWeekArr:(NSInteger)year;
+
+ /**  获取 quarterArr 数组 */
+- (NSArray *)getQuarterArr:(NSInteger)year;
+
 /** 添加 pickerView */
 - (void)setupPickerView:(UIView *)pickerView toView:(UIView *)view;
 
@@ -71,6 +80,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)getSecondText:(NSArray *)secondArr row:(NSInteger)row;
 
+- (NSString *)getWeekText:(NSArray *)weekArr row:(NSInteger)row;
+
+- (NSString *)getQuarterText:(NSArray *)quarterArr row:(NSInteger)row;
+
 - (NSString *)getAMText;
 
 - (NSString *)getPMText;
@@ -86,6 +99,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)getMinuteUnit;
 
 - (NSString *)getSecondUnit;
+
+- (NSString *)getWeekUnit;
+
+- (NSString *)getQuarterUnit;
 
 - (NSInteger)getIndexWithArray:(NSArray *)array object:(NSString *)obj;
 

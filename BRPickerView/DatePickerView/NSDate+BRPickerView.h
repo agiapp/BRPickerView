@@ -13,13 +13,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDate (BRPickerView)
 /// 获取指定date的详细信息
-@property (readonly) NSInteger br_year;    // 年
-@property (readonly) NSInteger br_month;   // 月
-@property (readonly) NSInteger br_day;     // 日
-@property (readonly) NSInteger br_hour;    // 时
-@property (readonly) NSInteger br_minute;  // 分
-@property (readonly) NSInteger br_second;  // 秒
-@property (readonly) NSInteger br_weekday; // 星期
+@property (readonly) NSInteger br_year;         // 年
+@property (readonly) NSInteger br_month;        // 月
+@property (readonly) NSInteger br_day;          // 日
+@property (readonly) NSInteger br_hour;         // 时
+@property (readonly) NSInteger br_minute;       // 分
+@property (readonly) NSInteger br_second;       // 秒
+@property (readonly) NSInteger br_weekday;      // 星期
+@property (readonly) NSInteger br_monthWeek;    // 月周
+@property (readonly) NSInteger br_yearWeek;     // 年周
+@property (readonly) NSInteger br_quarter;      // 季度
 
 /** 获取中文星期字符串 */
 @property (nullable, nonatomic, readonly, copy) NSString *br_weekdayString;
@@ -65,13 +68,33 @@ NS_ASSUME_NONNULL_BEGIN
 /** mm:ss */
 + (nullable NSDate *)br_setMinute:(NSInteger)minute second:(NSInteger)second;
 
+/** yyyy-MM-ww */
++ (nullable NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month weekOfMonth:(NSInteger)weekOfMont;
+
+/** yyyy-ww */
++ (nullable NSDate *)br_setYear:(NSInteger)year weekOfYear:(NSInteger)weekOfYear;
+
+/** yyyy-qq */
++ (nullable NSDate *)br_setYear:(NSInteger)year quarter:(NSInteger)quarter;
+
 
 /** 获取某个月的天数（通过年月求每月天数）*/
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month;
 
+/** 获取某个月的周数（通过年月求该月周数）*/
++ (NSUInteger)br_getWeeksOfMonthInYear:(NSInteger)year month:(NSInteger)month;
+
+/** 获取某一年的周数（通过年求该年周数）*/
++ (NSUInteger)br_getWeeksOfYearInYear:(NSInteger)year;
+
+/** 获取某一年的季度数（通过年求该年季度数）*/
++ (NSUInteger)br_getQuartersInYear:(NSInteger)year;
+
 /**  获取 日期加上/减去某天数后的新日期 */
 - (nullable NSDate *)br_getNewDateToDays:(NSTimeInterval)days;
 
+/**  获取 日期加上/减去某个月数后的新日期 */
+- (nullable NSDate *)br_getNewDateToMonths:(NSTimeInterval)months;
 
 /** NSDate 转 NSString */
 + (nullable NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat;
