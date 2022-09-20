@@ -19,11 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *key;
 /** value */
 @property (nullable, nonatomic, copy) NSString *value;
-
 /** 父级key（提示：联动时第一级数据，parentKey设置为：@"-1"） */
 @property (nullable, nonatomic, copy) NSString *parentKey;
 /** 父级value */
 @property (nullable, nonatomic, copy) NSString *parentValue;
+/** 子级list */
+@property (nonatomic, copy) NSArray<BRResultModel *> *children;
 
 /// 其它扩展字段
 @property (nullable, nonatomic, copy) NSString *remark;

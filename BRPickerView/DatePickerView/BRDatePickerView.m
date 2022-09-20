@@ -422,7 +422,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 更新日期数据源数组
 - (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth updateDay:(BOOL)updateDay updateHour:(BOOL)updateHour updateMinute:(BOOL)updateMinute updateSecond:(BOOL)updateSecond {
-    [self reloadDateArrayWithUpdateMonth:updateDay updateDay:updateDay updateHour:updateHour updateMinute:updateMinute updateSecond:NO updateWeekOfMonth:NO updateWeekOfYear:NO updateQuarter:NO];
+    [self reloadDateArrayWithUpdateMonth:updateMonth updateDay:updateDay updateHour:updateHour updateMinute:updateMinute updateSecond:NO updateWeekOfMonth:NO updateWeekOfYear:NO updateQuarter:NO];
 }
 
 - (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth updateDay:(BOOL)updateDay updateHour:(BOOL)updateHour updateMinute:(BOOL)updateMinute updateSecond:(BOOL)updateSecond

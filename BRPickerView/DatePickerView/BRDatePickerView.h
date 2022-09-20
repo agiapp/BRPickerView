@@ -47,12 +47,13 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     BRDatePickerModeHM,
     /** 【mm:ss】分秒 */
     BRDatePickerModeMS,
-    /** 【yyyy-MM-ww】月周数 */
+    
+    /** 【yyyy-qq】年季度 */
+    BRDatePickerModeYQ,
+    /** 【yyyy-MM-ww】年月周 */
     BRDatePickerModeYMW,
-    /** 【yyyy-ww】年周数 */
-    BRDatePickerModeYW,
-    /** 【yyyy-qq】季度 */
-    BRDatePickerModeYQ
+    /** 【yyyy-ww】年周 */
+    BRDatePickerModeYW
 };
 
 /// 日期单位显示的位置
@@ -93,12 +94,12 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 
 /** 选择结果的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock resultBlock;
-/** 选择结果范围的回调 */
+/** 选择结果范围的回调：for `BRDatePickerModeYQ`、`BRDatePickerModeYMW`、`BRDatePickerModeYW`, ignored otherwise. */
 @property (nullable, nonatomic, copy) BRDateResultRangeBlock resultRangeBlock;
 
 /** 滚动选择时触发的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock changeBlock;
-/** 滚动选择范围时触发的回调 */
+/** 滚动选择范围时触发的回调：for `BRDatePickerModeYQ`、`BRDatePickerModeYMW`、`BRDatePickerModeYW`, ignored otherwise. */
 @property (nullable, nonatomic, copy) BRDateResultRangeBlock changeRangeBlock;
 
 /** 日期单位显示类型 */
