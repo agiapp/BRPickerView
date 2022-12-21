@@ -300,6 +300,18 @@
         }
     
         [self.keyView addSubview:self];
+        
+        // iOS16：重新设置 alertView 高度（解决懒加载设置frame不生效问题）
+        CGFloat accessoryViewHeight = 0;
+        if (self.pickerHeaderView) {
+            accessoryViewHeight += self.pickerHeaderView.bounds.size.height;
+        }
+        if (self.pickerFooterView) {
+            accessoryViewHeight += self.pickerFooterView.bounds.size.height;
+        }
+        CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + self.pickerStyle.paddingBottom + accessoryViewHeight;
+        self.alertView.frame = CGRectMake(0, self.keyView.bounds.size.height - height, self.keyView.bounds.size.width, height);
+        
         // 动画前初始位置
         CGRect rect = self.alertView.frame;
         rect.origin.y = self.bounds.size.height;

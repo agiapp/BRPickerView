@@ -444,6 +444,10 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         pickerView.frame = CGRectMake(0, pickerHeaderViewHeight, view.bounds.size.width, view.bounds.size.height - pickerHeaderViewHeight - pickerFooterViewHeight);
         [self addSubview:pickerView];
     } else {
+        // iOS16：重新设置 pickerView 高度（解决懒加载设置frame不生效问题）
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        pickerView.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
+
         [self.alertView addSubview:pickerView];
     }
 }
