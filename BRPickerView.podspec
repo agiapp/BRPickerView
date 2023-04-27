@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "2.8.0"
+  s.version      = "2.8.1"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://www.irenb.com'
   
   # 框架支持的平台和版本
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
 
   # GitHub下载地址和版本
   s.source       = { :git => "https://github.com/91renb/BRPickerView.git", :tag => s.version.to_s }

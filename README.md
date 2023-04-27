@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.8.0` 。
+- 当前最新版本为： `2.8.1` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // ----- 以下11种是自定义样式 -----
+    // ----- 以下14种是自定义样式 -----
     /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
     BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
@@ -79,7 +79,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】时分 */
     BRDatePickerModeHM,
     /** 【mm:ss】分秒 */
-    BRDatePickerModeMS
+    BRDatePickerModeMS,
+    
+    /** 【yyyy-qq】年季度 */
+    BRDatePickerModeYQ,
+    /** 【yyyy-MM-ww】年月周 */
+    BRDatePickerModeYMW,
+    /** 【yyyy-ww】年周 */
+    BRDatePickerModeYW
 };
 ```
 
