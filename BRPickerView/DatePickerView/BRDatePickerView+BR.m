@@ -5,7 +5,7 @@
 //  Created by renbo on 2020/6/16.
 //  Copyright © 2020 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRDatePickerView+BR.h"
 #import "NSBundle+BRPickerView.h"
