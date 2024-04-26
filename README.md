@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.8.2` 。
+- 当前最新版本为： `2.8.3` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -310,7 +310,13 @@ stringPickerView.pickerStyle = customStyle;
 
 # 更新记录
 
+#### 2024-04-26（V2.8.3）
+
+- 解决已知问题：[#305](https://github.com/91renb/BRPickerView/issues/305) 
+
 #### 2024-04-23（V2.8.2）
+
+- 解决已知问题：[#304](https://github.com/91renb/BRPickerView/issues/304) 
 
 - Add PrivacyInfo.xcprivacy
 

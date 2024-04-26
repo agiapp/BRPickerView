@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "2.8.2"
+  s.version      = "2.8.3"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
@@ -34,12 +34,12 @@ Pod::Spec.new do |s|
   s.source_files  = "BRPickerView/BRPickerView.h"
   # 隐私清单
   s.resource_bundles = { 'BRPickerView.Privacy' => 'BRPickerView/PrivacyInfo.xcprivacy' }
+  # 框架包含的资源包
+  s.resources  = 'BRPickerView/Base/BRPickerView.bundle'
   
   # 二级目录（根目录是s，使用s.subspec设置子目录，这里设置子目录为ss）
   s.subspec 'Base' do |ss|
     ss.source_files = 'BRPickerView/Base/*.{h,m}'
-    # 框架包含的资源包
-    ss.resources  = 'BRPickerView/Base/BRPickerView.bundle'
   end
   
   s.subspec 'DatePickerView' do |ss|
@@ -51,7 +51,7 @@ Pod::Spec.new do |s|
     ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/AddressPickerView/*.{h,m}'
     # 地址选择器包含的资源包
-    ss.resources  = 'BRPickerView/AddressPickerView/BRAddressPickerView.bundle'
+    s.resources  = 'BRPickerView/AddressPickerView/BRAddressPickerView.bundle'
   end
   
   s.subspec 'StringPickerView' do |ss|
