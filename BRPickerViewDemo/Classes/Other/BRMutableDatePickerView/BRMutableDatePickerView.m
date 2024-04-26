@@ -569,7 +569,7 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1. 设置 picker 的列数
+// 1.返回组件数量
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 3;
 }

@@ -77,6 +77,9 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
 /** 滚动选择时触发的回调【多列】 */
 @property (nullable, nonatomic, copy) BRStringResultModelArrayBlock changeModelArrayBlock;
 
+/** 判断选择器是否处于滚动中。可以用于解决快速滑动选择器，在滚动结束前秒选确定按钮，出现显示不对的问题。*/
+@property (nonatomic, readonly, assign, getter=isRolling) BOOL rolling;
+
 /**
  *  最大层级数(列数) for `BRStringPickerComponentLinkage`, ignored otherwise.
  *  使用场景：默认可选，当数据源中有 key 等于 parentKey 情况时，必须要设置

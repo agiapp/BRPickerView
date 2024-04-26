@@ -102,6 +102,9 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 /** 滚动选择范围时触发的回调：for `BRDatePickerModeYQ`、`BRDatePickerModeYMW`、`BRDatePickerModeYW`, ignored otherwise. */
 @property (nullable, nonatomic, copy) BRDateResultRangeBlock changeRangeBlock;
 
+/** 判断选择器是否处于滚动中。可以用于解决快速滑动选择器，在滚动结束前秒选确定按钮，出现显示不对的问题。*/
+@property (nonatomic, readonly, assign, getter=isRolling) BOOL rolling;
+
 /** 日期单位显示类型 */
 @property (nonatomic, assign) BRShowUnitType showUnitType;
 

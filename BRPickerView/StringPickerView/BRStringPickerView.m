@@ -20,6 +20,10 @@
 /** 多列选择的值 */
 @property (nonatomic, copy) NSArray <NSString *>* mSelectValues;
 
+// 记录滚动中的位置
+@property(nonatomic, assign) NSInteger rollingComponent;
+@property(nonatomic, assign) NSInteger rollingRow;
+
 /** 数据源 */
 @property (nullable, nonatomic, copy) NSArray *mDataSourceArr;
 
@@ -249,7 +253,7 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1.设置 pickerView 的列数
+// 1.返回组件数量
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
@@ -265,7 +269,7 @@
     }
 }
 
-// 2.设置 pickerView 每列的行数
+// 2.返回每个组件的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
@@ -322,7 +326,39 @@
     // 2.设置选择器中间选中行的样式
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
     
+    // 3.记录选择器滚动过程中选中的列和行
+    // 获取选择器组件滚动中选中的行
+    NSInteger selectRow = [pickerView selectedRowInComponent:component];
+    if (selectRow >= 0) {
+        self.rollingComponent = component;
+        self.rollingRow = selectRow;
+    }
+    
     return label;
+}
+
+// 获取选择器是否滚动中状态
+- (BOOL)getRollingStatus:(UIView *)view {
+    if ([view isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)view;
+        if (scrollView.dragging || scrollView.decelerating) {
+            // 如果 UIPickerView 正在拖拽或正在减速，返回YES
+            return YES;
+        }
+    }
+    
+    for (UIView *subView in view.subviews) {
+        if ([self getRollingStatus:subView]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+// 选择器是否正在滚动
+- (BOOL)isRolling {
+    return [self getRollingStatus:self.pickerView];
 }
 
 // 4.滚动 pickerView 执行的回调方法
@@ -492,8 +528,16 @@
     [self reloadData];
     
     __weak typeof(self) weakSelf = self;
+    // 点击确定按钮的回调：点击确定按钮后，执行这个block回调
     self.doneBlock = ^{
-        // 点击确定按钮后，执行block回调
+        if (weakSelf.isRolling) {
+            NSLog(@"选择器滚动还未结束");
+            // 问题：如果滚动选择器过快，然后在滚动过程中快速点击确定按钮，会导致 didSelectRow 代理方法还没有执行，出现没有选中的情况。
+            // 解决：这里手动处理一下，如果滚动还未结束，强制执行一次 didSelectRow 代理方法，选择当前滚动的行。
+            [weakSelf pickerView:weakSelf.pickerView didSelectRow:weakSelf.rollingRow inComponent:weakSelf.rollingComponent];
+        }
+    
+        // 执行选择结果回调
         if (weakSelf.pickerMode == BRStringPickerComponentSingle) {
             if (weakSelf.resultModelBlock) {
                 weakSelf.resultModelBlock([weakSelf getResultModel]);

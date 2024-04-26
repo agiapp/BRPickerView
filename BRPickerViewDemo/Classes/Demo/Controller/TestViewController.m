@@ -318,11 +318,9 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
-                
                 NSLog(@"selectValue=%@", selectValue);
                 NSLog(@"selectDate=%@", selectDate);
                 NSLog(@"---------------------------------");
-                
             };
             
             datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
@@ -713,7 +711,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         // 1.切换日期选择器的显示模式
-        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月", @"月周", @"年周", @"季 度"]];
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月"]];
         segmentedControl.frame = CGRectMake(40, 50, self.view.bounds.size.width - 80, 36);
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         segmentedControl.apportionsSegmentWidthsByContent = YES;
@@ -838,15 +836,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     } else if (selecIndex == 2) {
         NSLog(@"年月");
         self.datePickerView.pickerMode = BRDatePickerModeYM;
-    } else if (selecIndex == 3) {
-        NSLog(@"年月");
-        self.datePickerView.pickerMode = BRDatePickerModeYMW;
-    } else if (selecIndex == 4) {
-        NSLog(@"年月");
-        self.datePickerView.pickerMode = BRDatePickerModeYW;
-    } else if (selecIndex == 5) {
-        NSLog(@"年月");
-        self.datePickerView.pickerMode = BRDatePickerModeYQ;
     }
     
     // 重置选择的值
