@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) UIView *footerView;
 @property (nonatomic, strong) UITextField *beginTimeTF;
 @property (nonatomic, strong) UITextField *endTimeTF;
-@property (nonatomic, strong) UILabel *rangeTimeL;
 @property (nonatomic, strong) UIView *beginTimeLineView;
 @property (nonatomic, strong) UIView *endTimeLineView;
 @property (nonatomic, strong) BRDatePickerView *datePickerView;
@@ -478,7 +477,9 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             };
             
             // 使用模板样式2
-            stringPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
+            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
+            customStyle.columnWidth = 80;
+            stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
             
@@ -795,12 +796,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 self.endTimeTF.text = selectValue;
             }
         };
-        NSString *format = @"yyyy-MM-dd HH:mm:ss";
-        datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
-            NSString *startTime = [NSDate br_stringFromDate:selectStartDate dateFormat:format];
-            NSString *endTime = [NSDate br_stringFromDate:selectEndDate dateFormat:format];
-            self.rangeTimeL.text = [NSString stringWithFormat:@"%@ ~ %@", startTime, endTime];
-        };
         
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
@@ -810,16 +805,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         
         // 添加选择器到容器视图
         [datePickerView addPickerToView:containerView];
-        
-        // 5.创建时间选择范围label
-        self.rangeTimeL = [[UILabel alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_footerView.bounds) - 60, CGRectGetWidth(containerView.bounds), 36)];
-        _rangeTimeL.backgroundColor = [UIColor clearColor];
-        _rangeTimeL.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
-        _rangeTimeL.font = [UIFont systemFontOfSize:14.0f];
-        _rangeTimeL.textAlignment = NSTextAlignmentCenter;
-        _rangeTimeL.textColor = [UIColor lightGrayColor];
-        _rangeTimeL.text = nil;
-        [_footerView addSubview:_rangeTimeL];
     }
     return _footerView;
 }

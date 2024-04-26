@@ -449,6 +449,16 @@
     return self.pickerStyle.rowHeight;
 }
 
+// 设置列宽
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
+    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
+    if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
+        return self.pickerStyle.columnWidth;
+    }
+    return columnWidth;
+}
+
 #pragma mark - 重写父类方法
 - (void)reloadData {
     // 1.处理数据源

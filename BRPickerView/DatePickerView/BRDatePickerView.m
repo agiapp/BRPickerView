@@ -1546,6 +1546,16 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     return self.pickerStyle.rowHeight;
 }
 
+// 设置列宽
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
+    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
+    if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
+        return self.pickerStyle.columnWidth;
+    }
+    return columnWidth;
+}
+
 #pragma mark - 日期选择器1 滚动后的响应事件
 - (void)didSelectValueChanged:(UIDatePicker *)sender {
     // 读取日期：datePicker.date
