@@ -251,7 +251,7 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
                    resultBlock:(nullable BRDateResultBlock)resultBlock;
 
 /**
- * 3.显示日期选择器
+ * 4.显示日期选择器
  *
  * @param mode             日期显示类型
  * @param title            选择器标题
