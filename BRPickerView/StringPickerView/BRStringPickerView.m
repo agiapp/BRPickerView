@@ -258,11 +258,12 @@
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
             return 1;
-            break;
         case BRStringPickerComponentMulti:
         case BRStringPickerComponentLinkage:
+            if (self.pickerStyle.columnSpacing > 0) {
+                return self.mDataSourceArr.count * 2 - 1;
+            }
             return self.mDataSourceArr.count;
-            break;
             
         default:
             break;
@@ -278,6 +279,13 @@
         case BRStringPickerComponentMulti:
         case BRStringPickerComponentLinkage:
         {
+            if (self.pickerStyle.columnSpacing > 0) {
+                if (component % 2 == 1) {
+                    return 1;
+                } else {
+                    component = component / 2;
+                }
+            }
             NSArray *itemArr = self.mDataSourceArr[component];
             return itemArr.count;
         }
@@ -304,24 +312,6 @@
         // 自适应最小字体缩放比例
         label.minimumScaleFactor = 0.5f;
     }
-    if (self.pickerMode == BRStringPickerComponentSingle) {
-        id item = self.mDataSourceArr[row];
-        if ([item isKindOfClass:[BRResultModel class]]) {
-            BRResultModel *model = (BRResultModel *)item;
-            label.text = model.value;
-        } else {
-            label.text = item;
-        }
-    } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
-        NSArray *itemArr = self.mDataSourceArr[component];
-        id item = [itemArr objectAtIndex:row];
-        if ([item isKindOfClass:[BRResultModel class]]) {
-            BRResultModel *model = (BRResultModel *)item;
-            label.text = model.value;
-        } else {
-            label.text = item;
-        }
-    }
     
     // 2.设置选择器中间选中行的样式
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
@@ -332,6 +322,37 @@
     if (selectRow >= 0) {
         self.rollingComponent = component;
         self.rollingRow = selectRow;
+    }
+
+    // 设置文本
+    if (self.pickerMode == BRStringPickerComponentSingle) {
+        id item = self.mDataSourceArr[row];
+        if ([item isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)item;
+            label.text = model.value;
+        } else {
+            label.text = item;
+        }
+    } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
+        
+        // 如果有设置列间距，且是第奇数列，则不显示内容（即空白间隔列）
+        if (self.pickerStyle.columnSpacing > 0) {
+            if (component % 2 == 1) {
+                label.text = @"";
+                return label;
+            } else {
+                component = component / 2;
+            }
+        }
+        
+        NSArray *itemArr = self.mDataSourceArr[component];
+        id item = [itemArr objectAtIndex:row];
+        if ([item isKindOfClass:[BRResultModel class]]) {
+            BRResultModel *model = (BRResultModel *)item;
+            label.text = model.value;
+        } else {
+            label.text = item;
+        }
     }
     
     return label;
@@ -383,6 +404,15 @@
             break;
         case BRStringPickerComponentMulti:
         {
+            // 处理选择器有设置列间距时，选择器的滚动问题
+            if (self.pickerStyle.columnSpacing > 0) {
+                if (component % 2 == 1) {
+                    return;
+                } else {
+                    component = component / 2;
+                }
+            }
+            
             if (component < self.selectIndexs.count) {
                 NSMutableArray *mutableArr = [self.selectIndexs mutableCopy];
                 [mutableArr replaceObjectAtIndex:component withObject:@(row)];
@@ -404,6 +434,15 @@
             break;
         case BRStringPickerComponentLinkage:
         {
+            // 处理选择器有设置列间距时，选择器的滚动问题
+            if (self.pickerStyle.columnSpacing > 0) {
+                if (component % 2 == 1) {
+                    return;
+                } else {
+                    component = component / 2;
+                }
+            }
+            
             if (component < self.selectIndexs.count) {
                 NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
                 for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
@@ -484,6 +523,9 @@
 
 // 设置列宽
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    if (self.pickerStyle.columnSpacing > 0 && component % 2 == 1) {
+        return self.pickerStyle.columnSpacing;
+    }
     NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
     CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
     if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
@@ -503,11 +545,19 @@
         [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
     } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
-            NSNumber *index = [self.selectIndexs objectAtIndex:i];
-            [self.pickerView selectRow:[index integerValue] inComponent:i animated:NO];
+            NSNumber *row = [self.selectIndexs objectAtIndex:i];
+            NSInteger component = i;
+            if (self.pickerStyle.columnSpacing > 0) {
+                component = i * 2;
+            }
+            [self.pickerView selectRow:[row integerValue] inComponent:component animated:NO];
         }
     }
 }
+
+// 0 【1】 2 【3】 4 【5】
+// 0 2 4
+// 0 1 2
 
 - (void)addPickerToView:(UIView *)view {
     // 1.添加选择器

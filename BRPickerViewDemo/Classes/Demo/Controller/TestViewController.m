@@ -466,19 +466,29 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         case 8:
         {
-            /// 多列字符串
+            /// 自定义多列字符串选择器
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
             stringPickerView.pickerMode = BRStringPickerComponentMulti;
-            stringPickerView.title = @"多列选择器";
-            stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
+            stringPickerView.title = @"自定义多列字符串";
+            stringPickerView.dataSourceArr = @[@[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12"], @[@"00", @"10", @"20", @"30", @"40", @"50"]];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-                textField.text = [NSString stringWithFormat:@"%@ %@", resultModelArr[0].value, resultModelArr[1].value];
+                textField.text = [NSString stringWithFormat:@"%@:%@", resultModelArr[0].value, resultModelArr[1].value];
             };
             
-            // 使用模板样式2
-            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
-            customStyle.columnWidth = 80;
+            // 设置自定义样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            // 设置 picker 的列宽
+            customStyle.columnWidth = 30;
+            // 设置 picker 的列间隔
+            customStyle.columnSpacing = 60;
+            // 设置圆角矩形背景
+            // 方式1：使用系统自带样式，保留iOS14之后系统默认的圆角样式。
+            customStyle.clearPickerNewStyle = NO;
+            // 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[stringPickerView.alertView addSubview:rectView];）
+            // 设置选择器中间选中行的样式
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+            customStyle.selectRowTextColor = [UIColor blueColor];
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
@@ -551,6 +561,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
             customStyle.selectRowTextColor = [UIColor blueColor];
+            customStyle.columnWidth = 60;
+            customStyle.columnSpacing = 10;
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
@@ -846,7 +858,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (NSArray *)titleArr {
     if (!_titleArr) {
-        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资", @"多列选择", @"二级联动选择", @"三级联动选择"];
+        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资", @"自定义多列选择", @"二级联动选择", @"三级联动选择"];
     }
     return _titleArr;
 }
