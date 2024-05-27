@@ -414,8 +414,8 @@
         self.maxDate = [NSDate distantFuture];
     }
     BOOL minMoreThanMax = [self br_compareDate:self.minDate targetDate:self.maxDate] == NSOrderedDescending;
-    NSAssert(!minMoreThanMax, @"最小日期不能大于最大日期！");
     if (minMoreThanMax) {
+        BRErrorLog(@"最小日期不能大于最大日期！");
         // 如果最小日期大于了最大日期，就忽略两个值
         self.minDate = [NSDate distantPast];
         self.maxDate = [NSDate distantFuture];

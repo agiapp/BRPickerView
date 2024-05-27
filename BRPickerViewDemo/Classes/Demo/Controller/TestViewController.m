@@ -32,11 +32,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) UIView *endTimeLineView;
 @property (nonatomic, strong) BRDatePickerView *datePickerView;
 
-
 @property (nonatomic, copy) NSArray *titleArr;
-
 @property (nonatomic, strong) BRInfoModel *infoModel;
-
 @property (nonatomic, assign) BRTimeType timeType;
 
 @property (nonatomic, assign) NSInteger genderSelectIndex;
@@ -322,13 +319,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 NSLog(@"---------------------------------");
             };
             
-            datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
-                NSLog(@"selectValue=%@", selectValue);
-                NSLog(@"selectStartDate=%@", selectStartDate);
-                NSLog(@"selectStartDate=%@", selectEndDate);
-                NSLog(@"---------------------------------");
-            };
-            
             // 设置年份背景
             UILabel *yearLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, 216)];
             yearLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -365,6 +355,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.title = @"出生时刻";
             datePickerView.selectDate = self.birthtimeSelectDate;
             datePickerView.isAutoSelect = YES;
+            //datePickerView.twelveHourMode = YES; // 设置12小时制
+            //datePickerView.timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"]; // 设置时区
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthtimeSelectDate = selectDate;
                 self.infoModel.birthtimeStr = selectValue;

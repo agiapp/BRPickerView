@@ -126,7 +126,7 @@
         _dataSourceException = ![item isKindOfClass:[BRResultModel class]];
     }
     if (_dataSourceException) {
-        NSAssert(!_dataSourceException, @"数据源异常！请检查选择器数据源的格式");
+        BRErrorLog(@"数据源异常！请检查选择器数据源的格式");
         return;
     }
     

@@ -33,7 +33,7 @@ safeBottomHeight = BRGetKeyWindow().safeAreaInsets.bottom;\
 
 // 打印错误日志
 #ifdef DEBUG
-    #define BRErrorLog(...) NSLog(@"reason: %@", [NSString stringWithFormat:__VA_ARGS__])
+    #define BRErrorLog(...) NSLog(@"【BRDatePickerView】reason: %@", [NSString stringWithFormat:__VA_ARGS__])
 #else
     #define BRErrorLog(...)
 #endif
