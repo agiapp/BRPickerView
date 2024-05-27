@@ -16,22 +16,52 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 @implementation NSDate (BRPickerView)
 
-#pragma mark - 获取日历单例对象
-+ (NSCalendar *)br_calendar {
-    static NSCalendar *sharedCalendar = nil;
-    if (!sharedCalendar) {
+/// 日历对象
+static NSCalendar *_sharedCalendar = nil;
+/// 时区
+static NSTimeZone *_timeZone = nil;
+
+/// ---------------- 设置【日历对象】和【时区】 ----------------
+#pragma mark - 设置日历对象
++ (void)br_setCalendar:(NSCalendar *)calendar {
+    _sharedCalendar = calendar;
+}
+
+#pragma mark - 获取日历对象
++ (NSCalendar *)br_getCalendar {
+    if (!_sharedCalendar) {
         // 创建日历对象，指定日历的算法（公历/阳历）
-        sharedCalendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        _sharedCalendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         // NSCalendar 设置时区
-        //sharedCalendar.timeZone = [NSTimeZone timeZoneWithName:@"America/Chicago"];
+        //_sharedCalendar.timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"];
     }
-    return sharedCalendar;
+    return _sharedCalendar;
+}
+
+#pragma mark - 设置时区
++ (void)br_setTimeZone:(NSTimeZone *)timeZone {
+    _timeZone = timeZone;
+    _sharedCalendar.timeZone = timeZone;
+}
+
+#pragma mark - 获取当前时区
++ (NSTimeZone *)br_getTimeZone {
+    if (!_timeZone) {
+        // 当前时区(不使用夏时制)
+        NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
+        // 当前时区相对于GMT(零时区)的偏移秒数
+        NSInteger interval = [localTimeZone secondsFromGMTForDate:[NSDate date]];
+        // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
+        // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
+        _timeZone = [NSTimeZone timeZoneForSecondsFromGMT:interval];
+    }
+    return _timeZone;
 }
 
 #pragma mark - NSDate 转 NSDateComponents
 + (NSDateComponents *)br_componentsFromDate:(NSDate *)date {
     // 通过日历类 NSCalendar 进行转换
-    NSCalendar *calendar = [self br_calendar];
+    NSCalendar *calendar = [self br_getCalendar];
     // NSDateComponents 可以获得日期的详细信息，即日期的组成
     return [calendar components:unitFlags fromDate:date];
 }
@@ -39,7 +69,7 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 #pragma mark - NSDateComponents 转 NSDate
 + (NSDate *)br_dateFromComponents:(NSDateComponents *)components {
     // 通过日历类 NSCalendar 进行转换
-    NSCalendar *calendar = [self br_calendar];
+    NSCalendar *calendar = [self br_getCalendar];
     return [calendar dateFromComponents:components];
 }
 
@@ -147,17 +177,6 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 }
 
 /// ---------------- 创建 date ----------------
-#pragma mark - 通过 NSDateComponents对象 来创建 NSDate对象（可以设置时区）
-+ (nullable NSDate *)br_setDateFromComponents:(NSDateComponents *)components timeZone:(NSTimeZone *)timeZone {
-    // 创建日历对象，指定日历的算法（公历/阳历）
-    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    if (timeZone) {
-        // NSCalendar 设置时区
-        calendar.timeZone = timeZone;
-    }
-    return [calendar dateFromComponents:components];
-}
-
 #pragma mark - 创建date（通过 NSCalendar 类来创建日期）
 + (NSDate *)br_setYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
     return [self br_setYear:year month:month day:day hour:hour minute:minute second:second weekOfMonth:0 weekOfYear:0 quarter:0];
@@ -334,20 +353,17 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSDate 转 NSString
 + (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat {
-    return [self br_stringFromDate:date dateFormat:dateFormat timeZone:nil language:nil];
+    return [self br_stringFromDate:date dateFormat:dateFormat language:nil];
 }
 #pragma mark - NSDate 转 NSString
 + (NSString *)br_stringFromDate:(NSDate *)date
                      dateFormat:(NSString *)dateFormat
-                       timeZone:(NSTimeZone *)timeZone
                        language:(NSString *)language {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = dateFormat;
     // NSDateFormatter 设置时区 ，不设置默认为系统时区
-    if (timeZone) {
-        dateFormatter.timeZone = timeZone;
-    }
+    dateFormatter.timeZone = [self br_getTimeZone];
     if (!language) {
         language = [NSLocale preferredLanguages].firstObject;
     }
@@ -359,50 +375,25 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
 
 #pragma mark - NSString 转 NSDate
 + (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat {
-    return [self br_dateFromString:dateString dateFormat:dateFormat timeZone:nil language:nil];
+    return [self br_dateFromString:dateString dateFormat:dateFormat language:nil];
 }
 #pragma mark - NSString 转 NSDate
 + (NSDate *)br_dateFromString:(NSString *)dateString
                    dateFormat:(NSString *)dateFormat
-                     timeZone:(NSTimeZone *)timeZone
                      language:(NSString *)language {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     // 设置日期格式
     dateFormatter.dateFormat = dateFormat;
-    // 设置时区
-    if (!timeZone) {
-        timeZone = [self currentTimeZone];
-    }
     if (!language) {
         language = [NSLocale preferredLanguages].firstObject;
     }
-    dateFormatter.timeZone = timeZone;
+    // 设置时区
+    dateFormatter.timeZone = [self br_getTimeZone];
     dateFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:language];
     // 如果当前时间不存在，就获取距离最近的整点时间
     dateFormatter.lenient = YES;
     
     return [dateFormatter dateFromString:dateString];
-}
-
-#pragma mark - 获取当前时区(不使用夏时制)
-+ (NSTimeZone *)currentTimeZone {
-    // 当前时区
-    NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
-    // 当前时区相对于GMT(零时区)的偏移秒数
-    NSInteger interval = [localTimeZone secondsFromGMTForDate:[NSDate date]];
-    // 当前时区(不使用夏时制)：由偏移量获得对应的NSTimeZone对象
-    // 注意：一些夏令时时间 NSString 转 NSDate 时，默认会导致 NSDateFormatter 格式化失败，返回 null
-    return [NSTimeZone timeZoneForSecondsFromGMT:interval];
-}
-
-#pragma mark - NSDate 转 NSString（已弃用）
-+ (NSString *)br_getDateString:(NSDate *)date format:(NSString *)format {
-    return [self br_stringFromDate:date dateFormat:format];
-}
-
-#pragma mark - NSString 转 NSDate（已弃用）
-+ (NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format {
-    return [self br_dateFromString:dateString dateFormat:format];
 }
 
 @end

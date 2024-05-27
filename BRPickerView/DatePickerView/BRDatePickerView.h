@@ -117,14 +117,11 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
-/** 首行添加【自定义字符串】，配合 selectValue 可设置默认选中 */
+/** 首行添加 自定义字符串，配合 selectValue 可设置默认选中 */
 @property (nullable, nonatomic, copy) NSString *firstRowContent;
 
-/** 末行添加【自定义字符串】，配合 selectValue 可设置默认选中 */
+/** 末行添加 自定义字符串（如：至今），配合 selectValue 可设置默认选中 */
 @property (nullable, nonatomic, copy) NSString *lastRowContent;
-
-/** 最后一行，添加【自定义字符串】 */
-@property (nullable, nonatomic, copy) NSString *addCustomString DEPRECATED_MSG_ATTRIBUTE("Use 'lastRowContent' instead");
 
 /** 滚轮上日期数据排序是否降序，默认为 NO（升序）*/
 @property (nonatomic, assign, getter=isDescending) BOOL descending;
@@ -168,8 +165,15 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 /** 设置时区，默认为当前时区 */
 @property (nullable, nonatomic, copy) NSTimeZone *timeZone;
 
-/** default is [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker` */
-@property (nonatomic, copy) NSCalendar *calendar;
+/** 
+ *  日历对象：默认是 [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker`
+ *
+ *  // 创建日历对象，可以指定日历的算法（公历/阳历）
+ *  calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+ *  // 设置农历日期. for `UIDatePicker`, ignored otherwise.
+ *  calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+ */
+@property (nullable, nonatomic, copy) NSCalendar *calendar;
 
 /** 指定不允许选择的日期 */
 @property (nullable, nonatomic, copy) NSArray <NSDate *> *nonSelectableDates;

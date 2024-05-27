@@ -142,8 +142,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     self.maxDate = [self handlerMaxDate:self.maxDate];
     
     BOOL minMoreThanMax = [self br_compareDate:self.minDate targetDate:self.maxDate dateFormat:self.dateFormatter] == NSOrderedDescending;
-    NSAssert(!minMoreThanMax, @"最小日期不能大于最大日期！");
     if (minMoreThanMax) {
+        BRErrorLog(@"最小日期不能大于最大日期！");
         // 如果最小日期大于了最大日期，就忽略两个值
         self.minDate = [NSDate distantPast]; // 0000-12-30 00:00:00 +0000
         self.maxDate = [NSDate distantFuture]; // 4001-01-01 00:00:00 +0000
@@ -1640,8 +1640,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         }
         
         self.datePicker.calendar = self.calendar;
-        // 设置农历日期
-        //self.datePicker.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese];
         
         if (self.minDate) {
             self.datePicker.minimumDate = self.minDate;
@@ -1803,8 +1801,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
 }
 
-- (void)setAddCustomString:(NSString *)addCustomString {
-    self.lastRowContent = addCustomString;
+- (void)setTimeZone:(NSTimeZone *)timeZone {
+    _timeZone = timeZone;
+    // 同步时区设置
+    [NSDate br_setTimeZone:timeZone];
 }
 
 #pragma mark - getter 方法

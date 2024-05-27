@@ -95,7 +95,6 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
                 date = [self br_dateFromString:self.selectValue dateFormat:dateFormat];
                 if (!date) {
                     BRErrorLog(@"参数异常！字符串 selectValue 的正确格式是：%@", dateFormat);
-                    NSAssert(date, @"参数异常！请检查字符串 selectValue 的格式");
                     date = [NSDate date]; // 默认值参数格式错误时，重置/忽略默认值，防止在 Release 环境下崩溃！
                 }
                 if (self.pickerMode == BRDatePickerModeMDHM) {
@@ -152,12 +151,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 
 #pragma mark - NSDate 转 NSString
 - (NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat {
-    return [NSDate br_stringFromDate:date dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
+    return [NSDate br_stringFromDate:date dateFormat:dateFormat language:self.pickerStyle.language];
 }
 
 #pragma mark - NSString 转 NSDate
 - (NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat {
-    return [NSDate br_dateFromString:dateString dateFormat:dateFormat timeZone:self.timeZone language:self.pickerStyle.language];
+    return [NSDate br_dateFromString:dateString dateFormat:dateFormat language:self.pickerStyle.language];
 }
 
 #pragma mark - 比较两个日期大小（可以指定比较级数，即按指定格式进行比较）

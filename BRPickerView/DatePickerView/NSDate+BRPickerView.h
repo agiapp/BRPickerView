@@ -10,8 +10,19 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 @interface NSDate (BRPickerView)
+
+/// ---------------- 设置【日历对象】和【时区】 ----------------
+/** 设置日历对象 */
++ (void)br_setCalendar:(NSCalendar *)calendar;
+/** 获取日历对象 */
++ (NSCalendar *)br_getCalendar;
+
+/** 设置时区 */
++ (void)br_setTimeZone:(NSTimeZone *)timeZone;
+/** 获取当前时区 */
++ (NSTimeZone *)br_getTimeZone;
+
 /// 获取指定date的详细信息
 @property (readonly) NSInteger br_year;         // 年
 @property (readonly) NSInteger br_month;        // 月
@@ -27,14 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 获取中文星期字符串 */
 @property (nullable, nonatomic, readonly, copy) NSString *br_weekdayString;
 
-/** 获取日历单例对象 */
-+ (NSCalendar *)br_calendar;
-
-
 /// ---------------- 创建 date ----------------
-/** 通过 NSDateComponents对象 来创建 NSDate对象（可以设置时区） */
-+ (nullable NSDate *)br_setDateFromComponents:(NSDateComponents *)components timeZone:(NSTimeZone *)timeZone;
-
 /** yyyy */
 + (nullable NSDate *)br_setYear:(NSInteger)year;
 
@@ -98,30 +102,19 @@ NS_ASSUME_NONNULL_BEGIN
 /**  获取 日期加上/减去某个月数后的新日期 */
 - (nullable NSDate *)br_getNewDateToMonths:(NSTimeInterval)months;
 
-/** NSDate 转 NSString */
+/** NSDate 转 NSString（使用系统默认 时区 和 语言）*/
 + (nullable NSString *)br_stringFromDate:(NSDate *)date dateFormat:(NSString *)dateFormat;
 /** NSDate 转 NSString */
 + (nullable NSString *)br_stringFromDate:(NSDate *)date
-                     dateFormat:(NSString *)dateFormat
-                       timeZone:(nullable NSTimeZone *)timeZone
-                       language:(nullable NSString *)language;
+                              dateFormat:(NSString *)dateFormat
+                                language:(nullable NSString *)language;
 
-
-/** NSString 转 NSDate */
+/** NSString 转 NSDate（使用系统默认 时区 和 语言）*/
 + (nullable NSDate *)br_dateFromString:(NSString *)dateString dateFormat:(NSString *)dateFormat;
 /** NSString 转 NSDate */
 + (nullable NSDate *)br_dateFromString:(NSString *)dateString
-                   dateFormat:(NSString *)dateFormat
-                     timeZone:(nullable NSTimeZone *)timeZone
-                     language:(nullable NSString *)language;
-
-
-/** NSDate 转 NSString（已弃用） */
-+ (nullable NSString *)br_getDateString:(NSDate *)date format:(NSString *)format DEPRECATED_MSG_ATTRIBUTE("Use 'br_stringFromDate:dateFormat:' instead");
-
-/** NSString 转 NSDate（已弃用） */
-+ (nullable NSDate *)br_getDate:(NSString *)dateString format:(NSString *)format DEPRECATED_MSG_ATTRIBUTE("Use 'br_dateFromString:dateFormat:' instead");
-
+                            dateFormat:(NSString *)dateFormat
+                              language:(nullable NSString *)language;
 
 @end
 
