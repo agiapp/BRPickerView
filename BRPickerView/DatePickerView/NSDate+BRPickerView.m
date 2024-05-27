@@ -252,6 +252,14 @@ static const NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMont
     return [self br_setYear:year month:0 day:0 hour:0 minute:0 second:0 weekOfMonth:0 weekOfYear:0 quarter:quarter];
 }
 
+- (NSDate *)br_setTwelveHour:(NSInteger)hour {
+    NSDateComponents *components = [NSDate br_componentsFromDate:self];
+    if (hour >= 0) {
+        components.hour = hour;
+    }
+    return [NSDate br_dateFromComponents:components];
+}
+
 #pragma mark - 获取某个月的天数（通过年月求每月天数）
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month {
     BOOL isLeapYear = year % 4 == 0 ? (year % 100 == 0 ? (year % 400 == 0 ? YES : NO) : YES) : NO;

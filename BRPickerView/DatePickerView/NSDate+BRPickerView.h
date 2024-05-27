@@ -77,6 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** yyyy-qq */
 + (nullable NSDate *)br_setYear:(NSInteger)year quarter:(NSInteger)quarter;
 
+/** 设置12小时制时的hour值 */
+- (NSDate *)br_setTwelveHour:(NSInteger)hour;
 
 /** 获取某个月的天数（通过年月求每月天数）*/
 + (NSUInteger)br_getDaysInYear:(NSInteger)year month:(NSInteger)month;

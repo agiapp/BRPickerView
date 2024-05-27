@@ -147,6 +147,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 如果最小日期大于了最大日期，就忽略两个值
         self.minDate = [NSDate distantPast]; // 0000-12-30 00:00:00 +0000
         self.maxDate = [NSDate distantFuture]; // 4001-01-01 00:00:00 +0000
+        
+        // 如果是12小时制，hour的最小值为1；hour的最大值为12
+        if (self.isTwelveHourMode) {
+            [self.minDate br_setTwelveHour:1];
+            [self.maxDate br_setTwelveHour:12];
+        }
     }
     
     // 3.默认选中的日期
@@ -636,7 +642,16 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.pickerMode == BRDatePickerModeYMDH && self.isShowAMAndPM) {
         self.hourIndex = selectDate.br_hour < 12 ? 0 : 1;
     } else {
-        self.hourIndex = [self getIndexWithArray:self.hourArr object:[self getMDHMSNumber:selectDate.br_hour]];
+        NSInteger hour = selectDate.br_hour;
+        // 如果是12小时制，hour的最小值为1；hour的最大值为12
+        if (self.isTwelveHourMode) {
+            if (hour < 1) {
+                hour = 1;
+            } else if (hour > 12) {
+                hour = hour - 12;
+            }
+        }
+        self.hourIndex = [self getIndexWithArray:self.hourArr object:[self getMDHMSNumber:hour]];
     }
     self.minuteIndex = [self getIndexWithArray:self.minuteArr object:[self getMDHMSNumber:selectDate.br_minute]];
     self.secondIndex = [self getIndexWithArray:self.secondArr object:[self getMDHMSNumber:selectDate.br_second]];

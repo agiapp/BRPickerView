@@ -35,6 +35,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
             minDate = [NSDate distantPast]; // 遥远的过去的一个时间点
         }
     }
+    
+    // 如果是12小时制，hour的最小值为1
+    if (self.isTwelveHourMode) {
+        [minDate br_setTwelveHour:1];
+    }
+    
     return minDate;
 }
 
@@ -55,6 +61,12 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
             maxDate = [NSDate distantFuture]; // 遥远的未来的一个时间点
         }
     }
+    
+    // 如果是12小时制，hour的最大值为12
+    if (self.isTwelveHourMode) {
+        [maxDate br_setTwelveHour:12];
+    }
+    
     return maxDate;
 }
 
@@ -268,13 +280,23 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
         return @[[self getAMText], [self getPMText]];
     }
     
-    NSInteger startHour = 0;
-    NSInteger endHour = 23;
+    NSInteger startHour = self.isTwelveHourMode ? 1 : 0;
+    NSInteger endHour = self.isTwelveHourMode ? 12 : 23;
     if (year == self.minDate.br_year && month == self.minDate.br_month && day == self.minDate.br_day) {
         startHour = self.minDate.br_hour;
+        if (self.isTwelveHourMode) {
+            if (startHour < 1 || startHour > 12) {
+                startHour = 1;
+            }
+        }
     }
     if (year == self.maxDate.br_year && month == self.maxDate.br_month && day == self.maxDate.br_day) {
         endHour = self.maxDate.br_hour;
+        if (self.isTwelveHourMode) {
+            if (endHour < 1 || endHour > 12) {
+                endHour = 12;
+            }
+        }
     }
     NSMutableArray *tempArr = [[NSMutableArray alloc]init];
     for (NSInteger i = startHour; i <= endHour; i++) {

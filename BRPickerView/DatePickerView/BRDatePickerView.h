@@ -132,6 +132,9 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 /** 选择器上数字是否带有前导零，默认为 NO（如：无前导零:2020-1-1；有前导零:2020-01-01）*/
 @property (nonatomic, assign, getter=isNumberFullName) BOOL numberFullName;
 
+/** 是否为12小时制，默认为NO */
+@property (nonatomic, assign, getter=isTwelveHourMode) BOOL twelveHourMode;
+
 /** 设置分的时间间隔，默认为1（范围：1 ~ 30）*/
 @property (nonatomic, assign) NSInteger minuteInterval;
 
