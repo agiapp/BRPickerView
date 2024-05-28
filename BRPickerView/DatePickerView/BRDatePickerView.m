@@ -1620,19 +1620,18 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     if (self.style == BRDatePickerStyleSystem) {
         // 2.刷新选择器（重新设置相关值）
         self.datePicker.datePickerMode = _datePickerMode;
+        
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130400 // 编译时检查SDK版本，iOS SDK 13.4 以后版本的处理
         if (@available(iOS 13.4, *)) {
+            CGRect rect = self.datePicker.frame;
             // 适配 iOS14 以后 UIDatePicker 的显示样式
+            // 注意：设置 preferredDatePickerStyle 的样式后，需要重新设置 UIDatePicker 的 frame；因为设置该样式会导致 frame 发生变化，显示会有问题
             self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
-            // 设置 datePicker 的 frame（在iOS14里，UIDatePicker 的 frame 赋值必须放在 datePickerMode 赋值之后， 否则 frame 不会生效）
-            CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
-            self.datePicker.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
-        } else
-#endif
-        {
-            // Fallback on earlier versions
+            // 重新设置 datePicker 的 frame
+            self.datePicker.frame = rect;
         }
-
+#endif
+        
         // 设置该 UIDatePicker 的国际化 Locale
         self.datePicker.locale = [[NSLocale alloc]initWithLocaleIdentifier:self.pickerStyle.language];
         if (self.timeZone) {
