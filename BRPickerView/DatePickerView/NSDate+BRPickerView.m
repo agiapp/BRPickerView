@@ -47,7 +47,7 @@ static NSTimeZone *_timeZone = nil;
 #pragma mark - 获取当前时区
 + (NSTimeZone *)br_getTimeZone {
     if (!_timeZone) {
-        // 当前时区(不使用夏时制)
+        // 当前时区
         NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
         // 当前时区相对于GMT(零时区)的偏移秒数
         NSInteger interval = [localTimeZone secondsFromGMTForDate:[NSDate date]];

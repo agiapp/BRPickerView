@@ -168,9 +168,7 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 /** 
  *  日历对象：默认是 [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker`
  *
- *  // 创建日历对象，可以指定日历的算法（公历/阳历）
- *  calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
- *  // 设置农历日期. for `UIDatePicker`, ignored otherwise.
+ *  // 自定义日历对象，可以指定日历的算法，如：设置中国农历（阴历）日期. for `UIDatePicker`, ignored otherwise.
  *  calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese];
  */
 @property (nullable, nonatomic, copy) NSCalendar *calendar;
