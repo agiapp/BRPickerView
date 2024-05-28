@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.8.5` 。
+- 当前最新版本为： `2.8.6` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -318,6 +318,12 @@ stringPickerView.pickerStyle = customStyle;
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2024-05-28（V2.8.6）
+
+- 解决已知问题：[#308](https://github.com/agiapp/BRPickerView/issues/308) 、[#309](https://github.com/agiapp/BRPickerView/issues/309) 
+- 时间选择器新增 `twelveHourMode` 属性，支持设置12小时制
+- 支持 Swift Package Manager
 
 #### 2024-04-28（V2.8.5）
 
