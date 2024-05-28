@@ -32,8 +32,6 @@ static NSTimeZone *_timeZone = nil;
     if (!_sharedCalendar) {
         // 创建日历对象，指定日历的算法（公历/阳历）
         _sharedCalendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        // NSCalendar 设置时区
-        //_sharedCalendar.timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"];
     }
     return _sharedCalendar;
 }
@@ -41,7 +39,8 @@ static NSTimeZone *_timeZone = nil;
 #pragma mark - 设置时区
 + (void)br_setTimeZone:(NSTimeZone *)timeZone {
     _timeZone = timeZone;
-    _sharedCalendar.timeZone = timeZone;
+    // 同步日历对象时区设置
+    [self br_getCalendar].timeZone = timeZone;
 }
 
 #pragma mark - 获取当前时区

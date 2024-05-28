@@ -162,14 +162,16 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 /** 显示上午和下午，默认为 NO. for `BRDatePickerModeYMDH`, ignored otherwise. */
 @property (nonatomic, assign, getter=isShowAMAndPM) BOOL showAMAndPM;
 
-/** 设置时区，默认为当前时区 */
+/** 
+ *  设置时区，默认为当前时区
+ *  如：timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"]; // 如：设置时区为 美国纽约
+ *  特别提示：如果有设置自定义时区，需要把有使用 NSDate+BRPickerView 分类中方法的代码（如：设置minDate、maxDate等） 放在设置时区代码的后面，目的是同步时区设置到 NSDate+BRPickerView 分类中
+ */
 @property (nullable, nonatomic, copy) NSTimeZone *timeZone;
 
 /** 
- *  日历对象：默认是 [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker`
- *
- *  // 自定义日历对象，可以指定日历的算法，如：设置中国农历（阴历）日期. for `UIDatePicker`, ignored otherwise.
- *  calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+ *  设置日历对象，可以指定日历的算法。default is [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker`, ignored otherwise.
+ *  如：calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese]; // 设置中国农历（阴历）日期
  */
 @property (nullable, nonatomic, copy) NSCalendar *calendar;
 
