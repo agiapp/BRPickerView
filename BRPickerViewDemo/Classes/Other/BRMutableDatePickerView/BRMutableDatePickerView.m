@@ -22,7 +22,7 @@
     BOOL _isAdjustSelectRow; // 设置minDate时，调整日期联动的选择(解决日期选择器联动不正确的问题)
 }
 // 蒙层视图
-@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, strong) UIView *maskBgView;
 // 弹出背景视图
 @property (nonatomic, strong) UIView *alertView;
 // 标题栏背景视图
@@ -74,7 +74,7 @@
     // 设置子视图的宽度随着父视图变化
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self addSubview:self.maskView];
+    [self addSubview:self.maskBgView];
     
     [self addSubview:self.alertView];
     [self.alertView addSubview:self.titleBarView];
@@ -85,17 +85,17 @@
 }
 
 #pragma mark - 蒙层视图
-- (UIView *)maskView {
-    if (!_maskView) {
-        _maskView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-        _maskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
+- (UIView *)maskBgView {
+    if (!_maskBgView) {
+        _maskBgView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        _maskBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
         // 设置子视图的大小随着父视图变化
-        _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _maskView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskView:)];
-        [_maskView addGestureRecognizer:myTap];
+        _maskBgView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _maskBgView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskBgView:)];
+        [_maskBgView addGestureRecognizer:myTap];
     }
-    return _maskView;
+    return _maskBgView;
 }
 
 #pragma mark - 弹框视图
@@ -276,7 +276,7 @@
 }
 
 #pragma mark - 点击蒙层视图事件
-- (void)didTapMaskView:(UITapGestureRecognizer *)sender {
+- (void)didTapMaskBgView:(UITapGestureRecognizer *)sender {
     [self dismiss];
 }
 
@@ -305,7 +305,7 @@
     rect.origin.y = self.bounds.size.height;
     self.alertView.frame = rect;
     // 弹出动画
-    self.maskView.alpha = 1;
+    self.maskBgView.alpha = 1;
     [UIView animateWithDuration:0.3f animations:^{
         CGRect rect = self.alertView.frame;
         rect.origin.y -= kPickerViewHeight + kTitleBarViewHeight + BR_BOTTOM_MARGIN;
@@ -320,7 +320,7 @@
         CGRect rect = self.alertView.frame;
         rect.origin.y += kPickerViewHeight + kTitleBarViewHeight + BR_BOTTOM_MARGIN;
         self.alertView.frame = rect;
-        self.maskView.alpha = 0;
+        self.maskBgView.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
