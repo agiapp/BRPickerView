@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.8.7` 。
+- 当前最新版本为： `2.8.8` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -35,7 +35,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 # 系统要求
 
-- iOS 8.0+
+- iOS 9.0+
 - ARC
 
 # 使用
@@ -318,6 +318,12 @@ stringPickerView.pickerStyle = customStyle;
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2024-07-02（V2.8.8）
+
+- [#310](https://github.com/agiapp/BRPickerView/issues/310) ：更新本地省市区数据源数据
+
+- [#314](https://github.com/agiapp/BRPickerView/issues/314) ：修改maskView视图命名，解决因命名冲突在iOS 18 上出现的崩溃问题
 
 #### 2024-05-28（V2.8.7）
 
