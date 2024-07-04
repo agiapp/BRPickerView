@@ -53,6 +53,8 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCity
 
 /**
  *  地区数据源（不传或为nil，默认就获取本地 BRCity.json 文件的数据）
+ *  本地 BRCity.json 文件的数据来源于高德地图：https://restapi.amap.com/v3/config/district?key=xxxxxxxxxxxxx&subdistrict=3
+ *
  *  1.可以传 JSON数组，要注意 层级结构 和 key 要与 BRCity.json 保持一致
  *  2.可以传 模型数组(NSArray <BRProvinceModel *> * 类型)，自己解析数据源 只需要注意层级结构就行
  */
