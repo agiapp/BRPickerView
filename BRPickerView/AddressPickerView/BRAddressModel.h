@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import <Foundation/Foundation.h>
 
@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *code;
 /** 省的名称 */
 @property (nullable, nonatomic, copy) NSString *name;
-/** 省的索引 */
-@property (nonatomic, assign) NSInteger index;
 /** 城市数组 */
 @property (nullable, nonatomic, copy) NSArray *citylist;
+/** 记录省选择的索引位置 */
+@property (nonatomic, assign) NSInteger index;
 
 @end
 
@@ -30,10 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *code;
 /** 市的名称 */
 @property (nullable, nonatomic, copy) NSString *name;
-/** 市的索引 */
-@property (nonatomic, assign) NSInteger index;
 /** 地区数组 */
 @property (nullable, nonatomic, copy) NSArray *arealist;
+/** 记录市选择的索引位置 */
+@property (nonatomic, assign) NSInteger index;
 
 @end
 
@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *code;
 /** 区的名称 */
 @property (nullable, nonatomic, copy) NSString *name;
-/** 区的索引 */
+/** 记录区选择的索引位置 */
 @property (nonatomic, assign) NSInteger index;
 
 @end

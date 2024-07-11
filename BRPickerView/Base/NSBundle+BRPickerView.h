@@ -5,7 +5,7 @@
 //  Created by renbo on 2019/10/30.
 //  Copyright © 2019 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import <Foundation/Foundation.h>
 
@@ -15,9 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 获取 BRPickerView.bundle
 + (instancetype)br_pickerBundle;
-
-/// 获取城市JSON数据
-+ (NSArray *)br_addressJsonArray;
 
 /// 获取国际化后的文本
 /// @param key 代表 Localizable.strings 文件中 key-value 中的 key。

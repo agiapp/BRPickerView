@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRBaseView.h"
 #import "BRResultModel.h"
@@ -76,6 +76,9 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
 @property (nullable, nonatomic, copy) BRStringResultModelBlock changeModelBlock;
 /** 滚动选择时触发的回调【多列】 */
 @property (nullable, nonatomic, copy) BRStringResultModelArrayBlock changeModelArrayBlock;
+
+/** 判断选择器是否处于滚动中。可以用于解决快速滑动选择器，在滚动结束前秒选确定按钮，出现显示不对的问题。*/
+@property (nonatomic, readonly, assign, getter=isRolling) BOOL rolling;
 
 /**
  *  最大层级数(列数) for `BRStringPickerComponentLinkage`, ignored otherwise.

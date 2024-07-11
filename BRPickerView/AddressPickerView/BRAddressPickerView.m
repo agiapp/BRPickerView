@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRAddressPickerView.h"
 #import "NSBundle+BRPickerView.h"
@@ -31,6 +31,10 @@
 @property(nonatomic, assign) NSInteger cityIndex;
 // 记录区选中的位置
 @property(nonatomic, assign) NSInteger areaIndex;
+
+// 记录滚动中的位置
+@property(nonatomic, assign) NSInteger rollingComponent;
+@property(nonatomic, assign) NSInteger rollingRow;
 
 @property (nonatomic, copy) NSArray <NSString *>* mSelectValues;
 
@@ -89,7 +93,7 @@
         }
     } else {
         // 如果外部没有传入地区数据源，就使用本地的数据源
-        NSArray *dataSource = [NSBundle br_addressJsonArray];
+        NSArray *dataSource = [self br_addressJsonArray];
         
         if (!dataSource || dataSource.count == 0) {
             return;
@@ -100,6 +104,23 @@
     
     // 设置默认值
     [self handlerDefaultSelectValue];
+}
+
+#pragma mark - 获取城市JSON数据
+- (NSArray *)br_addressJsonArray {
+    static NSArray *cityArray = nil;
+    if (!cityArray) {
+        // 获取 BRAddressPickerView.bundle
+        NSBundle *containnerBundle = [NSBundle bundleForClass:[BRAddressPickerView class]];
+        NSString *bundlePath = [containnerBundle pathForResource:@"BRAddressPickerView" ofType:@"bundle"];
+        NSBundle *addressPickerBundle = [NSBundle bundleWithPath:bundlePath];
+        
+        // 获取bundle中的JSON文件
+        NSString *filePath = [addressPickerBundle pathForResource:@"BRCity" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        cityArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    }
+    return cityArray;
 }
 
 #pragma mark - 获取模型数组
@@ -239,7 +260,7 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1.设置 pickerView 的列数
+// 1.返回组件数量
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.pickerMode) {
         case BRAddressPickerModeProvince:
@@ -257,7 +278,7 @@
     }
 }
 
-// 2.设置 pickerView 每列的行数
+// 2.返回每个组件的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
         // 返回省个数
@@ -304,7 +325,39 @@
     // 2.设置选择器中间选中行的样式
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
     
+    // 3.记录选择器滚动过程中选中的列和行
+    // 获取选择器组件滚动中选中的行
+    NSInteger selectRow = [pickerView selectedRowInComponent:component];
+    if (selectRow >= 0) {
+        self.rollingComponent = component;
+        self.rollingRow = selectRow;
+    }
+    
     return label;
+}
+
+// 获取选择器是否滚动中状态
+- (BOOL)getRollingStatus:(UIView *)view {
+    if ([view isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)view;
+        if (scrollView.dragging || scrollView.decelerating) {
+            // 如果 UIPickerView 正在拖拽或正在减速，返回YES
+            return YES;
+        }
+    }
+    
+    for (UIView *subView in view.subviews) {
+        if ([self getRollingStatus:subView]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+// 选择器是否正在滚动
+- (BOOL)isRolling {
+    return [self getRollingStatus:self.pickerView];
 }
 
 // 4.滚动 pickerView 执行的回调方法
@@ -396,6 +449,16 @@
     return self.pickerStyle.rowHeight;
 }
 
+// 设置列宽
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
+    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
+    if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
+        return self.pickerStyle.columnWidth;
+    }
+    return columnWidth;
+}
+
 #pragma mark - 重写父类方法
 - (void)reloadData {
     // 1.处理数据源
@@ -428,6 +491,10 @@
         self.pickerView.frame = CGRectMake(0, pickerHeaderViewHeight, view.bounds.size.width, view.bounds.size.height - pickerHeaderViewHeight - pickerFooterViewHeight);
         [self addSubview:self.pickerView];
     } else {
+        // iOS16：重新设置 pickerView 高度（解决懒加载设置frame不生效问题）
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        self.pickerView.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
+        
         [self.alertView addSubview:self.pickerView];
     }
     
@@ -440,10 +507,16 @@
     [self reloadData];
     
     __weak typeof(self) weakSelf = self;
+    // 点击确定按钮的回调：点击确定按钮后，执行这个block回调
     self.doneBlock = ^{
-        // 点击确定按钮后，执行block回调
-        [weakSelf removePickerFromView:view];
-        
+        if (weakSelf.isRolling) {
+            NSLog(@"选择器滚动还未结束");
+            // 问题：如果滚动选择器过快，然后在滚动过程中快速点击确定按钮，会导致 didSelectRow 代理方法还没有执行，出现没有选中的情况。
+            // 解决：这里手动处理一下，如果滚动还未结束，强制执行一次 didSelectRow 代理方法，选择当前滚动的行。
+            [weakSelf pickerView:weakSelf.pickerView didSelectRow:weakSelf.rollingRow inComponent:weakSelf.rollingComponent];
+        }
+    
+        // 执行选择结果回调
         if (weakSelf.resultBlock) {
             weakSelf.resultBlock(weakSelf.selectProvinceModel, weakSelf.selectCityModel, weakSelf.selectAreaModel);
         }

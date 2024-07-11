@@ -5,13 +5,13 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRBaseView.h"
 
 @interface BRBaseView ()
 // 蒙层视图
-@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, strong) UIView *maskBgView;
 // 标题栏背景视图
 @property (nonatomic, strong) UIView *titleBarView;
 // 左边取消按钮
@@ -36,7 +36,7 @@
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     if (!self.pickerStyle.hiddenMaskView) {
-        [self addSubview:self.maskView];
+        [self addSubview:self.maskBgView];
     }
     
     [self addSubview:self.alertView];
@@ -99,22 +99,22 @@
     
     if (_alertView && self.pickerStyle.topCornerRadius > 0) {
         // 设置顶部圆角
-        [self br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
+        [BRPickerStyle br_setView:_alertView roundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:self.pickerStyle.topCornerRadius];
     }
 }
 
 #pragma mark - 蒙层视图
-- (UIView *)maskView {
-    if (!_maskView) {
-        _maskView = [[UIView alloc]initWithFrame:self.keyView.bounds];
-        _maskView.backgroundColor = self.pickerStyle.maskColor;
+- (UIView *)maskBgView {
+    if (!_maskBgView) {
+        _maskBgView = [[UIView alloc]initWithFrame:self.keyView.bounds];
+        _maskBgView.backgroundColor = self.pickerStyle.maskColor;
         // 设置子视图的大小随着父视图变化
-        _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _maskView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskView:)];
-        [_maskView addGestureRecognizer:myTap];
+        _maskBgView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _maskBgView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskBgView:)];
+        [_maskBgView addGestureRecognizer:myTap];
     }
-    return _maskView;
+    return _maskBgView;
 }
 
 #pragma mark - 弹框视图
@@ -234,7 +234,7 @@
 }
 
 #pragma mark - 点击蒙层视图事件
-- (void)didTapMaskView:(UITapGestureRecognizer *)sender {
+- (void)didTapMaskBgView:(UITapGestureRecognizer *)sender {
     [self removePickerFromView:nil];
     if (self.cancelBlock) {
         self.cancelBlock();
@@ -251,6 +251,7 @@
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickDoneBtn {
+    [self removePickerFromView:nil];
     if (self.doneBlock) {
         self.doneBlock();
     }
@@ -299,17 +300,29 @@
         }
     
         [self.keyView addSubview:self];
+        
+        // iOS16：重新设置 alertView 高度（解决懒加载设置frame不生效问题）
+        CGFloat accessoryViewHeight = 0;
+        if (self.pickerHeaderView) {
+            accessoryViewHeight += self.pickerHeaderView.bounds.size.height;
+        }
+        if (self.pickerFooterView) {
+            accessoryViewHeight += self.pickerFooterView.bounds.size.height;
+        }
+        CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + self.pickerStyle.paddingBottom + accessoryViewHeight;
+        self.alertView.frame = CGRectMake(0, self.keyView.bounds.size.height - height, self.keyView.bounds.size.width, height);
+        
         // 动画前初始位置
         CGRect rect = self.alertView.frame;
         rect.origin.y = self.bounds.size.height;
         self.alertView.frame = rect;
         // 弹出动画
         if (!self.pickerStyle.hiddenMaskView) {
-            self.maskView.alpha = 0;
+            self.maskBgView.alpha = 0;
         }
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.3f animations:^{
             if (!self.pickerStyle.hiddenMaskView) {
-                self.maskView.alpha = 1;
+                self.maskBgView.alpha = 1;
             }
             CGFloat alertViewHeight = self.alertView.bounds.size.height;
             CGRect rect = self.alertView.frame;
@@ -325,13 +338,13 @@
         [self removeFromSuperview];
     } else {
         // 关闭动画
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.2f animations:^{
             CGFloat alertViewHeight = self.alertView.bounds.size.height;
             CGRect rect = self.alertView.frame;
             rect.origin.y += alertViewHeight;
             self.alertView.frame = rect;
             if (!self.pickerStyle.hiddenMaskView) {
-                self.maskView.alpha = 0;
+                self.maskBgView.alpha = 0;
             }
         } completion:^(BOOL finished) {
             [self removeFromSuperview];
@@ -368,15 +381,6 @@
         _keyView = BRGetKeyWindow();
     }
     return _keyView;
-}
-
-#pragma mark - 设置 view 的部分圆角
-// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
-- (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
-    UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
-    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
-    [shape setPath:rounded.CGPath];
-    view.layer.mask = shape;
 }
 
 #pragma mark - setter 方法（支持动态设置标题）

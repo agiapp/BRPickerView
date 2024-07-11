@@ -4,14 +4,14 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 【说明】
 
-- 当前最新版本为： `2.7.6` 。
+- 当前最新版本为： `2.8.8` 。
 - 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-| ![效果图1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/a.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/b.gif?raw=true) |
+| ![效果图1](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/a.gif?raw=true) | ![效果图2](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/b.gif?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                     框架Demo运行效果图1                      |                     框架Demo运行效果图2                      |
 
@@ -35,7 +35,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期�
 
 # 系统要求
 
-- iOS 8.0+
+- iOS 9.0+
 - ARC
 
 # 使用
@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // ----- 以下11种是自定义样式 -----
+    // ----- 以下14种是自定义样式 -----
     /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
     BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
@@ -79,7 +79,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】时分 */
     BRDatePickerModeHM,
     /** 【mm:ss】分秒 */
-    BRDatePickerModeMS
+    BRDatePickerModeMS,
+    
+    /** 【yyyy-qq】年季度 */
+    BRDatePickerModeYQ,
+    /** 【yyyy-MM-ww】年月周 */
+    BRDatePickerModeYMW,
+    /** 【yyyy-ww】年周 */
+    BRDatePickerModeYW
 };
 ```
 
@@ -114,44 +121,44 @@ datePickerView.pickerStyle = customStyle;
 
 - 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
 
-| ![样式1：BRDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type1.png?raw=true) | ![样式2：BRDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type2.png?raw=true) |
+| ![样式1：BRDatePickerModeTime](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type1.png?raw=true) | ![样式2：BRDatePickerModeDate](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type2.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                 样式1：BRDatePickerModeDate                  |              样式2：BRDatePickerModeDateAndTime              |
 |                                                              |                                                              |
-| ![样式3：BRDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type3.png?raw=true) | ![样式4：BRDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type4.png?raw=true) |
+| ![样式3：BRDatePickerModeDateAndTime](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type3.png?raw=true) | ![样式4：BRDatePickerModeCountDownTimer](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type4.png?raw=true) |
 |                 样式3：BRDatePickerModeTime                  |            样式4：BRDatePickerModeCountDownTimer             |
 
 - 以下11种样式是使用 UIPickerView 类进行封装的。
 
-| ![样式5：BRDatePickerModeYMDHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type5.png?raw=true) | ![样式6：BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type6.png?raw=true) |
+| ![样式5：BRDatePickerModeYMDHMS](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type5.png?raw=true) | ![样式6：BRDatePickerModeYMDHM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type6.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                样式5：BRDatePickerModeYMDHMS                 |                 样式6：BRDatePickerModeYMDHM                 |
 |                                                              |                                                              |
-| ![样式7：BRDatePickerModeYMDH](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type7.png?raw=true) | ![样式8：BRDatePickerModeMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type8.png?raw=true) |
+| ![样式7：BRDatePickerModeYMDH](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type7.png?raw=true) | ![样式8：BRDatePickerModeMDHM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type8.png?raw=true) |
 |                 样式7：BRDatePickerModeYMDH                  |                 样式8：BRDatePickerModeMDHM                  |
 |                                                              |                                                              |
-| ![样式9：BRDatePickerModeYMDE](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type9.png?raw=true) | ![样式10：BRDatePickerModeYMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type10.png?raw=true) |
+| ![样式9：BRDatePickerModeYMDE](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type9.png?raw=true) | ![样式10：BRDatePickerModeYMD](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type10.png?raw=true) |
 |                  样式9：BRDatePickerModeYMD                  |                  样式10：BRDatePickerModeYM                  |
 |                                                              |                                                              |
-| ![样式11：BRDatePickerModeYM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type11.png?raw=true) | ![样式12：BRDatePickerModeY](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type12.png?raw=true) |
+| ![样式11：BRDatePickerModeYM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type11.png?raw=true) | ![样式12：BRDatePickerModeY](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type12.png?raw=true) |
 |                  样式11：BRDatePickerModeY                   |                  样式12：BRDatePickerModeMD                  |
 |                                                              |                                                              |
-| ![样式13：BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
+| ![样式13：BRDatePickerModeMD](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
 |                 样式13：BRDatePickerModeHMS                  |                  样式14：BRDatePickerModeHM                  |
 |                                                              |                                                              |
-| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type15.png?raw=true) |                                                              |
+| ![样式15：BRDatePickerModeHM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type15.png?raw=true) |                                                              |
 |                  样式15：BRDatePickerModeMS                  |                                                              |
 
 - 其它日期样式
 
-| ![设置显示星期](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week1.png?raw=true) | ![设置显示星期](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week2.png?raw=true) |
+| ![设置显示星期](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week1.png?raw=true) | ![设置显示星期](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 设置显示星期：datePickerView.showWeek = YES;                 | 设置显示星期：datePickerView.showWeek = YES;                 |
 |                                                              |                                                              |
-| ![设置添加至今](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![设置显示今天](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
+| ![设置添加至今](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![设置显示今天](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 |                                                              |                                                              |
-| ![日期单位单行显示样式](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) | ![自定义选择器选中行颜色](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_row.png?raw=true) |
+| ![日期单位单行显示样式](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) | ![自定义选择器选中行颜色](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_row.png?raw=true) |
 | 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeOnlyCenter; | 设置选择器中间选中行的背景颜色：selectRowColor               |
 
 ```objective-c
@@ -163,17 +170,17 @@ customStyle.selectRowTextColor = [UIColor redColor];
 datePickerView.pickerStyle = customStyle;
 ```
 
-| ![英式日期年月日](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en1.png?raw=true) | ![英式日期年月](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en2.png?raw=true) |
+| ![英式日期年月日](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en1.png?raw=true) | ![英式日期年月](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 样式：BRDatePickerModeYMD （默认非中文环境显示英式日期）     | 样式：BRDatePickerModeYM （默认非中文环境显示英式日期）      |
 
 - 几种常见的弹框样式模板
 
-| ![模板样式1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style1.png?raw=true) | ![模板样式2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style2.png?raw=true) |
+| ![模板样式1](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/template_style1.png?raw=true) | ![模板样式2](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/template_style2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 弹框样式模板1：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]]; | 弹框样式模板2：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]]; |
 |                                                              |                                                              |
-| ![模板样式3](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) | ![添加选择器的头视图](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_top.png?raw=true) |
+| ![模板样式3](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) | ![添加选择器的头视图](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_top.png?raw=true) |
 | 弹框样式模板3：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]]; | 添加选择器的头视图：pickerHeaderView                         |
 
 ```objective-c
@@ -218,11 +225,11 @@ addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, 
 
 - 地址选择器的3种显示类型（showType 的3个枚举值）：
 
-| ![省份](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeCity.png?raw=true) |
+| ![省份](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeCity.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |              样式1：BRAddressPickerModeProvince              |                样式2：BRAddressPickerModeCity                |
 |                                                              |                                                              |
-| ![地区](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeArea.png?raw=true) |                                                              |
+| ![地区](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeArea.png?raw=true) |                                                              |
 |                样式3：BRAddressPickerModeArea                |                                                              |
 
 #### 3.  自定义字符串选择器：`BRStringPickerView`
@@ -273,18 +280,27 @@ stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
 [stringPickerView show];
 
 
-/// 3.多列字符串选择器
+/// 3.自定义多列字符串选择器
 BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
 stringPickerView.pickerMode = BRStringPickerComponentMulti;
 stringPickerView.title = @"自定义多列字符串";
-stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
-stringPickerView.selectIndexs = @[@2, @1];
+stringPickerView.dataSourceArr = @[@[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12"], @[@"00", @"10", @"20", @"30", @"40", @"50"]];
+stringPickerView.isAutoSelect = YES;
 stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value]);
+    textField.text = [NSString stringWithFormat:@"%@:%@", resultModelArr[0].value, resultModelArr[1].value];
 };
 
-// 设置选择器中间选中行的样式
+// 设置自定义样式
 BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+// 设置 picker 的列宽
+customStyle.columnWidth = 30;
+// 设置 picker 的列间隔
+customStyle.columnSpacing = 60;
+// 设置圆角矩形背景
+// 方式1：使用系统自带样式，保留iOS14之后系统默认的圆角样式。
+customStyle.clearPickerNewStyle = NO;
+// 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[stringPickerView.alertView addSubview:rectView];）
+// 设置选择器中间选中行的样式
 customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
 customStyle.selectRowTextColor = [UIColor blueColor];
 stringPickerView.pickerStyle = customStyle;
@@ -294,14 +310,50 @@ stringPickerView.pickerStyle = customStyle;
 
 - 字符串选择器效果图：
 
-| ![自定义单列字符串](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_single.png?raw=true) | ![融资情况](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_rongzi.png?raw=true) |
+| ![自定义单列字符串](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/string_single.png?raw=true) | ![融资情况](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/string_rongzi.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                       单列字符串选择器                       |                       单列字符串选择器                       |
 |                                                              |                                                              |
-| ![多列字符串选择器](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_more.png?raw=true) |                                                              |
+| ![多列字符串选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/string_more.png?raw=true) |                                                              |
 |                       多列字符串选择器                       |                                                              |
 
 # 更新记录
+
+#### 2024-07-02（V2.8.8）
+
+- [#310](https://github.com/agiapp/BRPickerView/issues/310) ：更新本地省市区数据源数据
+
+- [#314](https://github.com/agiapp/BRPickerView/issues/314) ：修改maskView视图命名，解决因命名冲突在iOS 18 上出现的崩溃问题
+
+#### 2024-05-28（V2.8.7）
+
+- 解决已知问题：[#308](https://github.com/agiapp/BRPickerView/issues/308) 、[#309](https://github.com/agiapp/BRPickerView/issues/309) 
+- 时间选择器新增 `twelveHourMode` 属性，支持设置12小时制
+- 支持 Swift Package Manager
+
+#### 2024-04-28（V2.8.5）
+
+- 解决已知问题：[#305](https://github.com/agiapp/BRPickerView/issues/305) 
+- 添加可设置选择器组件的列宽属性：`columnWidth`
+- 添加可设置`BRStringPickerView` 选择器组件的列间隔属性：`columnSpacing`
+
+#### 2024-04-23（V2.8.2）
+
+- 解决已知问题：[#304](https://github.com/agiapp/BRPickerView/issues/304) 
+
+- Add PrivacyInfo.xcprivacy
+
+#### 2022-07-08（V2.8.0）
+
+- 优化代码。
+
+#### 2022-06-16（V2.7.8）
+
+- 优化代码。
+
+#### 2022-03-30（V2.7.7）
+
+- 优化代码。
 
 #### 2021-10-09（V2.7.6）
 
@@ -311,21 +363,21 @@ stringPickerView.pickerStyle = customStyle;
 
 - 日期选择器新增属性：`monthNames` 和 `customUnit`
 
-- 解决已知问题：[#232](https://github.com/91renb/BRPickerView/issues/232) 、[#231](https://github.com/91renb/BRPickerView/issues/231)  、[#230](https://github.com/91renb/BRPickerView/issues/230)  、[#227](https://github.com/91renb/BRPickerView/issues/227)  、[#225](https://github.com/91renb/BRPickerView/issues/225) 、[#219](https://github.com/91renb/BRPickerView/issues/219) 、[#206](https://github.com/91renb/BRPickerView/issues/206) 
+- 解决已知问题：[#232](https://github.com/agiapp/BRPickerView/issues/232) 、[#231](https://github.com/agiapp/BRPickerView/issues/231)  、[#230](https://github.com/agiapp/BRPickerView/issues/230)  、[#227](https://github.com/agiapp/BRPickerView/issues/227)  、[#225](https://github.com/agiapp/BRPickerView/issues/225) 、[#219](https://github.com/agiapp/BRPickerView/issues/219) 、[#206](https://github.com/agiapp/BRPickerView/issues/206) 
 
 #### 2020-09-25（V2.7.3）
 
-- 适配选择器iOS14的样式：[#189](https://github.com/91renb/BRPickerView/issues/189) 、[#191](https://github.com/91renb/BRPickerView/issues/191)
+- 适配选择器iOS14的样式：[#189](https://github.com/agiapp/BRPickerView/issues/189) 、[#191](https://github.com/agiapp/BRPickerView/issues/191)
 
 #### 2020-09-23（V2.7.2）
 
 - 日期选择器新增添加自定义字符串属性：`firstRowContent` 和 `lastRowContent`
-- 解决日期选择器设置最小日期时，存在的联动不正确的问题：[#184](https://github.com/91renb/BRPickerView/issues/184) 
+- 解决日期选择器设置最小日期时，存在的联动不正确的问题：[#184](https://github.com/agiapp/BRPickerView/issues/184) 
 
 #### 2020-08-28（V2.7.0）
 
-- 日期选择器添加 `nonSelectableDates` 属性：[#178](https://github.com/91renb/BRPickerView/issues/178) 
-- 优化选中行文本显示：[#177](https://github.com/91renb/BRPickerView/issues/177) 
+- 日期选择器添加 `nonSelectableDates` 属性：[#178](https://github.com/agiapp/BRPickerView/issues/178) 
+- 优化选中行文本显示：[#177](https://github.com/agiapp/BRPickerView/issues/177) 
 
 #### 2020-08-16（V2.6.8）
 
@@ -338,7 +390,7 @@ stringPickerView.pickerStyle = customStyle;
 
 #### 2020-08-06（V2.6.6）
 
-- 修复 [#163](https://github.com/91renb/BRPickerView/issues/163) 和  [#170](https://github.com/91renb/BRPickerView/issues/170) 
+- 修复 [#163](https://github.com/agiapp/BRPickerView/issues/163) 和  [#170](https://github.com/agiapp/BRPickerView/issues/170) 
 
 #### 2020-07-18（V2.6.5）
 
@@ -362,7 +414,7 @@ stringPickerView.pickerStyle = customStyle;
 
 #### 2020-04-27（V2.5.8）
 
-- 修复 [#138](https://github.com/91renb/BRPickerView/issues/138) 和 [#142](https://github.com/91renb/BRPickerView/issues/142)
+- 修复 [#138](https://github.com/agiapp/BRPickerView/issues/138) 和 [#142](https://github.com/agiapp/BRPickerView/issues/142)
 - 日期选择器新增 `descending` 属性，支持降序的时间列表
 - 更新地址选择器地区数据源
 

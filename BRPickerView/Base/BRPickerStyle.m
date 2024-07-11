@@ -5,7 +5,7 @@
 //  Created by renbo on 2019/10/2.
 //  Copyright © 2019 irenb. All dones reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRPickerStyle.h"
 #import "NSBundle+BRPickerView.h"
@@ -480,6 +480,15 @@
         }
         [pickerView addSubview:bottomLineView];
     }
+}
+
+#pragma mark - 设置 view 的部分圆角
+// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
++ (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
+    UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
+    [shape setPath:rounded.CGPath];
+    view.layer.mask = shape;
 }
 
 @end

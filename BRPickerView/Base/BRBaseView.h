@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import <UIKit/UIKit.h>
 #import "BRPickerStyle.h"
@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^BRCancelBlock)(void);
-typedef void(^BRResultBlock)(void);
+typedef void(^BRDoneClickBlock)(void);
 
 @interface BRBaseView : UIView
 
@@ -35,8 +35,9 @@ typedef void(^BRResultBlock)(void);
 /** accessory view below picker view. default is nil */
 @property (nullable, nonatomic, strong) UIView *pickerFooterView;
 
-/** 选择结果的回调（组件内部使用）*/
-@property (nullable, nonatomic, copy) BRResultBlock doneBlock;
+/// 确定按钮点击事件的回调
+/// 应用场景：如果是自定义确定按钮，需要在该按钮点击事件方法里，执行一下 doneBlock 回调。目的是触发组件内部执行 resultBlock 回调，回调选择的值
+@property (nullable, nonatomic, copy) BRDoneClickBlock doneBlock;
 
 /** 弹框视图(使用场景：可以在 alertView 上添加选择器的自定义背景视图) */
 @property (nullable, nonatomic, strong) UIView *alertView;
@@ -51,6 +52,7 @@ typedef void(^BRResultBlock)(void);
 
 /// 扩展一：添加选择器到指定容器视图上
 /// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
+/// 补充说明：如果是自定义确定按钮，需要回调默认选择的值：只需在自定义确定按钮的点击事件方法里执行一下 doneBlock 回调（目的是去触发组件内部执行 resultBlock 回调，进而回调默认选择的值）
 /// @param view 容器视图
 - (void)addPickerToView:(nullable UIView *)view NS_REQUIRES_SUPER;
 

@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRBaseView.h"
 #import "BRAddressModel.h"
@@ -47,6 +47,9 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCity
 
 /** 滚动选择时触发的回调 */
 @property (nullable, nonatomic, copy) BRAddressResultBlock changeBlock;
+
+/** 判断选择器是否处于滚动中。可以用于解决快速滑动选择器，在滚动结束前秒选确定按钮，出现显示不对的问题。*/
+@property (nonatomic, readonly, assign, getter=isRolling) BOOL rolling;
 
 /**
  *  地区数据源（不传或为nil，默认就获取本地 BRCity.json 文件的数据）

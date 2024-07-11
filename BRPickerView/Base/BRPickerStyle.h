@@ -5,7 +5,7 @@
 //  Created by renbo on 2019/10/2.
 //  Copyright © 2019 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -187,8 +187,12 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 的高度，系统默认高度为 216 */
 @property (nonatomic, assign) CGFloat pickerHeight;
 
-/** 设置 picker 的行高。暂不支持日期选择器前4种类型 */
+/** 设置 picker 的行高 */
 @property (nonatomic, assign) CGFloat rowHeight;
+/** 设置 picker 的列宽 */
+@property (nonatomic, assign) CGFloat columnWidth;
+/** 设置 picker 的列间隔，仅支持`BRStringPickerView` */
+@property (nonatomic, assign) CGFloat columnSpacing;
 
 /**
  *  清除iOS14之后选择器默认自带的新样式。暂不支持日期选择器前4种类型
@@ -234,11 +238,17 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 + (instancetype)pickerStyleWithDoneBtnImage:(nullable UIImage *)doneBtnImage;
 
 
-/** 设置选择器中间选中行的样式（组件内部使用）*/
+//////////////////////////////// 以下是组件内部使用的几个封装方法 ////////////////////////////////
+
+/** 设置选择器中间选中行的样式 */
 - (void)setupPickerSelectRowStyle:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 
-/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加；组件内部使用）*/
+/** 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）*/
 - (void)addSeparatorLineView:(UIView *)pickerView;
+
+/** 设置 view 的部分圆角 */
+// corners(枚举类型，可组合使用)：UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerAllCorners
++ (void)br_setView:(UIView *)view roundingCorners:(UIRectCorner)corners withRadius:(CGFloat)radius;
 
 @end
 

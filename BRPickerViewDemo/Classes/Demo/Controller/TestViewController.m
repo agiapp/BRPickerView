@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "TestViewController.h"
 #import "BRPickerView.h"
@@ -32,11 +32,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) UIView *endTimeLineView;
 @property (nonatomic, strong) BRDatePickerView *datePickerView;
 
-
 @property (nonatomic, copy) NSArray *titleArr;
-
 @property (nonatomic, strong) BRInfoModel *infoModel;
-
 @property (nonatomic, assign) BRTimeType timeType;
 
 @property (nonatomic, assign) NSInteger genderSelectIndex;
@@ -287,7 +284,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             stringPickerView.pickerMode = BRStringPickerComponentSingle;
             stringPickerView.title = @"请选择性别";
             stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-            stringPickerView.selectIndex = self.genderSelectIndex ;
+            stringPickerView.selectIndex = self.genderSelectIndex;
             stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
                 self.genderSelectIndex = resultModel.index;
                 self.infoModel.genderStr = resultModel.value;
@@ -317,11 +314,9 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
-                
                 NSLog(@"selectValue=%@", selectValue);
                 NSLog(@"selectDate=%@", selectDate);
                 NSLog(@"---------------------------------");
-                
             };
             
             // 设置年份背景
@@ -360,6 +355,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.title = @"出生时刻";
             datePickerView.selectDate = self.birthtimeSelectDate;
             datePickerView.isAutoSelect = YES;
+            //datePickerView.twelveHourMode = YES; // 设置12小时制
+            //datePickerView.timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"]; // 设置时区
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthtimeSelectDate = selectDate;
                 self.infoModel.birthtimeStr = selectValue;
@@ -461,18 +458,30 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         case 8:
         {
-            /// 多列字符串
+            /// 自定义多列字符串选择器
             BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
             stringPickerView.pickerMode = BRStringPickerComponentMulti;
-            stringPickerView.title = @"多列选择器";
-            stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
+            stringPickerView.title = @"自定义多列字符串";
+            stringPickerView.dataSourceArr = @[@[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12"], @[@"00", @"10", @"20", @"30", @"40", @"50"]];
             stringPickerView.isAutoSelect = YES;
             stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
-                textField.text = [NSString stringWithFormat:@"%@ %@", resultModelArr[0].value, resultModelArr[1].value];
+                textField.text = [NSString stringWithFormat:@"%@:%@", resultModelArr[0].value, resultModelArr[1].value];
             };
             
-            // 使用模板样式2
-            stringPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
+            // 设置自定义样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            // 设置 picker 的列宽
+            customStyle.columnWidth = 30;
+            // 设置 picker 的列间隔
+            customStyle.columnSpacing = 60;
+            // 设置圆角矩形背景
+            // 方式1：使用系统自带样式，保留iOS14之后系统默认的圆角样式。
+            customStyle.clearPickerNewStyle = NO;
+            // 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[stringPickerView.alertView addSubview:rectView];）
+            // 设置选择器中间选中行的样式
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+            customStyle.selectRowTextColor = [UIColor blueColor];
+            stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
             
@@ -544,6 +553,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
             customStyle.selectRowTextColor = [UIColor blueColor];
+            customStyle.columnWidth = 60;
+            customStyle.columnSpacing = 10;
             stringPickerView.pickerStyle = customStyle;
             
             [stringPickerView show];
@@ -700,7 +711,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 #pragma mark - footerView
 - (UIView *)footerView {
     if (!_footerView) {
-        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 400)];
+        _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 450)];
         _footerView.backgroundColor = [UIColor clearColor];
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
@@ -708,6 +719,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月"]];
         segmentedControl.frame = CGRectMake(40, 50, self.view.bounds.size.width - 80, 36);
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        segmentedControl.apportionsSegmentWidthsByContent = YES;
         // 设置圆角和边框
         segmentedControl.layer.cornerRadius = 3.0f;
         segmentedControl.layer.masksToBounds = YES;
@@ -778,7 +790,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         datePickerView.pickerMode = BRDatePickerModeYMDH;
         datePickerView.maxDate = [NSDate date];
         datePickerView.isAutoSelect = YES;
-        datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
+        datePickerView.showUnitType = BRShowUnitTypeAll;
         datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
             if (self.timeType == BRTimeTypeBeginTime) {
                 self.beginSelectDate = selectDate;
@@ -797,7 +809,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         
         // 添加选择器到容器视图
         [datePickerView addPickerToView:containerView];
-        
     }
     return _footerView;
 }
@@ -839,7 +850,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (NSArray *)titleArr {
     if (!_titleArr) {
-        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资", @"多列选择", @"二级联动选择", @"三级联动选择"];
+        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资", @"自定义多列选择", @"二级联动选择", @"三级联动选择"];
     }
     return _titleArr;
 }

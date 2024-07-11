@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRStringPickerView.h"
 
@@ -19,6 +19,10 @@
 @property (nonatomic, copy) NSString *mSelectValue;
 /** 多列选择的值 */
 @property (nonatomic, copy) NSArray <NSString *>* mSelectValues;
+
+// 记录滚动中的位置
+@property(nonatomic, assign) NSInteger rollingComponent;
+@property(nonatomic, assign) NSInteger rollingRow;
 
 /** 数据源 */
 @property (nullable, nonatomic, copy) NSArray *mDataSourceArr;
@@ -122,7 +126,7 @@
         _dataSourceException = ![item isKindOfClass:[BRResultModel class]];
     }
     if (_dataSourceException) {
-        NSAssert(!_dataSourceException, @"数据源异常！请检查选择器数据源的格式");
+        BRErrorLog(@"数据源异常！请检查选择器数据源的格式");
         return;
     }
     
@@ -156,16 +160,16 @@
         self.mDataSourceArr = self.dataSourceArr;
         NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
         for (NSInteger i = 0; i < self.mDataSourceArr.count; i++) {
+            NSArray *itemArr = self.mDataSourceArr[i];
             NSInteger row = 0;
             if (self.selectIndexs.count > 0) {
                 if (i < self.selectIndexs.count) {
                     NSInteger index = [self.selectIndexs[i] integerValue];
-                    row = ((index > 0 && index < [self.mDataSourceArr[i] count]) ? index : 0);
+                    row = ((index > 0 && index < itemArr.count) ? index : 0);
                 }
             } else {
                 if (self.mSelectValues.count > 0 && i < self.mSelectValues.count) {
                     NSString *value = self.mSelectValues[i];
-                    NSArray *itemArr = self.mDataSourceArr[i];
                     id item = [itemArr firstObject];
                     if ([item isKindOfClass:[BRResultModel class]]) {
                         for (NSInteger j = 0; j < itemArr.count; j++) {
@@ -176,8 +180,8 @@
                             }
                         }
                     } else {
-                        if ([self.mDataSourceArr[i] containsObject:value]) {
-                            row = [self.mDataSourceArr[i] indexOfObject:value];
+                        if ([itemArr containsObject:value]) {
+                            row = [itemArr indexOfObject:value];
                         }
                     }
                 }
@@ -249,23 +253,24 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1.设置 pickerView 的列数
+// 1.返回组件数量
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
             return 1;
-            break;
         case BRStringPickerComponentMulti:
         case BRStringPickerComponentLinkage:
+            if (self.pickerStyle.columnSpacing > 0) {
+                return self.mDataSourceArr.count * 2 - 1;
+            }
             return self.mDataSourceArr.count;
-            break;
             
         default:
             break;
     }
 }
 
-// 2.设置 pickerView 每列的行数
+// 2.返回每个组件的行数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (self.pickerMode) {
         case BRStringPickerComponentSingle:
@@ -273,7 +278,17 @@
             break;
         case BRStringPickerComponentMulti:
         case BRStringPickerComponentLinkage:
-            return [self.mDataSourceArr[component] count];
+        {
+            if (self.pickerStyle.columnSpacing > 0) {
+                if (component % 2 == 1) {
+                    return 1;
+                } else {
+                    component = component / 2;
+                }
+            }
+            NSArray *itemArr = self.mDataSourceArr[component];
+            return itemArr.count;
+        }
             break;
             
         default:
@@ -297,6 +312,19 @@
         // 自适应最小字体缩放比例
         label.minimumScaleFactor = 0.5f;
     }
+    
+    // 2.设置选择器中间选中行的样式
+    [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
+    
+    // 3.记录选择器滚动过程中选中的列和行
+    // 获取选择器组件滚动中选中的行
+    NSInteger selectRow = [pickerView selectedRowInComponent:component];
+    if (selectRow >= 0) {
+        self.rollingComponent = component;
+        self.rollingRow = selectRow;
+    }
+
+    // 设置文本
     if (self.pickerMode == BRStringPickerComponentSingle) {
         id item = self.mDataSourceArr[row];
         if ([item isKindOfClass:[BRResultModel class]]) {
@@ -306,7 +334,19 @@
             label.text = item;
         }
     } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
-        id item = self.mDataSourceArr[component][row];
+        
+        // 如果有设置列间距，且是第奇数列，则不显示内容（即空白间隔列）
+        if (self.pickerStyle.columnSpacing > 0) {
+            if (component % 2 == 1) {
+                label.text = @"";
+                return label;
+            } else {
+                component = component / 2;
+            }
+        }
+        
+        NSArray *itemArr = self.mDataSourceArr[component];
+        id item = [itemArr objectAtIndex:row];
         if ([item isKindOfClass:[BRResultModel class]]) {
             BRResultModel *model = (BRResultModel *)item;
             label.text = model.value;
@@ -315,10 +355,31 @@
         }
     }
     
-    // 2.设置选择器中间选中行的样式
-    [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
-    
     return label;
+}
+
+// 获取选择器是否滚动中状态
+- (BOOL)getRollingStatus:(UIView *)view {
+    if ([view isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)view;
+        if (scrollView.dragging || scrollView.decelerating) {
+            // 如果 UIPickerView 正在拖拽或正在减速，返回YES
+            return YES;
+        }
+    }
+    
+    for (UIView *subView in view.subviews) {
+        if ([self getRollingStatus:subView]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+// 选择器是否正在滚动
+- (BOOL)isRolling {
+    return [self getRollingStatus:self.pickerView];
 }
 
 // 4.滚动 pickerView 执行的回调方法
@@ -343,6 +404,15 @@
             break;
         case BRStringPickerComponentMulti:
         {
+            // 处理选择器有设置列间距时，选择器的滚动问题
+            if (self.pickerStyle.columnSpacing > 0) {
+                if (component % 2 == 1) {
+                    return;
+                } else {
+                    component = component / 2;
+                }
+            }
+            
             if (component < self.selectIndexs.count) {
                 NSMutableArray *mutableArr = [self.selectIndexs mutableCopy];
                 [mutableArr replaceObjectAtIndex:component withObject:@(row)];
@@ -364,6 +434,15 @@
             break;
         case BRStringPickerComponentLinkage:
         {
+            // 处理选择器有设置列间距时，选择器的滚动问题
+            if (self.pickerStyle.columnSpacing > 0) {
+                if (component % 2 == 1) {
+                    return;
+                } else {
+                    component = component / 2;
+                }
+            }
+            
             if (component < self.selectIndexs.count) {
                 NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
                 for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
@@ -442,6 +521,19 @@
     return self.pickerStyle.rowHeight;
 }
 
+// 设置列宽
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    if (self.pickerStyle.columnSpacing > 0 && component % 2 == 1) {
+        return self.pickerStyle.columnSpacing;
+    }
+    NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
+    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
+    if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
+        return self.pickerStyle.columnWidth;
+    }
+    return columnWidth;
+}
+
 #pragma mark - 重写父类方法
 - (void)reloadData {
     // 1.处理数据源
@@ -453,11 +545,19 @@
         [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
     } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
-            NSNumber *index = [self.selectIndexs objectAtIndex:i];
-            [self.pickerView selectRow:[index integerValue] inComponent:i animated:NO];
+            NSNumber *row = [self.selectIndexs objectAtIndex:i];
+            NSInteger component = i;
+            if (self.pickerStyle.columnSpacing > 0) {
+                component = i * 2;
+            }
+            [self.pickerView selectRow:[row integerValue] inComponent:component animated:NO];
         }
     }
 }
+
+// 0 【1】 2 【3】 4 【5】
+// 0 2 4
+// 0 1 2
 
 - (void)addPickerToView:(UIView *)view {
     // 1.添加选择器
@@ -472,6 +572,10 @@
         self.pickerView.frame = CGRectMake(0, pickerHeaderViewHeight, view.bounds.size.width, view.bounds.size.height - pickerHeaderViewHeight - pickerFooterViewHeight);
         [self addSubview:self.pickerView];
     } else {
+        // iOS16：重新设置 pickerView 高度（解决懒加载设置frame不生效问题）
+        CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
+        self.pickerView.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
+        
         [self.alertView addSubview:self.pickerView];
     }
     
@@ -484,10 +588,16 @@
     [self reloadData];
     
     __weak typeof(self) weakSelf = self;
+    // 点击确定按钮的回调：点击确定按钮后，执行这个block回调
     self.doneBlock = ^{
-        // 点击确定按钮后，执行block回调
-        [weakSelf removePickerFromView:view];
-        
+        if (weakSelf.isRolling) {
+            NSLog(@"选择器滚动还未结束");
+            // 问题：如果滚动选择器过快，然后在滚动过程中快速点击确定按钮，会导致 didSelectRow 代理方法还没有执行，出现没有选中的情况。
+            // 解决：这里手动处理一下，如果滚动还未结束，强制执行一次 didSelectRow 代理方法，选择当前滚动的行。
+            [weakSelf pickerView:weakSelf.pickerView didSelectRow:weakSelf.rollingRow inComponent:weakSelf.rollingComponent];
+        }
+    
+        // 执行选择结果回调
         if (weakSelf.pickerMode == BRStringPickerComponentSingle) {
             if (weakSelf.resultModelBlock) {
                 weakSelf.resultModelBlock([weakSelf getResultModel]);

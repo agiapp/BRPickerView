@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/91renb/BRPickerView
+//  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "BRBaseView.h"
 #import "NSDate+BRPickerView.h"
@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // ----- 以下11种是自定义样式 -----
+    // ----- 以下14种是自定义样式 -----
     /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
     BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
@@ -46,7 +46,14 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】时分 */
     BRDatePickerModeHM,
     /** 【mm:ss】分秒 */
-    BRDatePickerModeMS
+    BRDatePickerModeMS,
+    
+    /** 【yyyy-qq】年季度 */
+    BRDatePickerModeYQ,
+    /** 【yyyy-MM-ww】年月周 */
+    BRDatePickerModeYMW,
+    /** 【yyyy-ww】年周 */
+    BRDatePickerModeYW
 };
 
 /// 日期单位显示的位置
@@ -60,6 +67,8 @@ typedef NS_ENUM(NSInteger, BRShowUnitType) {
 };
 
 typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nullable selectValue);
+
+typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue);
 
 @interface BRDatePickerView : BRBaseView
 
@@ -85,9 +94,16 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 
 /** 选择结果的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock resultBlock;
+/** 选择结果范围的回调：for `BRDatePickerModeYQ`、`BRDatePickerModeYMW`、`BRDatePickerModeYW`, ignored otherwise. */
+@property (nullable, nonatomic, copy) BRDateResultRangeBlock resultRangeBlock;
 
 /** 滚动选择时触发的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock changeBlock;
+/** 滚动选择范围时触发的回调：for `BRDatePickerModeYQ`、`BRDatePickerModeYMW`、`BRDatePickerModeYW`, ignored otherwise. */
+@property (nullable, nonatomic, copy) BRDateResultRangeBlock changeRangeBlock;
+
+/** 判断选择器是否处于滚动中。可以用于解决快速滑动选择器，在滚动结束前秒选确定按钮，出现显示不对的问题。*/
+@property (nonatomic, readonly, assign, getter=isRolling) BOOL rolling;
 
 /** 日期单位显示类型 */
 @property (nonatomic, assign) BRShowUnitType showUnitType;
@@ -101,20 +117,20 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 是否添加【至今】，默认为 NO */
 @property (nonatomic, assign, getter=isAddToNow) BOOL addToNow;
 
-/** 首行添加【自定义字符串】，配合 selectValue 可设置默认选中 */
+/** 首行添加 自定义字符串，配合 selectValue 可设置默认选中 */
 @property (nullable, nonatomic, copy) NSString *firstRowContent;
 
-/** 末行添加【自定义字符串】，配合 selectValue 可设置默认选中 */
+/** 末行添加 自定义字符串（如：至今），配合 selectValue 可设置默认选中 */
 @property (nullable, nonatomic, copy) NSString *lastRowContent;
-
-/** 最后一行，添加【自定义字符串】 */
-@property (nullable, nonatomic, copy) NSString *addCustomString DEPRECATED_MSG_ATTRIBUTE("Use 'lastRowContent' instead");
 
 /** 滚轮上日期数据排序是否降序，默认为 NO（升序）*/
 @property (nonatomic, assign, getter=isDescending) BOOL descending;
 
 /** 选择器上数字是否带有前导零，默认为 NO（如：无前导零:2020-1-1；有前导零:2020-01-01）*/
 @property (nonatomic, assign, getter=isNumberFullName) BOOL numberFullName;
+
+/** 是否为12小时制，默认为NO */
+@property (nonatomic, assign, getter=isTwelveHourMode) BOOL twelveHourMode;
 
 /** 设置分的时间间隔，默认为1（范围：1 ~ 30）*/
 @property (nonatomic, assign) NSInteger minuteInterval;
@@ -132,6 +148,12 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 @property (nonatomic, copy) NSArray <NSString *> *monthNames;
 
 /**
+ *  设置国际化日期(非中文环境下)月份是否显示简称，默认为 NO。for `BRDatePickerModeYMD` and `BRDatePickerModeYM`, ignored otherwise.
+ *  如：January 的简称为：Jan
+ */
+@property (nonatomic, assign, getter=isShortMonthName) BOOL shortMonthName;
+
+/**
  *  自定义日期单位
  *  字典格式：@{@"year": @"年", @"month": @"月", @"day": @"日", @"hour": @"时", @"minute": @"分", @"second": @"秒"}
  */
@@ -140,14 +162,24 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 /** 显示上午和下午，默认为 NO. for `BRDatePickerModeYMDH`, ignored otherwise. */
 @property (nonatomic, assign, getter=isShowAMAndPM) BOOL showAMAndPM;
 
-/** 设置时区，默认为当前时区 */
+/** 
+ *  设置时区，默认为当前时区
+ *  如：timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"]; // 如：设置时区为 美国纽约
+ *  特别提示：如果有设置自定义时区，需要把有使用 NSDate+BRPickerView 分类中方法的代码（如：设置minDate、maxDate等） 放在设置时区代码的后面，目的是同步时区设置到 NSDate+BRPickerView 分类中
+ */
 @property (nullable, nonatomic, copy) NSTimeZone *timeZone;
 
-/** default is [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker` */
-@property (nonatomic, copy) NSCalendar *calendar;
+/** 
+ *  设置日历对象，可以指定日历的算法。default is [NSCalendar currentCalendar]. setting nil returns to default. for `UIDatePicker`, ignored otherwise.
+ *  如：calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierChinese]; // 设置中国农历（阴历）日期
+ */
+@property (nullable, nonatomic, copy) NSCalendar *calendar;
 
 /** 指定不允许选择的日期 */
 @property (nullable, nonatomic, copy) NSArray <NSDate *> *nonSelectableDates;
+
+/** 不允许选择日期的回调 */
+@property (nullable, nonatomic, copy) BRDateResultBlock nonSelectableBlock;
 
 /// 初始化日期选择器
 /// @param pickerMode  日期选择器显示类型
@@ -225,6 +257,27 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
                   isAutoSelect:(BOOL)isAutoSelect
                    resultBlock:(nullable BRDateResultBlock)resultBlock;
 
+/**
+ * 4.显示日期选择器
+ *
+ * @param mode             日期显示类型
+ * @param title            选择器标题
+ * @param selectValue      默认选中的日期（默认选中当前日期）
+ * @param minDate          最小日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
+ * @param maxDate          最大日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）
+ * @param isAutoSelect     是否自动选择，即滚动选择器后就执行结果回调，默认为 NO
+ * @param resultBlock      选择结果的回调
+ * @param resultRangeBlock 范围选择结果的回调
+ *
+ */
++ (void)showDatePickerWithMode:(BRDatePickerMode)mode
+                         title:(nullable NSString *)title
+                   selectValue:(nullable NSString *)selectValue
+                       minDate:(nullable NSDate *)minDate
+                       maxDate:(nullable NSDate *)maxDate
+                  isAutoSelect:(BOOL)isAutoSelect
+                   resultBlock:(nullable BRDateResultBlock)resultBlock
+              resultRangeBlock:(nullable BRDateResultRangeBlock)resultRangeBlock;
 
 @end
 
