@@ -1,0 +1,96 @@
+{
+  "errno": 0,
+  "msg": "success",
+  "data": [
+      {
+          "parent_code": "-1",
+          "parent_text": "",
+          "code": "1",
+          "text": "小学"
+      },
+      {
+          "parent_code": "-1",
+          "parent_text": "",
+          "code": "2",
+          "text": "初中"
+      },
+      {
+          "parent_code": "-1",
+          "parent_text": "",
+          "code": "3",
+          "text": "高中"
+      },
+      {
+          "parent_code": "1",
+          "parent_text": "小学",
+          "code": "11",
+          "text": "一年级"
+      },
+      {
+          "parent_code": "1",
+          "parent_text": "小学",
+          "code": "12",
+          "text": "二年级"
+      },
+      {
+          "parent_code": "1",
+          "parent_text": "小学",
+          "code": "13",
+          "text": "三年级"
+      },
+      {
+          "parent_code": "1",
+          "parent_text": "小学",
+          "code": "14",
+          "text": "四年级"
+      },
+      {
+          "parent_code": "1",
+          "parent_text": "小学",
+          "code": "15",
+          "text": "五年级"
+      },
+      {
+          "parent_code": "1",
+          "parent_text": "小学",
+          "code": "16",
+          "text": "六年级"
+      },
+      {
+          "parent_code": "2",
+          "parent_text": "初中",
+          "code": "21",
+          "text": "初一"
+      },
+      {
+          "parent_code": "2",
+          "parent_text": "初中",
+          "code": "22",
+          "text": "初二"
+      },
+      {
+          "parent_code": "2",
+          "parent_text": "初中",
+          "code": "23",
+          "text": "初三"
+      },
+      {
+          "parent_code": "3",
+          "parent_text": "高中",
+          "code": "31",
+          "text": "高一"
+      },
+      {
+          "parent_code": "3",
+          "parent_text": "高中",
+          "code": "32",
+          "text": "高二"
+      },
+      {
+          "parent_code": "3",
+          "parent_text": "高中",
+          "code": "33",
+          "text": "高三"
+      }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "text" : "浙江省",
+    "children" : [
+        { "text": "杭州市", "children": [{ "text": "西湖区" }, { "text": "滨江区" }] },
+        { "text": "宁波市", "children": [{ "text": "海曙区" }, { "text": "江北区" }] }
+    ]
+  },
+  {
+    "text" : "江苏省",
+    "children" : [
+        { "text": "南京市", "children": [{ "text": "玄武区" }, { "text": "秦淮区" }] },
+        { "text": "苏州市", "children": [{ "text": "虎丘区" }, { "text": "吴中区" }] }
+    ]
+  },
+  {
+    "text" : "辽宁省",
+    "children" : [
+        { "text": "沈阳市", "children": [{ "text": "沈河区" }, { "text": "和平区" }, { "text": "浑南区" }] },
+        { "text": "大连市", "children": [{ "text": "中山区" }, { "text": "金州区" }, { "text": "长海县" }] }
+    ]
+  }
+]
