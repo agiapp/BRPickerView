@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) NSDate *beginSelectDate;
 @property (nonatomic, strong) NSDate *endSelectDate;
 
+@property (nonatomic, copy) NSArray <NSNumber *> *mySelectIndexs;
+
 @end
 
 @implementation TestViewController
@@ -99,8 +101,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     NSLog(@"联系方式：%@", self.infoModel.phoneStr);
     NSLog(@"地址：%@", self.infoModel.addressStr);
     NSLog(@"学历：%@", self.infoModel.educationStr);
-    
-    
 }
 
 - (UITableView *)tableView {
@@ -379,11 +379,14 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             // 地区
             BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
             textPickerView.title = @"请选择地区";
-            // 1.设置数据源：传入模型数组 NSArray<BRTextModel *> 类型
-            //textPickerView.dataSourceArr = [BRDataSourceHelper getRegionTreeModelArr];
-            // 2.设置数据源：直接传入 JSON文件
+            // 设置数据源
+            // NSArray *dataArr = [BRDataSourceHelper getLocalFileData:@"region_tree_data.json"];
+            // 方式1：传树状结构模型数组(NSArray <BRTextModel *>*)
+            // textPickerView.dataSourceArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
+            // 方式2：直接传入json文件名（可以将上面的json数据放到本地json文件中，如：region_tree_data.json）
             textPickerView.fileName = @"region_tree_data.json";
-            textPickerView.numberOfComponents = 3;
+            // 设置选择器显示的列数(即层级数)，默认是根据数据源层级动态计算显示。如：设置1则只显示前1列数据（即只显示省）；设置2则只显示前2列数据（即只显示省、市）；设置3则只显示前3列数据（即显示省、市、区）
+            textPickerView.showColumnNum = 3;
             textPickerView.selectIndexs = self.addressSelectIndexs;
             textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
                 self.addressSelectIndexs = indexs;
@@ -477,20 +480,32 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         case 9:
         {
-            /// 二级联动选择
+            /// 多列联动文本选择器（数据源扁平结构）
             BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
             textPickerView.title = @"二级联动选择";
-            textPickerView.dataSourceArr = [BRDataSourceHelper getStudentGradeTreeDataSource];
-            textPickerView.selectIndexs = self.linkage2SelectIndexs;
+            NSDictionary *responseObject = [BRDataSourceHelper getLocalFileData:@"cascade_list_data.json"];
+            NSArray *dataArr = responseObject[@"Result"];
+            // 指定 BRTextModel模型的属性 与 字典key 的映射关系
+            NSDictionary *mapper = @{ @"parentCode": @"ParentID", @"code": @"CategoryID", @"text": @"CategoryName" };
+            // 1.将上面数组 转为 模型数组（组件内封装的工具方法）
+            NSArray *listModelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
+            // 2.将扁平结构模型数组 转成 树状结构模型数组（组件内封装的工具方法）
+            NSArray *treeModelArr = [listModelArr br_buildTreeArray];
+            textPickerView.dataSourceArr = treeModelArr;
+
             textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-                self.linkage2SelectIndexs = indexs;
-                textField.text = [models br_joinText:@" "];
+                // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
+                NSString *selectText = [models br_joinText:@"-"];
+                NSLog(@"选择的结果：%@", selectText);
+                textField.text = selectText;
             };
             
             // 设置选择器中间选中行的样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
             customStyle.selectRowTextColor = [UIColor blueColor];
+            customStyle.columnWidth = 80;
+            customStyle.columnSpacing = 10;
             textPickerView.pickerStyle = customStyle;
             
             [textPickerView show];
@@ -499,22 +514,27 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             
         case 10:
         {
-            /// 三级联动选择
+            /// 多列联动文本选择器（数据源树状结构）
             BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
             textPickerView.title = @"三级联动选择";
-            textPickerView.dataSourceArr = [BRDataSourceHelper getProvinceCityAreaListDataSource];
-            textPickerView.selectIndexs = self.linkage3SelectIndexs;
+            NSDictionary *responseObject = [BRDataSourceHelper getLocalFileData:@"cascade_tree_data.json"];
+            NSArray *dataArr = responseObject[@"districts"];
+            // 指定 BRTextModel模型的属性 与 字典key 的映射关系
+            NSDictionary *mapper = @{ @"code": @"adcode", @"text": @"name", @"children": @"districts" };
+            // 将上面数组 转为 模型数组（组件内封装的工具方法）
+            NSArray *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
+            textPickerView.dataSourceArr = modelArr;
             textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-                self.linkage3SelectIndexs = indexs;
-                textField.text = [models br_joinText:@"-"];
+                // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
+                NSString *selectText = [models br_joinText:@"-"];
+                NSLog(@"选择的结果：%@", selectText);
+                textField.text = selectText;
             };
             
             // 设置选择器中间选中行的样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
             customStyle.selectRowTextColor = [UIColor blueColor];
-            customStyle.columnWidth = 60;
-            customStyle.columnSpacing = 10;
             textPickerView.pickerStyle = customStyle;
             
             [textPickerView show];

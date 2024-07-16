@@ -146,14 +146,22 @@
             selectModel = nextArr[selectIndex];
         }
         
-        if (self.numberOfComponents > 0) {
-            NSInteger count = dataList.count;
-            for (NSInteger i = 0; i < self.numberOfComponents - count; i++) {
-                // 添加空白占位数据
-                BRTextModel *placeholderModel = [[BRTextModel alloc]init];
-                NSArray *placeholderArr = @[placeholderModel];
-                [dataList addObject:placeholderArr];
-                [selectIndexs addObject:@(0)];
+        // 控制选择器固定显示的列数
+        if (self.showColumnNum > 0) {
+            NSInteger dataListCount = dataList.count;
+            if (self.showColumnNum < dataListCount) {
+                // 显示子集数据
+                dataList = [[dataList subarrayWithRange:NSMakeRange(0, self.showColumnNum)] mutableCopy];
+                selectIndexs = [[selectIndexs subarrayWithRange:NSMakeRange(0, self.showColumnNum)] mutableCopy];
+            } else {
+                // 补全占位数据
+                for (NSInteger i = 0; i < self.showColumnNum - dataListCount; i++) {
+                    // 添加空白占位数据
+                    BRTextModel *placeholderModel = [[BRTextModel alloc]init];
+                    NSArray *placeholderArr = @[placeholderModel];
+                    [dataList addObject:placeholderArr];
+                    [selectIndexs addObject:@(0)];
+                }
             }
         }
         self.dataList = [dataList copy];

@@ -7,23 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BRTextModel.h"
-#import "BRResultModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BRDataSourceHelper : NSObject
+/** 获取本地文件（.plist/.json）数据 */
++ (id)getLocalFileData:(NSString *)fileName;
 /** 加载高德行政区划省市区模型数组 */
-+ (void)loadAMapRegionModelArr:(void (^)(NSArray *modeArr))completionBlock;
-
-/** 获取本地省市区模型数组 */
-+ (NSArray<BRTextModel *> *)getRegionTreeModelArr;
-
-/** 获取学生年级数据源 */
-+ (NSArray <BRTextModel *>*)getStudentGradeTreeDataSource;
-
-/** 获取省市区数据源 */
-+ (NSArray <BRTextModel *>*)getProvinceCityAreaListDataSource;
++ (void)loadAMapRegionModelArr:(void (^)(NSArray *dataArr))completionBlock;
 
 @end
 

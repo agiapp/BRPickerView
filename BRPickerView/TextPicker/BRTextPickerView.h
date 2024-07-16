@@ -44,7 +44,7 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
  *    单列：@[@"男", @"女", @"其他"]，或直接传一维模型数组(NSArray <BRTextModel *>*)
  *    多列：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好"]]，或直接传多维模型数组
  *
- *    联动：直接传一维模型数组(NSArray <BRTextModel *>*)，对应的 JSON 基本数据格式如下：
+ *    联动：传树状结构模型数组(NSArray <BRTextModel *>*)，对应的 JSON 基本数据格式如下：
  
      [
        {
@@ -93,8 +93,8 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
 /** 判断选择器是否处于滚动中。可以用于解决快速滑动选择器，在滚动结束前秒选确定按钮，出现显示不对的问题 */
 @property (nonatomic, readonly, assign, getter=isRolling) BOOL rolling;
 
-/** 设置固定的层级数(即列数)，默认是根据数据源层级动态计算 */
-@property (nonatomic, assign) NSInteger numberOfComponents;
+/** 设置选择器显示的列数(即层级数)，默认是根据数据源层级动态计算显示 */
+@property (nonatomic, assign) NSUInteger showColumnNum;
 
 /** 滚动至选择行动画，默认为 NO */
 @property (nonatomic, readonly, assign) BOOL selectRowAnimated;

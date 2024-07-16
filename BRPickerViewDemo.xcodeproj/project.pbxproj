@@ -12,20 +12,19 @@
 		454D06F32C461C01002C3CF4 /* region_list_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F02C461C00002C3CF4 /* region_list_data.json */; };
 		454D06F42C461C01002C3CF4 /* region_tree_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F12C461C00002C3CF4 /* region_tree_data.json */; };
 		454D06F52C461C01002C3CF4 /* amap_region_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F22C461C01002C3CF4 /* amap_region_data.json */; };
-		454D06F72C46237E002C3CF4 /* cascade_three_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F62C46237E002C3CF4 /* cascade_three_data.json */; };
-		456506DE24C1AF7100A2E4EE /* student_grade_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 456506DD24C1AF7100A2E4EE /* student_grade_list.json */; };
+		454D06F72C46237E002C3CF4 /* cascade_tree_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F62C46237E002C3CF4 /* cascade_tree_data.json */; };
+		454D06F92C465893002C3CF4 /* grade_level_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F82C465893002C3CF4 /* grade_level_data.plist */; };
+		454D06FB2C4693CA002C3CF4 /* cascade_list_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */; };
 		45653925237032D90074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45653924237032D90074BBBC /* BRPickerView.bundle */; };
 		4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7D723B377D800CD59D4 /* TestViewController.m */; };
 		4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DA23B4425700CD59D4 /* UIImage+Color.m */; };
 		4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */; };
-		457DA34D24D90AFB009D75F3 /* student_grade_tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 457DA34C24D90AFB009D75F3 /* student_grade_tree.json */; };
 		4596CAF92C34E257003C6654 /* BRTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CAF82C34E257003C6654 /* BRTextModel.m */; };
 		4596CAFC2C34EC1B003C6654 /* BRTextPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CAFB2C34EC1B003C6654 /* BRTextPickerView.m */; };
 		4596CB052C364097003C6654 /* BRDataSourceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CB042C364096003C6654 /* BRDataSourceHelper.m */; };
 		4596CB102C36745E003C6654 /* BRPickerAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CB0F2C36745E003C6654 /* BRPickerAlertView.m */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */; };
-		45AB6DD4249A1306004EB3D0 /* province_city_area_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 45AB6DD3249A1306004EB3D0 /* province_city_area_list.json */; };
 		45C2FA9A2BD789F80093928B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 45C2FA992BD789F80093928B /* PrivacyInfo.xcprivacy */; };
 		45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */; };
 		45E81D042399387700B8878A /* education_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* education_data.plist */; };
@@ -47,7 +46,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4515BA352C436FE20017BA7D /* cascade_second_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cascade_second_data.json; sourceTree = "<group>"; };
 		451D6C0C234D6AA2004E801F /* BRPickerStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerStyle.h; sourceTree = "<group>"; };
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
@@ -55,8 +53,9 @@
 		454D06F02C461C00002C3CF4 /* region_list_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_list_data.json; sourceTree = "<group>"; };
 		454D06F12C461C00002C3CF4 /* region_tree_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_tree_data.json; sourceTree = "<group>"; };
 		454D06F22C461C01002C3CF4 /* amap_region_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amap_region_data.json; sourceTree = "<group>"; };
-		454D06F62C46237E002C3CF4 /* cascade_three_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cascade_three_data.json; sourceTree = "<group>"; };
-		456506DD24C1AF7100A2E4EE /* student_grade_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = student_grade_list.json; sourceTree = "<group>"; };
+		454D06F62C46237E002C3CF4 /* cascade_tree_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cascade_tree_data.json; sourceTree = "<group>"; };
+		454D06F82C465893002C3CF4 /* grade_level_data.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = grade_level_data.plist; sourceTree = "<group>"; };
+		454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cascade_list_data.json; sourceTree = "<group>"; };
 		45653924237032D90074BBBC /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		4566F7D623B377D700CD59D4 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		4566F7D723B377D800CD59D4 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
@@ -64,7 +63,6 @@
 		4566F7DA23B4425700CD59D4 /* UIImage+Color.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		4566F7DC23B4BCE100CD59D4 /* UIColor+BRAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+BRAdd.h"; sourceTree = "<group>"; };
 		4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BRAdd.m"; sourceTree = "<group>"; };
-		457DA34C24D90AFB009D75F3 /* student_grade_tree.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = student_grade_tree.json; sourceTree = "<group>"; };
 		4596CAF72C34E257003C6654 /* BRTextModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRTextModel.h; sourceTree = "<group>"; };
 		4596CAF82C34E257003C6654 /* BRTextModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRTextModel.m; sourceTree = "<group>"; };
 		4596CAFA2C34EC1B003C6654 /* BRTextPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRTextPickerView.h; sourceTree = "<group>"; };
@@ -78,7 +76,6 @@
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
 		45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BRDatePickerView+BR.h"; sourceTree = "<group>"; };
 		45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BRDatePickerView+BR.m"; sourceTree = "<group>"; };
-		45AB6DD3249A1306004EB3D0 /* province_city_area_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = province_city_area_list.json; sourceTree = "<group>"; };
 		45C2FA992BD789F80093928B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRAddressPickerView.bundle; sourceTree = "<group>"; };
 		45E81CF62399387700B8878A /* education_data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = education_data.plist; sourceTree = "<group>"; };
@@ -181,15 +178,13 @@
 				45E81CF82399387700B8878A /* Controller */,
 				45E81CFB2399387700B8878A /* Model */,
 				45E81CFE2399387700B8878A /* View */,
-				4515BA352C436FE20017BA7D /* cascade_second_data.json */,
-				454D06F62C46237E002C3CF4 /* cascade_three_data.json */,
 				454D06F22C461C01002C3CF4 /* amap_region_data.json */,
 				454D06F12C461C00002C3CF4 /* region_tree_data.json */,
 				454D06F02C461C00002C3CF4 /* region_list_data.json */,
-				456506DD24C1AF7100A2E4EE /* student_grade_list.json */,
-				457DA34C24D90AFB009D75F3 /* student_grade_tree.json */,
-				45AB6DD3249A1306004EB3D0 /* province_city_area_list.json */,
+				454D06F62C46237E002C3CF4 /* cascade_tree_data.json */,
+				454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */,
 				45E81CF62399387700B8878A /* education_data.plist */,
+				454D06F82C465893002C3CF4 /* grade_level_data.plist */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -402,14 +397,13 @@
 			files = (
 				45E81D042399387700B8878A /* education_data.plist in Resources */,
 				454D06F42C461C01002C3CF4 /* region_tree_data.json in Resources */,
+				454D06F92C465893002C3CF4 /* grade_level_data.plist in Resources */,
 				45C2FA9A2BD789F80093928B /* PrivacyInfo.xcprivacy in Resources */,
-				457DA34D24D90AFB009D75F3 /* student_grade_tree.json in Resources */,
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
-				45AB6DD4249A1306004EB3D0 /* province_city_area_list.json in Resources */,
+				454D06FB2C4693CA002C3CF4 /* cascade_list_data.json in Resources */,
 				454D06F52C461C01002C3CF4 /* amap_region_data.json in Resources */,
-				456506DE24C1AF7100A2E4EE /* student_grade_list.json in Resources */,
-				454D06F72C46237E002C3CF4 /* cascade_three_data.json in Resources */,
+				454D06F72C46237E002C3CF4 /* cascade_tree_data.json in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
 				45653925237032D90074BBBC /* BRPickerView.bundle in Resources */,
 				45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */,

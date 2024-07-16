@@ -10,6 +10,27 @@
 
 @implementation BRDataSourceHelper
 
+#pragma mark - 获取本地文件（.plist/.json）数据
++ (id)getLocalFileData:(NSString *)fileName {
+    // 获取本地数据源
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+    if (filePath && filePath.length > 0) {
+        if ([fileName hasSuffix:@".plist"]) {
+            // 获取本地 plist文件 数据源
+            return [[NSArray alloc] initWithContentsOfFile:filePath];
+        } else if ([fileName hasSuffix:@".json"]) {
+            // 获取本地 JSON文件 数据源
+            NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
+            return [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+        }
+    }
+    return nil;
+}
+
+
+// =====================================================
+// ================= 处理高德行政区划数据 =================
+// =====================================================
 #pragma mark - 获取高德地图行政区划数据源
 + (void)loadAMapRegionData:(NSString *)amapKey completionBlock:(void (^)(NSDictionary *responseObject))completionBlock {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://restapi.amap.com/v3/config/district?key=%@&subdistrict=3", amapKey]];
@@ -37,7 +58,7 @@
 }
 
 #pragma mark - 加载高德行政区划省市区模型数组
-+ (void)loadAMapRegionModelArr:(void (^)(NSArray *modeArr))completionBlock {
++ (void)loadAMapRegionModelArr:(void (^)(NSArray *dataArr))completionBlock {
     [self loadAMapRegionData:@"005deb4aeb1f8cfdd28fb5fdd6badf25" completionBlock:^(NSDictionary *responseObject) {
         // 写入数据到文件
         [self writeDataWithJSONObject:responseObject toFileName:@"amap_region_data.json"];
@@ -48,47 +69,14 @@
             NSDictionary *countryDic = districts.firstObject;
             districts = countryDic[@"districts"];
             
-            // 解析为模型数组
-            NSArray *modeArr = [self convertToTextModels:districts];
-            
             // 生成 region_data.json 文件
             [self writeToRegionDataJsonFile];
             // 生成 BRCity.json 文件
             [self writeToBRCityJsonFile];
             
-            completionBlock ? completionBlock(modeArr): nil;
+            completionBlock ? completionBlock(districts): nil;
         }
     }];
-}
-
-+ (NSArray *)convertToTextModels:(NSArray *)regionModels {
-    NSMutableArray *tempArr = [NSMutableArray array];
-    for (NSDictionary *dic in regionModels) {
-        BRTextModel *model = [[BRTextModel alloc]init];
-        model.code = dic[@"adcode"];
-        model.text =  dic[@"name"];
-        model.children = [self convertToTextModels:dic[@"districts"]]; // 递归处理子list
-        [tempArr addObject:model];
-    }
-    
-    // 按code字段对模型数组进行升序排序
-    [tempArr sortUsingComparator:^NSComparisonResult(BRTextModel * _Nonnull obj1, BRTextModel * _Nonnull obj2) {
-        return [obj1.code compare:obj2.code];
-    }];
-    
-    return [tempArr copy];
-}
-
-#pragma mark - 获取本地省市区模型数组
-+ (NSArray<BRTextModel *> *)getRegionTreeModelArr {
-    // 获取本地数据源
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"region_tree_data.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSArray *dataArr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    // 解析为模型数组
-    NSArray *modeArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
-    
-    return modeArr;
 }
 
 /// 写入数据到文件
@@ -104,85 +92,6 @@
     NSLog(@"%@文件保存路径：%@", fileName, filePath);
     NSLog(@"%@文件写入内容：%@", fileName, logString);
 }
-
-#pragma mark - 获取二级联动的数据源（扁平结构）
-+ (NSArray <BRTextModel *>*)getLinkag2DataSource {
-    // 获取本地数据源
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"linkage2_data.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    NSArray *dataArr = responseObj[@"data"];
-    
-    // 1.将 字典数组 转成 模型数组
-    NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
-    for (NSDictionary *dic in dataArr) {
-        BRTextModel *model = [[BRTextModel alloc]init];
-        model.code = dic[@"key"];
-        model.text = dic[@"value"];
-        model.parentCode = dic[@"parent_code"];
-        [listModelArr addObject:model];
-    }
-    
-    // 2.将扁平化结构数组 转成 树状结构数组
-    return [listModelArr br_buildTreeArray];
-}
-
-#pragma mark - 获取学生年级数据源
-+ (NSArray <BRTextModel *>*)getStudentGradeTreeDataSource {
-    // 获取本地数据源（树状结构）
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"student_grade_tree.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    NSArray *dataArr = responseObj[@"GetStageInfoDto"];
-    
-    NSDictionary *mapper = @{
-        @"code": @"StageID",
-        @"text": @"Name",
-        @"parentCode": @"GradeID",
-        @"children": @"GetGradeInfoDto"
-    };
-    return [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-}
-
-#pragma mark - 获取省市区数据源
-+ (NSArray <BRTextModel *>*)getProvinceCityAreaListDataSource {
-    // 获取本地数据源（扁平结构）
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"province_city_area_list.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
-    // 省
-    NSArray *provinceArr = responseObj[@"Result"][@"Province"];
-    for (NSInteger i = 0; i < provinceArr.count; i++) {
-        BRTextModel *model = [[BRTextModel alloc]init];
-        model.code = [NSString stringWithFormat:@"%@", provinceArr[i][@"ProvinceID"]];
-        model.text = provinceArr[i][@"Province"];
-        [listModelArr addObject:model];
-    }
-    // 市
-    NSArray *cityArr = responseObj[@"Result"][@"City"];
-    for (NSInteger i = 0; i < cityArr.count; i++) {
-        BRTextModel *model = [[BRTextModel alloc]init];
-        model.parentCode = [NSString stringWithFormat:@"%@", cityArr[i][@"ProvinceID"]];
-        model.code = [NSString stringWithFormat:@"%@", cityArr[i][@"CityID"]];
-        model.text = cityArr[i][@"City"];
-        [listModelArr addObject:model];
-    }
-    // 区
-    NSArray *areaArr = responseObj[@"Result"][@"Area"];
-    for (NSInteger i = 0; i < areaArr.count; i++) {
-        BRTextModel *model = [[BRTextModel alloc]init];
-        model.parentCode = [NSString stringWithFormat:@"%@", areaArr[i][@"CityID"]];;
-        model.code = [NSString stringWithFormat:@"%@", areaArr[i][@"AreaID"]];
-        model.text = areaArr[i][@"Area"];
-        [listModelArr addObject:model];
-    }
-    
-    // 2.将扁平化结构数组 转成 树状结构数组
-    return [listModelArr br_buildTreeArray];
-}
-
 
 #pragma mark - 生成 region_tree_data.json 文件
 + (void)writeToRegionDataJsonFile {
