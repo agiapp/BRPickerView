@@ -35,18 +35,19 @@ Pod::Spec.new do |s|
   # 隐私清单
   s.resource_bundles = { 'BRPickerView.Privacy' => 'BRPickerView/PrivacyInfo.xcprivacy' }
   
-  s.default_subspec = 'Default'
+  s.default_subspec = 'All'
   
   # 二级目录（根目录是s，使用s.subspec设置子目录，这里设置子目录为ss）
   s.subspec 'Default' do |ss|
-    ss.dependency 'BRPickerView/Turbo'
-    ss.dependency 'BRPickerView/Deprecated'
-  end
-  
-  # 加强版，轻量级
-  s.subspec 'Turbo' do |ss|
     ss.dependency 'BRPickerView/DatePicker'
     ss.dependency 'BRPickerView/TextPicker'
+  end
+  
+  # 全部组件（包含废弃的）
+  s.subspec 'All' do |ss|
+    ss.dependency 'BRPickerView/DatePicker'
+    ss.dependency 'BRPickerView/TextPicker'
+    ss.dependency 'BRPickerView/Deprecated'
   end
   
   s.subspec 'Core' do |ss|
@@ -65,28 +66,31 @@ Pod::Spec.new do |s|
     ss.source_files = 'BRPickerView/TextPicker/*.{h,m}'
   end
   
-  # 废弃版
+  # 废弃组件
   s.subspec 'Deprecated' do |ss|
-    ss.dependency 'BRPickerView/AddressPickerView'
-    ss.dependency 'BRPickerView/StringPickerView'
+    ss.dependency 'BRPickerView/Core'
+    ss.source_files = 'BRPickerView/Deprecated/*/*.{h,m}'
+    # 地址选择器包含的资源包
+    ss.resources  = 'BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle'
   end
   
   s.subspec 'Base' do |ss|
     ss.dependency 'BRPickerView/Core'
     ss.source_files = 'BRPickerView/Deprecated/Base/*.{h,m}'
   end
-  
+
   s.subspec 'AddressPickerView' do |ss|
     ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/Deprecated/AddressPickerView/*.{h,m}'
     # 地址选择器包含的资源包
     ss.resources  = 'BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle'
   end
-  
+
   s.subspec 'StringPickerView' do |ss|
     ss.dependency 'BRPickerView/Base'
     ss.source_files = 'BRPickerView/Deprecated/StringPickerView/*.{h,m}'
   end
+  
   
   # 框架要求ARC环境下使用
   s.requires_arc = true
