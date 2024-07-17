@@ -7,6 +7,10 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDa
 >- 当前最新版本为： `2.9.0` 。从当前版本开始新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
 >- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
+#### 📒 稀土掘金地址：https://juejin.cn/post/6844903605468676104
+
+
+
 # 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
