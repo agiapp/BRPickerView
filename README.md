@@ -2,7 +2,7 @@
 
 BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDatePickerView`** 日期选择器（支持年月日、年月等15种日期样式选择，支持设置星期、至今等）、**`BRTextPickerView`** 文本选择器（支持单列、多列、省市区、省市、省、自定义多级联动选择）。支持自定义主题样式，适配深色模式，支持将选择器组件添加到指定容器视图。
 
-【说明】
+【特别说明】
 
 >- 当前最新版本为： `2.9.0` 。从当前版本开始新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
 >- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
@@ -20,10 +20,14 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDa
 #### CocoaPods
 
 1. 在 Podfile 中添加 `pod 'BRPickerView'`。
-
 2. 执行 `pod install` 或 `pod update` 。
-
 3. 导入头文件 ` #import <BRPickerView.h>`。
+
+>安装说明：
+>
+>**pod 'BRPickerView'** ：默认是安装全部组件（包含：`BRDatePickerView` 、 `BRTextPickerView` ，和废弃的`BRAddressPickerView` 、`BRStringPickerView` 组件）
+>
+>**pod 'BRPickerView/Default'** ：仅安装`BRDatePickerView` 和 `BRTextPickerView` 组件
 
 
 #### 手动导入
@@ -626,6 +630,18 @@ textPickerView.pickerStyle = customStyle;
 
 | ![三列联动文本选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_three.png?raw=true) | ![两列字符串选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_two.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
+
+
+
+补充说明：对于一些需要特殊定制弹框的应用场景，可以使用下面的方法把日期选择器/文本选择器到指定容器视图上，实现个性化的弹框需求。
+
+```objective-c
+/// 扩展一：添加选择器到指定容器视图上
+/// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
+/// 补充说明：如果是自定义确定按钮，需要回调默认选择的值：只需在自定义确定按钮的点击事件方法里执行一下 doneBlock 回调（目的是去触发组件内部执行 resultBlock 回调，进而回调默认选择的值）
+/// @param view 容器视图
+- (void)addPickerToView:(nullable UIView *)view NS_REQUIRES_SUPER;
+```
 
 
 
