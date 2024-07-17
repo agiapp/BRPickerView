@@ -1,11 +1,11 @@
 # BRPickerView
 
-BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期选择器（支持年月日、年月等15种日期样式选择，支持设置星期、至今等）、文本选择器（支持单列、多列、多级联动选择）。支持自定义主题样式，适配深色模式，支持将选择器组件添加到指定容器视图。
+BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDatePickerView`** 日期选择器（支持年月日、年月等15种日期样式选择，支持设置星期、至今等）、**`BRTextPickerView`** 文本选择器（支持单列、多列、省市区、省市、省、自定义多级联动选择）。支持自定义主题样式，适配深色模式，支持将选择器组件添加到指定容器视图。
 
 【说明】
 
-- 当前最新版本为： `2.9.0` 。
-- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
+>- 当前最新版本为： `2.9.0` 。从当前版本开始新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
+>- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
 
@@ -259,8 +259,8 @@ NSArray *dataArr = @[@{@"code": @"1", @"text": @"大专以下"},
                      @{@"code": @"4", @"text": @"硕士"},
                      @{@"code": @"5", @"text": @"博士"},
                      @{@"code": @"6", @"text": @"博士后"}];
-// 将上面数组 转为 模型数组
-NSArray *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
+// 将上面数组 转为 模型数组（组件内封装的工具方法）
+NSArray<BRTextModel *> *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
 textPickerView.dataSourceArr = modelArr;
 ```
 
@@ -280,7 +280,7 @@ NSArray *dataArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
 // 指定 BRTextModel模型的属性 与 字典key 的映射关系
 NSDictionary *mapper = @{ @"code": @"key", @"text": @"value", @"extras": @"remark" };
 // 将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
+NSArray<BRTextModel *> *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
 textPickerView.dataSourceArr = modelArr;
 textPickerView.singleResultBlock = ^(BRTextModel * _Nullable model, NSInteger index) {
   	NSLog(@"选择的值：%@", model.text);
@@ -453,6 +453,14 @@ textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, N
 | ![省份](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_province.png?raw=true) |                                                              |
 | 样式3：textPickerView.showColumnNum = 1;                     |                                                              |
 
+>高德地图行政区划数据源（省、市、区/县）：数据更新于2024年7月
+>
+>- 原数据：https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/DataFile/amap_region_data.json
+>- 处理后的树状结构数据1：https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/DataFile/region_tree_data.json
+>- 处理后的树状结构数据2：https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/DataFile/region_list_data.json
+
+
+
 - 处理树状结构数据
 
 ```json
@@ -499,7 +507,7 @@ NSArray *dataArr = ...... responseObject[@"districts"];
 // 指定 BRTextModel模型的属性 与 字典key 的映射关系
 NSDictionary *mapper = @{ @"code": @"adcode", @"text": @"name", @"children": @"districts" };
 // 将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
+NSArray<BRTextModel *> *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
 textPickerView.dataSourceArr = modelArr;
 textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
     // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
@@ -589,16 +597,18 @@ textPickerView.title = @"多列联动文本选择器";
 NSArray *dataArr = ...... responseObject[@"Result"];
 // 指定 BRTextModel模型的属性 与 字典key 的映射关系
 NSDictionary *mapper = @{ @"parentCode": @"ParentID", @"code": @"CategoryID", @"text": @"CategoryName" };
-// 1.将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray *listModelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
+// 1.先将上面数组 转为 模型数组（组件内封装的工具方法）。如果数据源是多个数组，需要自己先手动组装成一个NSArray<BRTextModel *>类型的扁平结构模型数组。
+NSArray<BRTextModel *> *listModelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
 // 2.将扁平结构模型数组 转成 树状结构模型数组（组件内封装的工具方法）
-NSArray *treeModelArr = [listModelArr br_buildTreeArray];
+NSArray<BRTextModel *> *treeModelArr = [listModelArr br_buildTreeArray];
 textPickerView.dataSourceArr = treeModelArr;
 
 textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
     // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
   	NSString *selectText = [models br_joinText:@"-"];
     NSLog(@"选择的结果：%@", selectText);
+    // 获取选择模型指定属性（如：code）组成的数组（组件内封装的工具方法）
+    NSArray *selectIDs = [models br_getValueArr:@"code"];
 };
 
 // 设置选择器中间选中行的样式
