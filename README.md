@@ -453,11 +453,11 @@ textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, N
 | ![省份](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_province.png?raw=true) |                                                              |
 | 样式3：textPickerView.showColumnNum = 1;                     |                                                              |
 
->高德地图行政区划数据源（省、市、区/县）：数据更新于2024年7月
+>高德地图行政区划数据源（省、市、区/县），数据更新于2024年7月
 >
->- 原数据：https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/DataFile/amap_region_data.json
->- 处理后的树状结构数据1：https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/DataFile/region_tree_data.json
->- 处理后的树状结构数据2：https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/DataFile/region_list_data.json
+>- 原数据：[amap_region_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/amap_region_data.json)
+>- 处理后的树状结构数据1：[region_tree_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_tree_data.json) （组件使用本地数据源时，需要下载的文件）
+>- 处理后的树状结构数据2：[region_list_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_list_data.json)
 
 
 
