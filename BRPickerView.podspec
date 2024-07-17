@@ -45,8 +45,7 @@ Pod::Spec.new do |s|
   
   # 全部组件（包含废弃的）
   s.subspec 'All' do |ss|
-    ss.dependency 'BRPickerView/DatePicker'
-    ss.dependency 'BRPickerView/TextPicker'
+    ss.dependency 'BRPickerView/Default'
     ss.dependency 'BRPickerView/Deprecated'
   end
   
@@ -69,26 +68,29 @@ Pod::Spec.new do |s|
   # 废弃组件
   s.subspec 'Deprecated' do |ss|
     ss.dependency 'BRPickerView/Core'
-    ss.source_files = 'BRPickerView/Deprecated/*/*.{h,m}'
-    # 地址选择器包含的资源包
-    ss.resources  = 'BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle'
+    # 三级目录
+    ss.subspec 'Base' do |sss|
+      sss.source_files = 'BRPickerView/Deprecated/Base/*.{h,m}'
+    end
+    ss.subspec 'AddressPickerView' do |sss|
+      sss.dependency 'BRPickerView/Deprecated/Base'
+      sss.source_files = 'BRPickerView/Deprecated/AddressPickerView/*.{h,m}'
+      # 地址选择器包含的资源包
+      sss.resources  = 'BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle'
+    end
+    ss.subspec 'StringPickerView' do |sss|
+      sss.dependency 'BRPickerView/Deprecated/Base'
+      sss.source_files = 'BRPickerView/Deprecated/StringPickerView/*.{h,m}'
+    end
   end
   
-  s.subspec 'Base' do |ss|
-    ss.dependency 'BRPickerView/Core'
-    ss.source_files = 'BRPickerView/Deprecated/Base/*.{h,m}'
-  end
-
+  # 兼容老版本pod方式
   s.subspec 'AddressPickerView' do |ss|
-    ss.dependency 'BRPickerView/Base'
-    ss.source_files = 'BRPickerView/Deprecated/AddressPickerView/*.{h,m}'
-    # 地址选择器包含的资源包
-    ss.resources  = 'BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle'
+    ss.dependency 'BRPickerView/Deprecated/AddressPickerView'
   end
 
   s.subspec 'StringPickerView' do |ss|
-    ss.dependency 'BRPickerView/Base'
-    ss.source_files = 'BRPickerView/Deprecated/StringPickerView/*.{h,m}'
+    ss.dependency 'BRPickerView/Deprecated/StringPickerView'
   end
   
   
