@@ -121,6 +121,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		457868602C4758B6006F7FD6 /* DataFile */ = {
+			isa = PBXGroup;
+			children = (
+				454D06F22C461C01002C3CF4 /* amap_region_data.json */,
+				454D06F12C461C00002C3CF4 /* region_tree_data.json */,
+				454D06F02C461C00002C3CF4 /* region_list_data.json */,
+				454D06F62C46237E002C3CF4 /* cascade_tree_data.json */,
+				454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */,
+				45E81CF62399387700B8878A /* education_data.plist */,
+				454D06F82C465893002C3CF4 /* grade_level_data.plist */,
+			);
+			path = DataFile;
+			sourceTree = "<group>";
+		};
 		458CB7492C33FBFB00C46170 /* TextPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,13 +192,6 @@
 				45E81CF82399387700B8878A /* Controller */,
 				45E81CFB2399387700B8878A /* Model */,
 				45E81CFE2399387700B8878A /* View */,
-				454D06F22C461C01002C3CF4 /* amap_region_data.json */,
-				454D06F12C461C00002C3CF4 /* region_tree_data.json */,
-				454D06F02C461C00002C3CF4 /* region_list_data.json */,
-				454D06F62C46237E002C3CF4 /* cascade_tree_data.json */,
-				454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */,
-				45E81CF62399387700B8878A /* education_data.plist */,
-				454D06F82C465893002C3CF4 /* grade_level_data.plist */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -262,6 +269,7 @@
 				C5ACE50F1F3D80BA0069978B /* Classes */,
 				C5ACE4DC1F3D58BD0069978B /* AppDelegate.h */,
 				C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */,
+				457868602C4758B6006F7FD6 /* DataFile */,
 				C5ACE4D91F3D58BD0069978B /* Supporting Files */,
 			);
 			path = BRPickerViewDemo;

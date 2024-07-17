@@ -16,6 +16,7 @@
     if (self = [super init]) {
         self.code = dictionary[@"code"];
         self.text = dictionary[@"text"];
+        self.parentCode = dictionary[@"parent_code"];
         NSArray *childrenArray = dictionary[@"children"];
         if (childrenArray) {
             NSMutableArray *tempArr = [NSMutableArray array];
