@@ -12,13 +12,12 @@
 @interface BRTextPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
 /** 选择器 */
 @property (nonatomic, strong) UIPickerView *pickerView;
+/** 当前显示的数据源 */
+@property (nonatomic, copy) NSArray *dataList;
 
 // 记录滚动中的位置
 @property(nonatomic, assign) NSInteger rollingComponent;
 @property(nonatomic, assign) NSInteger rollingRow;
-
-/** 当前显示的数据源 */
-@property (nonatomic, copy) NSArray *dataList;
 
 @end
 
@@ -238,7 +237,7 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
-        label.numberOfLines = 2;
+        label.numberOfLines = self.pickerStyle.maxTextLines;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
         // 自适应最小字体缩放比例
