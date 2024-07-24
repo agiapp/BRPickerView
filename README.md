@@ -4,7 +4,7 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDa
 
 【特别说明】
 
->- 当前最新版本为： `2.9.0` 。从当前版本开始新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
+>- 从 `2.9.0` 版本起新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
 >- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
@@ -19,13 +19,13 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDa
 
 #### CocoaPods
 
-1. 在 Podfile 中添加 `pod 'BRPickerView'`。
-2. 执行 `pod install` 或 `pod update` 。
-3. 导入头文件 ` #import <BRPickerView.h>`。
+1. 在 Podfile 中添加 `pod 'BRPickerView'`
+2. 执行 `pod install` 或 `pod update` 
+3. 导入头文件 ` #import <BRPickerView.h>`
 
 >安装说明：
 >
->**pod 'BRPickerView'** ：默认是安装全部组件（包含：`BRDatePickerView` 、 `BRTextPickerView` ，和废弃的`BRAddressPickerView` 、`BRStringPickerView` 组件）
+>**pod 'BRPickerView'** ：默认是安装全部组件（包含：`BRDatePickerView` 、 `BRTextPickerView` ，和废弃的`BRAddressPickerView` 、`BRStringPickerView` 组件），等价于：`pod 'BRPickerView/All'`
 >
 >**pod 'BRPickerView/Default'** ：仅安装`BRDatePickerView` 和 `BRTextPickerView` 组件
 
@@ -646,6 +646,11 @@ textPickerView.pickerStyle = customStyle;
 
 
 # 更新记录
+
+#### 2024-07-24（V2.9.1）
+
+- 新增 maxTextLines 属性
+- 取消 selectRowAnimated 属性 readonly 限制
 
 #### 2024-07-17（V2.9.0）
 
