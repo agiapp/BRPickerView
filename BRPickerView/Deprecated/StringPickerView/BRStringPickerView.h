@@ -89,7 +89,7 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
 @property (nonatomic, assign) NSInteger numberOfComponents;
 
 /** 滚动至选择行动画，默认为 NO */
-@property (nonatomic, readonly, assign) BOOL selectRowAnimated;
+@property (nonatomic, assign) BOOL selectRowAnimated;
 
 /// 初始化字符串选择器
 /// @param pickerMode 字符串选择器显示类型

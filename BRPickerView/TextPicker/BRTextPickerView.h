@@ -97,7 +97,7 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
 @property (nonatomic, assign) NSUInteger showColumnNum;
 
 /** 滚动至选择行动画，默认为 NO */
-@property (nonatomic, readonly, assign) BOOL selectRowAnimated;
+@property (nonatomic, assign) BOOL selectRowAnimated;
 
 /// 初始化文本选择器
 /// @param pickerMode 文本选择器显示类型
