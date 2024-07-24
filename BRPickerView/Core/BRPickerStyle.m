@@ -253,6 +253,13 @@
     return _rowHeight;
 }
 
+- (NSUInteger)maxTextLines {
+    if (_maxTextLines < 1) {
+        _maxTextLines = 2;
+    }
+    return _maxTextLines;
+}
+
 - (NSString *)language {
     if (!_language) {
         // 跟随系统的首选语言自动改变

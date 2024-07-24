@@ -97,7 +97,7 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
 @property (nonatomic, assign) NSUInteger showColumnNum;
 
 /** 滚动至选择行动画，默认为 NO */
-@property (nonatomic, readonly, assign) BOOL selectRowAnimated;
+@property (nonatomic, assign) BOOL selectRowAnimated;
 
 /// 初始化文本选择器
 /// @param pickerMode 文本选择器显示类型
@@ -131,7 +131,7 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
  *  @param title               选择器标题
  *  @param dataSourceArr       数据源（如：@[@"男", @"女", @"其他"]，或直接传模型数组）
  *  @param selectIndex         默认选中的位置
- *  @param resultBlock           选择后的回调
+ *  @param resultBlock         选择后的回调
  *
  */
 + (void)showPickerWithTitle:(nullable NSString *)title
@@ -145,7 +145,7 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
  *  @param title               选择器标题
  *  @param dataSourceArr       数据源，格式：@[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好"]]，或直接传多维模型数组
  *  @param selectIndexs        默认选中的位置（传索引数组，如：@[@2, @1]）
- *  @param resultBlock           选择后的回调
+ *  @param resultBlock         选择后的回调
  *
  */
 + (void)showMultiPickerWithTitle:(nullable NSString *)title
@@ -159,7 +159,7 @@ typedef void(^BRMultiResultBlock)(NSArray <BRTextModel *> * _Nullable models, NS
  *  @param title               选择器标题
  *  @param dataSourceArr       数据源，格式：直接传一维模型数组(NSArray <BRTextModel *>*)
  *  @param selectIndexs        默认选中的位置（传索引数组，如：@[@2, @1]）
- *  @param resultBlock           选择后的回调
+ *  @param resultBlock         选择后的回调
  *
  */
 + (void)showCascadePickerWithTitle:(nullable NSString *)title
