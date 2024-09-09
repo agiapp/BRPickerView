@@ -23,9 +23,9 @@ let package = Package(
             path: "BRPickerView",
             // 指定该库包含的资源文件
             resources: [
-                .process("Core/BRPickerView.bundle"),
-                .process("Deprecated/AddressPickerView/BRAddressPickerView.bundle"), 
-                .copy("PrivacyInfo.xcprivacy")
+                .process("BRPickerView/Core/BRPickerView.bundle"),
+                .process("BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle"), 
+                .copy("BRPickerView/PrivacyInfo.xcprivacy")
             ],
             // 设置默认本地化为英语
             // defaultLocalization: "en",
