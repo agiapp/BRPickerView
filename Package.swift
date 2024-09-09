@@ -30,11 +30,11 @@ let package = Package(
             // 设置默认本地化为英语
             // defaultLocalization: "en",
             // 指定公共头文件的路径。在这里，它设置为当前目录（"."）
-            publicHeadersPath: ".",
+            publicHeadersPath: "Include",
             // 为C语言源代码指定一些设置
             cSettings: [
                 //Config header path
-                .headerSearchPath("."),
+                .headerSearchPath("Include"),
             ]
         ),
     ]

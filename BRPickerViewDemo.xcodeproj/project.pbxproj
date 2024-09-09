@@ -46,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AB995CB2C8F3E3600AEE7FD /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
 		451D6C0C234D6AA2004E801F /* BRPickerStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerStyle.h; sourceTree = "<group>"; };
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDatePickerView.m; sourceTree = "<group>"; };
 		C5ACE50C1F3D7E890069978B /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
 		C5ACE50D1F3D7E890069978B /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
-		C5ACE5201F3D90A90069978B /* BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
 		C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRPickerView.h"; sourceTree = "<group>"; };
 		C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +121,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AB995CC2C8F3E3600AEE7FD /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				1AB995CB2C8F3E3600AEE7FD /* BRPickerView.h */,
+			);
+			path = Include;
+			sourceTree = "<group>";
+		};
 		457868602C4758B6006F7FD6 /* DataFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,7 +298,7 @@
 		C5ACE4F01F3D5A8B0069978B /* BRPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				C5ACE5201F3D90A90069978B /* BRPickerView.h */,
+				1AB995CC2C8F3E3600AEE7FD /* Include */,
 				45C2FA992BD789F80093928B /* PrivacyInfo.xcprivacy */,
 				4596CB0C2C365564003C6654 /* Core */,
 				458CB74A2C33FBFB00C46170 /* DatePicker */,
@@ -373,7 +381,7 @@
 				TargetAttributes = {
 					C5ACE4D51F3D58BD0069978B = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = N92S3NU839;
+						DevelopmentTeam = K34Z59STMC;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -588,7 +596,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N92S3NU839;
+				DEVELOPMENT_TEAM = K34Z59STMC;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -605,7 +613,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N92S3NU839;
+				DEVELOPMENT_TEAM = K34Z59STMC;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
