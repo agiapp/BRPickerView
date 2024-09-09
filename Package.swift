@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     // 指定包的名称
     name: "BRPickerView",
-    // defaultLocalization: "en",
+    defaultLocalization: "en",
     // 该库的一些配置
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
