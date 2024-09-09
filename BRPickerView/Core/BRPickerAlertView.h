@@ -1,5 +1,5 @@
 //
-//  BaseView.h
+//  BRPickerAlertView.h
 //  BRPickerViewDemo
 //
 //  Created by renbo on 2017/8/11.
@@ -12,22 +12,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^BRCancelBlock)(void);
-typedef void(^BRDoneClickBlock)(void);
+typedef void(^BRPickerAlertCancelBlock)(void);
+typedef void(^BRPickerAlertDoneBlock)(void);
 
-@interface BRBaseView : UIView
+@interface BRPickerAlertView : UIView
 
 /** 选择器标题 */
 @property (nullable, nonatomic, copy) NSString *title;
 
-/** 是否自动选择，即滚动选择器后就执行结果回调，默认为 NO */
-@property (nonatomic, assign) BOOL isAutoSelect;
-
 /** 自定义UI样式（不传或为nil时，是默认样式） */
 @property (nullable, nonatomic, strong) BRPickerStyle *pickerStyle;
-
-/** 取消选择的回调 */
-@property (nullable, nonatomic, copy) BRCancelBlock cancelBlock;
 
 /** accessory view for above picker view. default is nil */
 @property (nullable, nonatomic, strong) UIView *pickerHeaderView;
@@ -35,9 +29,12 @@ typedef void(^BRDoneClickBlock)(void);
 /** accessory view below picker view. default is nil */
 @property (nullable, nonatomic, strong) UIView *pickerFooterView;
 
+/** 取消选择的回调 */
+@property (nullable, nonatomic, copy) BRPickerAlertCancelBlock cancelBlock;
+
 /// 确定按钮点击事件的回调
 /// 应用场景：如果是自定义确定按钮，需要在该按钮点击事件方法里，执行一下 doneBlock 回调。目的是触发组件内部执行 resultBlock 回调，回调选择的值
-@property (nullable, nonatomic, copy) BRDoneClickBlock doneBlock;
+@property (nullable, nonatomic, copy) BRPickerAlertDoneBlock doneBlock;
 
 /** 弹框视图(使用场景：可以在 alertView 上添加选择器的自定义背景视图) */
 @property (nullable, nonatomic, strong) UIView *alertView;

@@ -11,7 +11,7 @@
 #define BRPickerViewMacro_h
 
 #import <UIKit/UIKit.h>
-
+;
 // 屏幕安全区域下边距
 #define BR_BOTTOM_MARGIN \
 ({CGFloat safeBottomHeight = 0;\

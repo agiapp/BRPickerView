@@ -8,7 +8,7 @@
 //  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
 #import "NSBundle+BRPickerView.h"
-#import "BRBaseView.h"
+#import "BRPickerAlertView.h"
 
 BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
 
@@ -18,15 +18,10 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
 + (instancetype)br_pickerBundle {
     static NSBundle *pickerBundle = nil;
     if (!pickerBundle) {
-        /*
-            先拿到最外面的 bundle。
-            对 framework 链接方式来说就是 framework 的 bundle 根目录，
-            对静态库链接方式来说就是 target client 的 main bundle，
-            然后再去找下面名为 BRPickerView 的 bundle 对象。
-         */
-        NSBundle *bundle = [NSBundle bundleForClass:[BRBaseView class]];
-        NSURL *url = [bundle URLForResource:@"BRPickerView" withExtension:@"bundle"];
-        pickerBundle = [NSBundle bundleWithURL:url];
+        // 获取 BRPickerView.bundle
+        NSBundle *bundle = [NSBundle bundleForClass:[BRPickerAlertView class]];
+        NSString *bundlePath = [bundle pathForResource:@"BRPickerView" ofType:@"bundle"];
+        pickerBundle = [NSBundle bundleWithPath:bundlePath];
     }
     return pickerBundle;
 }

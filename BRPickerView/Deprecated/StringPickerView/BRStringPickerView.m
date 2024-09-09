@@ -307,6 +307,7 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
+        label.numberOfLines = self.pickerStyle.maxTextLines;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
         // 自适应最小字体缩放比例
@@ -542,7 +543,7 @@
     [self.pickerView reloadAllComponents];
     // 3.滚动到选择的值
     if (self.pickerMode == BRStringPickerComponentSingle) {
-        [self.pickerView selectRow:self.selectIndex inComponent:0 animated:NO];
+        [self.pickerView selectRow:self.selectIndex inComponent:0 animated:self.selectRowAnimated];
     } else if (self.pickerMode == BRStringPickerComponentMulti || self.pickerMode == BRStringPickerComponentLinkage) {
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
             NSNumber *row = [self.selectIndexs objectAtIndex:i];
@@ -550,14 +551,10 @@
             if (self.pickerStyle.columnSpacing > 0) {
                 component = i * 2;
             }
-            [self.pickerView selectRow:[row integerValue] inComponent:component animated:NO];
+            [self.pickerView selectRow:[row integerValue] inComponent:component animated:self.selectRowAnimated];
         }
     }
 }
-
-// 0 【1】 2 【3】 4 【5】
-// 0 2 4
-// 0 1 2
 
 - (void)addPickerToView:(UIView *)view {
     // 1.添加选择器

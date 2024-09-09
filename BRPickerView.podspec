@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "2.8.8"
+  s.version      = "2.9.1"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
@@ -35,29 +35,64 @@ Pod::Spec.new do |s|
   # 隐私清单
   s.resource_bundles = { 'BRPickerView.Privacy' => 'BRPickerView/PrivacyInfo.xcprivacy' }
   
+  s.default_subspec = 'All'
+  
   # 二级目录（根目录是s，使用s.subspec设置子目录，这里设置子目录为ss）
-  s.subspec 'Base' do |ss|
-    ss.source_files = 'BRPickerView/Base/*.{h,m}'
+  s.subspec 'Default' do |ss|
+    ss.dependency 'BRPickerView/DatePicker'
+    ss.dependency 'BRPickerView/TextPicker'
+  end
+  
+  # 全部组件（包含废弃的）
+  s.subspec 'All' do |ss|
+    ss.dependency 'BRPickerView/Default'
+    ss.dependency 'BRPickerView/Deprecated'
+  end
+  
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'BRPickerView/Core/*.{h,m}'
     # 框架包含的资源包
-    ss.resources  = 'BRPickerView/Base/BRPickerView.bundle'
+    ss.resources  = 'BRPickerView/Core/BRPickerView.bundle'
   end
   
-  s.subspec 'DatePickerView' do |ss|
-    ss.dependency 'BRPickerView/Base'
-    ss.source_files = 'BRPickerView/DatePickerView/*.{h,m}'
+  s.subspec 'DatePicker' do |ss|
+    ss.dependency 'BRPickerView/Core'
+    ss.source_files = 'BRPickerView/DatePicker/*.{h,m}'
   end
   
+  s.subspec 'TextPicker' do |ss|
+    ss.dependency 'BRPickerView/Core'
+    ss.source_files = 'BRPickerView/TextPicker/*.{h,m}'
+  end
+  
+  # 废弃组件
+  s.subspec 'Deprecated' do |ss|
+    ss.dependency 'BRPickerView/Core'
+    # 三级目录
+    ss.subspec 'Base' do |sss|
+      sss.source_files = 'BRPickerView/Deprecated/Base/*.{h,m}'
+    end
+    ss.subspec 'AddressPickerView' do |sss|
+      sss.dependency 'BRPickerView/Deprecated/Base'
+      sss.source_files = 'BRPickerView/Deprecated/AddressPickerView/*.{h,m}'
+      # 地址选择器包含的资源包
+      sss.resources  = 'BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle'
+    end
+    ss.subspec 'StringPickerView' do |sss|
+      sss.dependency 'BRPickerView/Deprecated/Base'
+      sss.source_files = 'BRPickerView/Deprecated/StringPickerView/*.{h,m}'
+    end
+  end
+  
+  # 兼容老版本pod方式
   s.subspec 'AddressPickerView' do |ss|
-    ss.dependency 'BRPickerView/Base'
-    ss.source_files = 'BRPickerView/AddressPickerView/*.{h,m}'
-    # 地址选择器包含的资源包
-    ss.resources  = 'BRPickerView/AddressPickerView/BRAddressPickerView.bundle'
+    ss.dependency 'BRPickerView/Deprecated/AddressPickerView'
+  end
+
+  s.subspec 'StringPickerView' do |ss|
+    ss.dependency 'BRPickerView/Deprecated/StringPickerView'
   end
   
-  s.subspec 'StringPickerView' do |ss|
-    ss.dependency 'BRPickerView/Base'
-    ss.source_files = 'BRPickerView/StringPickerView/*.{h,m}'
-  end
   
   # 框架要求ARC环境下使用
   s.requires_arc = true

@@ -26,6 +26,8 @@ typedef void(^BRStringResultModelBlock)(BRResultModel * _Nullable resultModel);
 
 typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullable resultModelArr);
 
+// BRStringPickerView 组件已废弃，请使用 BRTextPickerView 组件进行替换，具体使用请参见 README.md
+//__attribute__((deprecated("Use 'BRTextPickerView' instead.")))
 @interface BRStringPickerView : BRBaseView
 
 /**
@@ -85,6 +87,9 @@ typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullab
  *  使用场景：默认可选，当数据源中有 key 等于 parentKey 情况时，必须要设置
  */
 @property (nonatomic, assign) NSInteger numberOfComponents;
+
+/** 滚动至选择行动画，默认为 NO */
+@property (nonatomic, assign) BOOL selectRowAnimated;
 
 /// 初始化字符串选择器
 /// @param pickerMode 字符串选择器显示类型

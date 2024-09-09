@@ -306,6 +306,7 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
+        label.numberOfLines = self.pickerStyle.maxTextLines;
         // 字体自适应属性
         label.adjustsFontSizeToFitWidth = YES;
         // 自适应最小字体缩放比例

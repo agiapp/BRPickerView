@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, BRAddressPickerMode) {
 
 typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCityModel * _Nullable city, BRAreaModel * _Nullable area);
 
+// BRAddressPickerView 组件已废弃，请使用 BRTextPickerView 组件进行替换，具体使用请参见 README.md
+//__attribute__((deprecated("Use 'BRTextPickerView' instead.")))
 @interface BRAddressPickerView : BRBaseView
 
 /**
@@ -53,6 +55,8 @@ typedef void(^BRAddressResultBlock)(BRProvinceModel * _Nullable province, BRCity
 
 /**
  *  地区数据源（不传或为nil，默认就获取本地 BRCity.json 文件的数据）
+ *  本地 BRCity.json 文件的数据来源于高德地图：https://restapi.amap.com/v3/config/district?key=xxxxxxxxxxxxx&subdistrict=3
+ *
  *  1.可以传 JSON数组，要注意 层级结构 和 key 要与 BRCity.json 保持一致
  *  2.可以传 模型数组(NSArray <BRProvinceModel *> * 类型)，自己解析数据源 只需要注意层级结构就行
  */

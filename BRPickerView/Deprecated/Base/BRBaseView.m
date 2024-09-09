@@ -1,5 +1,5 @@
 //
-//  BRPickerView.h
+//  BaseView.m
 //  BRPickerViewDemo
 //
 //  Created by renbo on 2017/8/11.
@@ -7,10 +7,8 @@
 //
 //  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
-#ifndef BRPickerView_h
-#define BRPickerView_h
+#import "BRBaseView.h"
 
-#import "BRDatePickerView.h"
-#import "BRTextPickerView.h"
+@implementation BRBaseView
 
-#endif /* BRPickerView_h */
+@end

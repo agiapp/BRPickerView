@@ -7,7 +7,7 @@
 //
 //  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
-#import "BRBaseView.h"
+#import "BRPickerAlertView.h"
 #import "NSDate+BRPickerView.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -70,7 +70,7 @@ typedef void (^BRDateResultBlock)(NSDate * _Nullable selectDate, NSString * _Nul
 
 typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue);
 
-@interface BRDatePickerView : BRBaseView
+@interface BRDatePickerView : BRPickerAlertView
 
 /**
  //////////////////////////////////////////////////////////////////////////
@@ -91,6 +91,9 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
 @property (nullable, nonatomic, strong) NSDate *minDate;
 /** 最大日期（可使用 NSDate+BRPickerView 分类中对应的方法进行创建）*/
 @property (nullable, nonatomic, strong) NSDate *maxDate;
+
+/** 是否自动选择，即滚动选择器后就执行结果回调，默认为 NO */
+@property (nonatomic, assign) BOOL isAutoSelect;
 
 /** 选择结果的回调 */
 @property (nullable, nonatomic, copy) BRDateResultBlock resultBlock;

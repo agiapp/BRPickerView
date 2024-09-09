@@ -1,5 +1,5 @@
 //
-//  BaseView.m
+//  BRPickerAlertView.m
 //  BRPickerViewDemo
 //
 //  Created by renbo on 2017/8/11.
@@ -7,9 +7,9 @@
 //
 //  最新代码下载地址：https://github.com/agiapp/BRPickerView
 
-#import "BRBaseView.h"
+#import "BRPickerAlertView.h"
 
-@interface BRBaseView ()
+@interface BRPickerAlertView ()
 // 蒙层视图
 @property (nonatomic, strong) UIView *maskBgView;
 // 标题栏背景视图
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation BRBaseView
+@implementation BRPickerAlertView
 
 - (void)initUI {
     self.frame = self.keyView.bounds;
@@ -243,18 +243,18 @@
 
 #pragma mark - 取消按钮的点击事件
 - (void)clickCancelBtn {
-    [self removePickerFromView:nil];
     if (self.cancelBlock) {
         self.cancelBlock();
     }
+    [self removePickerFromView:nil];
 }
 
 #pragma mark - 确定按钮的点击事件
 - (void)clickDoneBtn {
-    [self removePickerFromView:nil];
     if (self.doneBlock) {
         self.doneBlock();
     }
+    [self removePickerFromView:nil];
 }
 
 #pragma mark - 添加视图方法

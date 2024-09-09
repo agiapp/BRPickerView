@@ -187,12 +187,15 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 的高度，系统默认高度为 216 */
 @property (nonatomic, assign) CGFloat pickerHeight;
 
-/** 设置 picker 的行高 */
+/** 设置 picker 的行高，默认为 35 */
 @property (nonatomic, assign) CGFloat rowHeight;
 /** 设置 picker 的列宽 */
 @property (nonatomic, assign) CGFloat columnWidth;
 /** 设置 picker 的列间隔，仅支持`BRStringPickerView` */
 @property (nonatomic, assign) CGFloat columnSpacing;
+
+/** 设置 picker 文本支持的最大行数，默认为 2 */
+@property (nonatomic, assign) NSUInteger maxTextLines;
 
 /**
  *  清除iOS14之后选择器默认自带的新样式。暂不支持日期选择器前4种类型

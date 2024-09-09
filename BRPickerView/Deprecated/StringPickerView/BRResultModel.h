@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** key */
 @property (nullable, nonatomic, copy) NSString *key;
 /** value */
-@property (nullable, nonatomic, copy) NSString *value;
+@property (nullable, nonatomic, copy) NSString *value;;
 /** 父级key（提示：联动时第一级数据，parentKey设置为：@"-1"） */
 @property (nullable, nonatomic, copy) NSString *parentKey;
 /** 父级value */
