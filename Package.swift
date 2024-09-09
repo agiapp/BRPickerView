@@ -23,18 +23,18 @@ let package = Package(
             path: "BRPickerView",
             // 指定该库包含的资源文件
             resources: [
-                .process("BRPickerView/Core/BRPickerView.bundle"),
-                .process("BRPickerView/Deprecated/AddressPickerView/BRAddressPickerView.bundle"), 
-                .copy("BRPickerView/PrivacyInfo.xcprivacy")
+                .process("Core/BRPickerView.bundle"),
+                .process("Deprecated/AddressPickerView/BRAddressPickerView.bundle"), 
+                .copy("PrivacyInfo.xcprivacy")
             ],
             // 设置默认本地化为英语
             // defaultLocalization: "en",
             // 指定公共头文件的路径。在这里，它设置为当前目录（"."）
-            publicHeadersPath: "BRPickerView",
+            publicHeadersPath: ".",
             // 为C语言源代码指定一些设置
             cSettings: [
                 //Config header path
-                .headerSearchPath("BRPickerView"),
+                .headerSearchPath("."),
             ]
         ),
     ]
