@@ -418,7 +418,12 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             } else {
                 customStyle.pickerColor = BR_RGB_HEX(0xf2f2f7, 1.0f);
             }
-            customStyle.separatorColor = [UIColor clearColor];
+            customStyle.separatorColor = [UIColor redColor];
+            customStyle.titleLineHeight = 1;
+            customStyle.titleLineLeftSpace = 20;
+            customStyle.titleLineRightSpace = 20;
+            customStyle.separatorLeftSpace = 20;
+            customStyle.separatorRightSpace = 20;
             textPickerView.pickerStyle = customStyle;
             
             [textPickerView show];

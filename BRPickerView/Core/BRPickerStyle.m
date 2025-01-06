@@ -87,6 +87,27 @@
     return _titleLineColor;
 }
 
+- (CGFloat)titleLineHeight {
+    if (_titleLineHeight <= 0) {
+        return 0.5f;
+    }
+    return _titleLineHeight;
+}
+
+- (CGFloat)titleLineLeftSpace{
+    if (_titleLineLeftSpace <= 0) {
+        return 0.0f;
+    }
+    return _titleLineLeftSpace;
+}
+
+- (CGFloat)titleLineRightSpace{
+    if (_titleLineRightSpace <= 0) {
+        return 0.0f;
+    }
+    return _titleLineRightSpace;
+}
+
 - (UIColor *)cancelColor {
     if (!_cancelColor) {
         _cancelColor = [UIColor clearColor];
@@ -465,7 +486,7 @@
 #pragma mark - 添加选择器中间行上下两条分割线（iOS14之后系统默认去掉，需要手动添加）
 - (void)addSeparatorLineView:(UIView *)pickerView {
     if ([UIDevice currentDevice].systemVersion.doubleValue >= 14.0) {
-        UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 - self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
+        UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(self.separatorLeftSpace, pickerView.bounds.size.height / 2 - self.rowHeight / 2, pickerView.bounds.size.width - self.separatorLeftSpace - self.separatorRightSpace, 0.5f)];
         topLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         topLineView.backgroundColor = self.separatorColor;
         // 设置分割线高度
@@ -476,7 +497,7 @@
         }
         [pickerView addSubview:topLineView];
         
-        UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, pickerView.bounds.size.height / 2 + self.rowHeight / 2, pickerView.bounds.size.width, 0.5f)];
+        UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(self.separatorLeftSpace, pickerView.bounds.size.height / 2 + self.rowHeight / 2, pickerView.bounds.size.width - self.separatorLeftSpace - self.separatorRightSpace, 0.5f)];
         bottomLineView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         bottomLineView.backgroundColor = self.separatorColor;
         // 设置分割线高度
