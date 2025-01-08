@@ -5,7 +5,7 @@
 //  Created by renbo on 2017/8/11.
 //  Copyright © 2017 irenb. All rights reserved.
 //
-//  最新代码下载地址：https://github.com/agiapp/BRPickerView
+//  最新代码下载地址：https://github.com/91renb/BRPickerView
 
 #import "TestViewController.h"
 #import "BRPickerView.h"
@@ -14,8 +14,6 @@
 #import "UIImage+Color.h"
 #import "UIColor+BRAdd.h"
 #import "Test2ViewController.h"
-#import "BRTextPickerView.h"
-#import "BRDataSourceHelper.h"
 
 #define kThemeColor BR_RGB_HEX(0x2e70c2, 1.0f)
 
@@ -30,17 +28,22 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 @property (nonatomic, strong) UIView *footerView;
 @property (nonatomic, strong) UITextField *beginTimeTF;
 @property (nonatomic, strong) UITextField *endTimeTF;
+@property (nonatomic, strong) UILabel *rangeTimeL;
 @property (nonatomic, strong) UIView *beginTimeLineView;
 @property (nonatomic, strong) UIView *endTimeLineView;
 @property (nonatomic, strong) BRDatePickerView *datePickerView;
 
+
 @property (nonatomic, copy) NSArray *titleArr;
+
 @property (nonatomic, strong) BRInfoModel *infoModel;
+
 @property (nonatomic, assign) BRTimeType timeType;
 
 @property (nonatomic, assign) NSInteger genderSelectIndex;
 @property (nonatomic, strong) NSDate *birthdaySelectDate;
 @property (nonatomic, strong) NSDate *birthtimeSelectDate;
+@property (nonatomic, strong) NSDate *pageTimeSelectDate;
 @property (nonatomic, assign) NSInteger educationSelectIndex;
 @property (nonatomic, copy) NSArray <NSNumber *> *addressSelectIndexs;
 @property (nonatomic, copy) NSArray <NSNumber *> *linkage2SelectIndexs;
@@ -48,8 +51,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 @property (nonatomic, strong) NSDate *beginSelectDate;
 @property (nonatomic, strong) NSDate *endSelectDate;
-
-@property (nonatomic, copy) NSArray <NSNumber *> *mySelectIndexs;
 
 @end
 
@@ -70,6 +71,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     self.infoModel.genderStr = @"";
     self.infoModel.birthdayStr = @"";
     self.infoModel.birthtimeStr = @"";
+    self.infoModel.selectedTimeStr = @"";
     self.infoModel.phoneStr = @"";
     self.infoModel.addressStr = @"";
     self.infoModel.educationStr = @"";
@@ -98,6 +100,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     NSLog(@"性别：%@", self.infoModel.genderStr);
     NSLog(@"出生日期：%@", self.infoModel.birthdayStr);
     NSLog(@"出生时刻：%@", self.infoModel.birthtimeStr);
+    NSLog(@"x选择时刻：%@", self.infoModel.selectedTimeStr);
     NSLog(@"联系方式：%@", self.infoModel.phoneStr);
     NSLog(@"地址：%@", self.infoModel.addressStr);
     NSLog(@"学历：%@", self.infoModel.educationStr);
@@ -173,6 +176,13 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             break;
         case 4:
         {
+            cell.canEdit = NO;
+            cell.textField.placeholder = @"请选择";
+            cell.textField.text = self.infoModel.selectedTimeStr;
+        }
+            break;
+        case 5:
+        {
             cell.canEdit = YES;
             cell.textField.placeholder = @"请输入";
             cell.textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -180,24 +190,18 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             cell.textField.text = self.infoModel.phoneStr;
         }
             break;
-        case 5:
+        case 6:
         {
             cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
             cell.textField.text = self.infoModel.addressStr;
         }
             break;
-        case 6:
-        {
-            cell.canEdit = NO;
-            cell.textField.placeholder = @"请选择";
-            cell.textField.text = self.infoModel.educationStr;
-        }
-            break;
         case 7:
         {
             cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
+            cell.textField.text = self.infoModel.educationStr;
         }
             break;
         case 8:
@@ -213,6 +217,12 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         }
             break;
         case 10:
+        {
+            cell.canEdit = NO;
+            cell.textField.placeholder = @"请选择";
+        }
+            break;
+        case 11:
         {
             cell.canEdit = NO;
             cell.textField.placeholder = @"请选择";
@@ -240,7 +250,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 #pragma mark - UITextFieldDelegate 返回键
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField.tag == 0 || textField.tag == 4) {
+    if (textField.tag == 0 || textField.tag == 5) {
         [textField resignFirstResponder];
     }
     return YES;
@@ -248,7 +258,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if (textField.tag == 0 || textField.tag == 4) {
+    if (textField.tag == 0 || textField.tag == 5) {
         [textField addTarget:self action:@selector(handlerTextFieldEndEdit:) forControlEvents:UIControlEventEditingDidEnd];
         return YES; // 当前 textField 可以编辑
     } else {
@@ -267,7 +277,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             self.infoModel.nameStr = textField.text;
         }
             break;
-        case 4:
+        case 5:
         {
             self.infoModel.phoneStr = textField.text;
         }
@@ -284,17 +294,18 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         case 1:
         {
             // 性别
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]init];
-            textPickerView.pickerMode = BRTextPickerComponentSingle;
-            textPickerView.title = @"请选择性别";
-            textPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
-            textPickerView.selectIndex = self.genderSelectIndex;
-            textPickerView.singleResultBlock = ^(BRTextModel * _Nullable model, NSInteger index) {
-                self.genderSelectIndex = index;
-                self.infoModel.genderStr = model.text;
-                textField.text = model.text;
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentSingle;
+            stringPickerView.title = @"请选择性别";
+            stringPickerView.dataSourceArr = @[@"男", @"女", @"其他"];
+            stringPickerView.selectIndex = self.genderSelectIndex;
+            stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+                self.genderSelectIndex = resultModel.index;
+                self.infoModel.genderStr = resultModel.value;
+                textField.text = resultModel.value;
             };
-            [textPickerView show];
+            [stringPickerView show];
+            
         }
             break;
             
@@ -302,7 +313,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         {
             // 出生年月日
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
-            datePickerView.pickerMode = BRDatePickerModeYMD;
+            datePickerView.showUnitType = BRShowUnitTypeNone;
+            datePickerView.pickerMode = BRDatePickerModeYMDHMS;
             datePickerView.title = @"请选择年月日";
             datePickerView.selectDate = self.birthdaySelectDate;
             datePickerView.minDate = [NSDate br_setYear:2018 month:3 day:10];
@@ -317,8 +329,17 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 self.birthdaySelectDate = selectDate;
                 self.infoModel.birthdayStr = selectValue;
                 textField.text = selectValue;
+                
                 NSLog(@"selectValue=%@", selectValue);
                 NSLog(@"selectDate=%@", selectDate);
+                NSLog(@"---------------------------------");
+                
+            };
+            
+            datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
+                NSLog(@"selectValue=%@", selectValue);
+                NSLog(@"selectStartDate=%@", selectStartDate);
+                NSLog(@"selectStartDate=%@", selectEndDate);
                 NSLog(@"---------------------------------");
             };
             
@@ -343,10 +364,16 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.pickerColor = [UIColor clearColor];
             customStyle.selectRowTextColor = [UIColor blueColor];
+            customStyle.selectRowColor = UIColor.greenColor;
+            customStyle.selectRowSideOffset = 40.f;
+            customStyle.selectRowCornerRadius = 2.f;
+
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
             
+            datePickerView.timeTitles = @[@"年", @"月", @"日", @"时", @"分", @"秒"];
+
         }
             break;
             
@@ -358,8 +385,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.title = @"出生时刻";
             datePickerView.selectDate = self.birthtimeSelectDate;
             datePickerView.isAutoSelect = YES;
-            //datePickerView.twelveHourMode = YES; // 设置12小时制
-            //datePickerView.timeZone = [NSTimeZone timeZoneWithName:@"America/New_York"]; // 设置时区
             datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
                 self.birthtimeSelectDate = selectDate;
                 self.infoModel.birthtimeStr = selectValue;
@@ -371,43 +396,64 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
+            
         }
             break;
             
-        case 5:
+        case 4:
         {
-            // 地区
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-            textPickerView.title = @"请选择地区";
-            // 设置数据源
-            // NSArray *dataArr = [BRDataSourceHelper getLocalFileData:@"region_tree_data.json"];
-            // 方式1：传树状结构模型数组(NSArray <BRTextModel *>*)
-            // textPickerView.dataSourceArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
-            // 方式2：直接传入json文件名（可以将上面的json数据放到本地json文件中，如：region_tree_data.json）
-            textPickerView.fileName = @"region_tree_data.json";
-            // 设置选择器显示的列数(即层级数)，默认是根据数据源层级动态计算显示。如：设置1则只显示前1列数据（即只显示省）；设置2则只显示前2列数据（即只显示省、市）；设置3则只显示前3列数据（即显示省、市、区）
-            textPickerView.showColumnNum = 3;
-            textPickerView.selectIndexs = self.addressSelectIndexs;
-            textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-                self.addressSelectIndexs = indexs;
-                self.infoModel.addressStr = [models br_joinText:@"-"];
-                textField.text = self.infoModel.addressStr;
+            // 时间
+            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
+            datePickerView.pickerMode = BRDatePickerModeHM;
+            datePickerView.isLoop = YES;
+            datePickerView.title = @"请选择时间";
+            datePickerView.selectDate = self.pageTimeSelectDate;
+            datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
+                self.pageTimeSelectDate = selectDate;
+                self.infoModel.selectedTimeStr = selectValue;
+                textField.text = selectValue;
             };
-            [textPickerView show];
+            
+            BRPickerStyle *customStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor darkGrayColor]];
+            datePickerView.pickerStyle = customStyle;
+            
+            [datePickerView show];
         }
             break;
             
         case 6:
         {
+            // 地区
+            BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]init];
+            addressPickerView.pickerMode = BRAddressPickerModeArea;
+            addressPickerView.title = @"请选择地区";
+            //addressPickerView.selectValues = [self.infoModel.addressStr componentsSeparatedByString:@" "];
+            addressPickerView.selectIndexs = self.addressSelectIndexs;
+            addressPickerView.isAutoSelect = YES;
+            addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+                self.addressSelectIndexs = @[@(province.index), @(city.index), @(area.index)];
+                self.infoModel.addressStr = [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name];
+                textField.text = self.infoModel.addressStr;
+            };
+            
+            [addressPickerView show];
+            
+        }
+            break;
+            
+        case 7:
+        {
             // 学历
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentSingle];
-            textPickerView.title = @"请选择学历";
-            // 设置数据源：直接传入 plist文件
-            textPickerView.fileName = @"education_data.plist";
-            textPickerView.selectIndex = self.educationSelectIndex;
-            textPickerView.singleResultBlock = ^(BRTextModel * _Nullable model, NSInteger index) {
-                self.educationSelectIndex = index;
-                self.infoModel.educationStr = model.text;
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentSingle;
+            stringPickerView.title = @"请选择学历";
+            stringPickerView.plistName = @"testData.plist";
+            //stringPickerView.selectIndex = self.educationSelectIndex;
+            stringPickerView.selectValue = self.infoModel.educationStr;
+            stringPickerView.isAutoSelect = YES;
+            stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+                self.educationSelectIndex = resultModel.index;
+                self.infoModel.educationStr = resultModel.value;
                 textField.text = self.infoModel.educationStr;
             };
             
@@ -419,125 +465,135 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 customStyle.pickerColor = BR_RGB_HEX(0xf2f2f7, 1.0f);
             }
             customStyle.separatorColor = [UIColor clearColor];
-            textPickerView.pickerStyle = customStyle;
+            stringPickerView.pickerStyle = customStyle;
             
-            [textPickerView show];
+            [stringPickerView show];
             
-        }
-            break;
-            
-        case 7:
-        {
-            /// 融资情况
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentSingle];
-            textPickerView.title = @"融资情况";
-            NSArray *dataArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
-                                 @{@"key": @"2001", @"value": @"天使轮", @"remark": @""},
-                                 @{@"key": @"3001", @"value": @"A轮", @"remark": @""},
-                                 @{@"key": @"4001", @"value": @"B轮", @"remark": @""},
-                                 @{@"key": @"5001", @"value": @"C轮以后", @"remark": @""},
-                                 @{@"key": @"6001", @"value": @"已上市", @"remark": @""}];
-            NSDictionary *mapper = @{ @"code": @"key", @"text": @"value", @"extras": @"remark" };
-            NSArray *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-            textPickerView.dataSourceArr = modelArr;
-            textPickerView.singleResultBlock = ^(BRTextModel * _Nullable model, NSInteger index) {
-                NSLog(@"选择的索引：%@", @(index));
-                NSLog(@"选择的值：%@", model.text);
-                textField.text = model.text;
-            };
-            [textPickerView show];
         }
             break;
             
         case 8:
         {
-            /// 自定义多列字符串选择器
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentMulti];
-            textPickerView.title = @"自定义多列字符串";
-            textPickerView.dataSourceArr = @[@[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12"], @[@"00", @"10", @"20", @"30", @"40", @"50"]];
-            textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-                textField.text = [models br_joinText:@":"];
-            };
-           
-            // 设置自定义样式
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            // 设置 picker 的列宽
-            customStyle.columnWidth = 30;
-            // 设置 picker 的列间隔
-            customStyle.columnSpacing = 60;
-            // 设置圆角矩形背景
-            // 方式1：使用系统自带样式，保留iOS14之后系统默认的圆角样式。
-            customStyle.clearPickerNewStyle = NO;
-            // 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[stringPickerView.alertView addSubview:rectView];）
-            // 设置选择器中间选中行的样式
-            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
-            customStyle.selectRowTextColor = [UIColor blueColor];
-            textPickerView.pickerStyle = customStyle;
+            /// 融资情况
+            NSArray *infoArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
+                                 @{@"key": @"2001", @"value": @"天使轮", @"remark": @""},
+                                 @{@"key": @"3001", @"value": @"A轮", @"remark": @""},
+                                 @{@"key": @"4001", @"value": @"B轮", @"remark": @""},
+                                 @{@"key": @"5001", @"value": @"C轮以后", @"remark": @""},
+                                 @{@"key": @"6001", @"value": @"已上市", @"remark": @""}];
+            NSMutableArray *modelArr = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in infoArr) {
+                BRResultModel *model = [[BRResultModel alloc]init];
+                model.key = dic[@"key"];
+                model.value = dic[@"value"];
+                model.remark = dic[@"remark"];
+                [modelArr addObject:model];
+            }
             
-            [textPickerView show];
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentSingle;
+            stringPickerView.title = @"融资情况";
+            stringPickerView.dataSourceArr = [modelArr copy];
+            stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+                NSLog(@"选择的索引：%@", @(resultModel.index));
+                NSLog(@"选择的值：%@", resultModel.value);
+                textField.text = resultModel.value;
+            };
+            
+            [stringPickerView show];
+            
         }
             break;
             
         case 9:
         {
-            /// 多列联动文本选择器（数据源扁平结构）
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-            textPickerView.title = @"二级联动选择";
-            NSDictionary *responseObject = [BRDataSourceHelper getLocalFileData:@"cascade_list_data.json"];
-            NSArray *dataArr = responseObject[@"Result"];
-            // 指定 BRTextModel模型的属性 与 字典key 的映射关系
-            NSDictionary *mapper = @{ @"parentCode": @"ParentID", @"code": @"CategoryID", @"text": @"CategoryName" };
-            // 1.将上面数组 转为 模型数组（组件内封装的工具方法）
-            NSArray *listModelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-            // 2.将扁平结构模型数组 转成 树状结构模型数组（组件内封装的工具方法）
-            NSArray *treeModelArr = [listModelArr br_buildTreeArray];
-            textPickerView.dataSourceArr = treeModelArr;
-
-            textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-                // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
-                NSString *selectText = [models br_joinText:@"-"];
-                NSLog(@"选择的结果：%@", selectText);
-                textField.text = selectText;
+            /// 多列字符串
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentMulti;
+            stringPickerView.title = @"多列选择器";
+            stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
+            stringPickerView.isAutoSelect = YES;
+            stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+                textField.text = [NSString stringWithFormat:@"%@ %@", resultModelArr[0].value, resultModelArr[1].value];
             };
             
-            // 设置选择器中间选中行的样式
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
-            customStyle.selectRowTextColor = [UIColor blueColor];
-            customStyle.columnWidth = 80;
-            customStyle.columnSpacing = 10;
-            textPickerView.pickerStyle = customStyle;
+            // 使用模板样式2
+            stringPickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]];
             
-            [textPickerView show];
+            [stringPickerView show];
+            
         }
             break;
             
         case 10:
         {
-            /// 多列联动文本选择器（数据源树状结构）
-            BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-            textPickerView.title = @"三级联动选择";
-            NSDictionary *responseObject = [BRDataSourceHelper getLocalFileData:@"cascade_tree_data.json"];
-            NSArray *dataArr = responseObject[@"districts"];
-            // 指定 BRTextModel模型的属性 与 字典key 的映射关系
-            NSDictionary *mapper = @{ @"code": @"adcode", @"text": @"name", @"children": @"districts" };
-            // 将上面数组 转为 模型数组（组件内封装的工具方法）
-            NSArray *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-            textPickerView.dataSourceArr = modelArr;
-            textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-                // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
-                NSString *selectText = [models br_joinText:@"-"];
-                NSLog(@"选择的结果：%@", selectText);
-                textField.text = selectText;
+            /// 二级联动选择
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentLinkage;
+            stringPickerView.title = @"二级联动选择";
+            //stringPickerView.dataSourceArr = [self getLinkag2DataSource];
+            stringPickerView.dataSourceArr = [self getStagesDataSource];
+            stringPickerView.selectIndexs = self.linkage2SelectIndexs;
+            stringPickerView.numberOfComponents = 2;
+            stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+                // 1.选择的索引
+                NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
+                // 2.选择的值
+                NSString *selectValue = @"";
+                for (BRResultModel *model in resultModelArr) {
+                    [selectIndexs addObject:@(model.index)];
+                    selectValue = [NSString stringWithFormat:@"%@ %@", selectValue, model.value];
+                }
+                if ([selectValue hasPrefix:@" "]) {
+                    selectValue = [selectValue substringFromIndex:1];
+                }
+                self.linkage2SelectIndexs = selectIndexs;
+                textField.text = selectValue;
             };
             
             // 设置选择器中间选中行的样式
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
             customStyle.selectRowTextColor = [UIColor blueColor];
-            textPickerView.pickerStyle = customStyle;
+            stringPickerView.pickerStyle = customStyle;
             
-            [textPickerView show];
+            [stringPickerView show];
+            
+        }
+            break;
+            
+        case 11:
+        {
+            /// 三级联动选择
+            BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+            stringPickerView.pickerMode = BRStringPickerComponentLinkage;
+            stringPickerView.title = @"三级联动选择";
+            stringPickerView.dataSourceArr = [self getLinkag3DataSource];
+            stringPickerView.selectIndexs = self.linkage3SelectIndexs;
+            stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+                // 1.选择的索引
+                NSMutableArray *selectIndexs = [[NSMutableArray alloc]init];
+                // 2.选择的值
+                NSString *selectValue = @"";
+                // 提示：【广东省-东莞市】，【广东省-中山市】 没有对应的区数据，三级联动会自动变成二级联动，使用 for循环遍历 获取选择的值而不直接使用数组下标，可以避免数组越界。如果想始终保持三级联动，在包装数据源时 可以把没有区数据用空字符串补上。
+                for (BRResultModel *model in resultModelArr) {
+                    [selectIndexs addObject:@(model.index)];
+                    selectValue = [NSString stringWithFormat:@"%@ %@", selectValue, model.value];
+                }
+                if ([selectValue hasPrefix:@" "]) {
+                    selectValue = [selectValue substringFromIndex:1];
+                }
+                self.linkage3SelectIndexs = selectIndexs;
+                textField.text = selectValue;
+            };
+            // 设置选择器中间选中行的样式
+            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
+            customStyle.selectRowTextColor = [UIColor blueColor];
+            stringPickerView.pickerStyle = customStyle;
+            
+            [stringPickerView show];
+            
         }
             break;
             
@@ -595,6 +651,98 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     }
 }
 
+#pragma mark - 获取二级联动的数据源
+- (NSArray <BRResultModel *>*)getLinkag2DataSource {
+    // 获取本地数据源
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"linkage2_data.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    NSArray *dataArr = responseObj[@"data"];
+    
+    NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
+    for (NSDictionary *dic in dataArr) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = dic[@"parent_key"];
+        model.parentValue = dic[@"parent_value"];
+        model.key = dic[@"key"];
+        model.value = dic[@"value"];
+        [listModelArr addObject:model];
+    }
+    return [listModelArr copy];
+}
+
+
+#pragma mark - 获取二级联动的数据源
+- (NSArray <BRResultModel *>*)getStagesDataSource {
+    // 获取本地数据源
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"stages.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    NSArray *dataArr = responseObj[@"GetStageInfoDto"];
+    
+    NSMutableArray *listModelArr = [[NSMutableArray alloc]init];
+    for (NSDictionary *dic in dataArr) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = @"-1";
+        model.parentValue = @"";
+        model.key = dic[@"StageID"];
+        model.value = dic[@"Name"];
+        [listModelArr addObject:model];
+        
+        for (NSDictionary *param in dic[@"GetGradeInfoDto"]) {
+            BRResultModel *model1 = [[BRResultModel alloc]init];
+            model1.parentKey = param[@"StageID"];
+            model1.parentValue = dic[@"Name"];
+            model1.key = param[@"GradeID"];
+            model1.value = param[@"Name"];
+            [listModelArr addObject:model1];
+        }
+    }
+    return [listModelArr copy];
+}
+
+
+#pragma mark - 获取三级联动的数据源
+- (NSArray <BRResultModel *>*)getLinkag3DataSource {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"linkage3_data.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *responseObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    
+    NSMutableArray *allRegionModelArr = [[NSMutableArray alloc]init];
+    // 省
+    NSArray *provinceArr = responseObj[@"Result"][@"Province"];
+    for (NSInteger i = 0; i < provinceArr.count; i++) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = @"-1";
+        model.parentValue = @"";
+        model.key = [NSString stringWithFormat:@"%@", provinceArr[i][@"ProvinceID"]];
+        model.value = provinceArr[i][@"Province"];
+        [allRegionModelArr addObject:model];
+    }
+    // 市
+    NSArray *cityArr = responseObj[@"Result"][@"City"];
+    for (NSInteger i = 0; i < cityArr.count; i++) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = [NSString stringWithFormat:@"%@", cityArr[i][@"ProvinceID"]];
+        model.parentValue = @"";
+        model.key = [NSString stringWithFormat:@"%@", cityArr[i][@"CityID"]];
+        model.value = cityArr[i][@"City"];
+        [allRegionModelArr addObject:model];
+    }
+    // 区
+    NSArray *areaArr = responseObj[@"Result"][@"Area"];
+    for (NSInteger i = 0; i < areaArr.count; i++) {
+        BRResultModel *model = [[BRResultModel alloc]init];
+        model.parentKey = [NSString stringWithFormat:@"%@", areaArr[i][@"CityID"]];;
+        model.parentValue = @"";
+        model.key = [NSString stringWithFormat:@"%@", areaArr[i][@"AreaID"]];
+        model.value = areaArr[i][@"Area"];
+        [allRegionModelArr addObject:model];
+    }
+    
+    return [allRegionModelArr copy];
+}
+
 #pragma mark - footerView
 - (UIView *)footerView {
     if (!_footerView) {
@@ -603,7 +751,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         // 1.切换日期选择器的显示模式
-        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月"]];
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"年月日时", @"年月日", @"年月", @"月周", @"年周", @"季 度"]];
         segmentedControl.frame = CGRectMake(40, 50, self.view.bounds.size.width - 80, 36);
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         segmentedControl.apportionsSegmentWidthsByContent = YES;
@@ -687,6 +835,12 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
                 self.endTimeTF.text = selectValue;
             }
         };
+        NSString *format = @"yyyy-MM-dd HH:mm:ss";
+        datePickerView.resultRangeBlock = ^(NSDate * _Nullable selectStartDate, NSDate * _Nullable selectEndDate, NSString * _Nullable selectValue) {
+            NSString *startTime = [NSDate br_stringFromDate:selectStartDate dateFormat:format];
+            NSString *endTime = [NSDate br_stringFromDate:selectEndDate dateFormat:format];
+            self.rangeTimeL.text = [NSString stringWithFormat:@"%@ ~ %@", startTime, endTime];
+        };
         
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
@@ -696,6 +850,16 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         
         // 添加选择器到容器视图
         [datePickerView addPickerToView:containerView];
+        
+        // 5.创建时间选择范围label
+        self.rangeTimeL = [[UILabel alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(_footerView.bounds) - 60, CGRectGetWidth(containerView.bounds), 36)];
+        _rangeTimeL.backgroundColor = [UIColor clearColor];
+        _rangeTimeL.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+        _rangeTimeL.font = [UIFont systemFontOfSize:14.0f];
+        _rangeTimeL.textAlignment = NSTextAlignmentCenter;
+        _rangeTimeL.textColor = [UIColor lightGrayColor];
+        _rangeTimeL.text = nil;
+        [_footerView addSubview:_rangeTimeL];
     }
     return _footerView;
 }
@@ -712,6 +876,15 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
     } else if (selecIndex == 2) {
         NSLog(@"年月");
         self.datePickerView.pickerMode = BRDatePickerModeYM;
+    } else if (selecIndex == 3) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYMW;
+    } else if (selecIndex == 4) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYW;
+    } else if (selecIndex == 5) {
+        NSLog(@"年月");
+        self.datePickerView.pickerMode = BRDatePickerModeYQ;
     }
     
     // 重置选择的值
@@ -737,7 +910,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
 
 - (NSArray *)titleArr {
     if (!_titleArr) {
-        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"联系方式", @"地址", @"学历", @"融资", @"自定义多列选择", @"二级联动选择", @"三级联动选择"];
+        _titleArr = @[@"姓名", @"性别", @"出生年月", @"出生时刻", @"时间选择", @"联系方式", @"地址", @"学历", @"融资", @"多列选择", @"二级联动选择", @"三级联动选择"];
     }
     return _titleArr;
 }

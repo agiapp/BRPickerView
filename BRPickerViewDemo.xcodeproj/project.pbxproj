@@ -9,29 +9,22 @@
 /* Begin PBXBuildFile section */
 		451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C0D234D6AA2004E801F /* BRPickerStyle.m */; };
 		451D6C1123509890004E801F /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C1023509890004E801F /* BRResultModel.m */; };
-		454D06F32C461C01002C3CF4 /* region_list_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F02C461C00002C3CF4 /* region_list_data.json */; };
-		454D06F42C461C01002C3CF4 /* region_tree_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F12C461C00002C3CF4 /* region_tree_data.json */; };
-		454D06F52C461C01002C3CF4 /* amap_region_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F22C461C01002C3CF4 /* amap_region_data.json */; };
-		454D06F72C46237E002C3CF4 /* cascade_tree_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F62C46237E002C3CF4 /* cascade_tree_data.json */; };
-		454D06F92C465893002C3CF4 /* grade_level_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F82C465893002C3CF4 /* grade_level_data.plist */; };
-		454D06FB2C4693CA002C3CF4 /* cascade_list_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */; };
+		456506DE24C1AF7100A2E4EE /* linkage2_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 456506DD24C1AF7100A2E4EE /* linkage2_data.json */; };
 		45653925237032D90074BBBC /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45653924237032D90074BBBC /* BRPickerView.bundle */; };
 		4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7D723B377D800CD59D4 /* TestViewController.m */; };
 		4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DA23B4425700CD59D4 /* UIImage+Color.m */; };
 		4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */; };
-		4596CAF92C34E257003C6654 /* BRTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CAF82C34E257003C6654 /* BRTextModel.m */; };
-		4596CAFC2C34EC1B003C6654 /* BRTextPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CAFB2C34EC1B003C6654 /* BRTextPickerView.m */; };
-		4596CB052C364097003C6654 /* BRDataSourceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CB042C364096003C6654 /* BRDataSourceHelper.m */; };
-		4596CB102C36745E003C6654 /* BRPickerAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CB0F2C36745E003C6654 /* BRPickerAlertView.m */; };
+		457DA34D24D90AFB009D75F3 /* stages.json in Resources */ = {isa = PBXBuildFile; fileRef = 457DA34C24D90AFB009D75F3 /* stages.json */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */; };
-		45C2FA9A2BD789F80093928B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 45C2FA992BD789F80093928B /* PrivacyInfo.xcprivacy */; };
+		45AB6DD4249A1306004EB3D0 /* linkage3_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 45AB6DD3249A1306004EB3D0 /* linkage3_data.json */; };
 		45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */; };
-		45E81D042399387700B8878A /* education_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* education_data.plist */; };
+		45E81D042399387700B8878A /* testData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45E81CF62399387700B8878A /* testData.plist */; };
 		45E81D072399387700B8878A /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81CFD2399387700B8878A /* BRInfoModel.m */; };
 		45E81D082399387700B8878A /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D002399387700B8878A /* BRInfoCell.m */; };
 		45E81D1123993A0500B8878A /* BRMutableDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D1023993A0500B8878A /* BRMutableDatePickerView.m */; };
 		45E81D1423993AFB00B8878A /* Test2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E81D1323993AFB00B8878A /* Test2ViewController.m */; };
+		45FD41D123E3DAD900DD742B /* 2020年1月县以上行政区划代码.json in Resources */ = {isa = PBXBuildFile; fileRef = 45FD41D023E3DAD900DD742B /* 2020年1月县以上行政区划代码.json */; };
 		C5A158F21FBD897A00B3B3BA /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A158F01FBD893900B3B3BA /* BRBaseView.m */; };
 		C5ACE4DB1F3D58BD0069978B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DA1F3D58BD0069978B /* main.m */; };
 		C5ACE4DE1F3D58BD0069978B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */; };
@@ -50,12 +43,7 @@
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
 		451D6C1023509890004E801F /* BRResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
-		454D06F02C461C00002C3CF4 /* region_list_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_list_data.json; sourceTree = "<group>"; };
-		454D06F12C461C00002C3CF4 /* region_tree_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_tree_data.json; sourceTree = "<group>"; };
-		454D06F22C461C01002C3CF4 /* amap_region_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amap_region_data.json; sourceTree = "<group>"; };
-		454D06F62C46237E002C3CF4 /* cascade_tree_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cascade_tree_data.json; sourceTree = "<group>"; };
-		454D06F82C465893002C3CF4 /* grade_level_data.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = grade_level_data.plist; sourceTree = "<group>"; };
-		454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cascade_list_data.json; sourceTree = "<group>"; };
+		456506DD24C1AF7100A2E4EE /* linkage2_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkage2_data.json; sourceTree = "<group>"; };
 		45653924237032D90074BBBC /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
 		4566F7D623B377D700CD59D4 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		4566F7D723B377D800CD59D4 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
@@ -63,22 +51,15 @@
 		4566F7DA23B4425700CD59D4 /* UIImage+Color.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		4566F7DC23B4BCE100CD59D4 /* UIColor+BRAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+BRAdd.h"; sourceTree = "<group>"; };
 		4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BRAdd.m"; sourceTree = "<group>"; };
-		4596CAF72C34E257003C6654 /* BRTextModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRTextModel.h; sourceTree = "<group>"; };
-		4596CAF82C34E257003C6654 /* BRTextModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRTextModel.m; sourceTree = "<group>"; };
-		4596CAFA2C34EC1B003C6654 /* BRTextPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRTextPickerView.h; sourceTree = "<group>"; };
-		4596CAFB2C34EC1B003C6654 /* BRTextPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRTextPickerView.m; sourceTree = "<group>"; };
-		4596CB032C364096003C6654 /* BRDataSourceHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRDataSourceHelper.h; sourceTree = "<group>"; };
-		4596CB042C364096003C6654 /* BRDataSourceHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRDataSourceHelper.m; sourceTree = "<group>"; };
-		4596CB0E2C36745E003C6654 /* BRPickerAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerAlertView.h; sourceTree = "<group>"; };
-		4596CB0F2C36745E003C6654 /* BRPickerAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerAlertView.m; sourceTree = "<group>"; };
+		457DA34C24D90AFB009D75F3 /* stages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stages.json; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
 		459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
 		459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
 		45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BRDatePickerView+BR.h"; sourceTree = "<group>"; };
 		45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BRDatePickerView+BR.m"; sourceTree = "<group>"; };
-		45C2FA992BD789F80093928B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		45AB6DD3249A1306004EB3D0 /* linkage3_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkage3_data.json; sourceTree = "<group>"; };
 		45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRAddressPickerView.bundle; sourceTree = "<group>"; };
-		45E81CF62399387700B8878A /* education_data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = education_data.plist; sourceTree = "<group>"; };
+		45E81CF62399387700B8878A /* testData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testData.plist; sourceTree = "<group>"; };
 		45E81CFC2399387700B8878A /* BRInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
 		45E81CFD2399387700B8878A /* BRInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
 		45E81CFF2399387700B8878A /* BRInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoCell.h; sourceTree = "<group>"; };
@@ -87,6 +68,7 @@
 		45E81D1023993A0500B8878A /* BRMutableDatePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRMutableDatePickerView.m; sourceTree = "<group>"; };
 		45E81D1223993AFB00B8878A /* Test2ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test2ViewController.h; sourceTree = "<group>"; };
 		45E81D1323993AFB00B8878A /* Test2ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test2ViewController.m; sourceTree = "<group>"; };
+		45FD41D023E3DAD900DD742B /* 2020年1月县以上行政区划代码.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2020年1月县以上行政区划代码.json"; sourceTree = "<group>"; };
 		C5A158F01FBD893900B3B3BA /* BRBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
 		C5A158F11FBD893900B3B3BA /* BRBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
 		C5ACE4D61F3D58BD0069978B /* BRPickerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRPickerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,77 +103,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		457868602C4758B6006F7FD6 /* DataFile */ = {
-			isa = PBXGroup;
-			children = (
-				454D06F22C461C01002C3CF4 /* amap_region_data.json */,
-				454D06F12C461C00002C3CF4 /* region_tree_data.json */,
-				454D06F02C461C00002C3CF4 /* region_list_data.json */,
-				454D06F62C46237E002C3CF4 /* cascade_tree_data.json */,
-				454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */,
-				45E81CF62399387700B8878A /* education_data.plist */,
-				454D06F82C465893002C3CF4 /* grade_level_data.plist */,
-			);
-			path = DataFile;
-			sourceTree = "<group>";
-		};
-		458CB7492C33FBFB00C46170 /* TextPicker */ = {
-			isa = PBXGroup;
-			children = (
-				4596CAFA2C34EC1B003C6654 /* BRTextPickerView.h */,
-				4596CAFB2C34EC1B003C6654 /* BRTextPickerView.m */,
-				4596CAF72C34E257003C6654 /* BRTextModel.h */,
-				4596CAF82C34E257003C6654 /* BRTextModel.m */,
-			);
-			path = TextPicker;
-			sourceTree = "<group>";
-		};
-		458CB74A2C33FBFB00C46170 /* DatePicker */ = {
-			isa = PBXGroup;
-			children = (
-				C5ACE5091F3D7D890069978B /* BRDatePickerView.h */,
-				C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */,
-				45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */,
-				45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */,
-				C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */,
-				C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */,
-			);
-			path = DatePicker;
-			sourceTree = "<group>";
-		};
-		4596CB0C2C365564003C6654 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				4596CB0E2C36745E003C6654 /* BRPickerAlertView.h */,
-				4596CB0F2C36745E003C6654 /* BRPickerAlertView.m */,
-				459A260A2362F0280048F06D /* BRPickerViewMacro.h */,
-				451D6C0C234D6AA2004E801F /* BRPickerStyle.h */,
-				451D6C0D234D6AA2004E801F /* BRPickerStyle.m */,
-				459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */,
-				459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */,
-				45653924237032D90074BBBC /* BRPickerView.bundle */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		4596CB0D2C3657EC003C6654 /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				C5ACE51C1F3D904F0069978B /* Base */,
-				C5ACE4F11F3D5A8B0069978B /* AddressPickerView */,
-				C5ACE4F41F3D5A8B0069978B /* StringPickerView */,
-			);
-			path = Deprecated;
-			sourceTree = "<group>";
-		};
 		45E81CF42399387700B8878A /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4596CB032C364096003C6654 /* BRDataSourceHelper.h */,
-				4596CB042C364096003C6654 /* BRDataSourceHelper.m */,
 				45E81CF82399387700B8878A /* Controller */,
 				45E81CFB2399387700B8878A /* Model */,
 				45E81CFE2399387700B8878A /* View */,
+				45FD41D023E3DAD900DD742B /* 2020年1月县以上行政区划代码.json */,
+				456506DD24C1AF7100A2E4EE /* linkage2_data.json */,
+				457DA34C24D90AFB009D75F3 /* stages.json */,
+				45AB6DD3249A1306004EB3D0 /* linkage3_data.json */,
+				45E81CF62399387700B8878A /* testData.plist */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -269,7 +191,6 @@
 				C5ACE50F1F3D80BA0069978B /* Classes */,
 				C5ACE4DC1F3D58BD0069978B /* AppDelegate.h */,
 				C5ACE4DD1F3D58BD0069978B /* AppDelegate.m */,
-				457868602C4758B6006F7FD6 /* DataFile */,
 				C5ACE4D91F3D58BD0069978B /* Supporting Files */,
 			);
 			path = BRPickerViewDemo;
@@ -291,11 +212,10 @@
 			isa = PBXGroup;
 			children = (
 				C5ACE5201F3D90A90069978B /* BRPickerView.h */,
-				45C2FA992BD789F80093928B /* PrivacyInfo.xcprivacy */,
-				4596CB0C2C365564003C6654 /* Core */,
-				458CB74A2C33FBFB00C46170 /* DatePicker */,
-				458CB7492C33FBFB00C46170 /* TextPicker */,
-				4596CB0D2C3657EC003C6654 /* Deprecated */,
+				C5ACE51C1F3D904F0069978B /* Base */,
+				C5ACE4F31F3D5A8B0069978B /* DatePickerView */,
+				C5ACE4F11F3D5A8B0069978B /* AddressPickerView */,
+				C5ACE4F41F3D5A8B0069978B /* StringPickerView */,
 			);
 			path = BRPickerView;
 			sourceTree = SOURCE_ROOT;
@@ -310,6 +230,19 @@
 				45D8F80627F57BB2002CF4ED /* BRAddressPickerView.bundle */,
 			);
 			path = AddressPickerView;
+			sourceTree = "<group>";
+		};
+		C5ACE4F31F3D5A8B0069978B /* DatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				C5ACE5091F3D7D890069978B /* BRDatePickerView.h */,
+				C5ACE50A1F3D7D890069978B /* BRDatePickerView.m */,
+				45AB6DD02498C5F4004EB3D0 /* BRDatePickerView+BR.h */,
+				45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */,
+				C5F069B9208F0BCA00C969B9 /* NSDate+BRPickerView.h */,
+				C5F069BA208F0BCA00C969B9 /* NSDate+BRPickerView.m */,
+			);
+			path = DatePickerView;
 			sourceTree = "<group>";
 		};
 		C5ACE4F41F3D5A8B0069978B /* StringPickerView */ = {
@@ -337,6 +270,12 @@
 			children = (
 				C5A158F11FBD893900B3B3BA /* BRBaseView.h */,
 				C5A158F01FBD893900B3B3BA /* BRBaseView.m */,
+				451D6C0C234D6AA2004E801F /* BRPickerStyle.h */,
+				451D6C0D234D6AA2004E801F /* BRPickerStyle.m */,
+				459A260A2362F0280048F06D /* BRPickerViewMacro.h */,
+				459A260C2369208E0048F06D /* NSBundle+BRPickerView.h */,
+				459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */,
+				45653924237032D90074BBBC /* BRPickerView.bundle */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -373,7 +312,7 @@
 				TargetAttributes = {
 					C5ACE4D51F3D58BD0069978B = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = N92S3NU839;
+						DevelopmentTeam = LMDZYJF4B6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -403,19 +342,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45E81D042399387700B8878A /* education_data.plist in Resources */,
-				454D06F42C461C01002C3CF4 /* region_tree_data.json in Resources */,
-				454D06F92C465893002C3CF4 /* grade_level_data.plist in Resources */,
-				45C2FA9A2BD789F80093928B /* PrivacyInfo.xcprivacy in Resources */,
+				45E81D042399387700B8878A /* testData.plist in Resources */,
+				457DA34D24D90AFB009D75F3 /* stages.json in Resources */,
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
-				454D06FB2C4693CA002C3CF4 /* cascade_list_data.json in Resources */,
-				454D06F52C461C01002C3CF4 /* amap_region_data.json in Resources */,
-				454D06F72C46237E002C3CF4 /* cascade_tree_data.json in Resources */,
+				45AB6DD4249A1306004EB3D0 /* linkage3_data.json in Resources */,
+				456506DE24C1AF7100A2E4EE /* linkage2_data.json in Resources */,
+				45FD41D123E3DAD900DD742B /* 2020年1月县以上行政区划代码.json in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
 				45653925237032D90074BBBC /* BRPickerView.bundle in Resources */,
 				45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */,
-				454D06F32C461C01002C3CF4 /* region_list_data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,18 +368,14 @@
 				4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */,
-				4596CB052C364097003C6654 /* BRDataSourceHelper.m in Sources */,
-				4596CB102C36745E003C6654 /* BRPickerAlertView.m in Sources */,
 				4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,
 				C5F069BB208F0BCA00C969B9 /* NSDate+BRPickerView.m in Sources */,
 				451D6C1123509890004E801F /* BRResultModel.m in Sources */,
 				459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */,
 				C5ACE5051F3D7C4F0069978B /* BRAddressPickerView.m in Sources */,
-				4596CAFC2C34EC1B003C6654 /* BRTextPickerView.m in Sources */,
 				451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */,
 				45E81D1123993A0500B8878A /* BRMutableDatePickerView.m in Sources */,
-				4596CAF92C34E257003C6654 /* BRTextModel.m in Sources */,
 				45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */,
 				C5ACE50E1F3D7E890069978B /* BRStringPickerView.m in Sources */,
 				45E81D082399387700B8878A /* BRInfoCell.m in Sources */,
@@ -588,11 +520,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N92S3NU839;
+				DEVELOPMENT_TEAM = LMDZYJF4B6;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.irenb.BRPickerViewDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.irenb.BRPickerViewDemo.NYS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -605,11 +538,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N92S3NU839;
+				DEVELOPMENT_TEAM = LMDZYJF4B6;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = BRPickerViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.irenb.BRPickerViewDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.irenb.BRPickerViewDemo.NYS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -1,5 +1,5 @@
 //
-//  BRPickerView.h
+//  BRAddressModel.m
 //  BRPickerViewDemo
 //
 //  Created by renbo on 2017/8/11.
@@ -7,11 +7,18 @@
 //
 //  最新代码下载地址：https://github.com/91renb/BRPickerView
 
-#ifndef BRPickerView_h
-#define BRPickerView_h
+#import "BRAddressModel.h"
 
-#import "BRDatePickerView.h"
-#import "BRAddressPickerView.h"
-#import "BRStringPickerView.h"
+@implementation BRProvinceModel
 
-#endif /* BRPickerView_h */
+@end
+
+
+@implementation BRCityModel
+
+@end
+
+
+@implementation BRAreaModel
+
+@end

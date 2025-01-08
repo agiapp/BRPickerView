@@ -22,7 +22,7 @@
     BOOL _isAdjustSelectRow; // 设置minDate时，调整日期联动的选择(解决日期选择器联动不正确的问题)
 }
 // 蒙层视图
-@property (nonatomic, strong) UIView *maskBgView;
+@property (nonatomic, strong) UIView *maskView;
 // 弹出背景视图
 @property (nonatomic, strong) UIView *alertView;
 // 标题栏背景视图
@@ -74,7 +74,7 @@
     // 设置子视图的宽度随着父视图变化
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self addSubview:self.maskBgView];
+    [self addSubview:self.maskView];
     
     [self addSubview:self.alertView];
     [self.alertView addSubview:self.titleBarView];
@@ -85,17 +85,17 @@
 }
 
 #pragma mark - 蒙层视图
-- (UIView *)maskBgView {
-    if (!_maskBgView) {
-        _maskBgView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-        _maskBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
+- (UIView *)maskView {
+    if (!_maskView) {
+        _maskView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        _maskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2f];
         // 设置子视图的大小随着父视图变化
-        _maskBgView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _maskBgView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskBgView:)];
-        [_maskBgView addGestureRecognizer:myTap];
+        _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _maskView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskView:)];
+        [_maskView addGestureRecognizer:myTap];
     }
-    return _maskBgView;
+    return _maskView;
 }
 
 #pragma mark - 弹框视图
@@ -276,7 +276,7 @@
 }
 
 #pragma mark - 点击蒙层视图事件
-- (void)didTapMaskBgView:(UITapGestureRecognizer *)sender {
+- (void)didTapMaskView:(UITapGestureRecognizer *)sender {
     [self dismiss];
 }
 
@@ -305,7 +305,7 @@
     rect.origin.y = self.bounds.size.height;
     self.alertView.frame = rect;
     // 弹出动画
-    self.maskBgView.alpha = 1;
+    self.maskView.alpha = 1;
     [UIView animateWithDuration:0.3f animations:^{
         CGRect rect = self.alertView.frame;
         rect.origin.y -= kPickerViewHeight + kTitleBarViewHeight + BR_BOTTOM_MARGIN;
@@ -320,7 +320,7 @@
         CGRect rect = self.alertView.frame;
         rect.origin.y += kPickerViewHeight + kTitleBarViewHeight + BR_BOTTOM_MARGIN;
         self.alertView.frame = rect;
-        self.maskBgView.alpha = 0;
+        self.maskView.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
@@ -414,8 +414,8 @@
         self.maxDate = [NSDate distantFuture];
     }
     BOOL minMoreThanMax = [self br_compareDate:self.minDate targetDate:self.maxDate] == NSOrderedDescending;
+    NSAssert(!minMoreThanMax, @"最小日期不能大于最大日期！");
     if (minMoreThanMax) {
-        BRErrorLog(@"最小日期不能大于最大日期！");
         // 如果最小日期大于了最大日期，就忽略两个值
         self.minDate = [NSDate distantPast];
         self.maxDate = [NSDate distantFuture];
@@ -569,7 +569,7 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-// 1.返回组件数量
+// 1. 设置 picker 的列数
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 3;
 }

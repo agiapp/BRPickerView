@@ -1,40 +1,32 @@
 # BRPickerView
 
-BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDatePickerView`** 日期选择器（支持年月日、年月等15种日期样式选择，支持设置星期、至今等）、**`BRTextPickerView`** 文本选择器（支持单列、多列、省市区、省市、省、自定义多级联动选择）。支持自定义主题样式，适配深色模式，支持将选择器组件添加到指定容器视图。
+BRPickerView 封装的是iOS中常用的选择器组件，主要包括：日期选择器（支持年月日、年月等15种日期样式选择，支持设置星期、至今等）、地址选择器（支持省市区、省市、省三种地区选择）、自定义字符串选择器（支持单列、多列、二级联动、三级联动选择）。支持自定义主题样式，适配深色模式，支持将选择器组件添加到指定容器视图。
 
-【特别说明】
+【说明】
 
->- 从 `2.9.0` 版本起新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
->- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
-
-#### 📒 稀土掘金地址：https://juejin.cn/post/6844903605468676104
-
-
+- 当前最新版本为： `2.8.0` 。
+- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
 
 # 效果演示
 
 查看并运行 `BRPickerViewDemo.xcodeproj`
 
-| ![效果图1](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/a.gif?raw=true) | ![效果图2](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/b.gif?raw=true) |
+| ![效果图1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/a.gif?raw=true) | ![效果图2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/b.gif?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                     框架Demo运行效果图1                      |                     框架Demo运行效果图2                      |
 
 # 安装
 
-#### CocoaPods
+#### 1. CocoaPods
 
-1. 在 Podfile 中添加 `pod 'BRPickerView'`
-2. 执行 `pod install` 或 `pod update` 
-3. 导入头文件 ` #import <BRPickerView.h>`
+1. 在 Podfile 中添加 `pod 'BRPickerView'`。
 
->安装说明：
->
->**pod 'BRPickerView'** ：默认是安装全部组件（包含：`BRDatePickerView` 、 `BRTextPickerView` ，和废弃的`BRAddressPickerView` 、`BRStringPickerView` 组件），等价于：`pod 'BRPickerView/All'`
->
->**pod 'BRPickerView/Default'** ：仅安装`BRDatePickerView` 和 `BRTextPickerView` 组件
+2. 执行 `pod install` 或 `pod update` 。
+
+3. 导入头文件 ` #import <BRPickerView.h>`。
 
 
-#### 手动导入
+#### 2. 手动导入
 
 1. 将与 `README.md` 同级目录下的 `BRPickerView` 文件夹拽入项目中
 
@@ -43,14 +35,14 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDa
 
 # 系统要求
 
-- iOS 9.0+
+- iOS 8.0+
 - ARC
 
 # 使用
 
-### 时间选择器：`BRDatePickerView`
+#### 1. 时间选择器：`BRDatePickerView`
 
-查看 BRDatePickerView.h 头文件，里面提供了两种使用方式，参见源码。
+​	查看 BRDatePickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
 ```objective-c
 /// 日期选择器格式
@@ -65,7 +57,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】UIDatePickerModeCountDownTimer */
     BRDatePickerModeCountDownTimer,
     
-    // ----- 以下14种是自定义样式 -----
+    // ----- 以下11种是自定义样式 -----
     /** 【yyyy-MM-dd HH:mm:ss】年月日时分秒 */
     BRDatePickerModeYMDHMS,
     /** 【yyyy-MM-dd HH:mm】年月日时分 */
@@ -87,14 +79,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerMode) {
     /** 【HH:mm】时分 */
     BRDatePickerModeHM,
     /** 【mm:ss】分秒 */
-    BRDatePickerModeMS,
-    
-    /** 【yyyy-qq】年季度 */
-    BRDatePickerModeYQ,
-    /** 【yyyy-MM-ww】年月周 */
-    BRDatePickerModeYMW,
-    /** 【yyyy-ww】年周 */
-    BRDatePickerModeYW
+    BRDatePickerModeMS
 };
 ```
 
@@ -129,44 +114,44 @@ datePickerView.pickerStyle = customStyle;
 
 - 以下4种样式是使用 UIDatePicker 类 进行封装的，支持循环滚动
 
-| ![样式1：BRDatePickerModeTime](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type1.png?raw=true) | ![样式2：BRDatePickerModeDate](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type2.png?raw=true) |
+| ![样式1：BRDatePickerModeTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type1.png?raw=true) | ![样式2：BRDatePickerModeDate](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type2.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                 样式1：BRDatePickerModeDate                  |              样式2：BRDatePickerModeDateAndTime              |
 |                                                              |                                                              |
-| ![样式3：BRDatePickerModeDateAndTime](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type3.png?raw=true) | ![样式4：BRDatePickerModeCountDownTimer](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type4.png?raw=true) |
+| ![样式3：BRDatePickerModeDateAndTime](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type3.png?raw=true) | ![样式4：BRDatePickerModeCountDownTimer](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type4.png?raw=true) |
 |                 样式3：BRDatePickerModeTime                  |            样式4：BRDatePickerModeCountDownTimer             |
 
 - 以下11种样式是使用 UIPickerView 类进行封装的。
 
-| ![样式5：BRDatePickerModeYMDHMS](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type5.png?raw=true) | ![样式6：BRDatePickerModeYMDHM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type6.png?raw=true) |
+| ![样式5：BRDatePickerModeYMDHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type5.png?raw=true) | ![样式6：BRDatePickerModeYMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type6.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                样式5：BRDatePickerModeYMDHMS                 |                 样式6：BRDatePickerModeYMDHM                 |
 |                                                              |                                                              |
-| ![样式7：BRDatePickerModeYMDH](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type7.png?raw=true) | ![样式8：BRDatePickerModeMDHM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type8.png?raw=true) |
+| ![样式7：BRDatePickerModeYMDH](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type7.png?raw=true) | ![样式8：BRDatePickerModeMDHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type8.png?raw=true) |
 |                 样式7：BRDatePickerModeYMDH                  |                 样式8：BRDatePickerModeMDHM                  |
 |                                                              |                                                              |
-| ![样式9：BRDatePickerModeYMDE](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type9.png?raw=true) | ![样式10：BRDatePickerModeYMD](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type10.png?raw=true) |
+| ![样式9：BRDatePickerModeYMDE](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type9.png?raw=true) | ![样式10：BRDatePickerModeYMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type10.png?raw=true) |
 |                  样式9：BRDatePickerModeYMD                  |                  样式10：BRDatePickerModeYM                  |
 |                                                              |                                                              |
-| ![样式11：BRDatePickerModeYM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type11.png?raw=true) | ![样式12：BRDatePickerModeY](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type12.png?raw=true) |
+| ![样式11：BRDatePickerModeYM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type11.png?raw=true) | ![样式12：BRDatePickerModeY](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type12.png?raw=true) |
 |                  样式11：BRDatePickerModeY                   |                  样式12：BRDatePickerModeMD                  |
 |                                                              |                                                              |
-| ![样式13：BRDatePickerModeMD](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
+| ![样式13：BRDatePickerModeMD](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type13.png?raw=true) | ![样式14：BRDatePickerModeHMS](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type14.png?raw=true) |
 |                 样式13：BRDatePickerModeHMS                  |                  样式14：BRDatePickerModeHM                  |
 |                                                              |                                                              |
-| ![样式15：BRDatePickerModeHM](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type15.png?raw=true) |                                                              |
+| ![样式15：BRDatePickerModeHM](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type15.png?raw=true) |                                                              |
 |                  样式15：BRDatePickerModeMS                  |                                                              |
 
 - 其它日期样式
 
-| ![设置显示星期](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week1.png?raw=true) | ![设置显示星期](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week2.png?raw=true) |
+| ![设置显示星期](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week1.png?raw=true) | ![设置显示星期](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_week2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 设置显示星期：datePickerView.showWeek = YES;                 | 设置显示星期：datePickerView.showWeek = YES;                 |
 |                                                              |                                                              |
-| ![设置添加至今](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![设置显示今天](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
+| ![设置添加至今](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_now.png?raw=true) | ![设置显示今天](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_today.png?raw=true) |
 | 设置添加至今：datePickerView.addToNow = YES;                 | 设置显示今天：datePickerView.showToday = YES;                |
 |                                                              |                                                              |
-| ![日期单位单行显示样式](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) | ![自定义选择器选中行颜色](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_row.png?raw=true) |
+| ![日期单位单行显示样式](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_unit.png?raw=true) | ![自定义选择器选中行颜色](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_row.png?raw=true) |
 | 日期单位显示样式：datePickerView.showUnitType = BRShowUnitTypeOnlyCenter; | 设置选择器中间选中行的背景颜色：selectRowColor               |
 
 ```objective-c
@@ -178,17 +163,17 @@ customStyle.selectRowTextColor = [UIColor redColor];
 datePickerView.pickerStyle = customStyle;
 ```
 
-| ![英式日期年月日](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en1.png?raw=true) | ![英式日期年月](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en2.png?raw=true) |
+| ![英式日期年月日](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en1.png?raw=true) | ![英式日期年月](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_en2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 样式：BRDatePickerModeYMD （默认非中文环境显示英式日期）     | 样式：BRDatePickerModeYM （默认非中文环境显示英式日期）      |
 
 - 几种常见的弹框样式模板
 
-| ![模板样式1](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/template_style1.png?raw=true) | ![模板样式2](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/template_style2.png?raw=true) |
+| ![模板样式1](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style1.png?raw=true) | ![模板样式2](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style2.png?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 弹框样式模板1：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithThemeColor:[UIColor blueColor]]; | 弹框样式模板2：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneTextColor:[UIColor blueColor]]; |
 |                                                              |                                                              |
-| ![模板样式3](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) | ![添加选择器的头视图](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_top.png?raw=true) |
+| ![模板样式3](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/template_style3.png?raw=true) | ![添加选择器的头视图](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/date_type_top.png?raw=true) |
 | 弹框样式模板3：datePickerView.pickerStyle = [BRPickerStyle pickerStyleWithDoneBtnImage:[UIImage imageNamed:@"icon_close"]]; | 添加选择器的头视图：pickerHeaderView                         |
 
 ```objective-c
@@ -210,479 +195,113 @@ for (NSInteger i = 0; i < unitArr.count; i++) {
 datePickerView.pickerHeaderView = headerView;
 ```
 
+#### 2. 地址选择器：`BRAddressPickerView`
 
+​	查看 BRAddressPickerView.h 头文件，里面提供了两种使用方式，参见源码。
 
-### 文本选择器：`BRTextPickerView`
-
-查看 BRTextPickerView.h 头文件，提供了三种类型：
+- 使用示例（参考Demo）：
 
 ```objective-c
-/// 文本选择器类型
-typedef NS_ENUM(NSInteger, BRTextPickerMode) {
-    /** 单列选择器 */
-    BRTextPickerComponentSingle,
-    /** 多列选择器 */
-    BRTextPickerComponentMulti,
-    /** 多列联动选择器 */
-    BRTextPickerComponentCascade
+/// 地址选择器
+BRAddressPickerView *addressPickerView = [[BRAddressPickerView alloc]init];
+addressPickerView.pickerMode = BRAddressPickerModeArea;
+addressPickerView.title = @"请选择地区";
+//addressPickerView.selectValues = @[@"浙江省", @"杭州市", @"西湖区"];
+addressPickerView.selectIndexs = @[@10, @0, @4];
+addressPickerView.isAutoSelect = YES;
+addressPickerView.resultBlock = ^(BRProvinceModel *province, BRCityModel *city, BRAreaModel *area) {
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@ %@ %@", province.name, city.name, area.name]);
 };
+
+[addressPickerView show];
 ```
 
-#### 1. 单列文本选择器
+- 地址选择器的3种显示类型（showType 的3个枚举值）：
 
-- 使用示例：
+| ![省份](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeProvince.png?raw=true) | ![城市](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeCity.png?raw=true) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|              样式1：BRAddressPickerModeProvince              |                样式2：BRAddressPickerModeCity                |
+|                                                              |                                                              |
+| ![地区](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/BRAddressPickerModeArea.png?raw=true) |                                                              |
+|                样式3：BRAddressPickerModeArea                |                                                              |
+
+#### 3.  自定义字符串选择器：`BRStringPickerView`
+
+​	查看 BRStringPickerView.h 头文件，里面提供了两种使用方式，参见源码。
+
+- 使用示例（参考Demo）：
 
 ```objective-c
-/// 单列文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentSingle];
-textPickerView.title = @"学历";
-// 设置数据源
-textPickerView.dataSourceArr = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-textPickerView.selectIndex = self.mySelectIndex;
-textPickerView.singleResultBlock = ^(BRTextModel * _Nullable model, NSInteger index) {
-  	NSLog(@"选择的值：%@", model.text);
-    self.mySelectIndex = index;
-    textField.text = model.text;
+/// 1.单列字符串选择器（传字符串数组）
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+stringPickerView.pickerMode = BRStringPickerComponentSingle;
+stringPickerView.title = @"学历";
+stringPickerView.dataSourceArr = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
+stringPickerView.selectIndex = 2;
+stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+    NSLog(@"选择的值：%@", resultModel.value);
 };
-[textPickerView show];
-```
 
-- 设置数据源有3种方式
+[stringPickerView show];
 
-```objective-c
-// 方式1：传字符串数组
-textPickerView.dataSourceArr = @[@"大专以下", @"大专", @"本科", @"硕士", @"博士", @"博士后"];
-```
 
-```objective-c
-// 方式2：直接传入 plist 文件名（可以将上面的字符串数组放到本地plist文件中，如：education_data.plist）
-textPickerView.fileName = @"education_data.plist";
-```
-
-```objective-c
-// 方式3：传入一维模型数组(NSArray <BRTextModel *>*)
-NSArray *dataArr = @[@{@"code": @"1", @"text": @"大专以下"},
-                     @{@"code": @"2", @"text": @"大专"},
-                     @{@"code": @"3", @"text": @"本科"},
-                     @{@"code": @"4", @"text": @"硕士"},
-                     @{@"code": @"5", @"text": @"博士"},
-                     @{@"code": @"6", @"text": @"博士后"}];
-// 将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray<BRTextModel *> *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
-textPickerView.dataSourceArr = modelArr;
-```
-
-说明：当字典key 与 BRTextModel模型的属性不匹配时，需要指定模型属性与字典key的映射关系
-
-```objective-c
-/// 单列文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentSingle];
-textPickerView.title = @"融资情况";
-// 方式3：传入一维模型数组(NSArray <BRTextModel *>*)
-NSArray *dataArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
+/// 2.单列字符串选择器（可以传模型数组）
+NSArray *infoArr = @[@{@"key": @"1001", @"value": @"无融资", @"remark": @""},
                      @{@"key": @"2001", @"value": @"天使轮", @"remark": @""},
                      @{@"key": @"3001", @"value": @"A轮", @"remark": @""},
                      @{@"key": @"4001", @"value": @"B轮", @"remark": @""},
                      @{@"key": @"5001", @"value": @"C轮以后", @"remark": @""},
                      @{@"key": @"6001", @"value": @"已上市", @"remark": @""}];
-// 指定 BRTextModel模型的属性 与 字典key 的映射关系
-NSDictionary *mapper = @{ @"code": @"key", @"text": @"value", @"extras": @"remark" };
-// 将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray<BRTextModel *> *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-textPickerView.dataSourceArr = modelArr;
-textPickerView.singleResultBlock = ^(BRTextModel * _Nullable model, NSInteger index) {
-  	NSLog(@"选择的值：%@", model.text);
-};
-[textPickerView show];
-```
-
-- 单列文本选择器效果图：
-
-| ![自定义单列字符串](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_single_xueli.png?raw=true) | ![融资情况](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_single_rongzi.png?raw=true) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-
-
-
-#### 2. 多列文本选择器
-
-- 使用示例：
-
-```objective-c
-/// 多列文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentMulti];
-textPickerView.title = @"多列文本选择器";
-// 设置数据源
-textPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好"]];
-textPickerView.selectIndexs = self.mySelectIndexs;
-textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-		self.mySelectIndexs = indexs;
-    // 将模型数组元素的 text 属性值，通过分隔符-连接成字符串（组件内封装的工具方法）
-    NSString *selectText = [models br_joinText:@"-"];
-    NSLog(@"选择的结果：%@", selectText);
-};
-[textPickerView show];
-```
-
-- 多列文本选择器设置数据源同单列一样，也有3种方式：
-
-```objective-c
-// 方式1：多维字符串数组
-textPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语"], @[@"优秀", @"良好"]];
-```
-
-```objective-c
-// 方式2：直接传入 plist 文件名（可以将上面的数组放到本地plist文件中，如：grade_level_data.plist）
-textPickerView.fileName = @"grade_level_data.plist";
-```
-
-```objective-c
-// 方式3：传入多维模型数组
-NSArray *subjectDataArr = @[@{@"subject_id": @"11", @"subject": @"语文"}, @{@"subject_id": @"12", @"subject": @"数学"}, @{@"subject_id": @"13", @"subject": @"英语"}];
-NSArray *gradeDataArr = @[@{@"grade_id": @"1", @"grade": @"优秀"}, @{@"grade_id": @"2", @"grade": @"良好"}];
-// 将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray *subjectModelArr = [NSArray br_modelArrayWithJson:subjectDataArr mapper:@{ @"code": @"subject_id", @"text": @"subject" }];
-NSArray *gradeModelArr = [NSArray br_modelArrayWithJson:gradeDataArr mapper:@{ @"code": @"grade_id", @"text": @"grade" }];
-textPickerView.dataSourceArr = @[subjectModelArr, gradeModelArr];
-```
-
-- 另外还可以设置更多自定义样式
-
-```objective-c
-/// 多列文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentMulti];
-textPickerView.title = @"自定义多列字符串";
-textPickerView.dataSourceArr = @[@[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12"], @[@"00", @"10", @"20", @"30", @"40", @"50"]];
-textPickerView.selectIndexs = self.mySelectIndexs;
-textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-  	self.mySelectIndexs = indexs;
-    // 将模型数组元素的 text 属性值，通过:分隔符 连接成字符串（组件内封装的工具方法）
-    NSString *selectText = [models br_joinText:@":"];
-    NSLog(@"选择的结果：%@", selectText);
+NSMutableArray *modelArr = [[NSMutableArray alloc]init];
+for (NSDictionary *dic in infoArr) {
+    BRResultModel *model = [[BRResultModel alloc]init];
+    model.key = dic[@"key"];
+    model.value = dic[@"value"];
+    model.remark = dic[@"remark"];
+    [modelArr addObject:model];
+}
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+stringPickerView.pickerMode = BRStringPickerComponentSingle;
+stringPickerView.title = @"融资情况";
+stringPickerView.dataSourceArr = [modelArr copy];
+stringPickerView.selectIndex = 2;
+stringPickerView.resultModelBlock = ^(BRResultModel *resultModel) {
+    NSLog(@"选择的索引：%@", @(resultModel.index));
+    NSLog(@"选择的值：%@", resultModel.value);
 };
 
-// 设置自定义样式
-BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-// 设置 picker 的列宽
-customStyle.columnWidth = 30;
-// 设置 picker 的列间隔
-customStyle.columnSpacing = 60;
-// 设置圆角矩形背景
-// 方式1：使用系统自带样式，保留iOS14之后系统默认的圆角样式。
-customStyle.clearPickerNewStyle = NO;
-// 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[stringPickerView.alertView addSubview:rectView];）
+[stringPickerView show];
+
+
+/// 3.多列字符串选择器
+BRStringPickerView *stringPickerView = [[BRStringPickerView alloc]init];
+stringPickerView.pickerMode = BRStringPickerComponentMulti;
+stringPickerView.title = @"自定义多列字符串";
+stringPickerView.dataSourceArr = @[@[@"语文", @"数学", @"英语", @"物理", @"化学", @"生物"], @[@"优秀", @"良好", @"及格", @"不及格"]];
+stringPickerView.selectIndexs = @[@2, @1];
+stringPickerView.resultModelArrayBlock = ^(NSArray<BRResultModel *> *resultModelArr) {
+    NSLog(@"选择的值：%@", [NSString stringWithFormat:@"%@，%@", resultModelArr[0].value, resultModelArr[1].value]);
+};
+
 // 设置选择器中间选中行的样式
+BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
 customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
 customStyle.selectRowTextColor = [UIColor blueColor];
-textPickerView.pickerStyle = customStyle;
+stringPickerView.pickerStyle = customStyle;
 
-[textPickerView show];
+[stringPickerView show];
 ```
 
-- 多列文本选择器效果图：
+- 字符串选择器效果图：
 
-| ![多列文本选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_multi_grade.png?raw=true) | ![多列文本选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_multi_time.png?raw=true) |
+| ![自定义单列字符串](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_single.png?raw=true) | ![融资情况](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_rongzi.png?raw=true) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-
-
-
-#### 3. 多列联动文本选择器
-
-- 使用示例：
-
-```objective-c
-/// 多列联动文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-textPickerView.title = @"多列联动文本选择器";
-NSArray *dataArr = @[
-    @{
-        @"text" : @"浙江省",
-        @"children" : @[
-            @{ @"text": @"杭州市", @"children": @[@{ @"text": @"西湖区" }, @{ @"text": @"滨江区" }] },
-            @{ @"text": @"宁波市", @"children": @[@{ @"text": @"海曙区" }, @{ @"text": @"江北区" }] },
-            @{ @"text": @"温州市", @"children": @[@{ @"text": @"鹿城区" }, @{ @"text": @"龙湾区" }] }
-      ]
-    },
-    @{
-        @"text" : @"江苏省",
-        @"children" : @[
-            @{ @"text": @"南京市", @"children": @[@{ @"text": @"玄武区" }, @{ @"text": @"秦淮区" }] },
-            @{ @"text": @"苏州市", @"children": @[@{ @"text": @"虎丘区" }, @{ @"text": @"吴中区" }] }
-      ]
-    },
-    @{
-        @"text" : @"辽宁省",
-        @"children" : @[
-            @{ @"text": @"沈阳市", @"children": @[@{ @"text": @"沈河区" }, @{ @"text": @"和平区" }] },
-            @{ @"text": @"大连市", @"children": @[@{ @"text": @"中山区" }, @{ @"text": @"金州区" }] }
-      ]
-    }
-];
-// 设置数据源：传树状结构模型数组(NSArray <BRTextModel *>*)
-textPickerView.dataSourceArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
-textPickerView.selectIndexs = self.mySelectIndexs;
-textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-    self.mySelectIndexs = indexs;
-  	// 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
-    NSString *selectText = [models br_joinText:@"-"];
-    NSLog(@"选择的结果：%@", selectText);
-};
-[textPickerView show];
-```
-
-
-
-- 实现省、市、区/县选择（使用本地数据源：region_tree_data.json）
-
-```objective-c
-// 地区
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-textPickerView.title = @"请选择地区";
-// 设置数据源：传入本地json文件名（可以下载Demo中的 region_tree_data.json 文件放到自己的项目中，该数据源来源于高德地图最新数据）
-textPickerView.fileName = @"region_tree_data.json";
-// 设置选择器显示的列数(即层级数)，默认是根据数据源层级动态计算显示。如：设置1则只显示前1列数据（即只显示省）；设置2则只显示前2列数据（即只显示省、市）；设置3则只显示前3列数据（即显示省、市、区）
-textPickerView.showColumnNum = 3;
-textPickerView.selectIndexs = self.addressSelectIndexs;
-textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-    self.addressSelectIndexs = indexs;
-    // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
-    NSString *selectText = [models br_joinText:@"-"];
-    NSLog(@"选择的结果：%@", selectText);
-    textField.text = selectText;
-};
-[textPickerView show];
-```
-
-- 地址文本选择器的3种显示效果
-
-| ![地区](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_area.png?raw=true) | ![城市](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_city.png?raw=true) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 样式1：textPickerView.showColumnNum = 3;                     | 样式2：textPickerView.showColumnNum = 2;                     |
+|                       单列字符串选择器                       |                       单列字符串选择器                       |
 |                                                              |                                                              |
-| ![省份](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_province.png?raw=true) |                                                              |
-| 样式3：textPickerView.showColumnNum = 1;                     |                                                              |
-
->高德地图行政区划数据源（省、市、区/县），数据更新于2024年7月
->
->- 原数据：[amap_region_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/amap_region_data.json)
->- 处理后的树状结构数据1：[region_tree_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_tree_data.json) （组件使用本地数据源时，需要下载的文件）
->- 处理后的树状结构数据2：[region_list_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_list_data.json)
-
-
-
-- 处理树状结构数据
-
-```json
-{
-    "status": "1",
-    "info": "OK",
-    "districts": [
-        {
-            "adcode": "330000",
-            "name": "浙江省",
-            "districts" : [
-                { "adcode" : "330100", "name": "杭州市", "districts": [{ "adcode" : "330106", "name": "西湖区" }, { "adcode" : "330108", "name": "滨江区" }] },
-                { "adcode" : "330200", "name": "宁波市", "districts": [{ "adcode" : "330203", "name": "海曙区" }, { "adcode" : "330205", "name": "江北区" }] },
-                { "adcode" : "330300", "name": "温州市", "districts": [{ "adcode" : "330302", "name": "鹿城区" }, { "adcode" : "330303", "name": "龙湾区" }] }
-            ]
-        },
-        {
-            "adcode": "320000",
-            "name": "江苏省",
-            "districts" : [
-                { "adcode" : "320100", "name": "南京市", "districts": [{ "adcode" : "320102", "name": "玄武区" }, { "adcode" : "320104", "name": "秦淮区" }] },
-                { "adcode" : "320500", "name": "苏州市", "districts": [{ "adcode" : "320505", "name": "虎丘区" }, { "adcode" : "320506", "name": "吴中区" }] }
-            ]
-        },
-        {
-            "adcode": "210000",
-            "name": "辽宁省",
-            "districts" : [
-                { "adcode" : "210100", "name": "沈阳市", "districts": [{ "adcode" : "210103", "name": "沈河区" }, { "adcode" : "210102", "name": "和平区" }] },
-                { "adcode" : "210200", "name": "大连市", "districts": [{ "adcode" : "210202", "name": "中山区" }, { "adcode" : "210213", "name": "金州区" }] }
-            ]
-        }
-    ]
-}
-```
-
-```objective-c
-/// 多列联动文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-textPickerView.title = @"多列联动文本选择器";
-
-// 接收网络请求结果数据（下面省略号表示省略部分代码）
-NSArray *dataArr = ...... responseObject[@"districts"];
-// 指定 BRTextModel模型的属性 与 字典key 的映射关系
-NSDictionary *mapper = @{ @"code": @"adcode", @"text": @"name", @"children": @"districts" };
-// 将上面数组 转为 模型数组（组件内封装的工具方法）
-NSArray<BRTextModel *> *modelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-textPickerView.dataSourceArr = modelArr;
-textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-    // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
-  	NSString *selectText = [models br_joinText:@"-"];
-    NSLog(@"选择的结果：%@", selectText);
-};
-[textPickerView show];
-```
-
-- 处理扁平结构数据
-
-```json
-{
-  "Code" : 200,
-  "Msg" : "获取成功",
-  "Result" : [
-      {
-        "ParentID" : "-1",
-        "ParentName" : "",
-        "CategoryID" : "330000",
-        "CategoryName" : "浙江省"
-      },
-      {
-        "ParentID" : "-1",
-        "ParentName" : "",
-        "CategoryID" : "320000",
-        "CategoryName" : "江苏省"
-      },
-      {
-        "ParentID" : "-1",
-        "ParentName" : "",
-        "CategoryID" : "210000",
-        "CategoryName" : "辽宁省"
-      },
-      {
-        "ParentID" : "330000",
-        "ParentName" : "浙江省",
-        "CategoryID" : "330100",
-        "CategoryName" : "杭州市"
-      },
-      {
-        "ParentID" : "330000",
-        "ParentName" : "浙江省",
-        "CategoryID" : "330200",
-        "CategoryName" : "宁波市"
-      },
-      {
-        "ParentID" : "330000",
-        "ParentName" : "浙江省",
-        "CategoryID" : "330300",
-        "CategoryName" : "温州市"
-      },
-      {
-        "ParentID" : "320000",
-        "ParentName" : "江苏省",
-        "CategoryID" : "320100",
-        "CategoryName" : "南京市"
-      },
-      {
-        "ParentID" : "320000",
-        "ParentName" : "江苏省",
-        "CategoryID" : "320500",
-        "CategoryName" : "苏州市"
-      },
-      {
-        "ParentID" : "210000",
-        "ParentName" : "辽宁省",
-        "CategoryID" : "210100",
-        "CategoryName" : "沈阳市"
-      },
-      {
-        "ParentID" : "210000",
-        "ParentName" : "辽宁省",
-        "CategoryID" : "210200",
-        "CategoryName" : "大连市"
-      }
-  ]
-}
-```
-
-```objective-c
-/// 多列联动文本选择器
-BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
-textPickerView.title = @"多列联动文本选择器";
-
-// 接收网络请求结果数据（下面省略号表示省略部分代码）
-NSArray *dataArr = ...... responseObject[@"Result"];
-// 指定 BRTextModel模型的属性 与 字典key 的映射关系
-NSDictionary *mapper = @{ @"parentCode": @"ParentID", @"code": @"CategoryID", @"text": @"CategoryName" };
-// 1.先将上面数组 转为 模型数组（组件内封装的工具方法）。如果数据源是多个数组，需要自己先手动组装成一个NSArray<BRTextModel *>类型的扁平结构模型数组。
-NSArray<BRTextModel *> *listModelArr = [NSArray br_modelArrayWithJson:dataArr mapper:mapper];
-// 2.将扁平结构模型数组 转成 树状结构模型数组（组件内封装的工具方法）
-NSArray<BRTextModel *> *treeModelArr = [listModelArr br_buildTreeArray];
-textPickerView.dataSourceArr = treeModelArr;
-
-textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
-    // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
-  	NSString *selectText = [models br_joinText:@"-"];
-    NSLog(@"选择的结果：%@", selectText);
-    // 获取选择模型指定属性（如：code）组成的数组（组件内封装的工具方法）
-    NSArray *selectIDs = [models br_getValueArr:@"code"];
-};
-
-// 设置选择器中间选中行的样式
-BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
-customStyle.selectRowTextColor = [UIColor blueColor];
-customStyle.columnWidth = 80;
-customStyle.columnSpacing = 10;
-textPickerView.pickerStyle = customStyle;
-
-[textPickerView show];
-```
-
-- 多列联动文本选择器效果图：
-
-| ![三列联动文本选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_three.png?raw=true) | ![两列字符串选择器](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_two.png?raw=true) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-
-
-
-补充说明：对于一些需要特殊定制弹框的应用场景，可以使用下面的方法把日期选择器/文本选择器到指定容器视图上，实现个性化的弹框需求。
-
-```objective-c
-/// 扩展一：添加选择器到指定容器视图上
-/// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
-/// 补充说明：如果是自定义确定按钮，需要回调默认选择的值：只需在自定义确定按钮的点击事件方法里执行一下 doneBlock 回调（目的是去触发组件内部执行 resultBlock 回调，进而回调默认选择的值）
-/// @param view 容器视图
-- (void)addPickerToView:(nullable UIView *)view NS_REQUIRES_SUPER;
-```
-
-
+| ![多列字符串选择器](https://github.com/91renb/BRPickerView/blob/master/BRPickerViewDemo/images/string_more.png?raw=true) |                                                              |
+|                       多列字符串选择器                       |                                                              |
 
 # 更新记录
-
-#### 2024-07-24（V2.9.1）
-
-- 新增 maxTextLines 属性
-- 取消 selectRowAnimated 属性 readonly 限制
-
-#### 2024-07-17（V2.9.0）
-
-- 新增 BRTextPickerView 文本选择组件（用于替代BRAddressPickerView、BRStringPickerView组件）
-
-#### 2024-07-02（V2.8.8）
-
-- [#310](https://github.com/agiapp/BRPickerView/issues/310) ：更新本地省市区数据源数据
-
-- [#314](https://github.com/agiapp/BRPickerView/issues/314) ：修改maskView视图命名，解决因命名冲突在iOS 18 上出现的崩溃问题
-
-#### 2024-05-28（V2.8.7）
-
-- 解决已知问题：[#308](https://github.com/agiapp/BRPickerView/issues/308) 、[#309](https://github.com/agiapp/BRPickerView/issues/309) 
-- 时间选择器新增 `twelveHourMode` 属性，支持设置12小时制
-- 支持 Swift Package Manager
-
-#### 2024-04-28（V2.8.5）
-
-- 解决已知问题：[#305](https://github.com/agiapp/BRPickerView/issues/305) 
-- 添加可设置选择器组件的列宽属性：`columnWidth`
-- 添加可设置`BRStringPickerView` 选择器组件的列间隔属性：`columnSpacing`
-
-#### 2024-04-23（V2.8.2）
-
-- 解决已知问题：[#304](https://github.com/agiapp/BRPickerView/issues/304) 
-
-- Add PrivacyInfo.xcprivacy
 
 #### 2022-07-08（V2.8.0）
 
@@ -704,21 +323,21 @@ textPickerView.pickerStyle = customStyle;
 
 - 日期选择器新增属性：`monthNames` 和 `customUnit`
 
-- 解决已知问题：[#232](https://github.com/agiapp/BRPickerView/issues/232) 、[#231](https://github.com/agiapp/BRPickerView/issues/231)  、[#230](https://github.com/agiapp/BRPickerView/issues/230)  、[#227](https://github.com/agiapp/BRPickerView/issues/227)  、[#225](https://github.com/agiapp/BRPickerView/issues/225) 、[#219](https://github.com/agiapp/BRPickerView/issues/219) 、[#206](https://github.com/agiapp/BRPickerView/issues/206) 
+- 解决已知问题：[#232](https://github.com/91renb/BRPickerView/issues/232) 、[#231](https://github.com/91renb/BRPickerView/issues/231)  、[#230](https://github.com/91renb/BRPickerView/issues/230)  、[#227](https://github.com/91renb/BRPickerView/issues/227)  、[#225](https://github.com/91renb/BRPickerView/issues/225) 、[#219](https://github.com/91renb/BRPickerView/issues/219) 、[#206](https://github.com/91renb/BRPickerView/issues/206) 
 
 #### 2020-09-25（V2.7.3）
 
-- 适配选择器iOS14的样式：[#189](https://github.com/agiapp/BRPickerView/issues/189) 、[#191](https://github.com/agiapp/BRPickerView/issues/191)
+- 适配选择器iOS14的样式：[#189](https://github.com/91renb/BRPickerView/issues/189) 、[#191](https://github.com/91renb/BRPickerView/issues/191)
 
 #### 2020-09-23（V2.7.2）
 
 - 日期选择器新增添加自定义字符串属性：`firstRowContent` 和 `lastRowContent`
-- 解决日期选择器设置最小日期时，存在的联动不正确的问题：[#184](https://github.com/agiapp/BRPickerView/issues/184) 
+- 解决日期选择器设置最小日期时，存在的联动不正确的问题：[#184](https://github.com/91renb/BRPickerView/issues/184) 
 
 #### 2020-08-28（V2.7.0）
 
-- 日期选择器添加 `nonSelectableDates` 属性：[#178](https://github.com/agiapp/BRPickerView/issues/178) 
-- 优化选中行文本显示：[#177](https://github.com/agiapp/BRPickerView/issues/177) 
+- 日期选择器添加 `nonSelectableDates` 属性：[#178](https://github.com/91renb/BRPickerView/issues/178) 
+- 优化选中行文本显示：[#177](https://github.com/91renb/BRPickerView/issues/177) 
 
 #### 2020-08-16（V2.6.8）
 
@@ -731,7 +350,7 @@ textPickerView.pickerStyle = customStyle;
 
 #### 2020-08-06（V2.6.6）
 
-- 修复 [#163](https://github.com/agiapp/BRPickerView/issues/163) 和  [#170](https://github.com/agiapp/BRPickerView/issues/170) 
+- 修复 [#163](https://github.com/91renb/BRPickerView/issues/163) 和  [#170](https://github.com/91renb/BRPickerView/issues/170) 
 
 #### 2020-07-18（V2.6.5）
 
@@ -755,7 +374,7 @@ textPickerView.pickerStyle = customStyle;
 
 #### 2020-04-27（V2.5.8）
 
-- 修复 [#138](https://github.com/agiapp/BRPickerView/issues/138) 和 [#142](https://github.com/agiapp/BRPickerView/issues/142)
+- 修复 [#138](https://github.com/91renb/BRPickerView/issues/138) 和 [#142](https://github.com/91renb/BRPickerView/issues/142)
 - 日期选择器新增 `descending` 属性，支持降序的时间列表
 - 更新地址选择器地区数据源
 

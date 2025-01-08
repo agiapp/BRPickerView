@@ -1,0 +1,84 @@
+{
+  "Code": 1,
+  "Message": "获取数据成功！",
+  "GetStageInfoDto": [
+      {
+          "StageID": "1",
+          "Name": "小学",
+          "GetGradeInfoDto": [
+              {
+                  "GradeID": "1",
+                  "Name": "一年级",
+                  "StageID": "1"
+              },
+              {
+                  "GradeID": "2",
+                  "Name": "二年级",
+                  "StageID": "1"
+              },
+              {
+                  "GradeID": "3",
+                  "Name": "三年级",
+                  "StageID": "1"
+              },
+              {
+                  "GradeID": "4",
+                  "Name": "四年级",
+                  "StageID": "1"
+              },
+              {
+                  "GradeID": "5",
+                  "Name": "五年级",
+                  "StageID": "1"
+              },
+              {
+                  "GradeID": "6",
+                  "Name": "六年级",
+                  "StageID": "1"
+              }
+          ]
+      },
+      {
+          "StageID": "2",
+          "Name": "初中",
+          "GetGradeInfoDto": [
+              {
+                  "GradeID": "1",
+                  "Name": "初一",
+                  "StageID": "2"
+              },
+              {
+                  "GradeID": "2",
+                  "Name": "初二",
+                  "StageID": "2"
+              },
+              {
+                  "GradeID": "3",
+                  "Name": "初三",
+                  "StageID": "2"
+              }
+          ]
+      },
+      {
+          "StageID": "3",
+          "Name": "高中",
+          "GetGradeInfoDto": [
+              {
+                  "GradeID": "1",
+                  "Name": "高一",
+                  "StageID": "3"
+              },
+              {
+                  "GradeID": "2",
+                  "Name": "高二",
+                  "StageID": "3"
+              },
+              {
+                  "GradeID": "3",
+                  "Name": "高三",
+                  "StageID": "3"
+              }
+          ]
+      }
+  ]
+}
