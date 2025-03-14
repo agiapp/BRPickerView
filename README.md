@@ -2,12 +2,12 @@
 
 BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDatePickerView`** 日期选择器（支持年月日、年月等15种日期样式选择，支持设置星期、至今等）、**`BRTextPickerView`** 文本选择器（支持单列、多列、省市区、省市、省、自定义多级联动选择）。支持自定义主题样式，适配深色模式，支持将选择器组件添加到指定容器视图。
 
-【特别说明】
+⚠️【特别说明】
 
->- 从 `2.9.0` 版本起新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 组件（这两个组件目前做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 组件进行替代）
->- 如果不能找到最新版本，请先执行一下 `pod repo update` 更新本地仓库，待更新完成后；再执行 `pod search BRPickerView` 进行搜索，就会看到最新版本。
+>- 从 `2.9.0` 版本起，新增了`BRTextPickerView` 组件，用于替代原先 `BRAddressPickerView` 和 `BRStringPickerView` 两个旧组件（目前这两个旧组件做了兼容，可以继续使用，后续会废弃掉，建议使用 `BRTextPickerView` 新组件进行替代）
+>- 在新iOS18系统上，因 `maskView` 命名问题出现的崩溃情况，请及时升级到最新版本。  
 
-#### 📒 稀土掘金地址：https://juejin.cn/post/6844903605468676104
+#### 📒 稀土掘金：https://juejin.cn/post/6844903605468676104
 
 
 
@@ -650,6 +650,10 @@ textPickerView.pickerStyle = customStyle;
 
 
 # 更新记录
+
+#### 2025-03-14（V2.9.2）
+
+- [#336](https://github.com/agiapp/BRPickerView/issues/336) ：优化选择年月日时分秒时，UI显示最后一个秒显示不全问题
 
 #### 2024-07-24（V2.9.1）
 
