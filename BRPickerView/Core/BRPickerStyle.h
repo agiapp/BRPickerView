@@ -191,11 +191,14 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 @property (nonatomic, assign) CGFloat rowHeight;
 /** 设置 picker 的列宽 */
 @property (nonatomic, assign) CGFloat columnWidth;
-/** 设置 picker 的列间隔，仅支持`BRStringPickerView` */
+/** 设置 picker 的列间隔，仅支持`BRTextPickerView` */
 @property (nonatomic, assign) CGFloat columnSpacing;
 
 /** 设置 picker 文本支持的最大行数，默认为 2 */
 @property (nonatomic, assign) NSUInteger maxTextLines;
+
+/** 最后一列文本是否左对齐（处理文本默认居中对齐溢出显示不全的情况）；注：时间类型为`BRDatePickerModeYMDHMS`默认值是 YES，其他都默认为 NO */
+@property (nonatomic, assign) BOOL isLastTextAlignLeft;
 
 /**
  *  清除iOS14之后选择器默认自带的新样式。暂不支持日期选择器前4种类型

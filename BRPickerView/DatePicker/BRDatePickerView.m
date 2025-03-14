@@ -865,6 +865,10 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         label = [[UILabel alloc]init];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
+        // 处理最后一列文本溢出显示不全问题
+        if (self.pickerStyle.isLastTextAlignLeft && component == pickerView.numberOfComponents - 1) {
+            label.textAlignment = NSTextAlignmentLeft;
+        }
         label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
         label.numberOfLines = self.pickerStyle.maxTextLines;
@@ -1657,6 +1661,12 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 3.滚动到选择的日期
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {
+        
+        // 处理时间类型为 BRDatePickerModeYMDHMS 时，最后一列的「秒」溢出屏幕外显示不全的情况
+        if (!self.pickerStyle.isLastTextAlignLeft && self.pickerMode == BRDatePickerModeYMDHMS) {
+            self.pickerStyle.isLastTextAlignLeft = YES;
+        }
+        
         // 2.刷新选择器
         [self.pickerView reloadAllComponents];
         // 3.滚动到选择的日期
