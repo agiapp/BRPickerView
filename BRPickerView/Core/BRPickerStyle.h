@@ -197,9 +197,6 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 picker 文本支持的最大行数，默认为 2 */
 @property (nonatomic, assign) NSUInteger maxTextLines;
 
-/** 最后一列文本是否左对齐（处理文本默认居中对齐溢出显示不全的情况）；注：时间类型为`BRDatePickerModeYMDHMS`默认值是 YES，其他都默认为 NO */
-@property (nonatomic, assign) BOOL isLastTextAlignLeft;
-
 /**
  *  清除iOS14之后选择器默认自带的新样式。暂不支持日期选择器前4种类型
  *  主要是：①隐藏中间选择行的背景样式，②清除默认的内边距，③新增中间选择行的两条分割线；与iOS14之前的样式保持一致），默认为 YES
@@ -227,6 +224,9 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /** 设置日期选择器单位 label 的竖直方向偏移量 */
 @property (nonatomic, assign) CGFloat dateUnitOffsetY;
+
+/** 设置日期选择器单位 label 的 centerX 差值（自定义调整各日期单位的水平偏移差值） */
+@property (nonatomic, copy) NSArray *dateUnitDeltaX;
 
 
 //////////////////////////////// 常用的几种模板样式 ////////////////////////////////

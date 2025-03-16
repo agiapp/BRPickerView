@@ -651,7 +651,7 @@ textPickerView.pickerStyle = customStyle;
 
 # 更新记录
 
-#### 2025-03-14（V2.9.2）
+#### 2025-03-16（V2.9.3）
 
 - [#336](https://github.com/agiapp/BRPickerView/issues/336) ：优化选择年月日时分秒时，UI显示最后一个秒显示不全问题
 

@@ -308,6 +308,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.minDate = [NSDate br_setYear:2018 month:3 day:10];
             datePickerView.maxDate = [NSDate br_setYear:2025 month:10 day:20];
             datePickerView.isAutoSelect = YES;
+            //datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
             //datePickerView.monthNames = @[@"一月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月", @"九月", @"十月", @"十一月", @"十二月"];
             //datePickerView.customUnit = @{@"year": @"Y", @"month": @"M", @"day": @"D", @"hour": @"H", @"minute": @"M", @"second": @"S"};
             // 指定不可选择的日期

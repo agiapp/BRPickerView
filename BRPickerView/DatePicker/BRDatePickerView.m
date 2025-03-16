@@ -865,10 +865,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         label = [[UILabel alloc]init];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        // 处理最后一列文本溢出显示不全问题
-        if (self.pickerStyle.isLastTextAlignLeft && component == pickerView.numberOfComponents - 1) {
-            label.textAlignment = NSTextAlignmentLeft;
-        }
         label.font = self.pickerStyle.pickerTextFont;
         label.textColor = self.pickerStyle.pickerTextColor;
         label.numberOfLines = self.pickerStyle.maxTextLines;
@@ -878,6 +874,17 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         label.minimumScaleFactor = 0.5f;
     }
     label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    
+    // 优化末列文本显示：处理时间类型为 BRDatePickerModeYMDHMS 时，最后一列的「秒」溢出屏幕外显示不全的情况
+    if (self.pickerMode == BRDatePickerModeYMDHMS && component == pickerView.numberOfComponents - 1) {
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentCenter; // 文本居中对齐
+        paragraphStyle.tailIndent = self.showUnitType == BRShowUnitTypeOnlyCenter ? -40 : -25; // 右侧缩进25点（负值表示从右边界向左缩进）
+        paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail; // 显示不下时，右侧显示省略号
+        NSDictionary *attributes = @{ NSParagraphStyleAttributeName: paragraphStyle, NSFontAttributeName: self.pickerStyle.pickerTextFont };
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:label.text attributes:attributes];
+        label.attributedText = attributedText;
+    }
     
     // 2.设置选择器中间选中行的样式
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
@@ -1661,12 +1668,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 3.滚动到选择的日期
         [self.datePicker setDate:self.mSelectDate animated:NO];
     } else if (self.style == BRDatePickerStyleCustom) {
-        
-        // 处理时间类型为 BRDatePickerModeYMDHMS 时，最后一列的「秒」溢出屏幕外显示不全的情况
-        if (!self.pickerStyle.isLastTextAlignLeft && self.pickerMode == BRDatePickerModeYMDHMS) {
-            self.pickerStyle.isLastTextAlignLeft = YES;
-        }
-        
         // 2.刷新选择器
         [self.pickerView reloadAllComponents];
         // 3.滚动到选择的日期
