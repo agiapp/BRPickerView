@@ -11,7 +11,7 @@
 
 @interface BRBaseView ()
 // 蒙层视图
-@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, strong) UIView *bgView;
 // 标题栏背景视图
 @property (nonatomic, strong) UIView *titleBarView;
 // 左边取消按钮
@@ -36,7 +36,7 @@
     self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     if (!self.pickerStyle.hiddenMaskView) {
-        [self addSubview:self.maskView];
+        [self addSubview:self.bgView];
     }
     
     [self addSubview:self.alertView];
@@ -104,17 +104,17 @@
 }
 
 #pragma mark - 蒙层视图
-- (UIView *)maskView {
-    if (!_maskView) {
-        _maskView = [[UIView alloc]initWithFrame:self.keyView.bounds];
-        _maskView.backgroundColor = self.pickerStyle.maskColor;
+- (UIView *)bgView {
+    if (!_bgView) {
+        _bgView = [[UIView alloc]initWithFrame:self.keyView.bounds];
+        _bgView.backgroundColor = self.pickerStyle.maskColor;
         // 设置子视图的大小随着父视图变化
-        _maskView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _maskView.userInteractionEnabled = YES;
+        _bgView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _bgView.userInteractionEnabled = YES;
         UITapGestureRecognizer *myTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapMaskView:)];
-        [_maskView addGestureRecognizer:myTap];
+        [_bgView addGestureRecognizer:myTap];
     }
-    return _maskView;
+    return _bgView;
 }
 
 #pragma mark - 弹框视图
@@ -321,11 +321,11 @@
         self.alertView.frame = rect;
         // 弹出动画
         if (!self.pickerStyle.hiddenMaskView) {
-            self.maskView.alpha = 0;
+            self.bgView.alpha = 0;
         }
         [UIView animateWithDuration:0.3f animations:^{
             if (!self.pickerStyle.hiddenMaskView) {
-                self.maskView.alpha = 1;
+                self.bgView.alpha = 1;
             }
             CGFloat alertViewHeight = self.alertView.bounds.size.height;
             CGRect rect = self.alertView.frame;
@@ -347,7 +347,7 @@
             rect.origin.y += alertViewHeight;
             self.alertView.frame = rect;
             if (!self.pickerStyle.hiddenMaskView) {
-                self.maskView.alpha = 0;
+                self.bgView.alpha = 0;
             }
         } completion:^(BOOL finished) {
             [self removeFromSuperview];
