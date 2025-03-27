@@ -150,7 +150,7 @@
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         if (!self.pickerStyle.hiddenTitleLine) {
             // 设置标题栏底部分割线
-            UIView *titleLineView = [[UIView alloc]initWithFrame:CGRectMake(0, _titleBarView.frame.size.height - 0.5f, _titleBarView.frame.size.width, 0.5f)];
+            UIView *titleLineView = [[UIView alloc]initWithFrame:CGRectMake(self.pickerStyle.titleLineLeftSpace, _titleBarView.frame.size.height - self.pickerStyle.titleLineHeight, _titleBarView.frame.size.width - self.pickerStyle.titleLineLeftSpace - self.pickerStyle.titleLineRightSpace, self.pickerStyle.titleLineHeight)];
             titleLineView.backgroundColor = self.pickerStyle.titleLineColor;
             titleLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [_titleBarView addSubview:titleLineView];
