@@ -894,14 +894,37 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
     
     // 3.记录选择器滚动过程中选中的列和行
+    [self handlePickerViewRollingStatus:pickerView component:component];
+
+    return label;
+}
+
+#pragma mark - 处理选择器滚动状态
+- (void)handlePickerViewRollingStatus:(UIPickerView *)pickerView component:(NSInteger)component {
     // 获取选择器组件滚动中选中的行
     NSInteger selectRow = [pickerView selectedRowInComponent:component];
     if (selectRow >= 0) {
         self.rollingComponent = component;
-        self.rollingRow = selectRow + 1; // 滚动中选择：由于滚动还未停止，无法选择将要停止的行，需要向前+1
+        // 根据滚动方向动态计算 rollingRow
+        NSInteger lastRow = self.rollingRow;
+        // 调整偏移量：当用户快速滚动并点击确定按钮时，可能导致选择不准确。这里简单的实现向前/向后多滚动一行（也可以根据滚动速度来调整偏移量）
+        NSInteger offset = 1;
+        if (lastRow >= 0) {
+            // 向上滚动
+            if (selectRow > lastRow) {
+                self.rollingRow = selectRow + offset;
+            } else if (selectRow < lastRow) {
+                // 向下滚动
+                self.rollingRow = selectRow - offset;
+            } else {
+                // 保持当前位置
+                self.rollingRow = selectRow;
+            }
+        } else {
+            // 首次滚动，默认向上滚动
+            self.rollingRow = selectRow + offset;
+        }
     }
-
-    return label;
 }
 
 // 返回每行的标题
