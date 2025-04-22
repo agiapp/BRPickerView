@@ -331,7 +331,7 @@
     NSInteger selectRow = [pickerView selectedRowInComponent:component];
     if (selectRow >= 0) {
         self.rollingComponent = component;
-        self.rollingRow = selectRow;
+        self.rollingRow = selectRow + 1; // 滚动中选择：由于滚动还未停止，无法选择将要停止的行，需要向前+1
     }
     
     return label;

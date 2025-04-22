@@ -147,12 +147,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         // 如果最小日期大于了最大日期，就忽略两个值
         self.minDate = [NSDate distantPast]; // 0000-12-30 00:00:00 +0000
         self.maxDate = [NSDate distantFuture]; // 4001-01-01 00:00:00 +0000
-        
-        // 如果是12小时制，hour的最小值为1；hour的最大值为12
-        if (self.isTwelveHourMode) {
-            [self.minDate br_setTwelveHour:1];
-            [self.maxDate br_setTwelveHour:12];
-        }
     }
     
     // 3.默认选中的日期
@@ -431,12 +425,22 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 }
 
 #pragma mark - 更新日期数据源数组
-- (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth updateDay:(BOOL)updateDay updateHour:(BOOL)updateHour updateMinute:(BOOL)updateMinute updateSecond:(BOOL)updateSecond {
-    [self reloadDateArrayWithUpdateMonth:updateMonth updateDay:updateDay updateHour:updateHour updateMinute:updateMinute updateSecond:NO updateWeekOfMonth:NO updateWeekOfYear:NO updateQuarter:NO];
+- (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth
+                             updateDay:(BOOL)updateDay
+                            updateHour:(BOOL)updateHour
+                          updateMinute:(BOOL)updateMinute
+                          updateSecond:(BOOL)updateSecond {
+    [self reloadDateArrayWithUpdateMonth:updateMonth updateDay:updateDay updateHour:updateHour updateMinute:updateMinute updateSecond:updateSecond updateWeekOfMonth:NO updateWeekOfYear:NO updateQuarter:NO];
 }
 
-- (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth updateDay:(BOOL)updateDay updateHour:(BOOL)updateHour updateMinute:(BOOL)updateMinute updateSecond:(BOOL)updateSecond
-                     updateWeekOfMonth:(BOOL)updateWeekOfMonth updateWeekOfYear:(BOOL)updateWeekOfYear updateQuarter:(BOOL)updateQuarter {
+- (void)reloadDateArrayWithUpdateMonth:(BOOL)updateMonth
+                             updateDay:(BOOL)updateDay
+                            updateHour:(BOOL)updateHour
+                          updateMinute:(BOOL)updateMinute
+                          updateSecond:(BOOL)updateSecond
+                     updateWeekOfMonth:(BOOL)updateWeekOfMonth
+                      updateWeekOfYear:(BOOL)updateWeekOfYear
+                         updateQuarter:(BOOL)updateQuarter {
     _isAdjustSelectRow = NO;
     // 1.更新 monthArr
     if (self.yearArr.count == 0) {
@@ -894,7 +898,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     NSInteger selectRow = [pickerView selectedRowInComponent:component];
     if (selectRow >= 0) {
         self.rollingComponent = component;
-        self.rollingRow = selectRow;
+        self.rollingRow = selectRow + 1; // 滚动中选择：由于滚动还未停止，无法选择将要停止的行，需要向前+1
     }
 
     return label;

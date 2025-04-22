@@ -38,7 +38,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     
     // 如果是12小时制，hour的最小值为1
     if (self.isTwelveHourMode) {
-        [minDate br_setTwelveHour:1];
+        minDate = [minDate br_setTwelveHour:1];
     }
     
     return minDate;
@@ -64,7 +64,7 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
     
     // 如果是12小时制，hour的最大值为12
     if (self.isTwelveHourMode) {
-        [maxDate br_setTwelveHour:12];
+        maxDate = [maxDate br_setTwelveHour:12];
     }
     
     return maxDate;
