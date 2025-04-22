@@ -369,7 +369,7 @@ customStyle.columnSpacing = 60;
 // 设置圆角矩形背景
 // 方式1：使用系统自带样式，保留iOS14之后系统默认的圆角样式。
 customStyle.clearPickerNewStyle = NO;
-// 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[stringPickerView.alertView addSubview:rectView];）
+// 方式2：可以使用UIView自定义一个圆角矩形视图rectView，并添加到 alertView 上也能实现同样的效果（[textPickerView.alertView addSubview:rectView];）
 // 设置选择器中间选中行的样式
 customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:20.0f];
 customStyle.selectRowTextColor = [UIColor blueColor];
@@ -644,12 +644,16 @@ textPickerView.pickerStyle = customStyle;
 /// 应用场景：可将中间的滚轮选择器 pickerView 视图（不包含蒙层及标题栏）添加到任何自定义视图上（会自动填满容器视图），也方便自定义更多的弹框样式
 /// 补充说明：如果是自定义确定按钮，需要回调默认选择的值：只需在自定义确定按钮的点击事件方法里执行一下 doneBlock 回调（目的是去触发组件内部执行 resultBlock 回调，进而回调默认选择的值）
 /// @param view 容器视图
-- (void)addPickerToView:(nullable UIView *)view NS_REQUIRES_SUPER;
+- (void)addPickerToView:(nullable UIView *)view;
 ```
 
 
 
 # 更新记录
+
+#### 2025-04-22（V2.9.4）
+
+- fix：[#319](https://github.com/agiapp/BRPickerView/issues/319) 、[#326](https://github.com/agiapp/BRPickerView/issues/326) 、[#340](https://github.com/agiapp/BRPickerView/issues/340) 
 
 #### 2025-03-16（V2.9.3）
 
