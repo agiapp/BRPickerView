@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,6 +6,7 @@ import PackageDescription
 let package = Package(
     // 指定包的名称
     name: "BRPickerView",
+    defaultLocalization: "en",
     // 该库的一些配置
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -27,13 +28,13 @@ let package = Package(
                 .copy("PrivacyInfo.xcprivacy")
             ],
             // 设置默认本地化为英语
-            defaultLocalization: "en",
+            // defaultLocalization: "en",
             // 指定公共头文件的路径。在这里，它设置为当前目录（"."）
-            publicHeadersPath: ".",
+            publicHeadersPath: "Include",
             // 为C语言源代码指定一些设置
             cSettings: [
                 //Config header path
-                .headerSearchPath("."),
+                .headerSearchPath("Include"),
             ]
         ),
     ]
