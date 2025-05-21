@@ -652,6 +652,10 @@ textPickerView.pickerStyle = customStyle;
 
 # 更新记录
 
+#### 2025-05-21（V2.9.6）
+
+- fix：[#318](https://github.com/agiapp/BRPickerView/issues/318) 
+
 #### 2025-04-22（V2.9.5）
 
 - fix：[#319](https://github.com/agiapp/BRPickerView/issues/319) 、[#326](https://github.com/agiapp/BRPickerView/issues/326) 、[#340](https://github.com/agiapp/BRPickerView/issues/340) 

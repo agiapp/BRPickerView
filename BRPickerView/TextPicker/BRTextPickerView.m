@@ -452,7 +452,7 @@
         return self.pickerStyle.columnSpacing;
     }
     NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
-    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
+    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount - 5;
     if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
         return self.pickerStyle.columnWidth;
     }
