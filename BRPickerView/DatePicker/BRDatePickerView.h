@@ -282,6 +282,10 @@ typedef void (^BRDateResultRangeBlock)(NSDate * _Nullable selectStartDate, NSDat
                    resultBlock:(nullable BRDateResultBlock)resultBlock
               resultRangeBlock:(nullable BRDateResultRangeBlock)resultRangeBlock;
 
+
+// 获取列宽(组件内部方法)
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component;
+
 @end
 
 NS_ASSUME_NONNULL_END

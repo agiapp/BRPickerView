@@ -879,17 +879,6 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
     }
     label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
     
-    // 优化末列文本显示：处理时间类型为 BRDatePickerModeYMDHMS 时，最后一列的「秒」溢出屏幕外显示不全的情况
-    if (self.pickerMode == BRDatePickerModeYMDHMS && component == pickerView.numberOfComponents - 1) {
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentCenter; // 文本居中对齐
-        paragraphStyle.tailIndent = self.showUnitType == BRShowUnitTypeOnlyCenter ? -40 : -25; // 右侧缩进25点（负值表示从右边界向左缩进）
-        paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail; // 显示不下时，右侧显示省略号
-        NSDictionary *attributes = @{ NSParagraphStyleAttributeName: paragraphStyle, NSFontAttributeName: self.pickerStyle.pickerTextFont };
-        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:label.text attributes:attributes];
-        label.attributedText = attributedText;
-    }
-    
     // 2.设置选择器中间选中行的样式
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
     
@@ -1603,7 +1592,8 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 // 设置列宽
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
-    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount;
+    CGFloat deltaSpace = columnCount > 3 ? 5 : 10;
+    CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount - deltaSpace;
     if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
         return self.pickerStyle.columnWidth;
     }
@@ -1752,12 +1742,15 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 
 #pragma mark - 添加日期单位到选择器
 - (void)addUnitLabel {
-    if (self.unitLabelArr.count > 0) {
-        for (UILabel *unitLabel in self.unitLabelArr) {
-            [unitLabel removeFromSuperview];
-        }
-        self.unitLabelArr = nil;
+    // 1. 批量移除所有单位标签
+    if (self.unitLabelArr && self.unitLabelArr.count > 0) {
+        [self.unitLabelArr makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
+    
+    // 2. 清空数组
+    self.unitLabelArr = nil;
+    
+    // 3. 重新创建并添加新单位标签
     self.unitLabelArr = [self setupPickerUnitLabel:self.pickerView unitArr:self.unitArr];
 }
 
