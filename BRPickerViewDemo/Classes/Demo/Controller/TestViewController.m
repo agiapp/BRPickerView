@@ -308,7 +308,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             datePickerView.minDate = [NSDate br_setYear:2018 month:3 day:10];
             datePickerView.maxDate = [NSDate br_setYear:2025 month:10 day:20];
             datePickerView.isAutoSelect = YES;
-            //datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
+            datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
             //datePickerView.monthNames = @[@"一月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月", @"九月", @"十月", @"十一月", @"十二月"];
             //datePickerView.customUnit = @{@"year": @"Y", @"month": @"M", @"day": @"D", @"hour": @"H", @"minute": @"M", @"second": @"S"};
             // 指定不可选择的日期
@@ -344,6 +344,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
             customStyle.pickerColor = [UIColor clearColor];
             customStyle.selectRowTextColor = [UIColor blueColor];
+            customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:18.0f];
+            customStyle.dateUnitTextFont = [UIFont boldSystemFontOfSize:18.0f];
             datePickerView.pickerStyle = customStyle;
             
             [datePickerView show];
@@ -355,7 +357,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         {
             // 出生时刻
             BRDatePickerView *datePickerView = [[BRDatePickerView alloc]init];
-            datePickerView.pickerMode = BRDatePickerModeHMS;
+            datePickerView.pickerMode = BRDatePickerModeYMDHMS;
             datePickerView.title = @"出生时刻";
             datePickerView.selectDate = self.birthtimeSelectDate;
             datePickerView.isAutoSelect = YES;
@@ -678,7 +680,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         datePickerView.pickerMode = BRDatePickerModeYMDH;
         datePickerView.maxDate = [NSDate date];
         datePickerView.isAutoSelect = YES;
-        datePickerView.showUnitType = BRShowUnitTypeAll;
+        datePickerView.showUnitType = BRShowUnitTypeOnlyCenter;
         datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
             if (self.timeType == BRTimeTypeBeginTime) {
                 self.beginSelectDate = selectDate;
@@ -692,6 +694,9 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         // 自定义选择器主题样式
         BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
         customStyle.pickerColor = containerView.backgroundColor;
+        customStyle.selectRowTextColor = [UIColor blueColor];
+        customStyle.selectRowTextFont = [UIFont boldSystemFontOfSize:18.0f];
+        customStyle.dateUnitTextFont = [UIFont boldSystemFontOfSize:18.0f];
         datePickerView.pickerStyle = customStyle;
         self.datePickerView = datePickerView;
         

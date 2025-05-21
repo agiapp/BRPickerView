@@ -288,13 +288,6 @@
     return _dateUnitTextFont;
 }
 
-- (NSArray *)dateUnitDeltaX {
-    if (!_dateUnitDeltaX) {
-        _dateUnitDeltaX = [[NSArray alloc]init];
-    }
-    return _dateUnitDeltaX;
-}
-
 #pragma mark - 创建自定义动态颜色（适配深色模式）
 - (UIColor *)br_colorWithLightColor:(UIColor *)lightColor darkColor:(UIColor *)darkColor {
     if (@available(iOS 13.0, *)) {

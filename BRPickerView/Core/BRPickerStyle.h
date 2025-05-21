@@ -225,9 +225,6 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置日期选择器单位 label 的竖直方向偏移量 */
 @property (nonatomic, assign) CGFloat dateUnitOffsetY;
 
-/** 设置日期选择器单位 label 的 centerX 差值（自定义调整各日期单位的水平偏移差值） */
-@property (nonatomic, copy) NSArray *dateUnitDeltaX;
-
 
 //////////////////////////////// 常用的几种模板样式 ////////////////////////////////
 
