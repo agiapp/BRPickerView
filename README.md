@@ -34,10 +34,15 @@ BRPickerView 封装的是iOS中常用的选择器组件，主要包括：**`BRDa
 >
 >**pod 'BRPickerView/Default'** ：仅安装`BRDatePickerView` 和 `BRTextPickerView` 组件
 
+#### SPM Supported
+
+1. 依次点击 Xcode 的菜单 File  > Add Package Dependencies...
+2. 输出 `https://github.com/agiapp/BRPickerView`搜索并选择，然后点击 Add Package
+
 
 #### 手动导入
 
-1. 将与 `README.md` 同级目录下的 `BRPickerView` 文件夹拽入项目中
+1. 将与 `README.md` 同级目录下的 `BRPickerView` 文件夹拽入项目中（注意：删除PrivacyInfo.xcprivacy文件）
 
 2. 导入头文件 ` #import "BRPickerView.h"`。
 
@@ -651,6 +656,10 @@ textPickerView.pickerStyle = customStyle;
 
 
 # 更新记录
+
+#### 2025-05-27（V2.9.7）
+
+- 修改 Swift Package Manager 集成方式
 
 #### 2025-05-21（V2.9.6）
 
