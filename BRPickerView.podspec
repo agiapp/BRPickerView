@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   # 框架的名称
   s.name         = "BRPickerView"
   # 框架的版本号
-  s.version      = "2.9.6"
+  s.version      = "2.9.7"
   # 框架的简单介绍
   s.summary      = "A custom picker view for iOS."
   # 框架的详细描述(详细介绍，要比简介长)
@@ -25,6 +25,8 @@ Pod::Spec.new do |s|
   # GitHub下载地址和版本
   s.source       = { :git => "https://github.com/agiapp/BRPickerView.git", :tag => s.version.to_s }
 
+  # 排除 include 目录（通过 CocoaPods 集成时，使用原始的头文件结构；通过 SPM 集成时，使用 include 目录中的头文件）
+  s.exclude_files = 'BRPickerView/include/**'
 
   s.public_header_files = 'BRPickerView/BRPickerView.h'
     
@@ -92,7 +94,6 @@ Pod::Spec.new do |s|
   s.subspec 'StringPickerView' do |ss|
     ss.dependency 'BRPickerView/Deprecated/StringPickerView'
   end
-  
   
   # 框架要求ARC环境下使用
   s.requires_arc = true
