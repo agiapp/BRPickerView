@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		451D6C0E234D6AA2004E801F /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C0D234D6AA2004E801F /* BRPickerStyle.m */; };
 		451D6C1123509890004E801F /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D6C1023509890004E801F /* BRResultModel.m */; };
-		454D06F32C461C01002C3CF4 /* region_list_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F02C461C00002C3CF4 /* region_list_data.json */; };
 		454D06F42C461C01002C3CF4 /* region_tree_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F12C461C00002C3CF4 /* region_tree_data.json */; };
-		454D06F52C461C01002C3CF4 /* amap_region_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F22C461C01002C3CF4 /* amap_region_data.json */; };
 		454D06F72C46237E002C3CF4 /* cascade_tree_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F62C46237E002C3CF4 /* cascade_tree_data.json */; };
 		454D06F92C465893002C3CF4 /* grade_level_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 454D06F82C465893002C3CF4 /* grade_level_data.plist */; };
 		454D06FB2C4693CA002C3CF4 /* cascade_list_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */; };
@@ -21,7 +19,6 @@
 		4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4566F7DD23B4BCE100CD59D4 /* UIColor+BRAdd.m */; };
 		4596CAF92C34E257003C6654 /* BRTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CAF82C34E257003C6654 /* BRTextModel.m */; };
 		4596CAFC2C34EC1B003C6654 /* BRTextPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CAFB2C34EC1B003C6654 /* BRTextPickerView.m */; };
-		4596CB052C364097003C6654 /* BRDataSourceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CB042C364096003C6654 /* BRDataSourceHelper.m */; };
 		4596CB102C36745E003C6654 /* BRPickerAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4596CB0F2C36745E003C6654 /* BRPickerAlertView.m */; };
 		459A260E2369208E0048F06D /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A260D2369208E0048F06D /* NSBundle+BRPickerView.m */; };
 		45AB6DD22498C5F4004EB3D0 /* BRDatePickerView+BR.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AB6DD12498C5F4004EB3D0 /* BRDatePickerView+BR.m */; };
@@ -50,9 +47,7 @@
 		451D6C0D234D6AA2004E801F /* BRPickerStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
 		451D6C0F23509890004E801F /* BRResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
 		451D6C1023509890004E801F /* BRResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
-		454D06F02C461C00002C3CF4 /* region_list_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_list_data.json; sourceTree = "<group>"; };
 		454D06F12C461C00002C3CF4 /* region_tree_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region_tree_data.json; sourceTree = "<group>"; };
-		454D06F22C461C01002C3CF4 /* amap_region_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amap_region_data.json; sourceTree = "<group>"; };
 		454D06F62C46237E002C3CF4 /* cascade_tree_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cascade_tree_data.json; sourceTree = "<group>"; };
 		454D06F82C465893002C3CF4 /* grade_level_data.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = grade_level_data.plist; sourceTree = "<group>"; };
 		454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cascade_list_data.json; sourceTree = "<group>"; };
@@ -67,8 +62,6 @@
 		4596CAF82C34E257003C6654 /* BRTextModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRTextModel.m; sourceTree = "<group>"; };
 		4596CAFA2C34EC1B003C6654 /* BRTextPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRTextPickerView.h; sourceTree = "<group>"; };
 		4596CAFB2C34EC1B003C6654 /* BRTextPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRTextPickerView.m; sourceTree = "<group>"; };
-		4596CB032C364096003C6654 /* BRDataSourceHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRDataSourceHelper.h; sourceTree = "<group>"; };
-		4596CB042C364096003C6654 /* BRDataSourceHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRDataSourceHelper.m; sourceTree = "<group>"; };
 		4596CB0E2C36745E003C6654 /* BRPickerAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRPickerAlertView.h; sourceTree = "<group>"; };
 		4596CB0F2C36745E003C6654 /* BRPickerAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRPickerAlertView.m; sourceTree = "<group>"; };
 		459A260A2362F0280048F06D /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
@@ -124,9 +117,7 @@
 		457868602C4758B6006F7FD6 /* DataFile */ = {
 			isa = PBXGroup;
 			children = (
-				454D06F22C461C01002C3CF4 /* amap_region_data.json */,
 				454D06F12C461C00002C3CF4 /* region_tree_data.json */,
-				454D06F02C461C00002C3CF4 /* region_list_data.json */,
 				454D06F62C46237E002C3CF4 /* cascade_tree_data.json */,
 				454D06FA2C4693C9002C3CF4 /* cascade_list_data.json */,
 				45E81CF62399387700B8878A /* education_data.plist */,
@@ -187,8 +178,6 @@
 		45E81CF42399387700B8878A /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4596CB032C364096003C6654 /* BRDataSourceHelper.h */,
-				4596CB042C364096003C6654 /* BRDataSourceHelper.m */,
 				45E81CF82399387700B8878A /* Controller */,
 				45E81CFB2399387700B8878A /* Model */,
 				45E81CFE2399387700B8878A /* View */,
@@ -410,12 +399,10 @@
 				C5ACE4E91F3D58BD0069978B /* LaunchScreen.storyboard in Resources */,
 				C5ACE4E61F3D58BD0069978B /* Assets.xcassets in Resources */,
 				454D06FB2C4693CA002C3CF4 /* cascade_list_data.json in Resources */,
-				454D06F52C461C01002C3CF4 /* amap_region_data.json in Resources */,
 				454D06F72C46237E002C3CF4 /* cascade_tree_data.json in Resources */,
 				C5ACE4E41F3D58BD0069978B /* Main.storyboard in Resources */,
 				45653925237032D90074BBBC /* BRPickerView.bundle in Resources */,
 				45D8F80727F57BB2002CF4ED /* BRAddressPickerView.bundle in Resources */,
-				454D06F32C461C01002C3CF4 /* region_list_data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,7 +419,6 @@
 				4566F7DB23B4425700CD59D4 /* UIImage+Color.m in Sources */,
 				C5ACE4DB1F3D58BD0069978B /* main.m in Sources */,
 				4566F7DE23B4BCE100CD59D4 /* UIColor+BRAdd.m in Sources */,
-				4596CB052C364097003C6654 /* BRDataSourceHelper.m in Sources */,
 				4596CB102C36745E003C6654 /* BRPickerAlertView.m in Sources */,
 				4566F7D823B377D800CD59D4 /* TestViewController.m in Sources */,
 				C5ACE50B1F3D7D890069978B /* BRDatePickerView.m in Sources */,

@@ -27,7 +27,7 @@ typedef void(^BRStringResultModelBlock)(BRResultModel * _Nullable resultModel);
 typedef void(^BRStringResultModelArrayBlock)(NSArray <BRResultModel *> * _Nullable resultModelArr);
 
 // BRStringPickerView 组件已废弃，请使用 BRTextPickerView 组件进行替换，具体使用请参见 README.md
-//__attribute__((deprecated("Use 'BRTextPickerView' instead.")))
+__attribute__((deprecated("Use 'BRTextPickerView' instead.")))
 @interface BRStringPickerView : BRBaseView
 
 /**

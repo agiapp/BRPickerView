@@ -1,7 +1,7 @@
 {
-    "status": "1",
-    "info": "OK",
-    "districts": [
+    "code": "1",
+    "message": "OK",
+    "data": [
         {
             "adcode": "330000",
             "name": "浙江省",

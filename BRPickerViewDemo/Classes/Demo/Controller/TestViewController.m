@@ -15,7 +15,6 @@
 #import "UIColor+BRAdd.h"
 #import "Test2ViewController.h"
 #import "BRTextPickerView.h"
-#import "BRDataSourceHelper.h"
 
 #define kThemeColor BR_RGB_HEX(0x2e70c2, 1.0f)
 
@@ -383,10 +382,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
             textPickerView.title = @"请选择地区";
             // 设置数据源
-            // NSArray *dataArr = [BRDataSourceHelper getLocalFileData:@"region_tree_data.json"];
-            // 方式1：传树状结构模型数组(NSArray <BRTextModel *>*)
-            // textPickerView.dataSourceArr = [NSArray br_modelArrayWithJson:dataArr mapper:nil];
-            // 方式2：直接传入json文件名（可以将上面的json数据放到本地json文件中，如：region_tree_data.json）
             textPickerView.fileName = @"region_tree_data.json";
             // 设置选择器显示的列数(即层级数)，默认是根据数据源层级动态计算显示。如：设置1则只显示前1列数据（即只显示省）；设置2则只显示前2列数据（即只显示省、市）；设置3则只显示前3列数据（即显示省、市、区）
             textPickerView.showColumnNum = 3;
@@ -486,7 +481,7 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             /// 多列联动文本选择器（数据源扁平结构）
             BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
             textPickerView.title = @"二级联动选择";
-            NSDictionary *responseObject = [BRDataSourceHelper getLocalFileData:@"cascade_list_data.json"];
+            NSDictionary *responseObject = [self getLocalFileData:@"cascade_list_data.json"];
             NSArray *dataArr = responseObject[@"Result"];
             // 指定 BRTextModel模型的属性 与 字典key 的映射关系
             NSDictionary *mapper = @{ @"parentCode": @"ParentID", @"code": @"CategoryID", @"text": @"CategoryName" };
@@ -520,8 +515,8 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             /// 多列联动文本选择器（数据源树状结构）
             BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
             textPickerView.title = @"三级联动选择";
-            NSDictionary *responseObject = [BRDataSourceHelper getLocalFileData:@"cascade_tree_data.json"];
-            NSArray *dataArr = responseObject[@"districts"];
+            NSDictionary *responseObject = [self getLocalFileData:@"cascade_tree_data.json"];
+            NSArray *dataArr = responseObject[@"data"];
             // 指定 BRTextModel模型的属性 与 字典key 的映射关系
             NSDictionary *mapper = @{ @"code": @"adcode", @"text": @"name", @"children": @"districts" };
             // 将上面数组 转为 模型数组（组件内封装的工具方法）
@@ -596,6 +591,23 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
         default:
             break;
     }
+}
+
+#pragma mark - 获取本地文件（.plist/.json）数据
+- (id)getLocalFileData:(NSString *)fileName {
+    // 获取本地数据源
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+    if (filePath && filePath.length > 0) {
+        if ([fileName hasSuffix:@".plist"]) {
+            // 获取本地 plist文件 数据源
+            return [[NSArray alloc] initWithContentsOfFile:filePath];
+        } else if ([fileName hasSuffix:@".json"]) {
+            // 获取本地 JSON文件 数据源
+            NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
+            return [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+        }
+    }
+    return nil;
 }
 
 #pragma mark - footerView
