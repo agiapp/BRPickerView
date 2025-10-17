@@ -116,7 +116,7 @@
             NSInteger row = 0;
             if (self.selectIndexs.count > 0 && component < self.selectIndexs.count) {
                 NSInteger index = [self.selectIndexs[component] integerValue];
-                row = (index >= 0 && index < itemArr.count) ? index : 0;
+                row = (index > 0 && index < itemArr.count) ? index : 0;
             }
             [selectIndexs addObject:@(row)];
         }
@@ -130,7 +130,7 @@
         NSInteger i = 0;
         NSInteger selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
         [selectIndexs addObject:@(selectIndex)];
-        if (selectIndex < self.dataSourceArr.count) {
+        if (selectIndex >= 0 && selectIndex < self.dataSourceArr.count) {
             BRTextModel *selectModel = self.dataSourceArr[selectIndex];
             while (hasNext) {
                 NSArray *nextArr = selectModel.children;
@@ -143,10 +143,8 @@
                 i++;
                 selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
                 [selectIndexs addObject:@(selectIndex)];
-                if (selectIndex >= 0 && selectIndex < nextArr.count) {
+                if (selectIndex < nextArr.count) {
                     selectModel = nextArr[selectIndex];
-                } else {
-                    hasNext = NO;
                 }
             }
         }
@@ -223,8 +221,7 @@
                 }
             }
             if (component < self.dataList.count) {
-                NSArray *itemArr = self.dataList[component];
-                return itemArr.count;
+                return [self.dataList[component] count];
             }
             return 0;
         }
@@ -262,7 +259,7 @@
     // 设置文本
     if (self.pickerMode == BRTextPickerComponentSingle) {
         id item = row < self.dataList.count ? self.dataList[row] : nil;
-        if ([item isKindOfClass:[BRTextModel class]]) {
+        if (item && [item isKindOfClass:[BRTextModel class]]) {
             BRTextModel *model = (BRTextModel *)item;
             label.text = model.text;
         } else {
@@ -281,8 +278,8 @@
         
         if (component < self.dataList.count) {
             NSArray *itemArr = self.dataList[component];
-            id item = row < itemArr.count ? [itemArr objectAtIndex:row] : nil;
-            if ([item isKindOfClass:[BRTextModel class]]) {
+            id item = row < itemArr.count ? itemArr[row] : nil;
+            if (item && [item isKindOfClass:[BRTextModel class]]) {
                 BRTextModel *model = (BRTextModel *)item;
                 label.text = model.text;
             } else {
@@ -435,7 +432,7 @@
     NSMutableArray *modelArr = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i < self.dataList.count; i++) {
         NSInteger index = i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
-        NSArray *dataArr = i < self.dataList.count ? self.dataList[i] : @[];
+        NSArray *dataArr = i < self.dataList.count ? self.dataList[i] : nil;
         
         id item = index < dataArr.count ? dataArr[index] : nil;
         if ([item isKindOfClass:[BRTextModel class]]) {
@@ -463,8 +460,6 @@
         return self.pickerStyle.columnSpacing;
     }
     NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
-    if (columnCount <= 0) return 0;
-    
     CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount - 5;
     if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
         return self.pickerStyle.columnWidth;
@@ -485,14 +480,9 @@
         }
     } else if (self.pickerMode == BRTextPickerComponentMulti || self.pickerMode == BRTextPickerComponentCascade) {
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
-            NSInteger component = i;
-            if (self.pickerStyle.columnSpacing > 0) {
-                component = i * 2;
-            }
-            NSNumber *row = i < self.selectIndexs.count ? [self.selectIndexs objectAtIndex:i] : @(0);
-            if ([row integerValue] >= 0 && [row integerValue] < self.dataList.count) {
-                [self.pickerView selectRow:[row integerValue] inComponent:component animated:self.selectRowAnimated];
-            }
+            NSInteger component = self.pickerStyle.columnSpacing > 0 ? i * 2 : i;
+            NSInteger row = i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
+            [self.pickerView selectRow:row inComponent:component animated:self.selectRowAnimated];
         }
     }
 }
