@@ -130,19 +130,25 @@
         NSInteger i = 0;
         NSInteger selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
         [selectIndexs addObject:@(selectIndex)];
-        BRTextModel *selectModel = self.dataSourceArr[selectIndex];
-        while (hasNext) {
-            NSArray *nextArr = selectModel.children;
-            if (!nextArr || nextArr.count == 0) {
-                hasNext = NO;
-                break;
+        if (selectIndex < self.dataSourceArr.count) {
+            BRTextModel *selectModel = self.dataSourceArr[selectIndex];
+            while (hasNext) {
+                NSArray *nextArr = selectModel.children;
+                if (!nextArr || nextArr.count == 0) {
+                    hasNext = NO;
+                    break;
+                }
+                [dataList addObject:nextArr];
+                
+                i++;
+                selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
+                [selectIndexs addObject:@(selectIndex)];
+                if (nextArr.count > selectIndex) {
+                    selectModel = nextArr[selectIndex];
+                } else {
+                    hasNext = NO;
+                }
             }
-            [dataList addObject:nextArr];
-            
-            i++;
-            selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
-            [selectIndexs addObject:@(selectIndex)];
-            selectModel = nextArr[selectIndex];
         }
         
         // 控制选择器固定显示的列数
@@ -216,8 +222,11 @@
                     component = component / 2;
                 }
             }
-            NSArray *itemArr = self.dataList[component];
-            return itemArr.count;
+            if (component < self.dataList.count) {
+                NSArray *itemArr = self.dataList[component];
+                return itemArr.count;
+            }
+            return 0;
         }
             break;
             
@@ -252,7 +261,7 @@
 
     // 设置文本
     if (self.pickerMode == BRTextPickerComponentSingle) {
-        id item = self.dataList[row];
+        id item = row < self.dataList.count ? self.dataList[row] : nil;
         if ([item isKindOfClass:[BRTextModel class]]) {
             BRTextModel *model = (BRTextModel *)item;
             label.text = model.text;
@@ -270,13 +279,15 @@
             }
         }
         
-        NSArray *itemArr = self.dataList[component];
-        id item = [itemArr objectAtIndex:row];
-        if ([item isKindOfClass:[BRTextModel class]]) {
-            BRTextModel *model = (BRTextModel *)item;
-            label.text = model.text;
-        } else {
-            label.text = item;
+        if (component < self.dataList.count) {
+            NSArray *itemArr = self.dataList[component];
+            id item = row < itemArr.count ? [itemArr objectAtIndex:row] : nil;
+            if ([item isKindOfClass:[BRTextModel class]]) {
+                BRTextModel *model = (BRTextModel *)item;
+                label.text = model.text;
+            } else {
+                label.text = item;
+            }
         }
     }
     
@@ -423,8 +434,8 @@
 - (NSArray *)getMultiSelectModels {
     NSMutableArray *modelArr = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i < self.dataList.count; i++) {
-        NSInteger index = [self.selectIndexs[i] integerValue];
-        NSArray *dataArr = self.dataList[i];
+        NSInteger index = i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
+        NSArray *dataArr = i < self.dataList.count ? self.dataList[i] : @[];
         
         id item = index < dataArr.count ? dataArr[index] : nil;
         if ([item isKindOfClass:[BRTextModel class]]) {
@@ -452,6 +463,8 @@
         return self.pickerStyle.columnSpacing;
     }
     NSInteger columnCount = [self numberOfComponentsInPickerView:pickerView];
+    if (columnCount <= 0) return 0;
+    
     CGFloat columnWidth = self.pickerView.bounds.size.width / columnCount - 5;
     if (self.pickerStyle.columnWidth > 0 && self.pickerStyle.columnWidth <= columnWidth) {
         return self.pickerStyle.columnWidth;
@@ -467,15 +480,19 @@
     [self.pickerView reloadAllComponents];
     // 3.滚动到选择的值
     if (self.pickerMode == BRTextPickerComponentSingle) {
-        [self.pickerView selectRow:self.selectIndex inComponent:0 animated:self.selectRowAnimated];
+        if (self.selectIndex >= 0 && self.selectIndex < self.dataList.count) {
+            [self.pickerView selectRow:self.selectIndex inComponent:0 animated:self.selectRowAnimated];
+        }
     } else if (self.pickerMode == BRTextPickerComponentMulti || self.pickerMode == BRTextPickerComponentCascade) {
         for (NSInteger i = 0; i < self.selectIndexs.count; i++) {
-            NSNumber *row = [self.selectIndexs objectAtIndex:i];
             NSInteger component = i;
             if (self.pickerStyle.columnSpacing > 0) {
                 component = i * 2;
             }
-            [self.pickerView selectRow:[row integerValue] inComponent:component animated:self.selectRowAnimated];
+            NSNumber *row = i < self.selectIndexs.count ? [self.selectIndexs objectAtIndex:i] : @(0);
+            if ([row integerValue] >= 0 && [row integerValue] < self.dataList.count) {
+                [self.pickerView selectRow:[row integerValue] inComponent:component animated:self.selectRowAnimated];
+            }
         }
     }
 }
