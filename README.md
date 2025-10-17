@@ -437,13 +437,13 @@ textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, N
 
 
 
-- 实现省、市、区/县选择（使用本地数据源：region_tree_data.json）
+- 实现省、市、区/县选择（通常省市区/县数据是从自己业务后台API获取，这里使用本地数据源仅做参考，文件下载地址：[region_tree_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_tree_data.json)）
 
 ```objective-c
 // 地区
 BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:BRTextPickerComponentCascade];
 textPickerView.title = @"请选择地区";
-// 设置数据源：传入本地json文件名（可以下载Demo中的 region_tree_data.json 文件放到自己的项目中，该数据源来源于高德地图最新数据）
+// 设置数据源：传入本地json文件名（可以下载Demo中的 region_tree_data.json 文件放到自己的项目中）
 textPickerView.fileName = @"region_tree_data.json";
 // 设置选择器显示的列数(即层级数)，默认是根据数据源层级动态计算显示。如：设置1则只显示前1列数据（即只显示省）；设置2则只显示前2列数据（即只显示省、市）；设置3则只显示前3列数据（即显示省、市、区）
 textPickerView.showColumnNum = 3;
@@ -467,21 +467,13 @@ textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, N
 | ![省份](https://github.com/agiapp/BRPickerView/blob/master/BRPickerViewDemo/images/text_cascade_province.png?raw=true) |                                                              |
 | 样式3：textPickerView.showColumnNum = 1;                     |                                                              |
 
->高德地图行政区划数据源（省、市、区/县），数据更新于2024年7月
->
->- 原数据：[amap_region_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/amap_region_data.json)
->- 处理后的树状结构数据1：[region_tree_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_tree_data.json) （组件使用本地数据源时，需要下载的文件）
->- 处理后的树状结构数据2：[region_list_data.json](https://raw.githubusercontent.com/agiapp/BRPickerView/master/BRPickerViewDemo/DataFile/region_list_data.json)
-
-
-
 - 处理树状结构数据
 
 ```json
 {
-    "status": "1",
-    "info": "OK",
-    "districts": [
+    "code": "200",
+    "message": "OK",
+    "data": [
         {
             "adcode": "330000",
             "name": "浙江省",
@@ -517,7 +509,7 @@ BRTextPickerView *textPickerView = [[BRTextPickerView alloc]initWithPickerMode:B
 textPickerView.title = @"多列联动文本选择器";
 
 // 接收网络请求结果数据（下面省略号表示省略部分代码）
-NSArray *dataArr = ...... responseObject[@"districts"];
+NSArray *dataArr = ...... responseObject[@"data"];
 // 指定 BRTextModel模型的属性 与 字典key 的映射关系
 NSDictionary *mapper = @{ @"code": @"adcode", @"text": @"name", @"children": @"districts" };
 // 将上面数组 转为 模型数组（组件内封装的工具方法）
@@ -656,6 +648,10 @@ textPickerView.pickerStyle = customStyle;
 
 
 # 更新记录
+
+#### 2025-10-17（V2.9.8）
+
+- fix：[#345](https://github.com/agiapp/BRPickerView/issues/345) 、[#349](https://github.com/agiapp/BRPickerView/issues/349) 
 
 #### 2025-05-27（V2.9.7）
 
