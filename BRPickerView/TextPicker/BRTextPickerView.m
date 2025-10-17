@@ -116,7 +116,7 @@
             NSInteger row = 0;
             if (self.selectIndexs.count > 0 && component < self.selectIndexs.count) {
                 NSInteger index = [self.selectIndexs[component] integerValue];
-                row = (index > 0 && index < itemArr.count) ? index : 0;
+                row = (index >= 0 && index < itemArr.count) ? index : 0;
             }
             [selectIndexs addObject:@(row)];
         }
@@ -254,7 +254,11 @@
     [self.pickerStyle setupPickerSelectRowStyle:pickerView titleForRow:row forComponent:component];
     
     // 3.记录选择器滚动过程中选中的列和行
-    [self handlePickerViewRollingStatus:pickerView component:component];
+    NSInteger selectRow = [pickerView selectedRowInComponent:component];
+    if (selectRow >= 0) {
+        self.rollingComponent = component;
+        self.rollingRow = selectRow;
+    }
 
     // 设置文本
     if (self.pickerMode == BRTextPickerComponentSingle) {
@@ -289,17 +293,6 @@
     }
     
     return label;
-}
-
-#pragma mark - 处理选择器滚动状态
-- (void)handlePickerViewRollingStatus:(UIPickerView *)pickerView component:(NSInteger)component {
-    // 获取选择器组件滚动中选中的行
-    NSInteger selectRow = [pickerView selectedRowInComponent:component];
-    if (selectRow >= 0) {
-        self.rollingComponent = component;
-        self.rollingRow = selectRow; // 直接使用当前选中行（点击确定可以延迟执行，来提高快速滚动时偏移准确性）
-        // 当用户快速滚动并点击确定按钮时，可能导致选择不准确。如果需要预判，可以根据滚动速度来调整偏移量
-    }
 }
 
 // 获取选择器是否滚动中状态
@@ -415,7 +408,7 @@
     NSMutableArray *modelArr = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i < self.dataList.count; i++) {
         NSInteger index = i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
-        NSArray *dataArr = i < self.dataList.count ? self.dataList[i] : nil;
+        NSArray *dataArr = i < self.dataList.count ? self.dataList[i] : @[];
         id item = index >= 0 && index < dataArr.count ? dataArr[index] : nil;
         
         if ([item isKindOfClass:[BRTextModel class]]) {
@@ -503,9 +496,10 @@
     self.doneBlock = ^{
         if (weakSelf.isRolling) {
             NSLog(@"选择器滚动还未结束");
-            // 问题：如果滚动选择器过快，然后在滚动过程中快速点击确定按钮，会导致 didSelectRow 代理方法还没有执行，出现没有选中的情况。
-            // 解决：这里手动处理一下，如果滚动还未结束，强制执行一次 didSelectRow 代理方法，选择当前滚动的行。
-            [weakSelf pickerView:weakSelf.pickerView didSelectRow:weakSelf.rollingRow inComponent:weakSelf.rollingComponent];
+            // 问题：当用户快速滚动选择器，在滚动未结束前快速点击确定按钮，会导致 didSelectRow 代理方法还没有执行，出现没有选中的情况。
+            // 解决：这里手动处理一下，如果滚动还未结束，强制执行一次 didSelectRow 代理方法，选择当前滚动的行。（如果需要预判，可以根据滚动速度来调整偏移量）
+            //[weakSelf pickerView:weakSelf.pickerView didSelectRow:weakSelf.rollingRow inComponent:weakSelf.rollingComponent];
+            [weakSelf handleAutoSelectRollingRow];
         }
     
         // 点击确定，执行选择结果回调
@@ -517,6 +511,26 @@
     };
     
     [super addPickerToView:view];
+}
+
+#pragma mark - 处理滚动未结束前自动选择行
+- (void)handleAutoSelectRollingRow {
+    NSInteger component = self.rollingComponent;
+    NSInteger row = self.rollingRow;
+    
+    // 组件边界检查
+    NSInteger maxComponent = [self.pickerView numberOfComponents] - 1;
+    component = MAX(0, MIN(component, maxComponent));
+    
+    // 行边界检查
+    NSInteger maxRow = [self.pickerView numberOfRowsInComponent:component] - 1;
+    row = MAX(0, MIN(row, maxRow));
+    
+    // 记录修正后的值
+    self.rollingComponent = component;
+    self.rollingRow = row;
+    
+    [self pickerView:self.pickerView didSelectRow:row inComponent:component];
 }
 
 #pragma mark - 重写父类方法
