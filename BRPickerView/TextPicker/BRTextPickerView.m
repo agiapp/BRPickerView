@@ -297,25 +297,8 @@
     NSInteger selectRow = [pickerView selectedRowInComponent:component];
     if (selectRow >= 0) {
         self.rollingComponent = component;
-        // 根据滚动方向动态计算 rollingRow
-        NSInteger lastRow = self.rollingRow;
-        // 调整偏移量：当用户快速滚动并点击确定按钮时，可能导致选择不准确。这里简单的实现向前/向后多滚动一行（也可以根据滚动速度来调整偏移量）
-        NSInteger offset = 1;
-        if (lastRow >= 0) {
-            // 向上滚动
-            if (selectRow > lastRow) {
-                self.rollingRow = selectRow + offset;
-            } else if (selectRow < lastRow) {
-                // 向下滚动
-                self.rollingRow = selectRow - offset;
-            } else {
-                // 保持当前位置
-                self.rollingRow = selectRow;
-            }
-        } else {
-            // 首次滚动，默认向上滚动
-            self.rollingRow = selectRow + offset;
-        }
+        self.rollingRow = selectRow; // 直接使用当前选中行（点击确定可以延迟执行，来提高快速滚动时偏移准确性）
+        // 当用户快速滚动并点击确定按钮时，可能导致选择不准确。如果需要预判，可以根据滚动速度来调整偏移量
     }
 }
 
@@ -433,8 +416,8 @@
     for (NSInteger i = 0; i < self.dataList.count; i++) {
         NSInteger index = i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
         NSArray *dataArr = i < self.dataList.count ? self.dataList[i] : nil;
+        id item = index >= 0 && index < dataArr.count ? dataArr[index] : nil;
         
-        id item = index < dataArr.count ? dataArr[index] : nil;
         if ([item isKindOfClass:[BRTextModel class]]) {
             BRTextModel *model = (BRTextModel *)item;
             model.index = index;
