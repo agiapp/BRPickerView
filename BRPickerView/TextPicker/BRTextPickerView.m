@@ -116,7 +116,7 @@
             NSInteger row = 0;
             if (self.selectIndexs.count > 0 && component < self.selectIndexs.count) {
                 NSInteger index = [self.selectIndexs[component] integerValue];
-                row = ((index > 0 && index < itemArr.count) ? index : 0);
+                row = (index >= 0 && index < itemArr.count) ? index : 0;
             }
             [selectIndexs addObject:@(row)];
         }
@@ -143,7 +143,7 @@
                 i++;
                 selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
                 [selectIndexs addObject:@(selectIndex)];
-                if (nextArr.count > selectIndex) {
+                if (selectIndex >= 0 && selectIndex < nextArr.count) {
                     selectModel = nextArr[selectIndex];
                 } else {
                     hasNext = NO;
