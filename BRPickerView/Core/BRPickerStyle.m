@@ -94,20 +94,6 @@
     return _titleLineHeight;
 }
 
-- (CGFloat)titleLineLeftSpace{
-    if (_titleLineLeftSpace <= 0) {
-        return 0.0f;
-    }
-    return _titleLineLeftSpace;
-}
-
-- (CGFloat)titleLineRightSpace{
-    if (_titleLineRightSpace <= 0) {
-        return 0.0f;
-    }
-    return _titleLineRightSpace;
-}
-
 - (UIColor *)cancelColor {
     if (!_cancelColor) {
         _cancelColor = [UIColor clearColor];
