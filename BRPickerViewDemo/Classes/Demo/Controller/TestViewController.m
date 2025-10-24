@@ -495,7 +495,6 @@ typedef NS_ENUM(NSInteger, BRTimeType) {
             // 2.将扁平结构模型数组 转成 树状结构模型数组（组件内封装的工具方法）
             NSArray *treeModelArr = [listModelArr br_buildTreeArray];
             textPickerView.dataSourceArr = treeModelArr;
-
             textPickerView.multiResultBlock = ^(NSArray<BRTextModel *> * _Nullable models, NSArray<NSNumber *> * _Nullable indexs) {
                 // 将模型数组元素的 text 属性值，通过-分隔符 连接成字符串（组件内封装的工具方法）
                 NSString *selectText = [models br_joinText:@"-"];

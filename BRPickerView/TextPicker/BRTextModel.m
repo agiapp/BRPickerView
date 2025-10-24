@@ -93,21 +93,22 @@
     NSMutableArray *tempArr = [NSMutableArray array];
     for (NSDictionary *dic in dataArr) {
         BRTextModel *model = [[BRTextModel alloc]init];
-        if (mapper[@"code"]) {
-            model.code = [NSString stringWithFormat:@"%@", dic[mapper[@"code"]]];
-        }
-        if (mapper[@"text"]) {
-            model.text = dic[mapper[@"text"]];
-        }
-        if (mapper[@"parentCode"]) {
-            model.parentCode = [NSString stringWithFormat:@"%@", dic[mapper[@"parentCode"]]];
-        }
-        if (mapper[@"extras"]) {
-            model.extras = dic[mapper[@"extras"]];
-        }
-        if (dic[mapper[@"children"]]) {
-            model.children = [self br_modelArrayWithJson:dic[mapper[@"children"]] mapper:mapper]; // 递归处理子list
-        }
+        
+        NSString *codeMappingKey = mapper[@"code"] ?: @"code";
+        model.code = dic[codeMappingKey] ? [NSString stringWithFormat:@"%@", dic[codeMappingKey]] : nil;
+                      
+        NSString *textMappingKey = mapper[@"text"] ?: @"text";
+        model.text = dic[textMappingKey];
+        
+        NSString *parentCodeMappingKey = mapper[@"parentCode"] ?: @"parentCode";
+        model.parentCode = dic[parentCodeMappingKey] ? [NSString stringWithFormat:@"%@", dic[parentCodeMappingKey]] : nil;
+        
+        NSString *extrasMappingKey = mapper[@"extras"] ?: @"extras";
+        model.extras = dic[extrasMappingKey];
+        
+        NSString *childrenMappingKey = mapper[@"children"] ?: @"children";
+        model.children = [self br_modelArrayWithJson:dic[childrenMappingKey] mapper:mapper]; // 递归处理子list
+        
         [tempArr addObject:model];
     }
 
