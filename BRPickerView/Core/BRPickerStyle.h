@@ -67,6 +67,15 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 titleBarView 标题栏底部分割线颜色 */
 @property (nullable, nonatomic, strong) UIColor *titleLineColor;
 
+/** 设置 titleBarView 标题栏底部分割线左边间距 */
+@property (nonatomic, assign) CGFloat titleLineLeftSpace;
+
+/** 设置 titleBarView 标题栏底部分割线左边间距 */
+@property (nonatomic, assign) CGFloat titleLineRightSpace;
+
+/** 设置 titleBarView 标题栏底部分割线高度 */
+@property (nonatomic, assign) CGFloat titleLineHeight;
+
 /** 隐藏 titleBarView 标题栏底部分割线，默认为 NO  */
 @property (nonatomic, assign) BOOL hiddenTitleLine;
 
@@ -168,6 +177,12 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 
 /** 设置 picker 中间两条分割线的高度。暂不支持日期选择器前4种类型 */
 @property (nonatomic, assign) CGFloat separatorHeight;
+
+/** 设置 picker 中间两条分割线的左侧间距。暂不支持日期选择器前4种类型 */
+@property (nonatomic, assign) CGFloat separatorLeftSpace;
+
+/** 设置 picker 中间两条分割线的右侧间距。暂不支持日期选择器前4种类型 */
+@property (nonatomic, assign) CGFloat separatorRightSpace;
 
 /** 设置 picker 文本的颜色。暂不支持日期选择器前4种类型 */
 @property (nullable, nonatomic, strong) UIColor *pickerTextColor;
