@@ -128,6 +128,9 @@
         BOOL hasNext = self.dataSourceArr.count > 0;
         NSInteger i = 0;
         NSInteger selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
+        if (selectIndex < 0 || selectIndex >= self.dataSourceArr.count) {
+            selectIndex = 0;
+        }
         [selectIndexs addObject:@(selectIndex)];
         if (selectIndex >= 0 && selectIndex < self.dataSourceArr.count) {
             BRTextModel *selectModel = self.dataSourceArr[selectIndex];
@@ -140,11 +143,10 @@
                 [dataList addObject:nextArr];
                 
                 i++;
-                selectIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
+                NSInteger requestedIndex = self.selectIndexs.count > 0 && i < self.selectIndexs.count ? [self.selectIndexs[i] integerValue] : 0;
+                selectIndex = requestedIndex >= 0 && requestedIndex < nextArr.count ? requestedIndex : 0;
                 [selectIndexs addObject:@(selectIndex)];
-                if (selectIndex < nextArr.count) {
-                    selectModel = nextArr[selectIndex];
-                }
+                selectModel = nextArr[selectIndex];
             }
         }
         
